@@ -1,0 +1,13 @@
+.appbar {
+    background-image: url('../assets/img/fundo_original-2.jpg') !important;
+    background-size: cover;
+    background-position: 55%;
+    min-height: 100px;
+    justify-content: center;
+}
+
+@media(min-width:1024px) {
+    .appbar {
+        background-image: none !important;
+    }
+}

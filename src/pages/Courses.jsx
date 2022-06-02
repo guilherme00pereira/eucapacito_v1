@@ -1,0 +1,196 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { Box, Tab, CircularProgress } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import apiService from "../services/apiService";
+
+import Button from "../components/Button";
+import CourseCard from "../components/Course/CourseCard";
+
+const Courses = () => {
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [isLoading, setIsLoading] = useState(false);
+  const [tab, setTab] = useState("1");
+  const [courses, setCourses] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
+  const [title, setTitle] = useOutletContext();
+
+  let navigate = useNavigate();
+
+  const { api } = apiService;
+
+  const handleTab = (e, newTab) => {
+    setCourses([]);
+    setPage(1);
+    setHideLoadMoreButton(false);
+    setTab(newTab);
+  };
+
+  const handleLoadMore = () => {
+    if (!hideLoadMoreButton) {
+      setPage(page + 1);
+    }
+  };
+
+  useEffect(() => {
+    token
+      ? setTitle({
+          main: "Meus Cursos",
+          sub: false,
+        })
+      : setTitle({
+          main: "Cursos",
+          sub: false,
+        });
+
+    setIsLoading(true);
+
+    api
+      .get(`/wp/v2/curso_ec?_embed&per_page=12&page=${page}`)
+      .then((res) => {
+        if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
+          setHideLoadMoreButton(true);
+        }
+
+        const fetchedCourses = [];
+
+        res.data.forEach((course) => {
+          const newCourse = {
+            id: course.id,
+            slug: course.slug,
+            featuredImg: course["featured_image_src"],
+            title: course.title.rendered,
+            subtitle: "Eu Capacito",
+            partnerLogoURL: course.responsavel.guid,
+          };
+
+          fetchedCourses.push(newCourse);
+        });
+
+        setCourses([...courses, ...fetchedCourses]);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        return false;
+      });
+  }, [navigate, tab, token, page]);
+
+  return (
+    <>
+      <Box sx={styles.tabPanelBox}>
+        {courses.length > 0 &&
+          courses.map((course) => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+      </Box>
+      {isLoading && <CircularProgress sx={styles.loading} />}
+      {!isLoading && (
+        <Button
+          sx={
+            hideLoadMoreButton
+              ? styles.hideLoadMoreButton
+              : styles.loadMoreButton
+          }
+          onClick={handleLoadMore}
+        >
+          Ver mais
+        </Button>
+      )}
+    </>
+    
+    // <TabContext value={tab}>
+    //   <Box>
+    //     <TabList
+    //       aria-label="Menu"
+    //       onChange={handleTab}
+    //       centered
+    //       sx={styles.tabList}
+    //     >
+    //       <Tab label="Tudo" value="1" />
+    //       {/* <Tab label="Em andamento" value="2" />
+    //       <Tab label="Completo" value="3" /> */}
+    //     </TabList>
+    //   </Box>
+
+    //   <TabPanel value="1" sx={styles.tabPanel}>
+    //     <Box sx={styles.tabPanelBox}>
+    //       {courses.length > 0 &&
+    //         courses.map((course) => (
+    //           <CourseCard key={course.id} course={course} />
+    //         ))}
+    //     </Box>
+    //   </TabPanel>
+
+    //   {/* <TabPanel value="2" sx={styles.tabPanel}>
+    //     <Box sx={styles.tabPanelBox}>
+    //       {courses.length > 0 &&
+    //         courses.map((course) => (
+    //           <CourseCard key={course.id} course={course} />
+    //         ))}
+    //     </Box>
+    //   </TabPanel>
+
+    //   <TabPanel value="3" sx={styles.tabPanel}>
+    //     <Box sx={styles.tabPanelBox}>
+    //       {courses.length > 0 &&
+    //         courses.map((course) => (
+    //           <CourseCard key={course.id} course={course} />
+    //         ))}
+    //     </Box>
+    //   </TabPanel> */}
+
+    //   {isLoading && <CircularProgress sx={styles.loading} />}
+    //   {!isLoading && (
+    //     <Button
+    //       sx={
+    //         hideLoadMoreButton
+    //           ? styles.hideLoadMoreButton
+    //           : styles.loadMoreButton
+    //       }
+    //       onClick={handleLoadMore}
+    //     >
+    //       Ver mais
+    //     </Button>
+    //   )}
+    // </TabContext>
+  );
+};
+
+export default Courses;
+
+const styles = {
+  tabList: {
+    button: {
+      fontSize: "1rem",
+      textTransform: "none",
+      "&.Mui-selected": {
+        color: "#33EDAC",
+      },
+    },
+    "& .MuiTabs-indicator": {
+      backgroundColor: "#33EDAC",
+    },
+  },
+  tabPanel: {
+    px: 0,
+  },
+  tabPanelBox: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+  },
+  hideLoadMoreButton: {
+    display: "none",
+  },
+  loadMoreButton: {
+    display: "block",
+    margin: "0 auto 3rem",
+  },
+  loading: {
+    display: "flex",
+    margin: "1.5rem auto 0",
+    color: "#77837F",
+  },
+};
