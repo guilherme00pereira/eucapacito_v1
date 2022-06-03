@@ -13,7 +13,26 @@ import {
 } from "@mui/material";
 
 import {useEffect, useState} from "react";
-import apiService from "../services/apiService";
+import apiService from "../services/apiService";  
+
+const extractData = (data) => {
+  let [bd, bm, by] = "";
+  if(data !== undefined && data.length === 8) {
+    bd = data.substr(6,2)
+    bm = data.substr(4,2)
+    by = data.substr(0,4)
+  }
+  return {bd, bm, by};
+}
+
+const extractPhone = (phone) => {
+  let [ddd, num] = "";
+  if(phone !== undefined) {
+    ddd = phone.substr(0,2)
+    num = phone.substr(2)
+  }
+  return {ddd, num};
+}
 
 const Account = () => {
   const [fields, setFields] = useState({
@@ -32,41 +51,49 @@ const Account = () => {
   });
   const token = sessionStorage.getItem('token');
   const {api} = apiService;
-  const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect( () => {
-    setIsLoading(true);
+    
     const id = sessionStorage.getItem('userID');
     api.get(`/wp/v2/users/${id}?_embed`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then( (res) => {
-      console.log(res.data)
+      let {bd, bm, by} = extractData(res.data.acf.data_de_nascimento)
+      let {ddd, num} = extractPhone(res.data.acf.telefone)
           setFields({
             username: res.data.slug,
             avatar: res.data.avatar_urls[96],
             full_name: res.data.first_name + " " + res.data.last_name,
+            b_day: bd,
+            b_month: bm,
+            b_year: by,
+            phone_ddd: ddd,
+            phone_number: num,
+            email: res.data.email,
+            country: res.data.acf.pais,
+            state: res.data.acf.estado,
+            city: res.data.acf.cidade
           })
         });
-    setIsLoading(false);
+    
   }, [token, api]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(fields);
+    const response = await apiService.register(fields);
+    
   }
 
   return (
     <Container sx={styles}>
-      {isLoading && <CircularProgress sx={styles.loading} />}
+      
       <Box sx={styles.pagetitle}>
         <h1>Edição da conta</h1>
       </Box>
 
       <Box sx={styles.profile}>
         <img src={fields.avatar} alt="Foto de perfil" />
-        <a href="/">
-          <h2>Alterar Foto</h2>
-        </a>
       </Box>
 
       <form sx={styles.form}>

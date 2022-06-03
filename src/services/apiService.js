@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://eucapacito.local/wp-json",
+  baseURL: process.env.REACT_APP_BACKED_URL,
 });
 
 const getTokenData = async (loginData) => {
@@ -82,6 +82,17 @@ const register = async (registerData) => {
   }
 }
 
+const updateProfile = async (profileData) => {
+  try {
+    const response = await api.post("/eucapacito/v1/update-profile?_embed", {
+      ...profileData
+    })
+    return { 'status': false, 'message': response.data };
+  } catch (error) {
+    return { 'status': false, 'message': error.response.data };
+  }
+}
+
 const recoverPassword = async (mail) => {
   try {
     const response = await api.post("/eucapacito/v1/recoverpass?_embed", {email: mail,})
@@ -127,6 +138,7 @@ const apiService = {
   getCourses,
   validateToken,
   register,
+  updateProfile,
   recoverPassword
 };
 
