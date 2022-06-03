@@ -67,14 +67,18 @@ const register = async (registerData) => {
       email: registerData.email,
       password: registerData.password,
     })
-    
+    const tokenData = await getTokenData({
+      email: registerData.email,
+      password: registerData.password,
+    });
     const data = response.data;
+    sessionStorage.setItem("token", tokenData.token);
     sessionStorage.setItem("userID", data.id);
     sessionStorage.setItem("username", `${data.first_name} ${data.last_name}`);
     sessionStorage.setItem("loggedIn", true);
-    return true;
+    return { 'status': true };
   } catch (error) {
-    return false;
+    return { 'status': false, 'message': error.response.data };
   }
 }
 

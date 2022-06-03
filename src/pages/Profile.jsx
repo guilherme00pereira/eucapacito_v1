@@ -12,7 +12,7 @@ import KeyIcon from "../assets/img/perfil-menu-chave.png";
 
 const Profile = () => {
   const [title, setTitle] = useOutletContext();
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem('loggedIn');
   let navigate = useNavigate();
 
   useEffect(() => {

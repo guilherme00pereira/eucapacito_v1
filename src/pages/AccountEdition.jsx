@@ -1,5 +1,5 @@
 import Button from "../components/Button";
-import { Select } from "@mui/material";
+import {CircularProgress} from "@mui/material";
 import {
   Container,
   Box,
@@ -12,20 +12,58 @@ import {
   Alert,
 } from "@mui/material";
 
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import apiService from "../services/apiService";
 
 const Account = () => {
-  const token = sessionStorage.getItem("token");
-  let navigate = useNavigate();
+  const [fields, setFields] = useState({
+    avatar: "",
+    username: "",
+    full_name: "",
+    email: "",
+    b_day: "",
+    b_month: "",
+    b_year: "",
+    phone_ddd: "",
+    phone_number: "",
+    country: "",
+    state: "",
+    city: "",
+  });
+  const token = sessionStorage.getItem('token');
+  const {api} = apiService;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect( () => {
+    setIsLoading(true);
+    const id = sessionStorage.getItem('userID');
+    api.get(`/wp/v2/users/${id}?_embed`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then( (res) => {
+      console.log(res.data)
+          setFields({
+            username: res.data.slug,
+            avatar: res.data.avatar_urls[96],
+            full_name: res.data.first_name + " " + res.data.last_name,
+          })
+        });
+    setIsLoading(false);
+  }, [token, api]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(fields);
+  }
 
   return (
     <Container sx={styles}>
+      {isLoading && <CircularProgress sx={styles.loading} />}
       <Box sx={styles.pagetitle}>
         <h1>Edição da conta</h1>
       </Box>
 
       <Box sx={styles.profile}>
-        <img src={sessionStorage.getItem("avatarURL")} alt="Foto de perfil" />
+        <img src={fields.avatar} alt="Foto de perfil" />
         <a href="/">
           <h2>Alterar Foto</h2>
         </a>
@@ -34,61 +72,57 @@ const Account = () => {
       <form sx={styles.form}>
         <Container sx={styles.formFirstContainer}>
           <FormControl>
-            <InputLabel htmlFor="password">Username</InputLabel>
-            <OutlinedInput required id="" type="text" />
+            <InputLabel htmlFor="username">Username</InputLabel>
+            <OutlinedInput required id="username" value={fields.username} type="text" />
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="password">Nome Completo</InputLabel>
-            <OutlinedInput required id="" type="text" />
+            <InputLabel htmlFor="full_name">Nome Completo</InputLabel>
+            <OutlinedInput required id="full_name" value={fields.full_name} type="text" />
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="password">Email</InputLabel>
-            <OutlinedInput required id="" type="email" />
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <OutlinedInput required id="email" value={fields.email} type="email" />
           </FormControl>
 
-          <FormControl>
-            <InputLabel htmlFor="password">Email Secundário</InputLabel>
-            <OutlinedInput required id="" type="email" />
-          </FormControl>
         </Container>
 
         <Container sx={styles.formSecondContainer}>
           <FormControl>
-            <InputLabel htmlFor="password">Data de nascimento</InputLabel>
+            <InputLabel htmlFor="birthdate">Data de nascimento</InputLabel>
             <Box sx={styles.dataN}>
-              <OutlinedInput required id="" type="text" />
-              <OutlinedInput required id="" type="text" />
-              <OutlinedInput required id="" type="text" />
+              <OutlinedInput required id="b_day" value={fields.b_day} type="text" />
+              <OutlinedInput required id="b_month" value={fields.b_month} type="text" />
+              <OutlinedInput required id="b_year" value={fields.b_year} type="text" />
             </Box>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="password">Cel</InputLabel>
+            <InputLabel htmlFor="phone">Cel</InputLabel>
             <Box sx={styles.cel}>
-              <OutlinedInput required id="" type="text" />
-              <OutlinedInput required id="" type="text" />
+              <OutlinedInput required id="phone_ddd" value={fields.phone_ddd} type="text" />
+              <OutlinedInput required id="phone_number" value={fields.phone_number} type="text" />
             </Box>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="password">País</InputLabel>
-            <OutlinedInput required id="" type="password" />
+            <InputLabel htmlFor="country">País</InputLabel>
+            <OutlinedInput required id="country" value={fields.country} type="text" />
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="password">Estado</InputLabel>
-            <OutlinedInput required id="" type="password" />
+            <InputLabel htmlFor="state">Estado</InputLabel>
+            <OutlinedInput required id="state" value={fields.state} type="text" />
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="password">Cidade</InputLabel>
-            <OutlinedInput required id="" type="password" />
+            <InputLabel htmlFor="city">Cidade</InputLabel>
+            <OutlinedInput required id="city" value={fields.city} type="text" />
           </FormControl>
         </Container>
 
-        <Button sx={styles.button}>Salvar</Button>
+        <Button onClick={handleSubmit} sx={styles.button}>Salvar</Button>
       </form>
     </Container>
   );
@@ -97,6 +131,11 @@ const Account = () => {
 export default Account;
 
 const styles = {
+  loading: {
+    display: "flex",
+    margin: "1.5rem auto 0",
+    color: "#77837F",
+  },
   profile: {
     mt: "43px",
     textAlign: "center",
