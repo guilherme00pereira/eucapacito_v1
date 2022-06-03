@@ -28,7 +28,7 @@ const validateToken = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response ? true : false;
+  return !!response;
 };
 
 const login = async (loginData) => {
@@ -84,10 +84,8 @@ const register = async (registerData) => {
 
 const updateProfile = async (profileData) => {
   try {
-    const response = await api.post("/eucapacito/v1/update-profile?_embed", {
-      ...profileData
-    })
-    return { 'status': false, 'message': response.data };
+    const response = await api.post("/eucapacito/v1/update-profile?_embed", {...profileData})
+    return { 'status': true, 'message': response.data };
   } catch (error) {
     return { 'status': false, 'message': error.response.data };
   }

@@ -34,6 +34,7 @@ const RegisterForm = () => {
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("false");
+    const [alertType, setAlertType] = useState("success");
     let navigate = useNavigate();
 
     const handleFieldChange = (field) => (e) =>
@@ -66,6 +67,7 @@ const RegisterForm = () => {
         if (response.status) {
             navigate("/perfil");
         } else {
+            setAlertType('error')
             setAlertMessage(response.message);
             setAlertOpen(true);
 
@@ -205,7 +207,7 @@ const RegisterForm = () => {
             <Snackbar
                 open={alertOpen}
                 onClose={handleCloseAlert}>
-                <Alert onClose={handleCloseAlert} severity="error">
+                <Alert onClose={handleCloseAlert} severity={alertType}>
                     {alertMessage}
                 </Alert>
             </Snackbar>

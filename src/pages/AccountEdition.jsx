@@ -1,23 +1,20 @@
 import Button from "../components/Button";
-import {CircularProgress} from "@mui/material";
 import {
   Container,
   Box,
   FormControl,
   OutlinedInput,
-  IconButton,
-  InputLabel,
-  InputAdornment,
-  Snackbar,
-  Alert,
+  Select,
+  MenuItem,
+  InputLabel, Alert, Snackbar,
 } from "@mui/material";
 
 import {useEffect, useState} from "react";
 import apiService from "../services/apiService";  
 
-const extractData = (data) => {
+const extractBirthdate = (data) => {
   let [bd, bm, by] = "";
-  if(data !== undefined && data.length === 8) {
+  if(data !== undefined && data !== null) {
     bd = data.substr(6,2)
     bm = data.substr(4,2)
     by = data.substr(0,4)
@@ -36,6 +33,7 @@ const extractPhone = (phone) => {
 
 const Account = () => {
   const [fields, setFields] = useState({
+    id: sessionStorage.getItem('userID'),
     avatar: "",
     username: "",
     full_name: "",
@@ -51,7 +49,21 @@ const Account = () => {
   });
   const token = sessionStorage.getItem('token');
   const {api} = apiService;
-  
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("false");
+  const [alertType, setAlertType] = useState("success");
+
+  const handleFieldChange = (field) => (e) =>
+      setFields({ ...fields, [field]: e.target.value });
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+    setAlertMessage("");
+  };
 
   useEffect( () => {
     
@@ -59,9 +71,11 @@ const Account = () => {
     api.get(`/wp/v2/users/${id}?_embed`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then( (res) => {
-      let {bd, bm, by} = extractData(res.data.acf.data_de_nascimento)
+
+      let {bd, bm, by} = extractBirthdate(res.data.acf.data_de_nascimento)
       let {ddd, num} = extractPhone(res.data.acf.telefone)
           setFields({
+            ...fields,
             username: res.data.slug,
             avatar: res.data.avatar_urls[96],
             full_name: res.data.first_name + " " + res.data.last_name,
@@ -71,7 +85,7 @@ const Account = () => {
             phone_ddd: ddd,
             phone_number: num,
             email: res.data.email,
-            country: res.data.acf.pais,
+            country: res.data.acf.pais ? res.data.acf.pais : 'Brasil',
             state: res.data.acf.estado,
             city: res.data.acf.cidade
           })
@@ -81,8 +95,13 @@ const Account = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await apiService.register(fields);
-    
+    const response = await apiService.updateProfile(fields);
+    if(response.status())
+      setAlertType('success')
+    else
+      setAlertType('error');
+    setAlertMessage(response.message);
+    setAlertOpen(true);
   }
 
   return (
@@ -100,17 +119,17 @@ const Account = () => {
         <Container sx={styles.formFirstContainer}>
           <FormControl>
             <InputLabel htmlFor="username">Username</InputLabel>
-            <OutlinedInput required id="username" value={fields.username} type="text" />
+            <OutlinedInput id="username" value={fields.username} type="text" disabled={true} />
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="full_name">Nome Completo</InputLabel>
-            <OutlinedInput required id="full_name" value={fields.full_name} type="text" />
+            <OutlinedInput id="full_name" value={fields.full_name} type="text" onChange={handleFieldChange("full_name")} />
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="email">Email</InputLabel>
-            <OutlinedInput required id="email" value={fields.email} type="email" />
+            <OutlinedInput id="email" value={fields.email} type="email" disabled={true} />
           </FormControl>
 
         </Container>
@@ -119,38 +138,74 @@ const Account = () => {
           <FormControl>
             <InputLabel htmlFor="birthdate">Data de nascimento</InputLabel>
             <Box sx={styles.dataN}>
-              <OutlinedInput required id="b_day" value={fields.b_day} type="text" />
-              <OutlinedInput required id="b_month" value={fields.b_month} type="text" />
-              <OutlinedInput required id="b_year" value={fields.b_year} type="text" />
+              <OutlinedInput id="b_day" value={fields.b_day} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("b_day")} />
+              <OutlinedInput id="b_month" value={fields.b_month} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("b_month")} />
+              <OutlinedInput id="b_year" value={fields.b_year} type="text" inputProps={{ maxLength: 4 }} onChange={handleFieldChange("b_year")} />
             </Box>
           </FormControl>
 
           <FormControl>
-            <InputLabel htmlFor="phone">Cel</InputLabel>
+            <InputLabel htmlFor="phone">Celular</InputLabel>
             <Box sx={styles.cel}>
-              <OutlinedInput required id="phone_ddd" value={fields.phone_ddd} type="text" />
-              <OutlinedInput required id="phone_number" value={fields.phone_number} type="text" />
+              <OutlinedInput id="phone_ddd" value={fields.phone_ddd} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("phone_ddd")} />
+              <OutlinedInput id="phone_number" value={fields.phone_number} type="text" inputProps={{ maxLength: 9 }} onChange={handleFieldChange("phone_number")} />
             </Box>
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="country">País</InputLabel>
-            <OutlinedInput required id="country" value={fields.country} type="text" />
+            <OutlinedInput id="country" value={fields.country} type="text" onChange={handleFieldChange("country")} />
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="state">Estado</InputLabel>
-            <OutlinedInput required id="state" value={fields.state} type="text" />
+            <Select id="state" value={fields.state} type="text" onChange={handleFieldChange("state")}>
+              <MenuItem value={'AC'}>Acre</MenuItem>
+              <MenuItem value={'AL'}>Alagoas</MenuItem>
+              <MenuItem value={'AP'}>Amapá</MenuItem>
+              <MenuItem value={'AM'}>Amazonas</MenuItem>
+              <MenuItem value={'BA'}>Bahia</MenuItem>
+              <MenuItem value={'CE'}>Ceará</MenuItem>
+              <MenuItem value={'DF'}>Distrito Federal</MenuItem>
+              <MenuItem value={'ES'}>Espírito Santo</MenuItem>
+              <MenuItem value={'GO'}>Goías</MenuItem>
+              <MenuItem value={'MA'}>Maranhão</MenuItem>
+              <MenuItem value={'MT'}>Mato Grosso</MenuItem>
+              <MenuItem value={'MS'}>Mato Grosso do Sul</MenuItem>
+              <MenuItem value={'MG'}>Minas Gerais</MenuItem>
+              <MenuItem value={'PA'}>Pará</MenuItem>
+              <MenuItem value={'PB'}>Paraíba</MenuItem>
+              <MenuItem value={'PR'}>Paraná</MenuItem>
+              <MenuItem value={'PE'}>Pernambuco</MenuItem>
+              <MenuItem value={'PI'}>Piauí</MenuItem>
+              <MenuItem value={'RJ'}>Rio de Janeiro</MenuItem>
+              <MenuItem value={'RN'}>Rio Grande do Norte</MenuItem>
+              <MenuItem value={'RS'}>Rio Grande do Sul</MenuItem>
+              <MenuItem value={'RO'}>Rondônia</MenuItem>
+              <MenuItem value={'RR'}>Roraíma</MenuItem>
+              <MenuItem value={'SC'}>Santa Catarina</MenuItem>
+              <MenuItem value={'SP'}>São Paulo</MenuItem>
+              <MenuItem value={'SE'}>Sergipe</MenuItem>
+              <MenuItem value={'TO'}>Tocantins</MenuItem>
+
+            </Select>
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="city">Cidade</InputLabel>
-            <OutlinedInput required id="city" value={fields.city} type="text" />
+            <OutlinedInput id="city" value={fields.city} type="text" onChange={handleFieldChange("city")} />
           </FormControl>
         </Container>
 
         <Button onClick={handleSubmit} sx={styles.button}>Salvar</Button>
       </form>
+      <Snackbar
+          open={alertOpen}
+          onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={alertType}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
