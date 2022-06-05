@@ -66,7 +66,7 @@ const LoginForm = () => {
     const token = await apiService.login(fields);
 
     if (token === 403) {
-      setAlertMessage("Usuário e/ou senha incorreto(s).");
+      setAlertMessage("E-mail e/ou senha incorreto(s).");
       setAlertOpen(true);
       return;
     }
@@ -217,9 +217,7 @@ const LoginForm = () => {
 
       <Snackbar
         open={alertOpen}
-        autoHideDuration={3000}
-        onClose={handleCloseAlert}
-      >
+        onClose={handleCloseAlert}>
         <Alert onClose={handleCloseAlert} severity="error">
           {alertMessage}
         </Alert>

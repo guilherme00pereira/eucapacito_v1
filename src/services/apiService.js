@@ -93,7 +93,16 @@ const updateProfile = async (profileData) => {
 
 const recoverPassword = async (mail) => {
   try {
-    const response = await api.post("/eucapacito/v1/recoverpwd?_embed", {email: mail,})
+    const response = await api.post("/eucapacito/v1/recoverpwd?_embed", {email: mail})
+    return { 'status': true, 'message': response.data };
+  } catch (error) {
+    return { 'status': false, 'message': error.response.data };
+  }
+}
+
+const changePassword = async (formData) => {
+  try {
+    const response = await api.post("/eucapacito/v1/changepwd?_embed", {...formData})
     return { 'status': true, 'message': response.data };
   } catch (error) {
     return { 'status': false, 'message': error.response.data };
@@ -136,7 +145,8 @@ const apiService = {
   validateToken,
   register,
   updateProfile,
-  recoverPassword
+  recoverPassword,
+  changePassword
 };
 
 export default apiService;

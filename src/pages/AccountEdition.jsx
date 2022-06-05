@@ -124,12 +124,12 @@ const Account = () => {
 
           <FormControl>
             <InputLabel htmlFor="full_name">Nome Completo</InputLabel>
-            <OutlinedInput id="full_name" value={fields.full_name} type="text" onChange={handleFieldChange("full_name")} />
+            <OutlinedInput required id="full_name" value={fields.full_name} type="text" onChange={handleFieldChange("full_name")} />
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="email">Email</InputLabel>
-            <OutlinedInput id="email" value={fields.email} type="email" disabled={true} />
+            <OutlinedInput required id="email" value={fields.email} type="email" disabled={true} />
           </FormControl>
 
         </Container>
@@ -138,28 +138,28 @@ const Account = () => {
           <FormControl>
             <InputLabel htmlFor="birthdate">Data de nascimento</InputLabel>
             <Box sx={styles.dataN}>
-              <OutlinedInput id="b_day" value={fields.b_day} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("b_day")} />
-              <OutlinedInput id="b_month" value={fields.b_month} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("b_month")} />
-              <OutlinedInput id="b_year" value={fields.b_year} type="text" inputProps={{ maxLength: 4 }} onChange={handleFieldChange("b_year")} />
+              <OutlinedInput required id="b_day" value={fields.b_day} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("b_day")} />
+              <OutlinedInput required id="b_month" value={fields.b_month} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("b_month")} />
+              <OutlinedInput required id="b_year" value={fields.b_year} type="text" inputProps={{ maxLength: 4 }} onChange={handleFieldChange("b_year")} />
             </Box>
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="phone">Celular</InputLabel>
             <Box sx={styles.cel}>
-              <OutlinedInput id="phone_ddd" value={fields.phone_ddd} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("phone_ddd")} />
-              <OutlinedInput id="phone_number" value={fields.phone_number} type="text" inputProps={{ maxLength: 9 }} onChange={handleFieldChange("phone_number")} />
+              <OutlinedInput required id="phone_ddd" value={fields.phone_ddd} type="text" inputProps={{ maxLength: 2 }} onChange={handleFieldChange("phone_ddd")} />
+              <OutlinedInput required id="phone_number" value={fields.phone_number} type="text" inputProps={{ maxLength: 9 }} onChange={handleFieldChange("phone_number")} />
             </Box>
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="country">País</InputLabel>
-            <OutlinedInput id="country" value={fields.country} type="text" onChange={handleFieldChange("country")} />
+            <OutlinedInput required id="country" value={fields.country} type="text" onChange={handleFieldChange("country")} />
           </FormControl>
 
           <FormControl>
             <InputLabel htmlFor="state">Estado</InputLabel>
-            <Select id="state" value={fields.state} type="text" onChange={handleFieldChange("state")}>
+            <Select required id="state" value={fields.state} type="text" onChange={handleFieldChange("state")}>
               <MenuItem value={'AC'}>Acre</MenuItem>
               <MenuItem value={'AL'}>Alagoas</MenuItem>
               <MenuItem value={'AP'}>Amapá</MenuItem>
@@ -193,7 +193,7 @@ const Account = () => {
 
           <FormControl>
             <InputLabel htmlFor="city">Cidade</InputLabel>
-            <OutlinedInput id="city" value={fields.city} type="text" onChange={handleFieldChange("city")} />
+            <OutlinedInput required id="city" value={fields.city} type="text" onChange={handleFieldChange("city")} />
           </FormControl>
         </Container>
 
