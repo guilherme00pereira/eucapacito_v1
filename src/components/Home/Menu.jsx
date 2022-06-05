@@ -33,7 +33,7 @@ const Menu = ({ sx }) => {
       <Swiper
         className="mySwiper"
         modules={[Navigation]}
-        slidesPerView={3.3}
+        slidesPerView={2.5}
         // navigation={true}
       >
         <SwiperSlide>

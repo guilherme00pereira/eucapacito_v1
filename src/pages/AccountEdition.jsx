@@ -96,7 +96,7 @@ const Account = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await apiService.updateProfile(fields);
-    if(response.status())
+    if(response.status)
       setAlertType('success')
     else
       setAlertType('error');
