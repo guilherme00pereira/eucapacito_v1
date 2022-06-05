@@ -93,11 +93,10 @@ const updateProfile = async (profileData) => {
 
 const recoverPassword = async (mail) => {
   try {
-    const response = await api.post("/eucapacito/v1/recoverpass?_embed", {email: mail,})
-    
-    return true;
+    const response = await api.post("/eucapacito/v1/recoverpwd?_embed", {email: mail,})
+    return { 'status': true, 'message': response.data };
   } catch (error) {
-    return false;
+    return { 'status': false, 'message': error.response.data };
   }
 }
 

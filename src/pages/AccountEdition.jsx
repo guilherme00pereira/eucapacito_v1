@@ -335,11 +335,11 @@ const styles = {
     },
   },
   button: {
-    width: "90%",
     margin: { md: "10px auto 0", xs: "10px 20px" },
     //css desktop
     width: {
       md: "30%",
+      xs: "90%"
     },
     position: {
       md: "absolute",

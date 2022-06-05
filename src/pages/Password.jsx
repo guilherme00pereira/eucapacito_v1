@@ -105,11 +105,11 @@ const Password = () => {
 
         <Button
           sx={{
-            width: "90%",
             margin: { md: "100px auto 0", xs: "10px 20px" },
             //css desktop
             width: {
               md: "45%",
+              xs: "90%"
             },
           }}
         >
