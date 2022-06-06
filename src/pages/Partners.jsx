@@ -22,121 +22,7 @@ import googleLogo from "../assets/img/google-partners.png";
 const Partners = () => {
   const [title, setTitle] = useOutletContext();
 
-  const boxSx = {
-    display: "flex",
-    flexWrap: "wrap",
-    img: {
-      filter: "grayscale(1)",
 
-      maxWidth: {
-        md: "100%",
-        xs: "85px",
-      },
-      maxHeight: {
-        md: "auto",
-        xs: "50px",
-      },
-    },
-    "& img:hover": {
-      filter: "grayscale(0)",
-    },
-    width: {
-      md: "90%",
-      xs: "100%",
-    },
-    margin: {
-      xs: "0",
-      md: "0 auto",
-    },
-    //css desktop
-    justifyContent: {
-      md: "space-evenly",
-      xs: "space-evenly",
-    },
-  };
-
-  const paperSx = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    border: "1px solid #77837F",
-    borderRadius: "5px",
-    minHeight: "82px",
-    background: "unset",
-    padding: {
-      md: "0",
-      xs: "5% 0",
-    },
-    //css desktop
-    width: { md: "28%", xs: "45%" },
-    minHeight: { md: "130px" },
-    //css desktop
-    margin: { md: "0 0 50px 0", xs: "0 auto 12px" },
-  };
-
-  const paperSxDesk = {
-    display: "flex",
-    justifyContent: { xs: "center", md: "space-evenly" },
-    alignItems: "center",
-    border: "1px solid #77837F",
-    borderRadius: "5px",
-    minHeight: "82px",
-    background: "unset",
-    padding: {
-      md: "0",
-      xs: "5% 0",
-    },
-    //css desktop
-    width: { md: "20%", xs: "45%" },
-    minHeight: { md: "90px", xs: "auto" },
-    //css desktop
-    margin: { md: "0 0 50px 0", xs: "0 auto 12px" },
-  };
-
-  const paperSxDeskLast = {
-    display: "flex",
-    justifyContent: { xs: "center", md: "space-evenly" },
-    alignItems: "center",
-    border: "1px solid #77837F",
-    borderRadius: "5px",
-    minHeight: "82px",
-    background: "unset",
-    padding: {
-      md: "0",
-      xs: "5% 0",
-    },
-    //css desktop
-    width: { md: "16%", xs: "45%" },
-    minHeight: { md: "90px", xs: "auto" },
-    maxHeight: { md: "auto", xs: "55px" },
-    //css desktop
-    margin: { md: "0 0 50px 0", xs: "0 auto 12px" },
-  };
-
-  const styleParagraph = {
-    fontSize: {
-      md: "22px",
-      xs: "18px",
-    },
-    fontWeight: {
-      md: "700",
-      xs: "500",
-    },
-    "& .text-footer":{
-        fontSize: {
-            md: "18px",
-            xs: "9px !important",
-          },
-          fontWeight:{md:"400", xs:"500"}
-          
-    },
-    "& .subtitle":{
-        display:{
-            md:"block",
-            xs:"none"
-        }
-    }
-  };
 
   useEffect(() => {
     setTitle({
@@ -303,16 +189,10 @@ const Partners = () => {
         <small className="text-footer">FAÇA PARTE DESSE PROJETO</small>
         <Button
           sx={{
-            width: "90%",
             margin: { md: "10px auto 0", xs: "10px 20px" },
             //css desktop
-            width: {
-              md: "30%",
-            },
-            mt: {
-              md: "42px",
-              xs: "15px",
-            },
+            width: {md: "30%", xs: "90%"},
+            mt: {md: "42px", xs: "15px",},
           }}
         >
           Quero ser parceiro
@@ -323,3 +203,119 @@ const Partners = () => {
 };
 
 export default Partners;
+
+
+const boxSx = {
+    display: "flex",
+    flexWrap: "wrap",
+    img: {
+        filter: "grayscale(1)",
+
+        maxWidth: {
+            md: "100%",
+            xs: "85px",
+        },
+        maxHeight: {
+            md: "auto",
+            xs: "50px",
+        },
+    },
+    "& img:hover": {
+        filter: "grayscale(0)",
+    },
+    width: {
+        md: "90%",
+        xs: "100%",
+    },
+    margin: {
+        xs: "0",
+        md: "0 auto",
+    },
+    //css desktop
+    justifyContent: {
+        md: "space-evenly",
+        xs: "space-evenly",
+    },
+};
+
+const paperSx = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid #77837F",
+    borderRadius: "5px",
+    background: "unset",
+    padding: {
+        md: "0",
+        xs: "5% 0",
+    },
+    //css desktop
+    width: { md: "28%", xs: "45%" },
+    minHeight: { md: "130px", xs: "82px" },
+    //css desktop
+    margin: { md: "0 0 50px 0", xs: "0 auto 12px" },
+};
+
+const paperSxDesk = {
+    display: "flex",
+    justifyContent: { xs: "center", md: "space-evenly" },
+    alignItems: "center",
+    border: "1px solid #77837F",
+    borderRadius: "5px",
+    //minHeight: "82px",
+    background: "unset",
+    padding: {
+        md: "0",
+        xs: "5% 0",
+    },
+    //css desktop
+    width: { md: "20%", xs: "45%" },
+    minHeight: { md: "90px", xs: "auto" },
+    //css desktop
+    margin: { md: "0 0 50px 0", xs: "0 auto 12px" },
+};
+
+const paperSxDeskLast = {
+    display: "flex",
+    justifyContent: { xs: "center", md: "space-evenly" },
+    alignItems: "center",
+    border: "1px solid #77837F",
+    borderRadius: "5px",
+    //minHeight: "82px",
+    background: "unset",
+    padding: {
+        md: "0",
+        xs: "5% 0",
+    },
+    //css desktop
+    width: { md: "16%", xs: "45%" },
+    minHeight: { md: "90px", xs: "auto" },
+    maxHeight: { md: "auto", xs: "55px" },
+    //css desktop
+    margin: { md: "0 0 50px 0", xs: "0 auto 12px" },
+};
+
+const styleParagraph = {
+    fontSize: {
+        md: "22px",
+        xs: "18px",
+    },
+    fontWeight: {
+        md: "700",
+        xs: "500",
+    },
+    "& .text-footer":{
+        fontSize: {
+            md: "18px",
+            xs: "9px !important",
+        },
+        fontWeight:{md:"400", xs:"500"}
+
+    },
+    "& .subtitle":{
+        display:{
+            md:"block",
+            xs:"none"
+        }
+    }
+};
