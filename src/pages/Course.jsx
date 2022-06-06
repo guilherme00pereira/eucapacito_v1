@@ -314,7 +314,7 @@ const styles = {
             md: "calc(100vh - 600px)",
             xs: "calc(100vh - 250px)",
         },
-        backgroundImage: "linear-gradient(#0E0E0E, #292C2F)", //`url(${imagemFundo})`,
+        backgroundImage: "linear-gradient(to right, #0E0E0E, #292C2F)", //`url(${imagemFundo})`,
         backgroundSize: "cover",
         backgroundPosition: "50%",
         position: "relative",

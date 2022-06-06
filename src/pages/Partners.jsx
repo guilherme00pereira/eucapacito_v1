@@ -22,8 +22,6 @@ import googleLogo from "../assets/img/google-partners.png";
 const Partners = () => {
   const [title, setTitle] = useOutletContext();
 
-
-
   useEffect(() => {
     setTitle({
       main: "Parceiros",
@@ -37,24 +35,7 @@ const Partners = () => {
         <p className="subtitle">Conheça quem apoia o Eu Capacito</p>
       </Box>
 
-      <Box
-        sx={{
-          hr: {
-            mt: "13px",
-            mb: "66px",
-            border: 0,
-            borderTop: "1px solid #77837F",
-            
-          },
-          "& p":{
-            fontSize:{
-                md:"22px",
-            xs:"16px",            
-        },
-        fontWeight:"700"
-          }
-        }}
-      >
+      <Box sx={boxTitle}>
         <p>Mantenedores</p>
         <hr />
       </Box>
@@ -85,23 +66,7 @@ const Partners = () => {
         </Paper>
       </Box>
 
-      <Box
-        sx={{
-          hr: {
-            mt: "13px",
-            mb: "66px",
-            border: 0,
-            borderTop: "1px solid #77837F",
-          },
-          "& p":{
-            fontSize:{
-                md:"22px",
-            xs:"16px",            
-        },
-        fontWeight:"700"
-          }
-        }}
-      >
+      <Box sx={boxTitle}>
         <p>Associados</p>
         <hr />
       </Box>
@@ -124,23 +89,7 @@ const Partners = () => {
         </Paper>
       </Box>
 
-      <Box
-        sx={{
-          hr: {
-            mt: "13px",
-            mb: "66px",
-            border: 0,
-            borderTop: "1px solid #77837F",
-          },
-          "& p":{
-            fontSize:{
-                md:"22px",
-            xs:"16px",            
-        },
-        fontWeight:"700"
-          }
-        }}
-      >
+      <Box sx={boxTitle}>
         <p>Parceiros institucionais</p>
         <hr />
       </Box>
@@ -163,38 +112,9 @@ const Partners = () => {
         </Paper>
       </Box>
 
-      <Box
-        sx={{
-          textAlign: "center",
-          small: { fontSize: "11px" },
-          //css desktop
-          display: "flex",
-
-          //css desktop
-          flexDirection: "column",
-
-          //css desktop
-          mt: {
-            md: "198px",
-            xs: "48px",
-          },
-          "& .text-footer": {
-            fontSize: {
-              md: "18px",
-              xs: "11px",
-            },
-          },
-        }}
-      >
+      <Box sx={boxBePart}>
         <small className="text-footer">FAÇA PARTE DESSE PROJETO</small>
-        <Button
-          sx={{
-            margin: { md: "10px auto 0", xs: "10px 20px" },
-            //css desktop
-            width: {md: "30%", xs: "90%"},
-            mt: {md: "42px", xs: "15px",},
-          }}
-        >
+        <Button sx={button}>
           Quero ser parceiro
         </Button>
       </Box>
@@ -204,6 +124,51 @@ const Partners = () => {
 
 export default Partners;
 
+const boxTitle = {
+    hr: {
+        mt: "13px",
+        mb: "66px",
+        border: 0,
+        borderTop: "1px solid #77837F",
+
+    },
+    "& p":{
+        fontSize:{
+            md:"22px",
+            xs:"16px",
+        },
+        fontWeight:"700"
+    }
+}
+
+const boxBePart = {
+    textAlign: "center",
+    small: { fontSize: "11px" },
+    //css desktop
+    display: "flex",
+
+    //css desktop
+    flexDirection: "column",
+
+    //css desktop
+    mt: {
+        md: "198px",
+        xs: "48px",
+    },
+    "& .text-footer": {
+        fontSize: {
+            md: "18px",
+            xs: "11px",
+        },
+    },
+}
+
+const button = {
+    margin: { md: "10px auto 0", xs: "10px 20px" },
+    //css desktop
+    width: {md: "30%", xs: "90%"},
+    mt: {md: "42px", xs: "15px",},
+}
 
 const boxSx = {
     display: "flex",

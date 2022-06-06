@@ -1,5 +1,5 @@
 body {
-    background-image: linear-gradient(#0E0E0E, #292C2F); /*url('./assets/img/fundo_original-2.jpg');*/
+    background-image: linear-gradient(to right, #0E0E0E, #292C2F); /*url('./assets/img/fundo_original-2.jpg');*/
     background-size: cover;
     background-position: 50%;
     color: #CAC8C8;
