@@ -33,7 +33,7 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxSx}>
-        {partners.map( (partner) => {
+        {partners.map( (partner, index) => {
           if(partner.category === 'Mantenedores') {
               return(<Paper sx={paperSx}>
                 <img src={partner.image} alt="Logo - {partner.name}" />
@@ -48,7 +48,7 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxSx}>
-        {partners.map( (partner) => {
+        {partners.map( (partner, index) => {
             if(partner.category === 'Associados') {
                 return(
                 <Paper sx={paperSxDesk}>
@@ -65,7 +65,7 @@ const Partners = () => {
 
       <Box sx={boxSx}>
 
-        {partners.map( (partner) => {
+        {partners.map( (partner, index) => {
             if(partner.category === 'Parceiros Institucionais') {
                 return(
                 <Paper sx={paperSxDeskLast}>
@@ -145,7 +145,7 @@ const boxSx = {
         },
         maxHeight: {
             md: "auto",
-            xs: "50px",
+            xs: "100px",
         },
     },
     "& img:hover": {
