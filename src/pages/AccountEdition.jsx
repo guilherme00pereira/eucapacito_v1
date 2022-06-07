@@ -6,11 +6,12 @@ import {
     OutlinedInput,
     Select,
     MenuItem,
-    InputLabel, Alert, Snackbar, CircularProgress,
+    InputLabel, Alert, Snackbar, CircularProgress, IconButton,
 } from "@mui/material";
 
 import {useEffect, useState} from "react";
 import apiService from "../services/apiService";
+import { PhotoCamera } from "@mui/icons-material";
 
 const extractBirthdate = (data) => {
     let [bd, bm, by] = "";
@@ -118,9 +119,9 @@ const Account = () => {
 
                     <Box sx={styles.profile}>
                         <img src={fields.avatar} alt="Foto de perfil"/>
-                        <a href="/">
-                            <h2>Alterar Foto</h2>
-                        </a>
+                        <IconButton component="span">
+                            <PhotoCamera />
+                        </IconButton>
                     </Box>
 
                     <form sx={styles.form}>
@@ -237,6 +238,9 @@ const styles = {
         display: "flex",
         margin: "1.5rem auto 0",
         color: "#77837F",
+    },
+    photoCamera: {
+        ml: "20px"
     },
     profile: {
         mt: "43px",

@@ -1,32 +1,24 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Box, Paper } from "@mui/material";
 import Button from "../components/Button";
-import partnerIcon from "../assets/icons/parceiros.svg";
-import microsoftLogo from "../assets/img/microsoft-partners.png";
-import oracleLogo from "../assets/img/oracle-partners.png";
-import golLogo from "../assets/img/gol-partners.png";
-import eyLogo from "../assets/logos/ey.png";
-import itmidiaLogo from "../assets/img/itmidia-partners.png";
-import fiapLogo from "../assets/img/fiap-partners.png";
-import soulcodeLogo from "../assets/img/soulCode-partners.png";
-import ciscoLogo from "../assets/logos/cisco.png";
-import deloitteLogo from "../assets/logos/deloitte.png";
-import engieLogo from "../assets/logos/engie.png";
-import idpLogo from "../assets/logos/idp.png";
-import sabinLogo from "../assets/logos/sabin.png";
-import fdcLogo from "../assets/logos/fdc.png";
-import arcelorLogo from "../assets/img/arcelor-partners.png";
-import googleLogo from "../assets/img/google-partners.png";
+import apiService from "../services/apiService";
 
 const Partners = () => {
   const [title, setTitle] = useOutletContext();
+  const [partners, setPartners] = useState([]);
+  const {api} = apiService;
 
   useEffect(() => {
     setTitle({
       main: "Parceiros",
       sub: "Conheça os nossos parceiros",
-    });
+      });
+
+      api.get('eucapacito/v1/partners').then((res) => {
+        setPartners(res.data)
+      })
+
   }, []);
 
   return (
@@ -41,29 +33,13 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxSx}>
-        <Paper sx={paperSx}>
-          <img src={microsoftLogo} alt="Logo - Microsoft" />
-        </Paper>
-
-        <Paper sx={paperSx}>
-          <img src={oracleLogo} alt="Logo - Oracle" />
-        </Paper>
-
-        <Paper sx={paperSx}>
-          <img src={golLogo} alt="Logo - Gol" />
-        </Paper>
-
-        <Paper sx={paperSx}>
-          <img src={googleLogo} alt="Logo - Google" />
-        </Paper>
-
-        <Paper sx={paperSx}>
-          <img src={ciscoLogo} alt="Logo - Cisco" />
-        </Paper>
-
-        <Paper sx={paperSx}>
-          <img src={itmidiaLogo} alt="Logo - EY" />
-        </Paper>
+        {partners.map( (partner) => {
+          if(partner.category === 'Mantenedores') {
+              return(<Paper sx={paperSx}>
+                <img src={partner.image} alt="Logo - {partner.name}" />
+            </Paper>)
+          }
+        })}        
       </Box>
 
       <Box sx={boxTitle}>
@@ -72,21 +48,14 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxSx}>
-        <Paper sx={paperSxDesk}>
-          <img src={arcelorLogo} alt="Logo - Arcelor" />
-        </Paper>
-
-        <Paper sx={paperSxDesk}>
-          <img src={deloitteLogo} alt="Logo - Deloitte" />
-        </Paper>
-
-        <Paper sx={paperSxDesk}>
-          <img src={engieLogo} alt="Logo - Engie" />
-        </Paper>
-
-        <Paper sx={paperSxDesk}>
-          <img src={sabinLogo} alt="Logo - Sabin" />
-        </Paper>
+        {partners.map( (partner) => {
+            if(partner.category === 'Associados') {
+                return(
+                <Paper sx={paperSxDesk}>
+                  <img src={partner.image} alt="Logo - {partner.name}" />
+              </Paper>)
+            }
+          })}
       </Box>
 
       <Box sx={boxTitle}>
@@ -95,21 +64,15 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxSx}>
-        <Paper sx={paperSxDeskLast}>
-          <img src={fiapLogo} alt="Logo - FIAP" />
-        </Paper>
 
-        <Paper sx={paperSxDeskLast}>
-          <img src={soulcodeLogo} alt="Logo - SoulCode" />
-        </Paper>
-
-        <Paper sx={paperSxDeskLast}>
-          <img src={fdcLogo} alt="Logo - FDC" />
-        </Paper>
-
-        <Paper sx={paperSxDeskLast}>
-          <img src={idpLogo} alt="Logo - IDP" />
-        </Paper>
+        {partners.map( (partner) => {
+            if(partner.category === 'Parceiros Institucionais') {
+                return(
+                <Paper sx={paperSxDeskLast}>
+                  <img src={partner.image} alt="Logo - {partner.name}" />
+              </Paper>)
+            }
+          })}
       </Box>
 
       <Box sx={boxBePart}>
