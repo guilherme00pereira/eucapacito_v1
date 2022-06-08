@@ -37,10 +37,18 @@ const Course = () => {
     let location = useLocation();
     let navigate = useNavigate();
 
+    const calcDuration = (v) => {
+        v = parseInt(v, 10);
+        const h = Math.floor(v / 3600);
+        const m = Math.floor((v - (h * 3600)) / 60);
+        let text = h + " horas";
+        if(m > 0) text += " e " + m + " minutos";
+        return (text)
+    }
+
     useEffect(() => {
         api.get(`/wp/v2/curso_ec/${id}?_embed`).then((res) => {
             const course = res.data;
-
             setCourseData({
                 featuredImg: course["featured_image_src"],
                 subtitle: "Eu Capacito",
@@ -48,7 +56,7 @@ const Course = () => {
                 category: course.categories.map((category) => category.name).join(", "),
                 partnerLogoURL: course.responsavel.guid,
                 price: "",
-                duration: course.duration,
+                duration: calcDuration(course.duration),
                 description: parse(`${course.content.rendered}`),
                 courseUrl: course.url,
             });
@@ -93,7 +101,7 @@ const Course = () => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <p><AccessTime sx={styles.description.block.icons}/> {courseData.duration / 3600} Horas
+                                <p><AccessTime sx={styles.description.block.icons}/> {courseData.duration}
                                 </p>
                             </Grid>
                         </Grid>

@@ -69,12 +69,16 @@ const Account = () => {
     };
 
     const handleCapture = ({ target }) => {
-
-        api.post('/wp/v2/media', {}, {
-            headers: {Authorization: `Bearer ${token}`},
-            'Content-Type': 'multipart/form-data; charset=utf-8;',
-            'Content-Disposition': `form-data; filename="${target.files[0].name}"`,
-            'Cache-Control': 'no-cache',
+        let formData = new FormData();
+        formData.set("file", target.files[0], target.files[0].name);
+        for (const key of formData.entries()) {
+            console.log(key[0] + ', ' + key[1]);
+        }
+        console.log(formData.entries())
+        api.post('/wp/v2/media', {formData}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
         }).then( (res) => {
             console.log(res.data)
         })
@@ -83,30 +87,36 @@ const Account = () => {
 
     useEffect(() => {
 
-        const id = sessionStorage.getItem('userID');
-        api.get(`/wp/v2/users/${id}?_embed`, {
-            headers: {Authorization: `Bearer ${token}`},
-        }).then((res) => {
+        /* const savedFields = sessionStorage.getItem('userProfile');
+        if(savedFields) {
+            setFields(savedFields)
+        } else { */
+            const id = sessionStorage.getItem('userID');
+            api.get(`/wp/v2/users/${id}?_embed`, {
+                headers: {Authorization: `Bearer ${token}`},
+            }).then((res) => {
 
-            let {bd, bm, by} = extractBirthdate(res.data.acf.data_de_nascimento)
-            let {ddd, num} = extractPhone(res.data.acf.telefone)
-            setFields({
-                ...fields,
-                username: res.data.slug,
-                avatar: res.data.avatar_urls[96],
-                full_name: res.data.first_name + " " + res.data.last_name,
-                b_day: bd,
-                b_month: bm,
-                b_year: by,
-                phone_ddd: ddd,
-                phone_number: num,
-                email: res.data.email,
-                country: res.data.acf.pais ? res.data.acf.pais : 'Brasil',
-                state: res.data.acf.estado,
-                city: res.data.acf.cidade
-            })
-            setIsLoading(false);
-        });
+                let {bd, bm, by} = extractBirthdate(res.data.acf.data_de_nascimento)
+                let {ddd, num} = extractPhone(res.data.acf.telefone)
+                setFields({
+                    ...fields,
+                    username: res.data.slug,
+                    avatar: res.data.avatar_urls[96],
+                    full_name: res.data.first_name + " " + res.data.last_name,
+                    b_day: bd,
+                    b_month: bm,
+                    b_year: by,
+                    phone_ddd: ddd,
+                    phone_number: num,
+                    email: res.data.email,
+                    country: res.data.acf.pais ? res.data.acf.pais : 'Brasil',
+                    state: res.data.acf.estado,
+                    city: res.data.acf.cidade
+                })
+                sessionStorage.setItem('userProfile', fields);
+                setIsLoading(false);
+            });
+        //}
 
     }, [token, api]);
 
