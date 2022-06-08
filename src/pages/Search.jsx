@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Box, CircularProgress } from "@mui/material";
 import apiService from "../services/apiService";
-import Jornadas from "../components/jornadas";
+import Jornadas from "../components/Jornadas";
 import Button from "../components/Button";
 import CourseBox from "../components/Search/CourseBox";
 import { SearchContext } from "../contexts/SearchContext";

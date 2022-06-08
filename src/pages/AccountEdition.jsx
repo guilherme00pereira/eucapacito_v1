@@ -6,12 +6,12 @@ import {
     OutlinedInput,
     Select,
     MenuItem,
-    InputLabel, Alert, Snackbar, CircularProgress, IconButton,
+    InputLabel, Alert, Snackbar, CircularProgress,
+    Button as MuiButton
 } from "@mui/material";
 
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import apiService from "../services/apiService";
-import { PhotoCamera } from "@mui/icons-material";
 
 const extractBirthdate = (data) => {
     let [bd, bm, by] = "";
@@ -55,6 +55,7 @@ const Account = () => {
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("false");
     const [alertType, setAlertType] = useState("success");
+    const uploadInputRef = useRef(null);
 
     const handleFieldChange = (field) => (e) =>
         setFields({...fields, [field]: e.target.value});
@@ -66,6 +67,19 @@ const Account = () => {
         setAlertOpen(false);
         setAlertMessage("");
     };
+
+    const handleCapture = ({ target }) => {
+
+        api.post('/wp/v2/media', {}, {
+            headers: {Authorization: `Bearer ${token}`},
+            'Content-Type': 'multipart/form-data; charset=utf-8;',
+            'Content-Disposition': `form-data; filename="${target.files[0].name}"`,
+            'Cache-Control': 'no-cache',
+        }).then( (res) => {
+            console.log(res.data)
+        })
+    };
+
 
     useEffect(() => {
 
@@ -119,9 +133,23 @@ const Account = () => {
 
                     <Box sx={styles.profile}>
                         <img src={fields.avatar} alt="Foto de perfil"/>
-                        <IconButton component="span">
-                            <PhotoCamera />
-                        </IconButton>
+                        <p>
+                            <input
+                                ref={uploadInputRef}
+                                type="file"
+                                accept="image/*"
+                                style={{ display: "none" }}
+                                onChange={handleCapture}
+                                id="profilePhote"
+                            />
+                            <MuiButton
+                                variant="text"
+                                component="span"
+                                size="small"
+                                onClick={() => uploadInputRef.current && uploadInputRef.current.click()}>
+                                Alterar Foto
+                            </MuiButton>
+                        </p>
                     </Box>
 
                     <form sx={styles.form}>
