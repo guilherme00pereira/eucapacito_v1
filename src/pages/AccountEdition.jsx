@@ -71,13 +71,12 @@ const Account = () => {
     const handleCapture = ({ target }) => {
         let formData = new FormData();
         formData.set("file", target.files[0], target.files[0].name);
-        for (const key of formData.entries()) {
-            console.log(key[0] + ', ' + key[1]);
-        }
-        console.log(formData.entries())
-        api.post('/wp/v2/media', {formData}, {
+
+        api.post('/wp/v2/media', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
+                "Content-Type": "image/*",
+                "Content-Disposition": `multipart/form-data; filename="${target.files[0].name}"`,
             }
         }).then( (res) => {
             console.log(res.data)

@@ -7,6 +7,7 @@ const BlogPost = ({ blog, sxContent }) => {
   return (
     <div>
       <Box sx={styles.post}>
+      <Link to={`/blog/${blog.slug}/${blog.id}`}>
         <Box sx={styles.post.image}>
           <img src={blog.featuredImg} alt="Placeholder Imagem" />
         </Box>
@@ -19,12 +20,11 @@ const BlogPost = ({ blog, sxContent }) => {
           <p>{blog.date}</p>
 
           <Box sx={styles.post.content.footer}>
-            <Link to={`/blog/${blog.slug}/${blog.id}`}>
               <CancelOutlined sx={styles.post.content.footer.icon} /> Leia mais
-            </Link>
             {/* <p>Logo</p> */}
           </Box>
         </Box>
+        </Link>
       </Box>
     </div>
   );
