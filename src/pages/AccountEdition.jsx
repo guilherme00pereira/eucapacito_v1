@@ -79,7 +79,17 @@ const Account = () => {
                 "Content-Disposition": `multipart/form-data; filename="${target.files[0].name}"`,
             }
         }).then( (res) => {
-            console.log(res.data)
+            const userData = {
+                user_id: sessionStorage.getItem('userID'),
+                media_id: res.data.id,
+            }
+            api.post('/jwt-auth/eucapacito/v1/avatar', userData,
+                { headers: { Authorization: `Bearer ${token}` }
+                }).then( (res) => {
+                console.log(res.data)
+                setFields({...fields, avatar: res.data.image})
+                sessionStorage.setItem('avatarURL', res.data.image);
+            })
         })
     };
 
@@ -100,7 +110,7 @@ const Account = () => {
                 setFields({
                     ...fields,
                     username: res.data.slug,
-                    avatar: res.data.avatar_urls[96],
+                    avatar: res.data.avatar,
                     full_name: res.data.first_name + " " + res.data.last_name,
                     b_day: bd,
                     b_month: bm,
