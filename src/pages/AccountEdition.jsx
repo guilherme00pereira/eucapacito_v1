@@ -107,10 +107,11 @@ const Account = () => {
 
                 let {bd, bm, by} = extractBirthdate(res.data.acf.data_de_nascimento)
                 let {ddd, num} = extractPhone(res.data.acf.telefone)
+                const avatar = res.data.avatar ? res.data.avatar : res.data.avatar_urls[96];
                 setFields({
                     ...fields,
                     username: res.data.slug,
-                    avatar: res.data.avatar,
+                    avatar: avatar,
                     full_name: res.data.first_name + " " + res.data.last_name,
                     b_day: bd,
                     b_month: bm,
