@@ -47,7 +47,7 @@ const login = async (loginData) => {
     sessionStorage.setItem("token", tokenData.token);
     sessionStorage.setItem("userID", data.id);
     sessionStorage.setItem("username", `${data.first_name} ${data.last_name}`);
-    sessionStorage.setItem("avatarURL", data.avatar_urls[96]);
+    sessionStorage.setItem("avatarURL", data.avatar);
     sessionStorage.setItem("loggedIn", true);
 
     return true;

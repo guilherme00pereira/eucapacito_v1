@@ -14,13 +14,10 @@ import {
 } from "@mui/material";
 
 import {
-    MailOutlined,
     LockOpenRounded,
     Visibility,
     VisibilityOff,
-    ArrowRight,
 } from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
 import apiService from "../services/apiService";
 
 const Password = () => {
@@ -29,7 +26,8 @@ const Password = () => {
         oldPassword: "",
         newPassword: "",
         confirmPassword: "",
-        showPassword: false,
+        showOldPassword: false,
+        showNewPassword: false,
     });
 
     const [alertOpen, setAlertOpen] = useState(false);
@@ -47,11 +45,20 @@ const Password = () => {
     const handleFieldChange = (field) => (e) =>
         setFields({...fields, [field]: e.target.value});
 
-    const handleShowPassword = () => {
-        setFields({
-            ...fields,
-            showPassword: !fields.showPassword,
-        });
+    const handleMouseDownPassword = (e) => e.preventDefault();
+
+    const handleShowPassword = (old) => {
+        if(old) {
+            setFields({
+                ...fields,
+                showOldPassword: !fields.showOldPassword,
+            });
+        } else {
+            setFields({
+                ...fields,
+                showNewPassword: !fields.showNewPassword,
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -78,7 +85,7 @@ const Password = () => {
                     <OutlinedInput
                         required
                         id="old-password"
-                        type="password"
+                        type={fields.showOldPassword ? "text" : "password"}
                         value={fields.oldPassword}
                         onChange={handleFieldChange("oldPassword")}
                         startAdornment={
@@ -90,8 +97,9 @@ const Password = () => {
                             <InputAdornment position="end">
                                 <IconButton
                                     aria-label="toggle password visibility"
-                                    onClick={handleShowPassword}>
-                                    {fields.showPassword ? <VisibilityOff/> : <Visibility/>}
+                                    onClick={() => handleShowPassword(true)}
+                                    onMouseDown={handleMouseDownPassword}>
+                                    {fields.showOldPassword ? <VisibilityOff/> : <Visibility/>}
                                 </IconButton>
                             </InputAdornment>
                         }
@@ -103,7 +111,7 @@ const Password = () => {
                     <OutlinedInput
                         required
                         id="new-password"
-                        type="password"
+                        type={fields.showNewPassword ? "text" : "password"}
                         value={fields.newPassword}
                         onChange={handleFieldChange("newPassword")}
                         startAdornment={
@@ -115,8 +123,9 @@ const Password = () => {
                             <InputAdornment position="end">
                                 <IconButton
                                     aria-label="toggle password visibility"
-                                    onClick={handleShowPassword}>
-                                    {fields.showPassword ? <VisibilityOff/> : <Visibility/>}
+                                    onClick={() => handleShowPassword(false)}
+                                    onMouseDown={handleMouseDownPassword}>
+                                    {fields.showNewPassword ? <VisibilityOff/> : <Visibility/>}
                                 </IconButton>
                             </InputAdornment>
                         }
@@ -192,8 +201,9 @@ const styles = {
         "& .MuiIconButton-root": {
             display: {
                 md: "block",
-                xs: "none",
+                xs: "block",
             },
+            margin: {xs: "8px auto 0"},
         },
     },
 }

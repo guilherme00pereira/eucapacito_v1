@@ -86,7 +86,6 @@ const Account = () => {
             api.post('/jwt-auth/eucapacito/v1/avatar', userData,
                 { headers: { Authorization: `Bearer ${token}` }
                 }).then( (res) => {
-                console.log(res.data)
                 setFields({...fields, avatar: res.data.image})
                 sessionStorage.setItem('avatarURL', res.data.image);
             })
