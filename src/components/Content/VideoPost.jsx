@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import { PlayCircleOutline } from "@mui/icons-material";
 import Link from "../Link";
 
-const VideoPost = ({ video }) => {
+const VideoPost = ({ video, sxFull }) => {
   return (
-    <Box sx={styles.post}>
+    <Box sx={{...styles.post,...sxFull}}>
       <h2>{video.title}</h2>
 
       <Link to={`/video/${video.slug}/${video.id}`}>

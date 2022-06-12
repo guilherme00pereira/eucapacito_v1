@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
 import { useOutletContext } from "react-router-dom";
 import BlogPost from "../components/Content/BlogPost";
 import VideoPost from "../components/Content/VideoPost";
 import EbookPost from "../components/Content/EbookPost";
 import UpdateForm from "../components/Content/UpdateForm";
+import ContentTitle from "../components/Content/ContentTitle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
 
@@ -102,9 +103,7 @@ const Content = () => {
   return (
     <Box sx={root}>
       <Box sx={blog}>
-        <h1>Blog</h1>
-        <hr />
-
+        <ContentTitle title="Blog" to={'/blogs'} linkText="Todos os posts" />
         <Box className="swiper-container">
           <Swiper
             className="mySwiper"
@@ -126,9 +125,7 @@ const Content = () => {
       </Box>
 
       <Box sx={styles.videos}>
-        <h1>Vídeos</h1>
-        <hr />
-
+        <ContentTitle title="Vídeos" to={'/videos'} linkText="Todos os vídeos" />
         <Swiper
           className="mySwiper"
           breakpoints={styles.swiper.breakpoints}
@@ -149,9 +146,7 @@ const Content = () => {
       </Box>
 
       <Box sx={styles.ebook}>
-        <h1>Ebook</h1>
-        <hr />
-
+        <ContentTitle title="Ebook" to={'/ebooks'} linkText="Todos os ebooks" />
         <Swiper
           className="mySwiper"
           breakpoints={styles.swiper.breakpoints}
@@ -159,7 +154,6 @@ const Content = () => {
           autoplay={styles.swiper.autoplay}
           modules={[Pagination, Navigation, Autoplay]}
           navigation={true}
-          // pagination={{ clickable: true }}
         >
           {ebooks.length > 0 &&
             ebooks.map((ebook) => (
@@ -169,22 +163,7 @@ const Content = () => {
             ))}
         </Swiper>
       </Box>
-
-      {/* <Box sx={styles.newsContainer}>
-        <h1>Últimas notícias</h1>
-        <hr />
-        <Box container sx={styles.news}>
-          <NewsPost />
-          <NewsPost />
-          <NewsPost />
-        </Box>
-      </Box> */}
-
-      <Box sx={form}>
-        <Box>
-          <UpdateForm />
-        </Box>
-      </Box>
+      <UpdateForm />
     </Box>
   );
 };
@@ -236,21 +215,6 @@ const styles = {
       fontWeight: "bold",
       color: "#33EDAC",
     },
-    // "& .swiper-wrapper": {
-    //   width: {
-    //     xs: "100%",
-    //     md: "87%",
-    //   },
-    //   px: {
-    //     md: "50px",
-    //   },
-    // },
-    // "& .swiper-slide": {
-    //   mr:{
-    //     xs: 0,
-    //     md: "50px !important",
-    //   },
-    // },
   },
   blog: {
     "& h1":{
@@ -271,9 +235,9 @@ const styles = {
       fontWeight: "400",
       textAlign: "left",
     },
-    "& a": {
-      fontSize: "6px !important",
-    },
+    // "& a": {
+    //   fontSize: "10px !important",
+    // },
     "& .MuiSvgIcon-root": {
       width: "12px",
     },
@@ -324,15 +288,6 @@ const styles = {
       },
     },
   },
-  form: {
-    //css desktop
-    "& .MuiBox-root": {
-      margin: {
-        md: "6.5rem 5.5rem 2rem",
-      },
-    },
-    margin: "0 auto",
-  },
   videos: {
     "& h1":{
         fontSize:{
@@ -363,30 +318,5 @@ const styles = {
       },
     },
 
-    //   newsContainer: {
-    //     display: {
-    //       md: "block",
-    //       xs: "none",
-    //     },
-    //     margin: "0 auto 130px auto",
-    //     "& h1": {
-    //       mt: "46px",
-    //     },
-    //   },
-    //   news: {
-    //     display: {
-    //       md: "none",
-    //       xs: "none",
-    //     },
-    //     justifyContent: "space-between",
-    //     "& .MuiGrid-root": {
-    //       width: {
-    //         md: "30%",
-    //       },
-    //     },
-    //     "& h2": {
-    //       marginLeft: "20px",
-    //     },
-    //   },
   },
 };

@@ -3,30 +3,28 @@ import { CancelOutlined } from "@mui/icons-material";
 import parse from "html-react-parser";
 import Link from "../Link";
 
-const BlogPost = ({ blog, sxContent }) => {
+const BlogPost = ({ blog, sxContent, sxFull }) => {
   return (
-    <div>
-      <Box sx={styles.post}>
-      <Link to={`/blog/${blog.slug}/${blog.id}`}>
-        <Box sx={styles.post.image}>
-          <img src={blog.featuredImg} alt="Placeholder Imagem" />
-        </Box>
-        <Box sx={{ ...styles.post.content, ...sxContent }}>
-          <small>{parse(`${blog.categories}`)}</small>
-          <hr />
-
-          <h2>{parse(`${blog.title}`)}</h2>
-          <div>{parse(`${blog.excerpt}`)}</div>
-          <p>{blog.date}</p>
-
-          <Box sx={styles.post.content.footer}>
-              <CancelOutlined sx={styles.post.content.footer.icon} /> Leia mais
-            {/* <p>Logo</p> */}
+      <Box sx={{...styles.post, ...sxFull}}>
+        <Link to={`/blog/${blog.slug}/${blog.id}`}>
+          <Box sx={styles.post.image}>
+            <img src={blog.featuredImg} alt="Placeholder Imagem" />
           </Box>
-        </Box>
+          <Box sx={{ ...styles.post.content, ...sxContent }}>
+            <small>{parse(`${blog.categories}`)}</small>
+            <hr />
+
+            <h2>{parse(`${blog.title}`)}</h2>
+            <div>{parse(`${blog.excerpt}`)}</div>
+            <p>{blog.date}</p>
+
+            <Box sx={styles.post.content.footer}>
+                <CancelOutlined sx={styles.post.content.footer.icon} /> Leia mais
+              {/* <p>Logo</p> */}
+            </Box>
+          </Box>
         </Link>
       </Box>
-    </div>
   );
 };
 

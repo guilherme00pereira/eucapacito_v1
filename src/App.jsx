@@ -19,6 +19,7 @@ import Faq from "./pages/Faq";
 import Partners from "./pages/Partners";
 import Content from "./pages/Content";
 import Blog from "./pages/Blog";
+import Blogs from "./pages/Blogs";
 import News from "./pages/News";
 import About from "./pages/About";
 import Oportunity from "./pages/Oportunity";
@@ -30,6 +31,8 @@ import Password from "./pages/Password";
 import AccountEdition from "./pages/AccountEdition";
 import Filter from "./pages/Filter";
 import Video from "./pages/Video";
+import Videos from "./pages/Videos";
+import Ebooks from "./pages/Ebooks";
 
 function App() {
   // const navigate = useNavigate();
@@ -59,7 +62,10 @@ function App() {
                 <Route path="/parceiros" element={<Partners />} />
                 <Route path="/conteudo" element={<Content />} />
                 <Route path="/blog/:slug/:id" element={<Blog />} />
+                <Route path="/blogs" element={<Blogs />} />
                 <Route path="/video/:slug/:id" element={<Video />} />
+                <Route path="/videos" element={<Videos />} />
+                <Route path="/ebooks" element={<Ebooks />} />
                 <Route path="/noticias" element={<News />} />
                 <Route path="/quem-somos" element={<About />} />
                 <Route path="/oportunidade/:slug/:id" element={<Oportunity />} />

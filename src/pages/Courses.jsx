@@ -46,8 +46,7 @@ const Courses = () => {
 
     setIsLoading(true);
 
-    api
-      .get(`/wp/v2/curso_ec?_embed&per_page=12&page=${page}`)
+    api.get(`/wp/v2/curso_ec?_embed&per_page=12&page=${page}`)
       .then((res) => {
         if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
           setHideLoadMoreButton(true);
@@ -99,84 +98,13 @@ const Courses = () => {
         </Button>
       )}
     </>
-    
-    // <TabContext value={tab}>
-    //   <Box>
-    //     <TabList
-    //       aria-label="Menu"
-    //       onChange={handleTab}
-    //       centered
-    //       sx={styles.tabList}
-    //     >
-    //       <Tab label="Tudo" value="1" />
-    //       {/* <Tab label="Em andamento" value="2" />
-    //       <Tab label="Completo" value="3" /> */}
-    //     </TabList>
-    //   </Box>
-
-    //   <TabPanel value="1" sx={styles.tabPanel}>
-    //     <Box sx={styles.tabPanelBox}>
-    //       {courses.length > 0 &&
-    //         courses.map((course) => (
-    //           <CourseCard key={course.id} course={course} />
-    //         ))}
-    //     </Box>
-    //   </TabPanel>
-
-    //   {/* <TabPanel value="2" sx={styles.tabPanel}>
-    //     <Box sx={styles.tabPanelBox}>
-    //       {courses.length > 0 &&
-    //         courses.map((course) => (
-    //           <CourseCard key={course.id} course={course} />
-    //         ))}
-    //     </Box>
-    //   </TabPanel>
-
-    //   <TabPanel value="3" sx={styles.tabPanel}>
-    //     <Box sx={styles.tabPanelBox}>
-    //       {courses.length > 0 &&
-    //         courses.map((course) => (
-    //           <CourseCard key={course.id} course={course} />
-    //         ))}
-    //     </Box>
-    //   </TabPanel> */}
-
-    //   {isLoading && <CircularProgress sx={styles.loading} />}
-    //   {!isLoading && (
-    //     <Button
-    //       sx={
-    //         hideLoadMoreButton
-    //           ? styles.hideLoadMoreButton
-    //           : styles.loadMoreButton
-    //       }
-    //       onClick={handleLoadMore}
-    //     >
-    //       Ver mais
-    //     </Button>
-    //   )}
-    // </TabContext>
   );
 };
 
 export default Courses;
 
 const styles = {
-  tabList: {
-    button: {
-      fontSize: "1rem",
-      textTransform: "none",
-      "&.Mui-selected": {
-        color: "#33EDAC",
-      },
-    },
-    "& .MuiTabs-indicator": {
-      backgroundColor: "#33EDAC",
-    },
-  },
-  tabPanel: {
-    px: 0,
-  },
-  tabPanelBox: {
+ tabPanelBox: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "flex-start",

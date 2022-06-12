@@ -1,7 +1,7 @@
 import { Link } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-const MenuLink = ({ to, imagePath, title }) => {
+const MenuLink = ({ to, title }) => {
   return (
     <Link component={NavLink} to={to} sx={styles.link}>
       <p>{title}</p>
@@ -14,8 +14,6 @@ export default MenuLink;
 const styles = {
   link: {
     display: "flex",
-    flexDirection: "column",
-    //css desktop
     flexDirection: {
       md: "row",
       xs: "column",
@@ -26,9 +24,6 @@ const styles = {
     fontSize: "0.875rem",
     fontWeight: 500,
     textDecoration: "none",
-    img: {
-      maxWidth: "90px",
-    },
     "& > p": {
       xs: {
         display: "flex",
@@ -57,12 +52,9 @@ const styles = {
       },
     },
     "& p": {
-      m: "0.3rem 0 0",
-    },
-    //css desktop
-    "& p": {
       m: {
         md: "0",
+        xs: "0.3rem 0 0",
       },
     },
   },

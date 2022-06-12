@@ -42,30 +42,7 @@ const Profile = () => {
       </Box>
 
       <h2>Conta</h2>
-      <Box
-        sx={{
-          //css desktop
-          display: {
-            md: "flex",
-          },
-          //css desktop
-          justifyContent: {
-            md: "space-between",
-          },
-          //css desktop
-          flexWrap: {
-            md: "wrap",
-          },
-          //css desktop
-          maxWidth: {
-            md: "90%",
-          },
-          //css deskto
-          margin: {
-            md: "0 auto",
-          },
-        }}
-      >
+      <Box sx={styles.accountBox}>
         <NavLink to="/cursos">
           <Box sx={styles.menu}>
             <Box sx={styles.menu.left}>
@@ -130,6 +107,28 @@ const styles = {
     h2: {
       fontSize: {xs:"20px", md:"20px"},
       fontWeight: 500,
+    },
+  },
+  accountBox: {
+    //css desktop
+    display: {
+      md: "flex",
+    },
+    //css desktop
+    justifyContent: {
+      md: "space-between",
+    },
+    //css desktop
+    flexWrap: {
+      md: "wrap",
+    },
+    //css desktop
+    maxWidth: {
+      md: "90%",
+    },
+    //css deskto
+    margin: {
+      md: "0 auto",
     },
   },
   user: {

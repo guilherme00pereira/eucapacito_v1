@@ -3,11 +3,11 @@ import parse from "html-react-parser";
 import { Box } from "@mui/material";
 import Link from "../Link";
 
-const EbookPost = ({ ebook }) => {
+const EbookPost = ({ ebook, sxFull }) => {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
   return (
-    <Box sx={styles.post}>
+    <Box sx={{...styles.post,...sxFull}}>
       <Box sx={styles.post.image}>
         <img src={ebook.featuredImg} alt="Imagem Placeholder" />
       </Box>
