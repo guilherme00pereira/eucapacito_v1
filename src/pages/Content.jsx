@@ -103,7 +103,7 @@ const Content = () => {
   return (
     <Box sx={root}>
       <Box sx={blog}>
-        <ContentTitle title="Blog" to={'/blogs'} linkText="Todos os posts" />
+        <ContentTitle title="Blog" to={'/blog'} linkText="Todos os posts" />
         <Box className="swiper-container">
           <Swiper
             className="mySwiper"
@@ -146,7 +146,7 @@ const Content = () => {
       </Box>
 
       <Box sx={styles.ebook}>
-        <ContentTitle title="Ebook" to={'/ebooks'} linkText="Todos os ebooks" />
+        <ContentTitle title="Ebook" to={'/ebook'} linkText="Todos os ebooks" />
         <Swiper
           className="mySwiper"
           breakpoints={styles.swiper.breakpoints}

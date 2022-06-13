@@ -67,11 +67,13 @@ const Ebooks = () => {
             </Box>
             {isLoading && <CircularProgress sx={postListStyles.loading}/>}
             {!isLoading && (
-                <Button
-                    sx={hideLoadMoreButton ? hideLoadMoreButton : postListStyles.loadMoreButton}
-                    onClick={handleLoadMore}>
-                    Ver mais
-                </Button>
+                <Box sx={postListStyles.loadMoreButtonBox}>
+                    <Button
+                        sx={hideLoadMoreButton ? hideLoadMoreButton : postListStyles.loadMoreButton}
+                        onClick={handleLoadMore}>
+                        Ver mais
+                    </Button>
+                </Box>
             )}
             <hr />
             <UpdateForm />

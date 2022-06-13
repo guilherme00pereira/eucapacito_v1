@@ -62,10 +62,10 @@ function App() {
                 <Route path="/parceiros" element={<Partners />} />
                 <Route path="/conteudo" element={<Content />} />
                 <Route path="/blog/:slug/:id" element={<Blog />} />
-                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/blog" element={<Blogs />} />
                 <Route path="/video/:slug/:id" element={<Video />} />
                 <Route path="/videos" element={<Videos />} />
-                <Route path="/ebooks" element={<Ebooks />} />
+                <Route path="/ebook" element={<Ebooks />} />
                 <Route path="/noticias" element={<News />} />
                 <Route path="/quem-somos" element={<About />} />
                 <Route path="/oportunidade/:slug/:id" element={<Oportunity />} />

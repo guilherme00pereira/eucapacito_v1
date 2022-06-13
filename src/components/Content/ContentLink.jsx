@@ -1,4 +1,4 @@
-import { Link, Box } from "@mui/material";
+import { Link } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import {ArrowForwardIos} from "@mui/icons-material";
 
@@ -22,13 +22,15 @@ const styles = {
         justifyContent: "center",
         alignItems: "baseline",
         color: "#33EDAC",
-        fontWeight: 500,
+        fontWeight: "400 !important",
+        fontStyle: "normal !important",
         textDecoration: "none",
         div: {
-            fontSize: "1.5em !important"
+            fontSize: "16px !important"
         }
     },
     arrow: {
-        mt: "10px",
+        fontSize: "16px",
+        width: "16px !important"
     }
 }

@@ -18,6 +18,11 @@ export const postListStyles = {
     hideLoadMoreButton: {
         display: "none",
     },
+    loadMoreButtonBox: {
+        display: "flex",
+        justifyContent: "center",
+        margin: "0 auto 48px",
+    },
     loadMoreButton: {
         display: "block",
         margin: "0 auto 3rem",
