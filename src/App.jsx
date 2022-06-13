@@ -29,7 +29,7 @@ import EmployabilityRegister from "./pages/EmployabilityRegister";
 import Profile from "./pages/Profile";
 import Password from "./pages/Password";
 import AccountEdition from "./pages/AccountEdition";
-import Filter from "./pages/Filter";
+import Filter from "./components/Search/Filter";
 import Video from "./pages/Video";
 import Videos from "./pages/Videos";
 import Ebooks from "./pages/Ebooks";
