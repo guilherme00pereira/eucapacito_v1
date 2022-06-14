@@ -26,12 +26,13 @@ const Search = () => {
         }
     };
 
-    const handleDrawer = () => setDrawerOpen(!drawerOpen);
+    const handleDrawer = () => {
+        setDrawerOpen(!drawerOpen);
+    } 
+
     const handleFilter = (status) => setDrawerOpen(status);
 
     useEffect(() => {
-        setCourses([]);
-
         setIsLoading(true);
 
         api.get(`/wp/v2/curso_ec?_embed&per_page=15&page=${page}&search=${search}`)
@@ -61,6 +62,9 @@ const Search = () => {
                 setIsLoading(false);
                 return false;
             });
+
+            
+
     }, [page]);
 
     return (
@@ -91,7 +95,7 @@ const Search = () => {
                                     }}
                                     sx={styles.filter}
                                 >
-                                    <Filter handleFilter={handleFilter}/>
+                                    <Filter handleFilter={handleFilter} />
                                 </Drawer>
                             </div>
 
