@@ -1,24 +1,21 @@
-import {useState, useEffect, useContext} from "react";
+import {useState, useEffect} from "react";
 import {Box, CircularProgress, Drawer} from "@mui/material";
 import FilterIcon from "../assets/img/filter-icon.svg";
 import apiService from "../services/apiService";
 import Filter from "../components/Search/Filter";
 import Button from "../components/Button";
 import CourseBox from "../components/Search/CourseBox";
-import {SearchContext} from "../contexts/SearchContext";
+import { useSearchParams } from "react-router-dom";
 
 const Search = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [courses, setCourses] = useState([]);
+    const [total, setTotal] = useState(0);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
-    const {search, setSearch} = useContext(SearchContext);
-
+    const [searchParams, setSearchParams] = useSearchParams();
     const {api} = apiService;
-
-    // const [searchParams] = useSearchParams();
-    // const [searchTerm, setSearchTerm] = useState(searchParams.get("search"));
 
     const handleLoadMore = () => {
         if (!hideLoadMoreButton) {
@@ -34,27 +31,24 @@ const Search = () => {
 
     useEffect(() => {
         setIsLoading(true);
-
-        api.get(`/wp/v2/curso_ec?_embed&per_page=15&page=${page}&search=${search}`)
-            .then((res) => {
+        const term = searchParams.get('search');
+        api.get(`/eucapacito/v1/search?page=${page}&search=${term}`).then((res) => {
                 if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
                     setHideLoadMoreButton(true);
                 }
-
                 const fetchedCourses = [];
-
-                res.data.forEach((course) => {
+                res.data.courses.forEach((course) => {
                     const newCourse = {
                         id: course.id,
                         slug: course.slug,
-                        title: course.title.rendered,
+                        title: course.title,
                         subtitle: course.type === "curso_ec" ? "Eu Capacito" : "Parceiro",
-                        partnerLogoURL: course.responsavel.guid,
+                        partnerLogoURL: course.logo
                     };
 
                     fetchedCourses.push(newCourse);
                 });
-
+                setTotal(res.data.total);
                 setCourses([...courses, ...fetchedCourses]);
                 setIsLoading(false);
             })
@@ -78,7 +72,7 @@ const Search = () => {
                     ) : (
                         <Box>
                             <div className="titulo">
-                                <p>Resultados da pesquisa</p>
+                                <p>Resultados da pesquisa ({total})</p>
 
                                 <div className="filter-control">
                                     <p>Filtro</p>
