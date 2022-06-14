@@ -6,7 +6,8 @@ import Button from "../components/Button";
 import VideoPost from "../components/Content/VideoPost";
 import UpdateForm from "../components/Content/UpdateForm";
 
-import { postListStyles } from '../commonStyles/postListStyles'
+import { postListStyles } from '../commonStyles/postListStyles';
+import {loading} from "../commonStyles/loading";
 
 
 const Videos = () => {
@@ -60,7 +61,7 @@ const Videos = () => {
                         <VideoPost video={video} sxFull={postListStyles.postItem} />
                     ))}
             </Box>
-            {isLoading && <CircularProgress sx={postListStyles.loading}/>}
+            {isLoading && <CircularProgress sx={loading.circular}/>}
             {!isLoading && (
                 <Box sx={postListStyles.loadMoreButtonBox}>
                     <Button

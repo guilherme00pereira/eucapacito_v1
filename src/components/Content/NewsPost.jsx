@@ -1,20 +1,18 @@
 import { Grid } from "@mui/material";
 import Link from "../Link";
-import NoticiasImg from "../../assets/img/noticias.png";
-import LinkDecoration from './LinkDecoration';
 
-const NewsPost = () => {
+const NewsPost = ({key, post}) => {
   return (
     <Grid container sx={styles.post}>
       <Grid item sx={styles.column1} xs={4}>
-        <img src={NoticiasImg} alt="placeholder" />
+        <img src={post.image_url} alt="placeholder" width="100" height="100" />
       </Grid>
       <Grid item sx={styles.column2} xs={8}>
-        <h2>NOVAS VAGAS PARA O CURSO DE DESIGN GRÁFICO</h2>
-        <Link to="#" sx={styles.link}>
+        <h2>{post.title}</h2>
+        <Link to={`/blog/${post.slug}/${post.id}`} sx={styles.link}>
           Saiba mais
-          <LinkDecoration />
         </Link>
+        <div style={styles.decoration}></div>
       </Grid>
     </Grid>
   );
@@ -32,7 +30,11 @@ const styles = {
       fontWeight: 500,
     },
   },
-  column1: {},
+  column1: {
+    img: {
+      borderRadius: "25%"
+    }
+  },
   column2: {},
   link: {
     position: 'relative',
@@ -41,4 +43,10 @@ const styles = {
     fontSize: "0.8rem",
     textTransform: "uppercase",
   },
+  decoration: {
+    right: "67px",
+    bottom: "-2px",
+    borderBottom: "1px solid #33EDAC",
+    width: "10px"
+  }
 };

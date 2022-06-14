@@ -6,7 +6,8 @@ import Button from "../components/Button";
 import EbookPost from "../components/Content/EbookPost";
 import UpdateForm from "../components/Content/UpdateForm";
 
-import { postListStyles } from '../commonStyles/postListStyles'
+import { postListStyles } from '../commonStyles/postListStyles';
+import {loading} from "../commonStyles/loading";
 
 const Ebooks = () => {
     const [ebooks, setEbooks] = useState([]);
@@ -65,7 +66,7 @@ const Ebooks = () => {
                         <EbookPost ebook={ebook} sxFull={postListStyles.postItem} />
                     ))}
             </Box>
-            {isLoading && <CircularProgress sx={postListStyles.loading}/>}
+            {isLoading && <CircularProgress sx={loading.circular}/>}
             {!isLoading && (
                 <Box sx={postListStyles.loadMoreButtonBox}>
                     <Button

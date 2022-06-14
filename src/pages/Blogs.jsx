@@ -5,7 +5,8 @@ import Button from "../components/Button";
 import BlogPost from "../components/Content/BlogPost";
 import UpdateForm from "../components/Content/UpdateForm";
 
-import { postListStyles } from '../commonStyles/postListStyles'
+import { postListStyles } from '../commonStyles/postListStyles';
+import {loading} from "../commonStyles/loading";
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -65,7 +66,7 @@ const Blogs = () => {
                         <BlogPost blog={blog} sxFull={postListStyles.postItem} />
                     ))}
             </Box>
-            {isLoading && <CircularProgress sx={postListStyles.loading}/>}
+            {isLoading && <CircularProgress sx={loading.circular}/>}
             {!isLoading && (
                 <Button
                     sx={hideLoadMoreButton ? hideLoadMoreButton : postListStyles.loadMoreButton}

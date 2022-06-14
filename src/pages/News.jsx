@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Grid, Box } from "@mui/material";
-import NewsPost from "../components/News/NewsPost";
+import NewsPost from "../components/Content/NewsPost";
 import PeopleIcon from "../assets/img/noticias-icone-pessoas.png";
 import CheckIcon from "../assets/img/noticias-icone-check.png";
 import HandsIcon from "../assets/img/noticias-icone-parceiros.png";

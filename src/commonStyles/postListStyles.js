@@ -27,9 +27,4 @@ export const postListStyles = {
         display: "block",
         margin: "0 auto 3rem",
     },
-    loading: {
-        display: "flex",
-        margin: "1.5rem auto 0",
-        color: "#77837F",
-    },
 };
