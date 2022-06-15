@@ -5,7 +5,7 @@ const NewsPost = ({key, post}) => {
   return (
     <Grid container sx={styles.post}>
       <Grid item sx={styles.column1} xs={4}>
-        <img src={post.image_url} alt="placeholder" width="100" height="100" />
+        <img src={post.image_url} alt="placeholder" />
       </Grid>
       <Grid item sx={styles.column2} xs={8}>
         <h2>{post.title}</h2>
@@ -32,7 +32,10 @@ const styles = {
   },
   column1: {
     img: {
-      borderRadius: "25%"
+      borderRadius: "25%",
+      width: "100px",
+      height: "100px",
+      objectFit: "cover"
     }
   },
   column2: {},

@@ -126,6 +126,7 @@ const styles = {
         verticalAlign: "bottom",
         width: "50px",
         height: "20px",
+        objectFit: "contain"
       },
     },
   },

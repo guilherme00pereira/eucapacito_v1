@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -10,16 +10,10 @@ import {
 import apiService from "../../services/apiService";
 import Button from "../../components/Button";
 
-const Filter = ({handleFilter}) => {
-  const {api} = apiService;
+const Filter = ({handleModal, filters}) => {
+  //const {api} = apiService;
   const [searchParams, setSearchParams] = useSearchParams();
   const [categoryIDs, setCategoryIDs] = useState([]);
-  const [filters, setFilters] = useState({
-    levels: [],
-    ranking: [],
-    categories: [],
-    partners: []
-  });
   let navigate = useNavigate();
   
   const handleCheckbox = (e) => {
@@ -35,21 +29,10 @@ const Filter = ({handleFilter}) => {
   };
 
   const handleApply = () => {
-    handleFilter(false)
+    handleModal(false);
     const term = searchParams.get('search');
     navigate(`/procurar?search=${term}&t=${categoryIDs.toString()}`, {replace: true})
   }
-
-  useEffect(() => {
-      api.get('/eucapacito/v1/filters').then((res) => {
-        setFilters({
-          levels: res.data.nivel,
-          ranking: res.data.avaliao,
-          categories: res.data.categoria_de_curso_ec,
-          partners: res.data.parceiro_ec  
-        });
-    });
-  }, []);
 
   return (
       <Box sx={styles.root}>
@@ -73,7 +56,7 @@ const Filter = ({handleFilter}) => {
                     {
                       filters.categories.map((item) => ( 
                         <FormControlLabel
-                            label={item.name + " (" + item.count + ")"}
+                            label={item.name}
                             control={<Checkbox onChange={handleCheckbox} />}
                             name="category"
                             value={item.id}
@@ -90,7 +73,7 @@ const Filter = ({handleFilter}) => {
                     {
                         filters.levels.map((item) => ( 
                           <FormControlLabel
-                              label={item.name + " (" + item.count + ")"}
+                              label={item.name}
                               control={<Checkbox onChange={handleCheckbox} />}
                               name="level"
                               value={item.id}
@@ -109,7 +92,7 @@ const Filter = ({handleFilter}) => {
                     {
                         filters.ranking.map((item) => ( 
                           <FormControlLabel
-                              label={item.name + " (" + item.count + ")"}
+                              label={item.name}
                               control={<Checkbox onChange={handleCheckbox} />}
                               name="ranking"
                               value={item.id}
@@ -127,7 +110,7 @@ const Filter = ({handleFilter}) => {
                     {
                         filters.partners.map((item) => ( 
                           <FormControlLabel
-                              label={item.name + " (" + item.count + ")"}
+                              label={item.name}
                               control={<Checkbox onChange={handleCheckbox} />}
                               name="partners"
                               value={item.id}

@@ -10,6 +10,12 @@ import { useSearchParams } from "react-router-dom";
 const Search = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [courses, setCourses] = useState([]);
+    const [filters, setFilters] = useState({
+        levels: [],
+        ranking: [],
+        categories: [],
+        partners: []
+    });
     const [total, setTotal] = useState(0);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [page, setPage] = useState(1);
@@ -27,13 +33,14 @@ const Search = () => {
         setDrawerOpen(!drawerOpen);
     }
 
-    const handleFilter = (status) => setDrawerOpen(status);
+    const handleModal = (status) => setDrawerOpen(status);
 
     useEffect(() => {
         const term = searchParams.get('search');
-        if (term.length > 3) {
+        const ids = searchParams.get('t');
+        if (term === "" || term.length > 3) {
             setIsLoading(true);
-            api.get(`/eucapacito/v1/search?page=${page}&search=${term}`).then((res) => {
+            api.get(`/eucapacito/v1/search?page=${page}&search=${term}&t=${ids}`).then((res) => {
                 if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
                     setHideLoadMoreButton(true);
                 } else {
@@ -48,10 +55,15 @@ const Search = () => {
                         subtitle: course.type === "curso_ec" ? "Eu Capacito" : "Parceiro",
                         partnerLogoURL: course.logo
                     };
-
                     fetchedCourses.push(newCourse);
                 });
                 setTotal(res.data.total);
+                setFilters({
+                    levels: res.data.filters.nivel,
+                    ranking: res.data.filters.avaliao,
+                    categories: res.data.filters.categoria_de_curso_ec,
+                    partners: res.data.filters.parceiro_ec
+                })
                 if (page === 1) {
                     setCourses([...fetchedCourses]);
                 } else {
@@ -90,7 +102,7 @@ const Search = () => {
                         }}
                         sx={styles.filter}
                     >
-                        <Filter handleFilter={handleFilter} />
+                        <Filter handleModal={handleModal} filters={filters} />
                     </Drawer>
                 </div>
 
