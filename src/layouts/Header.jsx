@@ -25,7 +25,6 @@ import MenuDesk from "../components/Home/MenuDesktop";
 const Header = ({ title, subtitle }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { search, setSearch } = useContext(SearchContext);
-  // const [search, setSearch] = useState("");
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [userFirstName, setUserFirstName] = useState(
     sessionStorage.getItem("username")
@@ -50,11 +49,13 @@ const Header = ({ title, subtitle }) => {
 
   const handleDrawer = () => setDrawerOpen(!drawerOpen);
 
-  const handleSearch = (e) => setSearch(e.target.value);
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  } 
 
   const handleSearchResults = (e) => {
     if (e.key === "Enter") {
-      navigate(`/procurar?search=${search}`);
+      navigate(`/procurar?search=${search}`, {replace: true});
     }
   };
 

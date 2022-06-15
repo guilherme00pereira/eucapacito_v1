@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react";
-import {Box, CircularProgress, Drawer} from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, CircularProgress, Drawer } from "@mui/material";
 import FilterIcon from "../assets/img/filter-icon.svg";
 import apiService from "../services/apiService";
 import Filter from "../components/Search/Filter";
@@ -15,7 +15,7 @@ const Search = () => {
     const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
-    const {api} = apiService;
+    const { api } = apiService;
 
     const handleLoadMore = () => {
         if (!hideLoadMoreButton) {
@@ -25,16 +25,19 @@ const Search = () => {
 
     const handleDrawer = () => {
         setDrawerOpen(!drawerOpen);
-    } 
+    }
 
     const handleFilter = (status) => setDrawerOpen(status);
 
     useEffect(() => {
-        setIsLoading(true);
         const term = searchParams.get('search');
-        api.get(`/eucapacito/v1/search?page=${page}&search=${term}`).then((res) => {
+        if (term.length > 3) {
+            setIsLoading(true);
+            api.get(`/eucapacito/v1/search?page=${page}&search=${term}`).then((res) => {
                 if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
                     setHideLoadMoreButton(true);
+                } else {
+                    setHideLoadMoreButton(false);
                 }
                 const fetchedCourses = [];
                 res.data.courses.forEach((course) => {
@@ -49,77 +52,76 @@ const Search = () => {
                     fetchedCourses.push(newCourse);
                 });
                 setTotal(res.data.total);
-                setCourses([...courses, ...fetchedCourses]);
+                if (page === 1) {
+                    setCourses([...fetchedCourses]);
+                } else {
+                    setCourses([...courses, ...fetchedCourses]);
+                }
                 setIsLoading(false);
             })
-            .catch((error) => {
-                setIsLoading(false);
-                return false;
-            });
-
-            
-
-    }, [page]);
+                .catch((error) => {
+                    setIsLoading(false);
+                    return false;
+                });
+        }
+    }, [page, searchParams]);
 
     return (
-        <>
-            {isLoading && <CircularProgress sx={styles.loading}/>}
-            {!isLoading && (
-                <Box sx={styles.root}>
 
-                    {courses.length === 0 ? (
-                        <p>Não foi encontrado cursos relacionados</p>
-                    ) : (
-                        <Box>
-                            <div className="titulo">
-                                <p>Resultados da pesquisa ({total})</p>
+        <Box sx={styles.root}>
 
-                                <div className="filter-control">
-                                    <p>Filtro</p>
 
-                                    <img src={FilterIcon} alt="" onClick={handleDrawer}/>
-                                </div>
+            <Box>
+                <div className="titulo">
+                    <p>Resultados da pesquisa ({total})</p>
 
-                                <Drawer
-                                    anchor="top"
-                                    open={drawerOpen}
-                                    onClose={handleDrawer}
-                                    ModalProps={{
-                                        BackdropProps: {sx: {backgroundColor: "unset"}},
-                                    }}
-                                    sx={styles.filter}
-                                >
-                                    <Filter handleFilter={handleFilter} />
-                                </Drawer>
-                            </div>
+                    <div className="filter-control">
+                        <p>Filtro</p>
 
-                            <hr/>
+                        <img src={FilterIcon} alt="" onClick={handleDrawer} />
+                    </div>
 
-                            {courses.map((course) => (
-                                <CourseBox
-                                    key={course.id}
-                                    courseId={course.id}
-                                    slug={course.slug}
-                                    title={course.title}
-                                    company="Eu Capacito"
-                                    logoURL={course.partnerLogoURL}
-                                />
-                            ))}
-                            <Button
-                                sx={
-                                    hideLoadMoreButton
-                                        ? styles.hideLoadMoreButton
-                                        : styles.loadMoreButton
-                                }
-                                onClick={handleLoadMore}
-                            >
-                                Ver mais
-                            </Button>
-                        </Box>
-                    )}
-                </Box>
-            )}
-        </>
+                    <Drawer
+                        anchor="top"
+                        open={drawerOpen}
+                        onClose={handleDrawer}
+                        ModalProps={{
+                            BackdropProps: { sx: { backgroundColor: "unset" } },
+                        }}
+                        sx={styles.filter}
+                    >
+                        <Filter handleFilter={handleFilter} />
+                    </Drawer>
+                </div>
+
+                <hr />
+
+                {courses.map((course) => (
+                    <CourseBox
+                        key={course.id}
+                        courseId={course.id}
+                        slug={course.slug}
+                        title={course.title}
+                        company="Eu Capacito"
+                        logoURL={course.partnerLogoURL}
+                    />
+                ))}
+                {isLoading && <CircularProgress sx={styles.loading} />}
+                {!isLoading && (
+                    <Button
+                        sx={
+                            hideLoadMoreButton
+                                ? styles.hideLoadMoreButton
+                                : styles.loadMoreButton
+                        }
+                        onClick={handleLoadMore}
+                    >
+                        Ver mais
+                    </Button>
+                )}
+            </Box>
+
+        </Box>
     );
 };
 
@@ -167,10 +169,10 @@ const styles = {
     filter: {
         "& .MuiDrawer-paper": {
             m: "0 auto",
-            padding: {xs: 0, md: "1.5rem"},
+            padding: { xs: 0, md: "1.5rem" },
             width: "100%",
             minWidth: "282px",
-            height: {xs: "calc(100% - 56px)", md: "auto"},
+            height: { xs: "calc(100% - 56px)", md: "auto" },
             background: 'rgb(0,0,0)',
             background: '-moz-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
             background: '-webkit-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',

@@ -22,6 +22,7 @@ import Blog from "./pages/Blog";
 import Blogs from "./pages/Blogs";
 import News from "./pages/News";
 import About from "./pages/About";
+import About2 from "./pages/About2";
 import Oportunity from "./pages/Oportunity";
 import Oportunities from "./pages/Oportunities";
 import Employability from "./pages/Employability";
@@ -68,6 +69,7 @@ function App() {
                 <Route path="/ebook" element={<Ebooks />} />
                 <Route path="/noticias" element={<News />} />
                 <Route path="/quem-somos" element={<About />} />
+                <Route path="/new-quem-somos" element={<About2 />} />
                 <Route path="/oportunidade/:slug/:id" element={<Oportunity />} />
                 <Route path="/oportunidades" element={<Oportunities />} />
                 <Route path="/perfil" element={<Profile />} />

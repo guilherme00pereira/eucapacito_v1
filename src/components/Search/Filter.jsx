@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import {
   Grid,
   Box,
@@ -9,16 +10,18 @@ import {
 import apiService from "../../services/apiService";
 import Button from "../../components/Button";
 
-const Filter = (handler) => {
+const Filter = ({handleFilter}) => {
   const {api} = apiService;
+  const [searchParams, setSearchParams] = useSearchParams();
   const [categoryIDs, setCategoryIDs] = useState([]);
   const [filters, setFilters] = useState({
     levels: [],
     ranking: [],
     categories: [],
     partners: []
-});
-
+  });
+  let navigate = useNavigate();
+  
   const handleCheckbox = (e) => {
     const checkboxID = parseInt(e.target.value);
 
@@ -30,6 +33,12 @@ const Filter = (handler) => {
       ]);
     }
   };
+
+  const handleApply = () => {
+    handleFilter(false)
+    const term = searchParams.get('search');
+    navigate(`/procurar?search=${term}&t=${categoryIDs.toString()}`, {replace: true})
+  }
 
   useEffect(() => {
       api.get('/eucapacito/v1/filters').then((res) => {
@@ -48,7 +57,7 @@ const Filter = (handler) => {
           <Grid item xs={4}>
             <Box sx={styles.submit}>
               <h1>Filtro</h1>
-              <Button to="#" sx={styles.submit.button}>
+              <Button onClick={handleApply} sx={styles.submit.button}>
                 Aplicar
               </Button>
             </Box>

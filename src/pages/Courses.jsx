@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { Box, Tab, CircularProgress } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, CircularProgress } from "@mui/material";
 import apiService from "../services/apiService";
-
+import {loading} from "../commonStyles/loading"
 import Button from "../components/Button";
 import CourseCard from "../components/Course/CourseCard";
 
@@ -19,13 +18,6 @@ const Courses = () => {
   let navigate = useNavigate();
 
   const { api } = apiService;
-
-  const handleTab = (e, newTab) => {
-    setCourses([]);
-    setPage(1);
-    setHideLoadMoreButton(false);
-    setTab(newTab);
-  };
 
   const handleLoadMore = () => {
     if (!hideLoadMoreButton) {
@@ -84,7 +76,7 @@ const Courses = () => {
             <CourseCard key={course.id} course={course} />
           ))}
       </Box>
-      {isLoading && <CircularProgress sx={styles.loading} />}
+      {isLoading && <CircularProgress sx={loading.circular} />}
       {!isLoading && (
         <Button
           sx={
@@ -115,10 +107,5 @@ const styles = {
   loadMoreButton: {
     display: "block",
     margin: "0 auto 3rem",
-  },
-  loading: {
-    display: "flex",
-    margin: "1.5rem auto 0",
-    color: "#77837F",
-  },
+  }
 };
