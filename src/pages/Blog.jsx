@@ -98,6 +98,7 @@ const styles = {
             position: "relative",
             left: "-16px",
             zIndex: -1,
+            objectFit: "cover"
         },
         pl: {
             xs: "0",
