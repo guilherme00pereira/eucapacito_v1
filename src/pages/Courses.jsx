@@ -1,19 +1,30 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Drawer } from "@mui/material";
+import Filter from "../components/Search/Filter";
 import apiService from "../services/apiService";
-import {loading} from "../commonStyles/loading"
+import { useSearchParams } from "react-router-dom";
+import { loading } from "../commonStyles/loading"
 import Button from "../components/Button";
 import CourseCard from "../components/Course/CourseCard";
+import FilterIcon from "../assets/img/filter-icon.svg";
 
 const Courses = () => {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState("1");
   const [courses, setCourses] = useState([]);
+  const [filters, setFilters] = useState({
+    levels: [],
+    ranking: [],
+    categories: [],
+    partners: []
+  });
+  const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
   const [title, setTitle] = useOutletContext();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   let navigate = useNavigate();
 
@@ -25,56 +36,103 @@ const Courses = () => {
     }
   };
 
+  const handleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+  }
+
+  const handleModal = (status) => setDrawerOpen(status);
+
   useEffect(() => {
     token
       ? setTitle({
-          main: "Meus Cursos",
-          sub: false,
-        })
+        main: "Meus Cursos",
+        sub: false,
+      })
       : setTitle({
-          main: "Cursos",
-          sub: false,
-        });
+        main: "Cursos",
+        sub: false,
+      });
 
     setIsLoading(true);
-
-    api.get(`/wp/v2/curso_ec?_embed&per_page=12&page=${page}`)
-      .then((res) => {
+    const ids = searchParams.get('t');
+    let url = `/eucapacito/v1/search?page=${page}`;
+    if(null !== ids) {
+      url += `&t=${ids}`;
+    }
+    //api.get(`/wp/v2/curso_ec?_embed&per_page=12&page=${page}`).then((res) => {
+      api.get(url).then((res) => {
         if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
           setHideLoadMoreButton(true);
         }
 
         const fetchedCourses = [];
 
-        res.data.forEach((course) => {
+        res.data.courses.forEach((course) => {
           const newCourse = {
             id: course.id,
             slug: course.slug,
-            featuredImg: course["featured_image_src"],
-            title: course.title.rendered,
+            featuredImg: course.image,
+            title: course.title,
             subtitle: "Eu Capacito",
-            partnerLogoURL: course.responsavel.guid,
+            partnerLogoURL: course.logo,
           };
 
           fetchedCourses.push(newCourse);
         });
 
-        setCourses([...courses, ...fetchedCourses]);
+        setFilters({
+          levels: res.data.filters.nivel,
+          ranking: res.data.filters.avaliao,
+          categories: res.data.filters.categoria_de_curso_ec,
+          partners: res.data.filters.parceiro_ec
+      })
+      if (page === 1) {
+          setCourses([...fetchedCourses]);
+      } else {
+          setCourses([...courses, ...fetchedCourses]);
+      }
         setIsLoading(false);
       })
       .catch((error) => {
         setIsLoading(false);
         return false;
       });
-  }, [navigate, tab, token, page]);
+  }, [page, token, searchParams]);
 
   return (
-    <>
+    <Box sx={styles.root}>
+
+      <Box>
+        <div className="titulo">
+            <p>Cursos</p>
+
+            <div className="filter-control">
+              <p>Filtro</p>
+
+              <img src={FilterIcon} alt="" onClick={handleDrawer} />
+            </div>
+
+            <Drawer
+              anchor="top"
+              open={drawerOpen}
+              onClose={handleDrawer}
+              ModalProps={{
+                BackdropProps: { sx: { backgroundColor: "unset" } },
+              }}
+              sx={styles.filter}
+            >
+              <Filter handleModal={handleModal} filters={filters} />
+            </Drawer>
+          </div>
+
+          <hr />
+      </Box>
+
       <Box sx={styles.tabPanelBox}>
-        {courses.length > 0 &&
+        {courses.length > 0 ? 
           courses.map((course) => (
             <CourseCard key={course.id} course={course} />
-          ))}
+          )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
       </Box>
       {isLoading && <CircularProgress sx={loading.circular} />}
       {!isLoading && (
@@ -89,14 +147,39 @@ const Courses = () => {
           Ver mais
         </Button>
       )}
-    </>
+    </Box>
   );
 };
 
 export default Courses;
 
 const styles = {
- tabPanelBox: {
+  root: {
+    hr: {
+      border: 0,
+      borderTop: "1px solid #77837F",
+      pb: "20px",
+      mt: "0px"
+    },
+    "& p": {
+      fontWeight: 500,
+    },
+    "& .titulo": {
+      display: "flex",
+      justifyContent: "space-between",
+    },
+    "& .filter-control": {
+      display: "flex",
+      alignItems: "center",
+      "& p + img": {
+        ml: "0.75rem",
+      },
+      "& p + img:hover": {
+        cursor: "pointer",
+      },
+    },
+  },
+  tabPanelBox: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "flex-start",
@@ -107,5 +190,19 @@ const styles = {
   loadMoreButton: {
     display: "block",
     margin: "0 auto 3rem",
-  }
+  },
+  filter: {
+    "& .MuiDrawer-paper": {
+      m: "0 auto",
+      padding: { xs: 0, md: "1.5rem" },
+      width: "100%",
+      minWidth: "282px",
+      height: { xs: "calc(100% - 56px)", md: "auto" },
+      background: 'rgb(0,0,0)',
+      background: '-moz-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
+      background: '-webkit-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
+      background: 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
+      filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#272b2e",GradientType=1)',
+    },
+  },
 };

@@ -38,9 +38,14 @@ const Search = () => {
     useEffect(() => {
         const term = searchParams.get('search');
         const ids = searchParams.get('t');
+        let url = `/eucapacito/v1/search?page=${page}`;
+        if(null !== ids) {
+            url += `&t=${ids}`;
+          }
         if (term === "" || term.length > 3) {
+            url += `&search=${term}`;
             setIsLoading(true);
-            api.get(`/eucapacito/v1/search?page=${page}&search=${term}&t=${ids}`).then((res) => {
+            api.get(url).then((res) => {
                 if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
                     setHideLoadMoreButton(true);
                 } else {
@@ -107,8 +112,8 @@ const Search = () => {
                 </div>
 
                 <hr />
-
-                {courses.map((course) => (
+                {courses.length > 0 ? 
+                    courses.map((course) => (
                     <CourseBox
                         key={course.id}
                         courseId={course.id}
@@ -117,7 +122,7 @@ const Search = () => {
                         company="Eu Capacito"
                         logoURL={course.partnerLogoURL}
                     />
-                ))}
+                )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
                 {isLoading && <CircularProgress sx={styles.loading} />}
                 {!isLoading && (
                     <Button

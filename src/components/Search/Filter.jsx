@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import {
   Grid,
   Box,
@@ -15,6 +15,7 @@ const Filter = ({handleModal, filters}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categoryIDs, setCategoryIDs] = useState([]);
   let navigate = useNavigate();
+  const location = useLocation();
   
   const handleCheckbox = (e) => {
     const checkboxID = parseInt(e.target.value);
@@ -31,7 +32,11 @@ const Filter = ({handleModal, filters}) => {
   const handleApply = () => {
     handleModal(false);
     const term = searchParams.get('search');
-    navigate(`/procurar?search=${term}&t=${categoryIDs.toString()}`, {replace: true})
+    let url = location.pathname + '?t=' + categoryIDs.toString();
+    if(null !== term){
+      url += '&search=' + term
+    }
+    navigate(url, {replace: true})
   }
 
   return (
