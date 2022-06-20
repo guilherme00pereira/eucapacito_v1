@@ -11,7 +11,6 @@ import PeopleIcon from "../assets/img/noticias-icone-pessoas.png";
 import CheckIcon from "../assets/img/noticias-icone-check.png";
 import HandsIcon from "../assets/img/noticias-icone-parceiros.png";
 import PartyIcon from "../assets/img/noticias-icone-festa.png";
-import VideoPage from "../assets/img/video-quem-somos.png";
 import EuCapacitoLogoVertical from "../assets/img/logo-vertical.png";
 import linhaQuemSomos from "../assets/img/linha-quem-somos.png";
 import linhaQuemSomosDepoimento from "../assets/img/linhagrande-quem-somos.png";
@@ -26,7 +25,9 @@ const About = () => {
   const [content, setContent] = useState({
     video: '',
     lide: '',
-    full_content: ''
+    full_text: '',
+    quote: '',
+    quote_author: ''
   });
   const {api} = apiService;
 
@@ -38,8 +39,10 @@ const About = () => {
     api.get('/eucapacito/v1/aboutpage').then( (res) => {
       setContent({
         video: res.data.video,
-        lide: res.data.bloco1,
-        full_content: res.data.texto
+        lide: res.data.lide,
+        full_text: res.data.full_text,
+        quote: res.data.quote,
+        quote_author: res.data.quote_author
       });
     })
   }, []);
@@ -105,17 +108,13 @@ const About = () => {
             <img src={linhaQuemSomosDepoimento} alt="" />
             <Box>
               <h4>DEPOIMENTO</h4>
-              <p>
-                é uma escola que prepara profissionais para uma nova era, dando
-                uma visão de evolução e aprendizagem constante dentro de nossas
-                próprias atuações, quebrando os paradigmas.”
-              </p>
-              <p>- ANTONIO SANTOS, ADMINISTRADOR, SP</p>
+              <p>{content.quote}</p>
+              <p>- {content.quote_author}</p>
             </Box>
           </Box>
         </Container>
 
-        {parse(content.full_content)}
+        {parse(content.full_text)}
 
       </Box>
 
