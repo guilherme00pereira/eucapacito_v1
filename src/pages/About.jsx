@@ -27,7 +27,16 @@ const About = () => {
     lide: '',
     full_text: '',
     quote: '',
-    quote_author: ''
+    quote_author: '',
+    forwho: [],
+    alunos_title: '',
+    alunos_info: '',
+    conclusao_title: '',
+    conclusao_info: '',
+    parceiros_title: '',
+    parceiros_info: '',
+    empregos_title: '',
+    empregos_info: '',
   });
   const {api} = apiService;
 
@@ -42,7 +51,16 @@ const About = () => {
         lide: res.data.lide,
         full_text: res.data.full_text,
         quote: res.data.quote,
-        quote_author: res.data.quote_author
+        quote_author: res.data.quote_author,
+        forwho: res.data.forwho,
+        alunos_title: res.data.alunos_title,
+        alunos_info: res.data.alunos_info,
+        conclusao_title: res.data.conclusao_title,
+        conclusao_info: res.data.conclusao_info,
+        parceiros_title: res.data.parceiros_title,
+        parceiros_info: res.data.parceiros_info,
+        empregos_title: res.data.empregos_title,
+        empregos_info: res.data.empregos_info,
       });
     })
   }, []);
@@ -63,26 +81,11 @@ const About = () => {
           <p>PARA QUEM É?</p>
 
           <Container>
-            <Box sx={styles.boxInfo}>
-              <img src={linhaQuemSomos} />
-              <p>PESSOAS EM TRANSIÇÃO DE CARREIRA</p>
-            </Box>
-            <Box sx={styles.boxInfo}>
-              <img src={linhaQuemSomos} />
-              <p>PROFISSIONAIS EM BUSCA DE NOVAS HABILIDADES</p>
-            </Box>
-            <Box sx={styles.boxInfo}>
-              <img src={linhaQuemSomos} />
-              <p>EMPRESAS EM TRANSIÇÃO DIGITAL</p>
-            </Box>
-            <Box sx={styles.boxInfo}>
-              <img src={linhaQuemSomos} />
-              <p>EMPREENDEDORES E FREELANCERS</p>
-            </Box>
-            <Box sx={styles.boxInfo}>
-              <img src={linhaQuemSomos} />
-              <p>LÍDERES E TIMES DE PRODUTOS</p>
-            </Box>
+            {content.forwho.map((item) => (
+                <Box sx={styles.boxInfo}>
+                    <p>{item}</p>
+                  </Box>
+            ))}
           </Container>
 
           <Box sx={{ mr: "10px" }}>
@@ -121,31 +124,31 @@ const About = () => {
       <Box sx={styles.icons}>
         <Grid container>
           <Grid item xs={6} md={3}>
-            <h2>ALUNOS</h2>
+            <h2>{content.alunos_title}</h2>
             <p>MATRICULADOS</p>
             <img src={PeopleIcon} alt="Ícone - Pessoas" />
-            <p>3.000</p>
+            <p>{content.alunos_info}</p>
           </Grid>
 
           <Grid item xs={6} md={3}>
-            <h2>CONCLUÍDOS</h2>
+            <h2>{content.conclusao_title}</h2>
             <p>CURSOS FINALIZADOS</p>
             <img src={CheckIcon} alt="Ícone - Check" />
-            <p>2.700</p>
+            <p>{content.conclusao_info}</p>
           </Grid>
 
           <Grid item xs={6} md={3}>
-            <h2>PARCEIROS</h2>
+            <h2>{content.parceiros_title}</h2>
             <p>AJUDAM NO PROJETO</p>
             <img src={HandsIcon} alt="Ícone - Hands" />
-            <p>42</p>
+            <p>{content.parceiros_info}</p>
           </Grid>
 
           <Grid item xs={6} md={3}>
-            <h2>EMPREGOS</h2>
+            <h2>{content.empregos_title}</h2>
             <p>PELO EU CAPACITO</p>
             <img src={PartyIcon} alt="Ícone - Jobs" />
-            <p>400</p>
+            <p>{content.empregos_info}</p>
           </Grid>
         </Grid>
       </Box>
@@ -220,20 +223,24 @@ const styles = {
     display: "flex",
     alignItems: "flex-start",
     mb: "15px",
-    img: {
-      mr: "14px",
-      height: "100%",
-    },
+    pl: "17px",
+    backgroundImage: `url(${linhaQuemSomos})`,
+    backgroundRepeat: "no-repeat",
     "& p": {
       margin: "0",
-      fontSize: "18px",
+      fontSize: "16px",
       transform: "none",
       position: "relative",
-      lineHeight:"20px"
+      lineHeight:"18px",
+      textTransform: "uppercase",
+      wordBreak: "break-word",
     },
   },
   containerDepoimento: {
-    display: "flex",
+    display: {
+      md: "flex",
+      xs: "none",
+    },
     justifyContent: "space-between",
     "& > img": {
       width: "342px",
@@ -313,7 +320,7 @@ const styles = {
       fontWeight: 500,
     },
     img: { mb: "0.75rem", minHeight:"75px" },
-    "img+p": { color: "#CAC8C8", fontSize: {xs:"2.5rem", md:"50px"}, fontWeight: 700 },
+    "img+p": { color: "#CAC8C8", fontSize: {xs:"2.5rem", md:"32px"}, fontWeight: 700 },
     "& .MuiGrid-item": {
       display: "flex",
       flexDirection: "column",

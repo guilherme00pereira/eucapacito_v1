@@ -41,8 +41,8 @@ const Filter = ({handleModal, filters}) => {
 
   return (
       <Box sx={styles.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
+        <Grid container spacing={3} sx={styles.wrapper}>
+          <Grid item md={4}>
             <Box sx={styles.submit}>
               <h1>Filtro</h1>
               <Button onClick={handleApply} sx={styles.submit.button}>
@@ -51,7 +51,7 @@ const Filter = ({handleModal, filters}) => {
             </Box>
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item md={8}>
             <Grid container>
               <Grid item xs={12} md={4}>
                 <Box sx={styles.group}>
@@ -153,6 +153,14 @@ const styles = {
       fontWeight: 500,
     },
   },
+  wrapper: {
+    xs: {
+      flexDirection: "column",
+    },
+    md: {
+      flexDirection: "row",
+    }
+  },
   group: {
     mb: "2rem",
   },
@@ -160,13 +168,19 @@ const styles = {
     mx: "2rem",
     pr: "2rem",
     pl: "1rem",
-    borderRight: "1px solid #77837F",
+    borderRight: {
+      xs: "none",
+      md: "1px solid #77837F",
+    },
     height: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "flex-start",
     h1: {
+      xs: {
+        display: "none",
+      },
       mt: 0,
       fontSize: "22px",
     },
