@@ -1,6 +1,6 @@
 {
   "name": "eucapacito",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -13,8 +13,9 @@
     "@testing-library/user-event": "^14.2.0",
     "axios": "^0.27.2",
     "html-react-parser": "^1.4.14",
-    "react": "^18.1.0",
+    "react": "^18.2.0",
     "react-dom": "^18.1.0",
+    "react-player": "^2.10.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "swiper": "^8.2.2",

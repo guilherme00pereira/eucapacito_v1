@@ -1,13 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Grid, Box, Container, Link as MuiLink } from "@mui/material";
 import { Instagram, Facebook, LinkedIn } from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
-
-import facebookIcon from "../assets/img/facebook-icon-footer.png";
-import instagramIcon from "../assets/img/instagram-icon-footer.png";
-import youtubeIcon from "../assets/img/ytb-icon-footer.png";
-import linkedinIcon from "../assets/img/linkedin-icon-footer.png";
+import apiService from "../services/apiService";
+import ReactPlayer from "react-player";
+import parse from 'html-react-parser';
 
 import PeopleIcon from "../assets/img/noticias-icone-pessoas.png";
 import CheckIcon from "../assets/img/noticias-icone-check.png";
@@ -25,12 +23,25 @@ import Imagem4 from "../assets/img/image4-quem-somos.png";
 
 const About = () => {
   const [title, setTitle] = useOutletContext();
+  const [content, setContent] = useState({
+    video: '',
+    lide: '',
+    full_content: ''
+  });
+  const {api} = apiService;
 
   useEffect(() => {
     setTitle({
       main: "Quem Somos",
       sub: "Saiba mais sobre",
     });
+    api.get('/eucapacito/v1/aboutpage').then( (res) => {
+      setContent({
+        video: res.data.video,
+        lide: res.data.bloco1,
+        full_content: res.data.texto
+      });
+    })
   }, []);
 
   return (
@@ -38,20 +49,12 @@ const About = () => {
       <h1>Sobre o Eu Capacito</h1>
       <hr />
 
-      <Box container sx={{ textAlign: "center", mt: "57px" }}>
-        <img src={VideoPage} alt="video" />
+      <Box container sx={{ display: "flex", justifyContent: "center", mt: "57px" }}>
+        <ReactPlayer url={content.video} />
       </Box>
 
       <Box sx={styles.texto}>
-        <p>
-          O <small>Eu Capacito</small> é um projeto social que tem o objetivo de
-          formar uma legião de profissionais para a economia digital. A
-          plataforma oferece capacitação profissional gratuita, focadas em
-          habilidades de tecnologia, seja do ponto de vista conceitual, de
-          desenvolvimento ou de manuseio para áreas de negócio, além de
-          conhecimento em outras áreas consideradas importantes para a vida
-          corporativa ou empreendedorismo.
-        </p>
+        <p>{content.lide}</p>
 
         <Container sx={styles.containerParaQuem}>
           <p>PARA QUEM É?</p>
@@ -112,53 +115,8 @@ const About = () => {
           </Box>
         </Container>
 
-        <p>
-          Em termos de empregos nos setores de tecnologia e do metaverso,
-          pesquisas, como a do portal cult, indicam que até 2030 essa novidade
-          terá criado 10 novas profissões específicas para seu funcionamento,
-          como cientista de pesquisa, estrategista, storyteller e especialista
-          em segurança cibernética do metaverso.
-        </p>
-        <p>
-          Já pensando nesse novo mercado, o Eu Capacito já disponibiliza seis
-          cursos, com certificado e chancela de grandes empresas de tecnologia
-          ou instituições de ensino, que podem ajudar quem pretende se
-          aprofundar no metaverso. Confira eles a seguir:
-        </p>
-        <p>
-          <small>Segurança Digital - Cybersecurity Essentials: </small>O curso
-          oferecido pela Cisco tem carga horária total de 30 horas e traz
-          conceitos básicos sobre controle de segurança para redes, servidores e
-          aplicativos.
-        </p>
-        <p>
-          <small>Introdução à Cibersegurança: </small>
-          Com 15 horas, contextualiza as principais ameaças da segurança
-          cibernética e as principais alternativas de proteção utilizadas pelas
-          empresas. O curso também é oferecido pela Cisco.
-        </p>
-        <p>
-          <small>Por onde começar? Lógica de Programação +50:</small> Curso
-          focado em desenvolver competências relacionadas a programação em
-          pessoas maiores de 50 anos. Ele tem carga horária de 40 horas.
-        </p>
-        <p>
-          <small>Design Gráfico: </small>O curso com chancela da FIAP possui 140
-          horas e aborda design, tipografia, Photoshop, inDesign e muito mais.
-        </p>
-        <p>
-          <small>UX - Experiência do Usuário: </small>o curso UX - Experiência
-          do Usuário ensina aos alunos como otimizar os cenários, realizar
-          testes e outros conceitos importantes de UX Design. A carga horária do
-          curso da IDP é de 8 horas.
-        </p>
-        <p>
-          <small>Fundamentos do Marketing Digital: </small>
-          Quando falamos em storytelling, é importante saber quais são os
-          principais fundamentos do Marketing Digital para atrair a atenção do
-          leitor. Nesse caso, o curso desenvolvido por instrutores do Google tem
-          40 horas, divididos em 26 módulos.
-        </p>
+        {parse(content.full_content)}
+
       </Box>
 
       <Box sx={styles.icons}>
