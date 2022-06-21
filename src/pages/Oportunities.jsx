@@ -35,11 +35,12 @@ const Oportunities = () => {
       const fetchedEmployabilities = [];
 
       res.data.forEach((employability) => {
+        console.log(employability)
         const newEmployability = {
           id: employability.id,
           slug: employability.slug,
           type: employability.type,
-          featuredImg: employability["featured_image_src"],
+          featuredImg: employability.imagem.guid,
           title: parse(`${employability.title.rendered}`),
           subtitle: "Eu Capacito",
           logo: "EC",

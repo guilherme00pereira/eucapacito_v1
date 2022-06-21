@@ -302,6 +302,7 @@ const styles = {
     },
     image: {
         minHeight: "350px",
+        maxHeight: "533px",
         mt: "-24px",
         img: {
             width: "100%",

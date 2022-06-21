@@ -33,7 +33,7 @@ const Oportunity = () => {
         const post = res.data;
 
         setCourseData({
-          featuredImg: post["featured_image_src"],
+          featuredImg: post.imagem.guid,
           title: parse(`${post.title.rendered}`),
           description: parse(`${post.content.rendered}`),
         });
@@ -42,11 +42,10 @@ const Oportunity = () => {
 
   return (
     <Box sx={styles.root}>
-      <Box sx={styles.image}>
-        <img src={CourseImg3} alt={courseData.title} />
-      </Box>
+      <h1>Empregabilidade</h1>
+      <hr />
 
-      <Box sx={styles.container}>
+      <Box sx={styles.texto}>
         <Box sx={styles.description}>
           <h1>{courseData.title}</h1>
 
@@ -61,22 +60,10 @@ export default Oportunity;
 
 const styles = {
   root: {
-    mx: "-16px",
-    h1: {
-      fontSize: "1.5rem",
-      fontWeight: 500,
-      textAlign: {
-        md: "center",
-        xs: "left",
-      },
-      borderBottom: {
-        xs: "none",
-        md: "1px solid #77837f",
-      },
-      paddingBottom: {
-        md: "23px",
-        xs: "0",
-      },
+    h1: { marginTop: "2rem", fontSize: "22px", color: "#CAC8C8" },
+    hr: { border: 0, borderTop: "1px solid #77837F" },
+    ".MuiContainer-root": {
+      pb: "100px",
     },
     h2: {
       fontSize: "1.3rem",
@@ -85,26 +72,26 @@ const styles = {
   },
   image: {
     minHeight: "350px",
+    maxHeight: "533px",
     mt: "-24px",
     img: {
       width: "100%",
     },
   },
-  container: {
-    p: "1rem 1.5rem 2rem",
-    mt: "-149px",
-    borderRadius: "20px 20px 0 0",
-    filter: {
-      md: "drop-shadow(0px -6px 12px #33EDAC)",
-      xs: "drop-shadow(0px -6px 44px #33EDAC)",
+  texto: {
+    margin: "70px auto",
+    "& p": {
+      lineHeight: "30px",
+      fontSize: "18px",
+      fontWeight: "500",
+      color: "#77837F",
+      textAlign: "justify",
     },
-    minHeight: {
-      md: "calc(100vh - 600px)",
-      xs: "calc(100vh - 250px)",
+    width: "90%",
+    "& small": {
+      fontSize: "18px",
+      color: "#CAC8C8",
     },
-    backgroundImage: `url(${imagemFundo})`,
-    position: "relative",
-    zIndex: 9,
   },
   description: {
     block: {
