@@ -9,20 +9,16 @@ import apiService from "../services/apiService";
 import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
-
+import Banners from "../components/Home/Banners";
 import Menu from "../components/Home/Menu";
 import CourseCard from "../components/CourseCard";
-import Link from "../components/Link";
 import Footer from "../layouts/Footer";
 import BlogPost from "../components/Content/BlogPost";
 
-import Banner1 from "../assets/img/home-banner1.png";
-import Banner1Desk from "../assets/img/home-banner-desk.png";
-import Banner2 from "../assets/img/home-banner2.png";
-import Banner3 from "../assets/img/home-banner3.png";
-
 import CourseImg3 from "../assets/img/home-curso3.png";
 import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
+import {swiper} from "../commonStyles/swiper";
+
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -106,35 +102,7 @@ const Home = () => {
     <Box>
       <Menu sx={styles.menu} />
 
-      <Box sx={styles.banners}>
-        <Swiper
-          className="mySwiper"
-          autoplay={styles.swiper.autoplay}
-          modules={[Pagination, Autoplay]}
-          slidesPerView={1}
-          // pagination={{ clickable: true, renderBullet: (index, className) => {} }}
-        >
-          <SwiperSlide className="bannerMobile">
-            <img src={Banner1} alt="Banner" />
-            <Link to="#">Qualifique-se Já</Link>
-          </SwiperSlide>
-
-          <SwiperSlide className="bannerDesk">
-            <img src={Banner1Desk} alt="Banner" />
-            <Link to="#">Qualifique-se Já</Link>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <img src={Banner2} alt="Banner" />
-            <Link to="#">Candidate-se Já</Link>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <img src={Banner3} alt="Banner" />
-            <Link to="#">Acesse Agora</Link>
-          </SwiperSlide>
-        </Swiper>
-      </Box>
+      <Banners />
 
       <Box sx={styles.courses}>
         {/* versão desktop cursos em destaque */}
@@ -186,8 +154,8 @@ const Home = () => {
               className="mySwiper"
               slidesPerView={1.2}
               spaceBetween={25}
-              breakpoints={styles.swiper.breakpoints}
-              autoplay={styles.swiper.autoplay}
+              breakpoints={swiper.breakpoints}
+              autoplay={swiper.autoplay}
               modules={[Pagination, Navigation, Autoplay]}
               navigation={true}
             >
@@ -239,8 +207,8 @@ const Home = () => {
               className="mySwiper"
               slidesPerView={1.2}
               spaceBetween={25}
-              breakpoints={styles.swiper.breakpoints}
-              autoplay={styles.swiper.autoplay}
+              breakpoints={swiper.breakpoints}
+              autoplay={swiper.autoplay}
               modules={[Pagination, Navigation, Autoplay]}
               navigation={true}
             >
@@ -270,8 +238,8 @@ const Home = () => {
               className="mySwiper SwiperOportunidade"
               slidesPerView={1.2}
               spaceBetween={25}
-              breakpoints={styles.swiper.breakpoints}
-              autoplay={styles.swiper.autoplay}
+              breakpoints={swiper.breakpoints}
+              autoplay={swiper.autoplay}
               modules={[Pagination, Navigation, Autoplay]}
               navigation={true}
             >
@@ -305,64 +273,10 @@ const styles = {
       md: "none",
     },
   },
-  swiper: {
-    autoplay: {
-      delay: 4000,
-    },
-    breakpoints: {
-      0: {
-        slidesPerView: 1,
-        spaceBetween: 0,
-      },
-      900: {
-        slidesPerView: 3,
-        spaceBetween: 30,
-      },
-    },
-  },
   accordion: {
     details: {
       xs: { px: 0 },
       md: { px: "50px" },
-    },
-  },
-  banners: {
-    mb: "2rem",
-    "& img": {
-      maxWidth: "100%",
-    },
-    "& .swiper-slide": {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    a: {
-      mt: "0.5rem",
-      border: "1px solid #33EDAC",
-      padding: "0.3rem 0.9rem",
-      color: "#77837F",
-      fontSize: "0.75rem",
-      fontWeight: 500,
-      textTransform: "uppercase",
-      maxWidth: "max-content",
-    },
-    "& .bannerDesk": {
-      display: {
-        md: "block",
-        xs: "none",
-      },
-      a: {
-        position: "absolute",
-        top: "75%",
-        left: "70%",
-      },
-    },
-    "& .bannerMobile": {
-      display: {
-        md: "none",
-        xs: "block",
-      },
     },
   },
   courses: {
