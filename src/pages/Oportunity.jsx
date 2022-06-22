@@ -5,16 +5,9 @@ import parse from "html-react-parser";
 
 import apiService from "../services/apiService";
 
-import CourseImg3 from "../assets/img/home-curso3.png";
-
-
-import Button from "../components/Button";
-// import CourseCurriculum from "../components/Course/CourseCurriculum";
-
-import imagemFundo from "../assets/img/bg-desktop.png";
 
 const Oportunity = () => {
-  const [courseData, setCourseData] = useState({
+  const [oportunityData, setOportunityData] = useState({
     featuredImg: "",
     title: "",
     description: "",
@@ -32,7 +25,7 @@ const Oportunity = () => {
       .then((res) => {
         const post = res.data;
 
-        setCourseData({
+        setOportunityData({
           featuredImg: post.imagem.guid,
           title: parse(`${post.title.rendered}`),
           description: parse(`${post.content.rendered}`),
@@ -47,11 +40,15 @@ const Oportunity = () => {
 
       <Box sx={styles.texto}>
         <Box sx={styles.description}>
-          <h1>{courseData.title}</h1>
+          <h1>{oportunityData.title}</h1>
 
-          <p>{courseData.description}</p>
+          <p>{oportunityData.description}</p>
         </Box>
       </Box>
+
+      <h2>Para ajudar no seu processo, conclua o(s) seguinte(s) curso(s):</h2>
+      <hr />
+
     </Box>
   );
 };

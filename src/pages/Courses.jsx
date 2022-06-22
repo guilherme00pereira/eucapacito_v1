@@ -46,11 +46,11 @@ const Courses = () => {
     token
       ? setTitle({
         main: "Meus Cursos",
-        sub: false,
+        sub: "Pesquisar um curso iniciado",
       })
       : setTitle({
         main: "Cursos",
-        sub: false,
+        sub: "Encontre um curso para aprender",
       });
 
     setIsLoading(true);

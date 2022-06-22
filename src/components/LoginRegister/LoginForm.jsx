@@ -181,9 +181,6 @@ const LoginForm = () => {
                 padding: {
                   md: "6px 116px",
                 },
-                marginTop: {
-                  md: "189px",
-                },
               },
             }}
           >

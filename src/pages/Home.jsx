@@ -5,6 +5,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
+import { useOutletContext } from "react-router-dom";
 import apiService from "../services/apiService";
 import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,10 +25,15 @@ const Home = () => {
   const [courses, setCourses] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [scholarships, setScholarships] = useState([]);
+  const [title, setTitle] = useOutletContext();
 
   const { api } = apiService;
 
   useEffect(() => {
+    setTitle({
+      main: "Olá Seja Bem Vindo",
+      sub: "Encontre um curso para aprender",
+    });
     const postsPerPage = "9";
     // Cursos EC
     api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`).then((res) => {
@@ -99,7 +105,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Box>
+    <Box sx={styles.root}>
       <Menu sx={styles.menu} />
 
       <Banners />
@@ -156,8 +162,8 @@ const Home = () => {
               spaceBetween={25}
               breakpoints={swiper.breakpoints}
               autoplay={swiper.autoplay}
-              modules={[Pagination, Navigation, Autoplay]}
-              navigation={true}
+              modules={[Pagination, Autoplay]}
+              pagination={{clickable:true}}
             >
               {courses.length > 0 &&
                 courses.map((course) => (
@@ -204,13 +210,14 @@ const Home = () => {
           </AccordionSummary>
           <AccordionDetails sx={styles.accordion.details}>
             <Swiper
+              sx={swiper.pagination}
               className="mySwiper"
               slidesPerView={1.2}
               spaceBetween={25}
               breakpoints={swiper.breakpoints}
               autoplay={swiper.autoplay}
-              modules={[Pagination, Navigation, Autoplay]}
-              navigation={true}
+              modules={[Pagination, Autoplay]}
+              pagination={{clickable:true}}
             >
               {blogs.length > 0 &&
                 blogs.map((blog) => (
@@ -240,8 +247,8 @@ const Home = () => {
               spaceBetween={25}
               breakpoints={swiper.breakpoints}
               autoplay={swiper.autoplay}
-              modules={[Pagination, Navigation, Autoplay]}
-              navigation={true}
+              modules={[Pagination, Autoplay]}
+              pagination={{clickable:true}}
             >
               {scholarships.length > 0 &&
                 scholarships.map((scholarship) => (
@@ -267,6 +274,20 @@ const Home = () => {
 export default Home;
 
 const styles = {
+  root: {
+    "& .swiper-pagination-bullet": {
+      background: "#33EDAC",
+    },
+    "& .swiper-pagination-bullet-active": {
+      background: "#33EDAC",
+    },
+    "& .swiper-slide": {
+      mb: {
+        xs: "0",
+        md: "50px",
+      },
+    },
+  },
   menu: {
     m: "0 0 2rem",
     display: {

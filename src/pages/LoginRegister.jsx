@@ -23,7 +23,7 @@ const LoginRegister = () => {
 
   return (
     <Container>
-      <Box elevation={0} sx={{ mt: "100px", mb: "100px", textAlign: "center" }}>
+      <Box elevation={0} sx={{ mt: "100px", mb: "50px", textAlign: "center" }}>
         <Link to="/">
           <img src={EuCapacitoLogo} alt="Logo EuCapacito" />
         </Link>

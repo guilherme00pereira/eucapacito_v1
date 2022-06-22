@@ -8,6 +8,7 @@ import UpdateForm from "../components/Content/UpdateForm";
 import ContentTitle from "../components/Content/ContentTitle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
+import {swiper} from "../commonStyles/swiper";
 
 import apiService from "../services/apiService";
 
@@ -104,15 +105,13 @@ const Content = () => {
     <Box sx={root}>
       <Box sx={blog}>
         <ContentTitle title="Blog" to={'/blog'} linkText="Todos os posts" />
-        <Box className="swiper-container">
           <Swiper
             className="mySwiper"
-            breakpoints={styles.swiper.breakpoints}
+            breakpoints={swiper.breakpoints}
             slidesPerView={1}
-            autoplay={styles.swiper.autoplay}
-            modules={[Pagination, Navigation, Autoplay]}
-            navigation={true}
-            // pagination={{ clickable: true }}
+            autoplay={swiper.autoplay}
+            modules={[Pagination, Autoplay]}
+            pagination={{ clickable: true }}
           >
             {blogs.length > 0 &&
               blogs.map((blog) => (
@@ -121,20 +120,19 @@ const Content = () => {
                 </SwiperSlide>
               ))}
           </Swiper>
-        </Box>
+        
       </Box>
 
       <Box sx={styles.videos}>
         <ContentTitle title="Vídeos" to={'/videos'} linkText="Todos os vídeos" />
         <Swiper
           className="mySwiper"
-          breakpoints={styles.swiper.breakpoints}
+          breakpoints={swiper.breakpoints}
           slidesPerView={1.15}
           spaceBetween={15}
-          // autoplay={styles.swiper.autoplay}
-          modules={[Pagination, Navigation, Autoplay]}
-          navigation={true}
-          // pagination={{ clickable: true }}
+          autoplay={swiper.autoplay}
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
         >
           {videos.length > 0 &&
             videos.map((video) => (
@@ -149,11 +147,11 @@ const Content = () => {
         <ContentTitle title="Ebook" to={'/ebook'} linkText="Todos os ebooks" />
         <Swiper
           className="mySwiper"
-          breakpoints={styles.swiper.breakpoints}
+          breakpoints={swiper.breakpoints}
           slidesPerView={1}
-          autoplay={styles.swiper.autoplay}
-          modules={[Pagination, Navigation, Autoplay]}
-          navigation={true}
+          autoplay={swiper.autoplay}
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
         >
           {ebooks.length > 0 &&
             ebooks.map((ebook) => (
@@ -172,21 +170,6 @@ export default Content;
 
 
 const styles = {
-  swiper: {
-    autoplay: {
-      delay: 4000,
-    },
-    breakpoints: {
-      0: {
-        slidesPerView: 1,
-        spaceBetween: 0,
-      },
-      900: {
-        slidesPerView: 3,
-        spaceBetween: 30,
-      },
-    },
-  },
   root: {
     h1: { marginTop: "2rem", fontSize: "22px", color: "#CAC8C8" },
     hr: { border: 0, borderTop: "1px solid #77837F" },
@@ -215,6 +198,18 @@ const styles = {
       fontWeight: "bold",
       color: "#33EDAC",
     },
+    "& .swiper-pagination-bullet": {
+      background: "#33EDAC",
+    },
+    "& .swiper-pagination-bullet-active": {
+      background: "#33EDAC",
+    },
+    "& .swiper-slide": {
+      mb: {
+        xs: "0",
+        md: "50px",
+      },
+    },
   },
   blog: {
     "& h1":{
@@ -233,7 +228,6 @@ const styles = {
     "& div": {
       fontSize: "10px",
       fontWeight: "400",
-      textAlign: "left",
     },
     // "& a": {
     //   fontSize: "10px !important",

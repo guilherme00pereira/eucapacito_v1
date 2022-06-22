@@ -10,12 +10,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
 import parse from "html-react-parser";
 import { useOutletContext } from "react-router-dom";
-
 import apiService from "../services/apiService";
 import CourseCard from "../components/CourseCard";
-
 import CourseImg3 from "../assets/img/home-curso3.png";
 import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
+import {swiper} from "../commonStyles/swiper";
+
 
 const Oportunities = () => {
   const [title, setTitle] = useOutletContext();
@@ -118,10 +118,10 @@ const Oportunities = () => {
             className="mySwiper"
             slidesPerView={1.2}
             spaceBetween={25}
-            breakpoints={styles.swiper.breakpoints}
-            autoplay={styles.swiper.autoplay}
-            modules={[Pagination, Navigation, Autoplay]}
-            navigation={true}
+            breakpoints={swiper.breakpoints}
+            autoplay={swiper.autoplay}
+            modules={[Pagination, Autoplay]}
+            pagination={{clickable:true}}
           >
             {employabilities.length > 0 &&
               employabilities.map((employability) => (
@@ -152,10 +152,10 @@ const Oportunities = () => {
             className="mySwiper"
             slidesPerView={1.2}
             spaceBetween={25}
-            breakpoints={styles.swiper.breakpoints}
-            autoplay={styles.swiper.autoplay}
-            modules={[Pagination, Navigation, Autoplay]}
-            navigation={true}
+            breakpoints={swiper.breakpoints}
+            autoplay={swiper.autoplay}
+            modules={[Pagination, Autoplay]}
+            pagination={{clickable:true}}
           >
             {scholarships.length > 0 &&
               scholarships.map((oportunity) => (
@@ -197,21 +197,6 @@ const Oportunities = () => {
 export default Oportunities;
 
 const styles = {
-  swiper: {
-    autoplay: {
-      delay: 4000,
-    },
-    breakpoints: {
-      0: {
-        slidesPerView: 1.2,
-        spaceBetween: 25,
-      },
-      900: {
-        slidesPerView: 3,
-        spaceBetween: 30,
-      },
-    },
-  },
   accordion: {
     details: {
       xs: { px: 0 },
@@ -281,6 +266,18 @@ const styles = {
       fontSize: "20px",
       fontWeight: "bold",
       color: "#33EDAC",
+    },
+    "& .swiper-pagination-bullet": {
+      background: "#33EDAC",
+    },
+    "& .swiper-pagination-bullet-active": {
+      background: "#33EDAC",
+    },
+    "& .swiper-slide": {
+      mb: {
+        xs: "0",
+        md: "50px",
+      },
     },
   },
   description: {

@@ -77,6 +77,7 @@ function App() {
                 <Route path="/editar-conta" element={<AccountEdition />} />
                 <Route path="/filtro" element={<Filter />} />
                 <Route path="/empregabilidade" element={<Employability />} />
+                <Route path="/comece-agora" element={<EmployabilityRegister />} />
               </Route>
             </Route>
 

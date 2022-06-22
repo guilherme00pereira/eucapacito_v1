@@ -56,12 +56,11 @@ const EmployabilityRegister = () => {
   // const handleFormField = (field) => field;
 
   return (
-    <Container>
-      <Box elevation={0} sx={{ mt: '100px', mb: '100px', textAlign: 'center' }}>
+    <Container sx={styles.container}>
+      <Box elevation={0} sx={{ mt: '100px', mb: '50px', textAlign: 'center' }}>
         <Link to="/">
           <img src={EuCapacitoLogo} alt="Logo EuCapacito" />
         </Link>
-        <p>Aprenda em casa</p>
       </Box>
 
       <Box sx={styles.root}>
@@ -102,9 +101,18 @@ const EmployabilityRegister = () => {
 export default EmployabilityRegister;
 
 const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
   root: {
     border: "1px solid #77837F",
     borderRadius: "0.5rem",
+    width: {
+      md: "760px"
+    }
   },
   stepper: {
     backgroundColor: "unset",
@@ -123,7 +131,7 @@ const styles = {
         border: "1px solid #77837F",
         borderRadius: "2px",
         backgroundColor: "unset",
-        height: "9px",
+        height: "20px",
         "& .MuiLinearProgress-bar": {
           backgroundColor: "#33EDAC",
         },

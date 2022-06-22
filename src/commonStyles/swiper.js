@@ -12,4 +12,18 @@ export const swiper = {
             spaceBetween: 30,
         },
     },
+    pagination: {
+        "& .swiper-pagination-bullet": {
+            background: "#33EDAC",
+          },
+          "& .swiper-pagination-bullet-active": {
+            background: "#33EDAC",
+          },
+          "& .swiper-slide": {
+            mb: {
+              xs: "0",
+              md: "50px",
+            },
+          },
+    }
 }
