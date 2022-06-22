@@ -1,8 +1,9 @@
 import { Grid, FormGroup, FormControl, OutlinedInput } from "@mui/material";
 import formStyle from "./formStyle";
 
-const CpfForm = () => {
-  return (
+const CpfForm = ({form, handler}) => {
+
+    return (
     <FormGroup sx={styles.root}>
       <p>Qual é o seu CPF?</p>
 
@@ -18,8 +19,8 @@ const CpfForm = () => {
               id="cpf"
               name="cpf"
               required
-              // value={fields.cpf}
-              // onChange={}
+              value={form.cpf}
+              onChange={(e) => handler({...form, cpf: e.target.value})}
               sx={styles.input}
             />
           </FormControl>

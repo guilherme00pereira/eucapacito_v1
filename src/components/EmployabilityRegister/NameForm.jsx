@@ -1,7 +1,8 @@
 import { Grid, FormGroup, FormControl, OutlinedInput } from "@mui/material";
 import formStyle from "./formStyle";
+import {useContext} from "react";
 
-const NameForm = () => {
+const NameForm = ({form, handler}) => {
   return (
     <FormGroup sx={styles.root}>
       <p>Antes de iniciarmos,</p>
@@ -19,8 +20,8 @@ const NameForm = () => {
               id="name"
               name="name"
               required
-              // value={fields.name}
-              // onChange={}
+              value={form.name}
+              onChange={(e) => handler({...form, name: e.target.value})}
               sx={styles.input}
             />
           </FormControl>

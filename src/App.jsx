@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
-import { SearchContext } from './contexts/SearchContext';
+import { SearchContext } from './ApplicationContexts';
 
 import Theme from './Theme';
 import AppSettings from './AppSettings';

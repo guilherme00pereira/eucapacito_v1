@@ -1,7 +1,8 @@
 import { Grid, FormGroup, FormControl, OutlinedInput } from "@mui/material";
 import formStyle from "./formStyle";
 
-const DateForm = () => {
+const DateForm = ({form, handler}) => {
+
   return (
     <FormGroup sx={styles.root}>
       <p>Inscreva-se para concorrer</p>
@@ -18,8 +19,8 @@ const DateForm = () => {
               id="day"
               name="day"
               required
-              // value={fields.day}
-              // onChange={}
+              value={form.day}
+              onChange={(e) => handler({...form, day: e.target.value})}
               sx={styles.input}
             />
           </FormControl>
@@ -32,8 +33,8 @@ const DateForm = () => {
               id="month"
               name="month"
               required
-              // value={fields.month}
-              // onChange={}
+              value={form.month}
+              onChange={(e) => handler({...form, month: e.target.value})}
               sx={styles.input}
             />
           </FormControl>
@@ -46,8 +47,8 @@ const DateForm = () => {
               id="year"
               name="year"
               required
-              // value={fields.year}
-              // onChange={}
+              value={form.year}
+              onChange={(e) => handler({...form, year: e.target.value})}
               sx={styles.input}
             />
           </FormControl>

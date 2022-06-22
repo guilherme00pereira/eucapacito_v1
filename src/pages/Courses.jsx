@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { Box, CircularProgress, Drawer } from "@mui/material";
 import Filter from "../components/Search/Filter";
 import apiService from "../services/apiService";
@@ -25,8 +25,6 @@ const Courses = () => {
   const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
   const [title, setTitle] = useOutletContext();
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  let navigate = useNavigate();
 
   const { api } = apiService;
 
@@ -198,9 +196,9 @@ const styles = {
       width: "100%",
       minWidth: "282px",
       height: { xs: "calc(100% - 56px)", md: "auto" },
-      background: 'rgb(0,0,0)',
-      background: '-moz-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
-      background: '-webkit-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
+      // background: 'rgb(0,0,0)',
+      // background: '-moz-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
+      // background: '-webkit-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
       background: 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
       filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#272b2e",GradientType=1)',
     },
