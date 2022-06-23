@@ -75,7 +75,7 @@ const Course = () => {
         <>
             {isLoading && <CircularProgress sx={styles.loading} />}
             {!isLoading && (
-                <Box sx={styles.root}>
+            <Box sx={styles.root}>
                 <Box sx={styles.image}>
                     <img src={courseData.featuredImg} alt={courseData.title}/>
                 </Box>
@@ -278,6 +278,7 @@ export default Course;
 const styles = {
     root: {
         mx: "-16px",
+        mt: "-48px",
         h1: {
             fontSize: {xs: "16px", md: "32px"},
             fontWeight: {md: "500", xs: "700"},

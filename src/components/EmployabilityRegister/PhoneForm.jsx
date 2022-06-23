@@ -1,7 +1,7 @@
 import { Grid, FormGroup, FormControl, OutlinedInput } from "@mui/material";
 import formStyle from "./formStyle";
 
-const PhoneForm = () => {
+const PhoneForm = ({form, handler}) => {
   return (
     <FormGroup sx={styles.root}>
       <p>Cel com o DDD</p>
@@ -18,8 +18,8 @@ const PhoneForm = () => {
               id="ddd"
               name="ddd"
               required
-              // value={fields.ddd}
-              // onChange={}
+              value={form.ddd}
+              onChange={(e) => handler({...form, ddd: e.target.value})}
               sx={styles.input}
             />
           </FormControl>
@@ -32,8 +32,8 @@ const PhoneForm = () => {
               id="phone"
               name="phone"
               required
-              // value={fields.phone}
-              // onChange={}
+              value={form.phone}
+              onChange={(e) => handler({...form, phone: e.target.value})}
               sx={styles.input}
             />
           </FormControl>

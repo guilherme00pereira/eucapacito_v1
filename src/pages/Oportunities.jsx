@@ -35,7 +35,6 @@ const Oportunities = () => {
       const fetchedEmployabilities = [];
 
       res.data.forEach((employability) => {
-        console.log(employability)
         const newEmployability = {
           id: employability.id,
           slug: employability.slug,

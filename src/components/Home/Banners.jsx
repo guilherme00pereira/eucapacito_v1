@@ -21,7 +21,6 @@ const Banners = () => {
                 }
                 fetchedBanners.push(newBanner)
             });
-            console.log(fetchedBanners)
             setBanners([...banners, ...fetchedBanners]);
         });
     }, []);

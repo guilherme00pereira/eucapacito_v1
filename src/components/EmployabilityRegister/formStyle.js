@@ -24,7 +24,7 @@ const formStyle = {
     },
   },
   gridCheckbox: {
-    width: "100%",
+    width: "50%",
     label: {
       mb: "1rem",
       color: "#CAC8C8",

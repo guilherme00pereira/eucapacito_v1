@@ -1,7 +1,7 @@
 import { Grid, FormGroup, FormControl, OutlinedInput } from "@mui/material";
 import formStyle from "./formStyle";
 
-const EmailForm = () => {
+const EmailForm = ({form, handler}) => {
   return (
     <FormGroup sx={styles.root}>
       <p>Qual é o seu e-mail?</p>
@@ -18,8 +18,8 @@ const EmailForm = () => {
               id="email"
               name="email"
               required
-              // value={fields.email}
-              // onChange={}
+              value={form.email}
+              onChange={(e) => handler({...form, email: e.target.value})}
               sx={styles.input}
             />
           </FormControl>

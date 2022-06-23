@@ -286,7 +286,7 @@ const styles = {
         xs: "0",
         md: "50px",
       },
-    },
+    }
   },
   menu: {
     m: "0 0 2rem",
