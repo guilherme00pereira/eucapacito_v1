@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
+import Button from "../components/Button";
 import parse from "html-react-parser";
+
+import CourseCard from "../components/CourseCard";
 
 import apiService from "../services/apiService";
 
@@ -12,6 +15,7 @@ const Oportunity = () => {
     title: "",
     description: "",
   });
+  const [oportunityCourses, setOportunityCourses] = useState([]);
 
   const { api } = apiService;
   const { id } = useParams();
@@ -24,12 +28,23 @@ const Oportunity = () => {
       .get(`/wp/v2/${type}/${id}?_embed`)
       .then((res) => {
         const post = res.data;
-
         setOportunityData({
           featuredImg: post.imagem.guid,
           title: parse(`${post.title.rendered}`),
           description: parse(`${post.content.rendered}`),
         });
+        const fetchedCourses = [];
+        res.data.cursos_ec.forEach((course) => {
+          fetchedCourses.push({
+            id: course.id,
+            url: course.url,
+            featuredImg: course.image,
+            title: course.title,
+            subtitle: "Eu Capacito",
+            partnerLogoURL: course.responsavel,
+          });
+        });
+        setOportunityCourses(fetchedCourses);
       });
   }, [id, api]);
 
@@ -47,7 +62,38 @@ const Oportunity = () => {
       </Box>
 
       <h2>Para ajudar no seu processo, conclua o(s) seguinte(s) curso(s):</h2>
-      <hr />
+
+      <Box sx={styles.cardsContainer}>
+        
+          {oportunityCourses.length > 0 && 
+            oportunityCourses.map((course) => (
+              <Box key={course.id} sx={styles.card}>
+              <CourseCard
+                coursePath={course.url}
+                imagePath={course.featuredImg}
+                title={course.title}
+                subtitle={course.subtitle}
+                logoPath={course.partnerLogoURL}
+                className="card-desk"
+              />
+              </Box>
+            ))
+          }
+          
+        <Box sx={styles.certificado}>
+          <Button>Envie os certificados</Button>
+          <input type="file" />
+          <input type="file" />
+          <p>
+            Finalizando os cursos anexar nos campos correspondentes e comece o
+            processo seletivo clicando em "comece agora”.
+          </p>
+        </Box>
+      </Box>
+
+      <Box sx={styles.button}>
+        <Button href={'/comece-agora'}>Comece agora!</Button>
+      </Box>
 
     </Box>
   );
@@ -58,13 +104,17 @@ export default Oportunity;
 const styles = {
   root: {
     h1: { marginTop: "2rem", fontSize: "22px", color: "#CAC8C8" },
-    hr: { border: 0, borderTop: "1px solid #77837F" },
-    ".MuiContainer-root": {
-      pb: "100px",
-    },
     h2: {
-      fontSize: "1.3rem",
+      fontSize: "1.15rem",
       fontWeight: 500,
+      borderBottom: {
+        xs: "none",
+        md: "1px solid #77837F",
+      },
+      pb: {
+        md: "13px",
+        xs: "0",
+      },
     },
   },
   image: {
@@ -268,4 +318,64 @@ const styles = {
     },
   },
   curriculum: {},
+  button: {
+    mx: "1rem",
+    textAlign: { md: "center", xs: "left" },
+    "& .MuiButton-root": {
+      width: { xs: "100%", md: "25%" },
+    },
+  },
+  cardsContainer: {
+    display: {
+      md: "flex",
+      xs: "none",
+    },
+  },
+  card: {
+    maxWidth: "30%",
+    "& img": {
+      border: "1px solid #77837f",
+    },
+    "& .MuiGrid-root img": {
+      border: "none",
+    },
+    mr: "25px",
+    mb: "40px",
+
+    "& .MuiGrid-container": {
+      border: "1px solid #77837f",
+      boxSizing: "border-box",
+      mt: "14px",
+      borderRadius: "8px",
+      padding: "24px",
+      justifyContent: "space-between",
+      alignItems: "end",
+    },
+    "& .desk-info": {
+      mb: "50px",
+    },
+    "& small": {
+      fontSize: "16px",
+    },
+  },
+  certificado: {
+    display: "flex",
+    flexDirection: "column",
+    width: "33%",
+    margin: "0 auto",
+    "& button": {
+      width: "75%",
+      margin: "0 auto 63px auto",
+    },
+    "& p": {
+      fontSize: "12px !important",
+      lineHeight: "20px",
+      maxWidth: "359px",
+    },
+    "& input": {
+      border: "1px solid #CAC8C8",
+      borderRadius: "8px",
+      margin: "10px 0",
+    },
+  },
 };
