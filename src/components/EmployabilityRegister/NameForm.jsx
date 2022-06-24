@@ -32,4 +32,6 @@ const NameForm = ({form, handler}) => {
 
 export default NameForm;
 
-const styles = {...formStyle};
+const styles = {
+    ...formStyle,
+};

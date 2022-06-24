@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Container, Box, MobileStepper, Button, StepContext} from "@mui/material";
+import {Container, Box, MobileStepper, Button} from "@mui/material";
 import {KeyboardArrowLeft} from "@mui/icons-material";
 import {Link} from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import CityForm from "../components/EmployabilityRegister/CityForm";
 import GenderForm from "../components/EmployabilityRegister/GenderForm";
 import EducationForm from "../components/EmployabilityRegister/EducationForm";
 import TermsForm from "../components/EmployabilityRegister/TermsForm";
+import FinishForm from "../components/EmployabilityRegister/FinishForm";
 
 
 const EmployabilityRegister = () => {
@@ -40,7 +41,7 @@ const EmployabilityRegister = () => {
 
     const handleBackStep = () => setCurrentStep(currentStep - 1);
     const handleNextStep = () =>
-        currentStep < 8 && setCurrentStep(currentStep + 1);
+        currentStep < 9 && setCurrentStep(currentStep + 1);
 
     const thisStep = (step) => {
         switch (step) {
@@ -61,14 +62,15 @@ const EmployabilityRegister = () => {
             case 7:
                 return <EducationForm form={formData} handler={setFormData}/>
             case 8:
-                return <TermsForm form={formData} handler={setFormData}/>
+                return <TermsForm form={formData} handler={setFormData} step={handleNextStep}/>
+            case 9:
+                return <FinishForm form={formData} />
             default:
                 return <NameForm form={formData} handler={setFormData} />
         }
     }
 
     return (
-        <StepContext.Provider value={[formData, setFormData]}>
             <Container sx={styles.container}>
                 <Box elevation={0} sx={{mt: '25px', mb: '50px', textAlign: 'center'}}>
                     <Link to="/">
@@ -80,7 +82,7 @@ const EmployabilityRegister = () => {
                     <Box>
                         <MobileStepper
                             variant="progress"
-                            steps={10}
+                            steps={9}
                             position="static"
                             activeStep={currentStep}
                             sx={styles.stepper}
@@ -101,14 +103,13 @@ const EmployabilityRegister = () => {
 
                     {thisStep(currentStep)}
 
-                    {currentStep !== 8 && (
+                    {currentStep < 8 && (
                         <Btn onClick={handleNextStep} sx={styles.submitButton}>
                             Continuar <img src={ArrowRightPath} alt="Ícone - Seta para direita"/>
                         </Btn>
                     )}
                 </Box>
             </Container>
-        </StepContext.Provider>
     );
 };
 

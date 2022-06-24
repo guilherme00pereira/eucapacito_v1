@@ -2,11 +2,7 @@ import {Grid, FormGroup, FormControlLabel, Checkbox} from "@mui/material";
 import Button from "../Button";
 import formStyle from "./formStyle";
 
-const TermsForm = ({form, handler}) => {
-
-    const handleClick = () => {
-
-    }
+const TermsForm = ({form, handler, step}) => {
 
     return (
         <FormGroup sx={styles.root}>
@@ -40,10 +36,7 @@ const TermsForm = ({form, handler}) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Button
-                        sx={styles.buttonCadastrar}
-                        onClick={handleClick}
-                    >
+                    <Button sx={styles.buttonCadastrar} onClick={() => step()}>
                         Cadastrar
                     </Button>
                 </Grid>

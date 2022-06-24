@@ -18,7 +18,7 @@ const Oportunity = () => {
   const [oportunityCourses, setOportunityCourses] = useState([]);
 
   const { api } = apiService;
-  const { id } = useParams();
+  const { slug, id } = useParams();
 
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
@@ -68,14 +68,14 @@ const Oportunity = () => {
           {oportunityCourses.length > 0 && 
             oportunityCourses.map((course) => (
               <Box key={course.id} sx={styles.card}>
-              <CourseCard
-                coursePath={course.url}
-                imagePath={course.featuredImg}
-                title={course.title}
-                subtitle={course.subtitle}
-                logoPath={course.partnerLogoURL}
-                className="card-desk"
-              />
+                <CourseCard
+                  coursePath={course.url}
+                  imagePath={course.featuredImg}
+                  title={course.title}
+                  subtitle={course.subtitle}
+                  logoPath={course.partnerLogoURL}
+                  className="card-desk"
+                />
               </Box>
             ))
           }
@@ -92,7 +92,7 @@ const Oportunity = () => {
       </Box>
 
       <Box sx={styles.button}>
-        <Button href={'/comece-agora'}>Comece agora!</Button>
+        <Button href={`/comece-agora/${slug}`}>Comece agora!</Button>
       </Box>
 
     </Box>
