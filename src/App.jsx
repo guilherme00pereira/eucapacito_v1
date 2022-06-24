@@ -33,6 +33,7 @@ import Filter from "./components/Search/Filter";
 import Video from "./pages/Video";
 import Videos from "./pages/Videos";
 import Ebooks from "./pages/Ebooks";
+import Finished from "./pages/Finished";
 
 function App() {
   // const navigate = useNavigate();
@@ -76,6 +77,7 @@ function App() {
                 <Route path="/filtro" element={<Filter />} />
                 <Route path="/empregabilidade" element={<Employability />} />
                 <Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />
+                <Route path="/concluido" element={<Finished />} />
               </Route>
             </Route>
 

@@ -12,7 +12,6 @@ import FilterIcon from "../assets/img/filter-icon.svg";
 const Courses = () => {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(false);
-  const [tab, setTab] = useState("1");
   const [courses, setCourses] = useState([]);
   const [filters, setFilters] = useState({
     levels: [],
@@ -57,7 +56,6 @@ const Courses = () => {
     if(null !== ids) {
       url += `&t=${ids}`;
     }
-    //api.get(`/wp/v2/curso_ec?_embed&per_page=12&page=${page}`).then((res) => {
       api.get(url).then((res) => {
         if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
           setHideLoadMoreButton(true);
@@ -196,9 +194,6 @@ const styles = {
       width: "100%",
       minWidth: "282px",
       height: { xs: "calc(100% - 56px)", md: "auto" },
-      // background: 'rgb(0,0,0)',
-      // background: '-moz-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
-      // background: '-webkit-linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
       background: 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(39,43,46,1) 100%)',
       filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#272b2e",GradientType=1)',
     },

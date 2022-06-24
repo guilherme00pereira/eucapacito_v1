@@ -16,7 +16,6 @@ import CityForm from "../components/EmployabilityRegister/CityForm";
 import GenderForm from "../components/EmployabilityRegister/GenderForm";
 import EducationForm from "../components/EmployabilityRegister/EducationForm";
 import TermsForm from "../components/EmployabilityRegister/TermsForm";
-import FinishForm from "../components/EmployabilityRegister/FinishForm";
 
 
 const EmployabilityRegister = () => {
@@ -62,9 +61,7 @@ const EmployabilityRegister = () => {
             case 7:
                 return <EducationForm form={formData} handler={setFormData}/>
             case 8:
-                return <TermsForm form={formData} handler={setFormData} step={handleNextStep}/>
-            case 9:
-                return <FinishForm form={formData} />
+                return <TermsForm form={formData} handler={setFormData}/>
             default:
                 return <NameForm form={formData} handler={setFormData} />
         }
@@ -82,7 +79,7 @@ const EmployabilityRegister = () => {
                     <Box>
                         <MobileStepper
                             variant="progress"
-                            steps={9}
+                            steps={8}
                             position="static"
                             activeStep={currentStep}
                             sx={styles.stepper}

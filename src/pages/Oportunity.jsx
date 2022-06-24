@@ -23,6 +23,9 @@ const Oportunity = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
 
+  const showForm = slug === 'introducao-a-ciencia-de-dados-exclusivo-para-pessoas-trans' && type === 'bolsa_de_estudo';
+
+
   useEffect(() => {
     api
       .get(`/wp/v2/${type}/${id}?_embed`)
@@ -46,6 +49,9 @@ const Oportunity = () => {
         });
         setOportunityCourses(fetchedCourses);
       });
+    if(showForm) {
+      new window.RDStationForms('ec-projeto-pf-pessoas-trans-315f15ff93fc2429b3db', 'UA-176452904-1').createForm()
+    }
   }, [id, api]);
 
   return (
@@ -74,7 +80,6 @@ const Oportunity = () => {
                   title={course.title}
                   subtitle={course.subtitle}
                   logoPath={course.partnerLogoURL}
-                  className="card-desk"
                 />
               </Box>
             ))
@@ -94,6 +99,10 @@ const Oportunity = () => {
       <Box sx={styles.button}>
         <Button href={`/comece-agora/${slug}`}>Comece agora!</Button>
       </Box>
+
+      {showForm &&
+          <div role="main" id="ec-projeto-pf-pessoas-trans-315f15ff93fc2429b3db"></div>
+      }
 
     </Box>
   );
