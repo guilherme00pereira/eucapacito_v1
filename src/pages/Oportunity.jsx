@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import { Box } from "@mui/material";
 import Button from "../components/Button";
 import parse from "html-react-parser";
@@ -16,14 +16,30 @@ const Oportunity = () => {
     description: "",
   });
   const [oportunityCourses, setOportunityCourses] = useState([]);
-
+  const loggedId = sessionStorage.getItem('loggedIn');
   const { api } = apiService;
   const { slug, id } = useParams();
-
+  let navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
 
   const showForm = slug === 'introducao-a-ciencia-de-dados-exclusivo-para-pessoas-trans' && type === 'bolsa_de_estudo';
+
+  const handleCertificationUpload = () => {
+    if(!loggedId) {
+      navigate('/login')
+    } else {
+      console.log('fazer upload');
+    }
+  }
+
+  const handleStartForm = () => {
+    if(!loggedId) {
+      navigate('/login')
+    } else {
+      window.location.href = showForm ? "https://forms.rdstation.com.br/ec-projeto-pf-pessoas-trans-315f15ff93fc2429b3db" : `/comece-agora/${slug}`
+    }
+  }
 
   useEffect(() => {
     api
@@ -82,7 +98,7 @@ const Oportunity = () => {
           }
           
         <Box sx={styles.certificado}>
-          <Button>Envie os certificados</Button>
+          <Button onClick={handleCertificationUpload}>Envie os certificados</Button>
           <input type="file" />
           <input type="file" />
           <p>
@@ -93,7 +109,7 @@ const Oportunity = () => {
       </Box>
 
       <Box sx={styles.button}>
-        <Button href={showForm ? "https://forms.rdstation.com.br/ec-projeto-pf-pessoas-trans-315f15ff93fc2429b3db" : `/comece-agora/${slug}`}>Comece agora!</Button>
+        <Button onClick={handleStartForm}>Comece agora!</Button>
       </Box>
 
     </Box>
