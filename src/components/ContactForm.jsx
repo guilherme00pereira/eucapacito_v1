@@ -184,8 +184,6 @@ const ContactForm = () => {
             <Button
               type="submit"
               sx={{
-                mt: 4,
-                //css desktop
                 mt: {
                   md: "50x",
                 },

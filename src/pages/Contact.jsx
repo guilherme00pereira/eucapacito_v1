@@ -10,11 +10,6 @@ import mapa from "../assets/img/mapa.png";
 const Contact = () => {
   const [title, setTitle] = useOutletContext();
 
-  const boxSx = {
-    // mx: 3,
-    position: "relative",
-  };
-
   useEffect(() => {
     setTitle({
       main: "Contato",
@@ -23,84 +18,21 @@ const Contact = () => {
   }, []);
 
   return (
-    <Box sx={boxSx}>
-      <Container
-        sx={{
-          "h1 > a": {
-            color: "#CAC8C8",
-            display: {
-              md: "none",
-              xs: "block",
-            },
-          },
-          h1: { color: { xs: "#CAC8C8", md: "#CAC8C8" } },
-        }}
-      >
-        <Box
-          sx={{
-            ...boxSx,
-            display: "flex",
-            justifyContent: "space-between",
-            //css desktop
-            width: {
-              md: "47%",
-            },
-            "& h1":{
-              fontSize:{
-                  md:"22px",
-                  xs:"16px"
-              }  
-            },
-          }}
-        >
+    <Box sx={styles.boxSx}>
+      <Container sx={styles.container}>
+        <Box sx={styles.header}>
           <h1>Mensagem</h1>
           <h1>
             <Link to="/faq">F.A.Q.</Link>
           </h1>
         </Box>
 
-        <Box
-          sx={{
-            //css desktop
-            marginLeft: {
-              md: "0",
-            },
-            //css desktop
-            maxWidth: {
-              md: "47%",
-            },
-            //css desktop
-            "& .MuiContainer-root": {
-              padding: {
-                md: "0",
-              },
-            },
-          }}
-        >
+        <Box sx={styles.contactWrapper}>
           <ContactForm />
         </Box>
 
         <Box
-          sx={{
-            ...boxSx,
-            //css desktop
-            width: {
-              md: "43%",
-            },
-            //css desktop
-            mt: {
-              md: "50px",
-            },
-            "& h2": {
-              fontSize: { xs: "16px", md: "22px" },
-            },
-            "& p": {
-              fontSize: "13.5px",
-              fontWeight: "500!important",
-              fontStyle: "italic",
-              color: "#77837F",
-            },
-          }}
+          sx={styles.address}
         >
           <h2>Localização</h2>
           <p>Avenida Chedid Jafet Nº 222 Bloco B, 1 andar São Paulo - SP</p>
@@ -108,10 +40,6 @@ const Contact = () => {
 
         <Box
           sx={{
-            ...boxSx,
-            //css desktop
-
-            //css desktop
             mt: {
               xs: "0",
               md: "65px",
@@ -128,7 +56,6 @@ const Contact = () => {
 
         <Box
           sx={{
-            ...boxSx,
             textAlign: {
               md: "left",
               xs: "center",
@@ -172,8 +99,6 @@ const Contact = () => {
 
           <Box
             sx={{
-              mt: 2,
-              //css desktop
               mt: { md: "0px", xs: "50px" },
               ml: { md: "20px", xs: "0" },
               display: {
@@ -195,8 +120,6 @@ const Contact = () => {
 
           <Box
             sx={{
-              mt: 2,
-              //css desktop
               mt: { md: "0px", xs: "50px" },
               ml: { md: "70px", xs: "0" },
               display: {
@@ -311,6 +234,68 @@ const Contact = () => {
 export default Contact;
 
 const styles = {
+    boxSx: {
+        position: "relative",
+    },
+    container: {
+        "h1 > a": {
+            color: "#CAC8C8",
+            display: {
+                md: "none",
+                xs: "block",
+            },
+        },
+        h1: { color: { xs: "#CAC8C8", md: "#CAC8C8" } },
+    },
+    header: {
+        position: "relative",
+        display: "flex",
+        justifyContent: "space-between",
+        //css desktop
+        width: {
+            md: "47%",
+        },
+        "& h1":{
+            fontSize:{
+                md:"22px",
+                xs:"16px"
+            }
+        },
+    },
+    contactWrapper: {
+        //css desktop
+        marginLeft: {
+            md: "0",
+        },
+        //css desktop
+        maxWidth: {
+            md: "47%",
+        },
+        //css desktop
+        "& .MuiContainer-root": {
+            padding: {
+                md: "0",
+            },
+        },
+    },
+    address: {
+        width: {
+            md: "43%",
+        },
+        //css desktop
+        mt: {
+            md: "50px",
+        },
+        "& h2": {
+            fontSize: { xs: "16px", md: "22px" },
+        },
+        "& p": {
+            fontSize: "13.5px",
+            fontWeight: "500!important",
+            fontStyle: "italic",
+            color: "#77837F",
+        },
+    },
   email: {
     mx: 1,
     color: "#77837F",
