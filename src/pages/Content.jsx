@@ -7,7 +7,7 @@ import EbookPost from "../components/Content/EbookPost";
 import UpdateForm from "../components/Content/UpdateForm";
 import ContentTitle from "../components/Content/ContentTitle";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper";
+import { Pagination, Autoplay } from "swiper";
 import {swiper} from "../commonStyles/swiper";
 
 import apiService from "../services/apiService";
@@ -161,7 +161,9 @@ const Content = () => {
             ))}
         </Swiper>
       </Box>
+
       <UpdateForm />
+
     </Box>
   );
 };

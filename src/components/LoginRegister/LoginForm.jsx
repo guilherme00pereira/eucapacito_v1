@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {
   Container,
   Box,
@@ -86,6 +86,13 @@ const LoginForm = () => {
 
     navigate("/");
   };
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
+    script.async = true;
+    document.body.appendChild(script);
+}, [])
 
 
   return (
@@ -185,6 +192,7 @@ const LoginForm = () => {
             }}
           >
             <Button
+              type="submit"
               onClick={handleSubmit}
               sx={{
                 mt: 3,

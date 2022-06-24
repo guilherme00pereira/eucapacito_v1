@@ -17,7 +17,7 @@ const FinishForm = ({form}) => {
         script.async = true;
         document.body.appendChild(script);
         document.forms["comece-agora-data"].submit()
-    })
+    }, [])
 
     return (
         <div>

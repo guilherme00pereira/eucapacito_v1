@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Box,
@@ -20,7 +20,14 @@ const ContactForm = () => {
   const handleFieldChange = (field) => (e) =>
     setFields({ ...fields, [field]: e.target.value });
 
-  const handleSubmit = (e) => e.preventDefault();
+  const handleSubmit = (e) => {}
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
+    script.async = true;
+    document.body.appendChild(script);
+}, [])
 
   return (
     <Container maxWidth="md" sx={{ p: 0, input: {}, color: "#77837F", "& .title-form":{fontSize:"16px", fontWeight:"500"} }}>
@@ -175,6 +182,7 @@ const ContactForm = () => {
             }}
           >
             <Button
+              type="submit"
               sx={{
                 mt: 4,
                 //css desktop
