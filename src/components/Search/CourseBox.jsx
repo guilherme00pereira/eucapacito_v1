@@ -87,6 +87,7 @@ const styles = {
         fontSize: "1.8rem",
       },
       description: {
+        wordBreak: "break-word",
         h3: {
           m: 0,
           mb: "0.625rem",
@@ -124,8 +125,8 @@ const styles = {
       },
       img: {
         verticalAlign: "bottom",
-        width: "50px",
-        height: "20px",
+        width: "25px",
+        height: "25px",
         objectFit: "contain"
       },
     },
