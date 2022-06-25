@@ -278,7 +278,10 @@ export default Course;
 const styles = {
     root: {
         mx: "-16px",
-        mt: "-48px",
+        mt: {
+            md: "-48px",
+            xs: "-24px"
+        },
         h1: {
             fontSize: {xs: "16px", md: "32px"},
             fontWeight: {md: "500", xs: "700"},

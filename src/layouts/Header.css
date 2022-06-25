@@ -1,5 +1,5 @@
 .appbar {
-    background-image: url('../assets/img/fundo_original-2.jpg') !important;
+    background-image: linear-gradient(to right, #0E0E0E, #292C2F);/*url('../assets/img/fundo_original-2.jpg') !important;*/
     background-size: cover;
     background-position: 55%;
     min-height: 100px;

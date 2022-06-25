@@ -64,7 +64,7 @@ const Header = ({ title, subtitle }) => {
       <AppBar
         className="appbar"
         id="appbar"
-        position="static"
+        position="relative"
         sx={
           location !== "/"
             ? styles.appbar
