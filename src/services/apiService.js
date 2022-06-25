@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  //baseURL: process.env.REACT_APP_BACKED_URL_WP,
-  baseRL: "https://wp.eucapacito.com.br/wp-json"
+  baseURL: process.env.REACT_APP_BACKED_URL_WP,
+  //baseRL: "https://wp.eucapacito.com.br/wp-json"
 });
 
 const getTokenData = async (loginData) => {
