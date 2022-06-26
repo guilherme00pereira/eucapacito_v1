@@ -93,8 +93,8 @@ const styles = {
     p: { margin: 0 },
     img: {
       maxWidth: {
-        xs: "70px",
-        md: "100px",
+        xs: "49px",
+        md: "70px",
       },
       maxHeight: {
         xs: "30px",
