@@ -61,19 +61,19 @@ const Footer = () => {
           </MuiLink>
         </Box>
         <Box>
-          <MuiLink href="https://facebook.com">
+          <MuiLink href="https://www.facebook.com/eucapacito/">
             <Facebook sx={styles.email} />
           </MuiLink>
 
-          <MuiLink href="https://instagram.com">
+          <MuiLink href="https://www.instagram.com/eucapacito/">
             <Instagram sx={styles.email} />
           </MuiLink>
 
-          <MuiLink href="https://youtube.com">
+          <MuiLink href="https://www.youtube.com/c/EuCapacito">
             <YouTube sx={styles.email} />
           </MuiLink>
 
-          <MuiLink href="https://linkedin.com">
+          <MuiLink href="https://www.linkedin.com/company/eucapacito/">
             <LinkedIn sx={styles.email} />
           </MuiLink>
         </Box>
@@ -91,7 +91,9 @@ const Footer = () => {
 
       <Box sx={{ display: "flex" }}>
         <Paper sx={styles.footerLogo}>
-          <img src={rodapeLogos} alt="Logo - Eu Capacito" />
+          <MuiLink href="https://www.institutoitmidia.com.br/" target="_blank">
+            <img src={rodapeLogos} alt="Logo - Eu Capacito" />
+          </MuiLink>
         </Paper>
       </Box>
     </Container>
