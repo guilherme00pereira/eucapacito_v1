@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import {Accordion, AccordionDetails, AccordionSummary, Box, CircularProgress, Drawer} from "@mui/material";
-import Filter from "../components/Search/Filter";
+import {Box} from "@mui/material";
 import apiService from "../services/apiService";
 import { useSearchParams } from "react-router-dom";
-import { loading } from "../commonStyles/loading"
-import Button from "../components/Button";
+import ContentTitle from "../components/Content/ContentTitle";
 import CourseCard from "../components/CourseCard";
-import FilterIcon from "../assets/img/filter-icon.svg";
-import {ExpandMore} from "@mui/icons-material";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {swiper} from "../commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
@@ -107,35 +103,8 @@ const Courses = () => {
 
   return (
     <Box sx={styles.root}>
-
-      <Box>
-        <div className="titulo">
-            <p>Cursos</p>
-
-            <div className="filter-control">
-              <p>Filtro</p>
-
-              <img src={FilterIcon} alt="" onClick={handleDrawer} />
-            </div>
-
-            <Drawer
-              anchor="top"
-              open={drawerOpen}
-              onClose={handleDrawer}
-              ModalProps={{
-                BackdropProps: { sx: { backgroundColor: "unset" } },
-              }}
-              sx={styles.filter}
-            >
-              <Filter handleModal={handleModal} filters={filters} />
-            </Drawer>
-          </div>
-
-          <hr />
-      </Box>
-
-
-          <Swiper
+      <ContentTitle title="Cursos" to={'/procurar?search='} linkText="Todos os cursos" />
+        <Swiper
               className="mySwiper"
               slidesPerView={1.2}
               spaceBetween={25}
@@ -163,7 +132,7 @@ const Courses = () => {
 
       <Box>
         <div className="titulo">
-          <p>Jornadas</p>
+          <h1>Jornadas</h1>
         </div>
         <hr />
       </Box>
@@ -202,6 +171,7 @@ export default Courses;
 
 const styles = {
   root: {
+    h1: { marginTop: "2rem", fontSize: "20px", color: "#CAC8C8" },
     hr: {
       border: 0,
       borderTop: "1px solid #77837F",

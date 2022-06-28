@@ -21,7 +21,6 @@ const Oportunities = () => {
   const [title, setTitle] = useOutletContext();
   const [employabilities, setEmployabilities] = useState([]);
   const [scholarships, setScholarships] = useState([]);
-  const [journeys, setJourneys] = useState([]);
   const { api } = apiService;
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const Oportunities = () => {
           id: scholarship.id,
           slug: scholarship.slug,
           type: scholarship.type,
-          featuredImg: scholarship["featured_image_src"],
+          featuredImg: scholarship.imagem.guid,
           title: parse(`${scholarship.title.rendered}`),
           subtitle: "Eu Capacito",
           logo: "EC",
@@ -72,26 +71,7 @@ const Oportunities = () => {
       setScholarships([...scholarships, ...fetchedScholarships]);
     });
 
-    // JourneyCard
-    // api.get(`/wp/v2/jornada?per_page=12`).then((res) => {
-    //   const fetchedJourneys = [];
-
-    //   res.data.forEach((journey) => {
-    //     const newJourneys = {
-    //       id: journey.id,
-    //       slug: journey.slug,
-    //       type: journey.type,
-    //       featuredImg: journey["featured_image_src"],
-    //       title: parse(`${journey.title.rendered}`),
-    //       subtitle: "Eu Capacito",
-    //       logo: "EC",
-    //     };
-
-    //     fetchedJourneys.push(newJourneys);
-    //   });
-
-    //   setJourneys([...journeys, ...fetchedJourneys]);
-    // });
+    
   }, []);
 
   return (
@@ -126,7 +106,7 @@ const Oportunities = () => {
               employabilities.map((employability) => (
                 <SwiperSlide key={employability.id}>
                   <CourseCard
-                    url={`/oportunidade/${employability.slug}/${employability.id}?type=${employability.type}`}
+                    url={`/empregabilidade/${employability.slug}`}
                     imagePath={employability.featuredImg || CourseImg3}
                     title={employability.title}
                     subtitle="Cadastre-se"
@@ -157,12 +137,12 @@ const Oportunities = () => {
             pagination={{clickable:true}}
           >
             {scholarships.length > 0 &&
-              scholarships.map((oportunity) => (
-                <SwiperSlide key={oportunity.id}>
+              scholarships.map((scholarship) => (
+                <SwiperSlide key={scholarship.id}>
                   <CourseCard
-                    url={`/oportunidade/${oportunity.slug}/${oportunity.id}?type=${oportunity.type}`}
-                    imagePath={oportunity.featuredImg || CourseImg3}
-                    title={oportunity.title}
+                    url={`/bolsa-de-estudo/${scholarship.slug}`}
+                    imagePath={scholarship.featuredImg || CourseImg3}
+                    title={scholarship.title}
                     subtitle="Cadastre-se"
                     logoPath={CourseLogoFiap}
                   />
@@ -239,10 +219,7 @@ const styles = {
         md: "30px",
         xs: "0",
       },
-      fontSize: {
-        xs: "16px",
-        md: "22px",
-      },
+      fontSize: "20px",
       fontWeight: {
         md: "700",
         xs: "500",

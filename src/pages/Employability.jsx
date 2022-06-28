@@ -1,145 +1,100 @@
-import { useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import { Box } from "@mui/material";
 import Button from "../components/Button";
-import eyLogo from "../assets/img/ey-logo.png";
-import CourseCard from "../components/CourseCard";
-import CourseImg1 from "../assets/img/home-curso1.png";
-import CourseImg2 from "../assets/img/home-curso2.png";
-import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
-import CourseLogoMicrosoft from "../assets/img/home-curso-logo-microsoft.png";
+import parse from "html-react-parser";
 
-const Employability = () => {
-  const [title, setTitle] = useOutletContext();
+import CourseCard from "../components/CourseCard";
+
+import apiService from "../services/apiService";
+
+
+const Scholarship = () => {
+  const [employabilityData, setEmployabilityData] = useState({
+    featuredImg: "",
+    title: "",
+    description: "",
+  });
+  const [courses, setCourses] = useState([]);
+  const loggedId = sessionStorage.getItem('loggedIn');
+  const { api } = apiService;
+  const { slug } = useParams();
+  let navigate = useNavigate();
+
+  const handleCertificationUpload = () => {
+    if(!loggedId) {
+      navigate('/login')
+    } else {
+      console.log('fazer upload');
+    }
+  }
+
+  const handleStartForm = () => {
+    if(!loggedId) {
+      navigate('/login')
+    } else {
+      window.location.href = `/comece-agora/${slug}`
+    }
+  }
 
   useEffect(() => {
-    setTitle({
-      main: "Empregabilidade",
-      sub: "Participe do processo seletivo",
-    });
-  }, []);
+    api
+      .get(`/wp/v2/empregabilidade?slug=${slug}&_embed`)
+      .then((res) => {
+        const post = res.data[0];
+        setEmployabilityData({
+          featuredImg: post.imagem.guid,
+          title: parse(`${post.title.rendered}`),
+          description: parse(`${post.content.rendered}`),
+        });
+        const fetchedCourses = [];
+        post.cursos_ec.forEach((course) => {
+          fetchedCourses.push({
+            id: course.id,
+            url: course.url,
+            featuredImg: course.image,
+            title: course.title,
+            subtitle: "Eu Capacito",
+            partnerLogoURL: course.responsavel,
+          });
+        });
+        setCourses(fetchedCourses);
+      });
+  }, [api]);
 
   return (
     <Box sx={styles.root}>
       <h1>Empregabilidade</h1>
+      <hr />
 
-      <Box sx={{ textAlign: "center", mb: "90px", "& h3":{fontSize:"14px" }}}>
-        <h3>VENHA PARA A EY! (TECNOLOGIA)</h3>
-        <img src={eyLogo} alt="" />
+      <Box sx={styles.texto}>
+        <Box sx={styles.description}>
+          <h1>{employabilityData.title}</h1>
+
+          <p>{employabilityData.description}</p>
+        </Box>
       </Box>
 
-      <Box>
-        <h2>Quem somos</h2>
-        <p>
-          A EY é líder em serviços de Auditoria, Consultoria, Impostos,
-          Estratégias e Transações, Serviços Financeiros e de Tecnologia.
-        </p>
-        <p>
-          Movida pelo propósito de construir um mundo de negócios melhor, a EY
-          acredita no crescimento econômico sustentável e inclusivo. Por isso,
-          trabalha continuamente para melhorar a qualidade dos serviços,
-          capacitando as pessoas e investindo em inovação tecnológica. Cada área
-          de atuação da EY se conecta e, juntas, formam as competências
-          necessárias para gerar as transformações que o mundo pede hoje.
-        </p>
-        <p>
-          Preencha o formulário de inscrição e complete a trilha de conhecimento
-          para concorrer às vagas abertas no site da EY!
-        </p>
-      </Box>
-
-      <Box>
-        <h2>Etapas do processo</h2>
-        <p>
-          1) Preencha o formulário de inscrição para concorrer às vagas (confira
-          aqui todas as posições em aberto);
-        </p>
-        <p>
-          2) Nossas pessoas especialistas em tecnologia fizeram uma curadoria
-          para indicar alguns treinamentos que podem fortalecer suas
-          competências para o mercado e diferenciar você nos processos
-          seletivos;
-        </p>
-        <p>3) Complete o(s) treinamento(s) abaixo;</p>
-        <p>
-          Atenção: os treinamentos selecionados foram sugeridos devido à
-          importância das competências digitais para o mercado de trabalho. A
-          recomendação tem como objetivo apoiar a sua formação tecnológica;
-        </p>
-        <p>
-          4) Ao completar todos os treinamentos abaixo, faça o upload dos
-          certificados (ou tela que comprove a conclusão do curso) até 31 de
-          janeiro de 2022 (quanto mais rápido, melhor!). Aproveite e
-          diferencie-se;
-        </p>
-      </Box>
-
-      <Box sx={styles.faq}>
-        <h2>FAQ</h2>
-        <p>1) A que vaga estou concorrendo?</p>
-        <p>
-          A todas as vagas abertas no site da EY. Quer conhecê-las?{" "}
-          <a href="">Clique aqui.</a>
-        </p>
-        <p>
-          2) A conclusão ou a aprovação dos cursos é obrigatória para se
-          candidatar às vagas?
-        </p>
-        <p>
-          Não, mas, sem dúvida, será um diferencial tanto para a EY, quanto para
-          o mercado.
-        </p>
-        <p>
-          3) Concluir os treinamentos digitais do Eu Capacito é uma garantia de
-          aprovação?
-        </p>
-        <p>
-          Não, mas, sem dúvida, será um diferencial tanto para a EY, quanto para
-          o mercado.
-        </p>
-      </Box>
-
-      <Box
-        sx={{
-          textAlign: "center",
-          display: {
-            md: "block",
-            xs: "none",
-          },
-          margin: "49px 0",
-        }}
-      >
-        <p>
-          Em caso de dúvidas adicionais: <br /> recrutamento.brasil@br.ey.com
-        </p>
-      </Box>
-
-      <h1>Para ajudar no seu processo, conclua o(s) seguinte(s) curso(s):</h1>
+      <h2>Para ajudar no seu processo, conclua o(s) seguinte(s) curso(s):</h2>
 
       <Box sx={styles.cardsContainer}>
-        <Box sx={styles.card}>
-          <CourseCard
-            coursePath={"#"}
-            imagePath={CourseImg1}
-            title="Python"
-            subtitle="EY Tecnologia"
-            logoPath={CourseLogoFiap}
-            className="card-desk"
-          />
-        </Box>
-        <Box sx={styles.card}>
-          <CourseCard
-            coursePath={"#"}
-            imagePath={CourseImg2}
-            title="Big Data & Analytics"
-            subtitle="EY Tecnologia"
-            logoPath={CourseLogoMicrosoft}
-            className="card-desk"
-          />
-        </Box>
-
+        
+          {courses.length > 0 && 
+            courses.map((course) => (
+              <Box key={course.id} sx={styles.card}>
+                <CourseCard
+                  url={course.url}
+                  imagePath={course.featuredImg}
+                  title={course.title}
+                  subtitle={course.subtitle}
+                  logoPath={course.partnerLogoURL}
+                />
+              </Box>
+            ))
+          }
+          
         <Box sx={styles.certificado}>
-          <Button>Envie os certificados</Button>
+          <Button onClick={handleCertificationUpload}>Envie os certificados</Button>
           <input type="file" />
           <input type="file" />
           <p>
@@ -150,21 +105,21 @@ const Employability = () => {
       </Box>
 
       <Box sx={styles.button}>
-        <Button>Comece agora!</Button>
+        <Button onClick={handleStartForm}>Comece agora!</Button>
       </Box>
+
     </Box>
   );
 };
 
-export default Employability;
+export default Scholarship;
 
 const styles = {
   root: {
-    h1: {
-      mb: "1.875rem",
-      color: "#CAC8C8",
-      fontSize: {md:"1.15rem",xs:"16px"},
-      fontWeight: {md:"500",xs:"700"},
+    h1: { marginTop: "2rem", fontSize: "22px", color: "#CAC8C8" },
+    h2: {
+      fontSize: "1.15rem",
+      fontWeight: 500,
       borderBottom: {
         xs: "none",
         md: "1px solid #77837F",
@@ -174,38 +129,213 @@ const styles = {
         xs: "0",
       },
     },
-    h2: {
-      mb: "1rem",
-      fontSize: { xs: "10px", md: "18px" },
-      fontWeight: 500,
+  },
+  image: {
+    minHeight: "350px",
+    maxHeight: "533px",
+    mt: "-24px",
+    img: {
+      width: "100%",
     },
+  },
+  texto: {
+    margin: "70px auto",
     "& p": {
+      lineHeight: "30px",
+      fontSize: "18px",
+      fontWeight: "500",
       color: "#77837F",
-      fontSize: { xs: "10px", md: "18px" },
-      fontWeight: 700,
-      lineHeight: { xs: "1.7rem", md: "30px" },
+      textAlign: "justify",
     },
-    "& p:last-of-type": {
-      mb: {
-        xs: "2rem",
-        md: "0",
+    width: "90%",
+    "& small": {
+      fontSize: "18px",
+      color: "#CAC8C8",
+    },
+  },
+  description: {
+    block: {
+      //css desktop
+      flexWrap: {
+        md: "nowrap",
+        xs: "wrap",
+      },
+      textAlign: "right",
+      "& p": {
+        m: 0,
+        fontSize: "0.875rem",
+      },
+      "& p span": {
+        color: "#FAE62E",
+      },
+      "& .MuiGrid-item:first-of-type p": {
+        mb: {
+          md: "0",
+          xs: "0.5rem",
+        },
+        textAlign: "left",
+      },
+      "& .MuiGrid-item:nth-of-type(2) p": {
+        fontSize: "1.5rem",
+        fontWeight: 700,
+        color: {
+          md: "#77837F",
+        },
+      },
+      "& .MuiGrid-item:last-of-type": {
+        maxWidth: {
+          md: "32%",
+          xs: "100%",
+        },
+
+        mt: "1rem",
+        mb: {
+          md: "0",
+          xs: "0.5rem",
+        },
+        "& p": {
+          color: "#33EDAC",
+          display: "flex",
+          //css desktop
+          justifyContent: {
+            md: "flex-start",
+            xs: "flex-end",
+          },
+          alignItems: "center",
+        },
+      },
+      icons: {
+        ml: "0.85rem",
+        mr: "0.35rem",
+        fontSize: "1.2rem",
+      },
+      //css desktop
+      pb: {
+        md: "38px",
+        xs: "0",
+      },
+
+      borderBottom: {
+        xs: "none",
+        md: "1px solid #77837f",
+      },
+      alignItems: {
+        md: "flex-end",
+      },
+      "& .description-desk": {
+        display: {
+          md: "flex",
+          xs: "block",
+        },
+        justifyContent: "space-around",
+        order: {
+          md: "2",
+        },
+        img:{
+            maxWidth:{                
+                md:"100px",
+                xs:"70px",
+            },
+            mb:{
+                md:"-14px",
+                xs:"-10px"
+            }
+        }
+      },
+      "& .description-desk-value": {
+        order: {
+          md: "3",
+        },
+        "& .desk-curso": {
+          display: {
+            md: "inline-block",
+            xs: "none",
+          },
+          color: "#DADADA",
+          fontSize: "18px",
+        },
+      },
+    },
+    "& .MuiGrid-root + p": {
+      color: "#77837F",
+      lineHeight: "1.625rem",
+    },
+    courseLink: {
+      width: {
+        md: "28%",
+        xs: "100%",
+      },
+      padding: {
+        md: "15px 75px",
+        xs: "6px 16px",
+      },
+    },
+    button: {
+      textAlign: "center",
+      mt: {
+        md: "30px",
+      },
+    },
+    desktopBonus: {
+      display: {
+        xs: "none",
+        md: "block",
+      },
+      "& p:last-of-type": {
+        display: "flex",
+        justifyContent: "space-between",
+        fontSize: "14px",
+        alignItems: "center",
+        "& img": {
+          mr: "10px",
+        },
+        mb:"35px",
+      },
+      "& p:first-of-type": {
+        margin: "85px 0 35px 0",
+      },
+      containerButton: {
+        display: {
+          md: "flex",
+          xs: "none",
+        },
+        justifyContent: "space-around",
+        mt: "30px",
+        pb: "23px",
+        borderBottom: "1px solid #77837f",
+      },
+      button: {
+        minWidth: "30%",
+        padding: "30px 60px",
+        background: "none",
+        border: "1px solid #77837F",
+        boxShadow: "none",
+        color: "#CAC8C8",
+        "&:hover":{
+            background:"none"
+        }
       },
     },
   },
+  specs: {
+    "& .MuiGrid-root p": {
+      mt: 0,
+      mb: "0.625rem",
+      display: "flex",
+      alignItems: "center",
+      color: "#77837F",
+      svg: {
+        mr: "1rem",
+        color: "#CAC8C8",
+      },
+    },
+  },
+  curriculum: {},
   button: {
     mx: "1rem",
     textAlign: { md: "center", xs: "left" },
     "& .MuiButton-root": {
       width: { xs: "100%", md: "25%" },
-    },
-  },
-  faq: {
-    "& p:nth-of-type(odd)": {
-      color: "#CAC8C8",
-    },
-    display: {
-      md: "block",
-      xs: "none",
     },
   },
   cardsContainer: {

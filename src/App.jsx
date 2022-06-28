@@ -22,7 +22,7 @@ import Blog from "./pages/Blog";
 import Blogs from "./pages/Blogs";
 import News from "./pages/News";
 import About from "./pages/About";
-import Oportunity from "./pages/Oportunity";
+import Scholarship from "./pages/Scholarship";
 import Oportunities from "./pages/Oportunities";
 import Employability from "./pages/Employability";
 import EmployabilityRegister from "./pages/EmployabilityRegister";
@@ -71,13 +71,13 @@ function App() {
                 <Route path="/ebook" element={<Ebooks />} />
                 <Route path="/noticias" element={<News />} />
                 <Route path="/quem-somos" element={<About />} />
-                <Route path="/oportunidade/:slug/:id" element={<Oportunity />} />
+                <Route path="/bolsa-de-estudo/:slug" element={<Scholarship />} />
+                <Route path="/empregabilidade/:slug" element={<Employability />} />
                 <Route path="/oportunidades" element={<Oportunities />} />
                 <Route path="/perfil" element={<Profile />} />
                 <Route path="/editar-senha" element={<Password />} />
                 <Route path="/editar-conta" element={<AccountEdition />} />
                 <Route path="/filtro" element={<Filter />} />
-                <Route path="/empregabilidade" element={<Employability />} />
                 <Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />
                 <Route path="/concluido" element={<Finished />} />
               </Route>

@@ -173,7 +173,7 @@ export default Content;
 
 const styles = {
   root: {
-    h1: { marginTop: "2rem", fontSize: "22px", color: "#CAC8C8" },
+    h1: { marginTop: "2rem", fontSize: "20px", color: "#CAC8C8" },
     hr: { border: 0, borderTop: "1px solid #77837F" },
     //css desktop
     "& .swiper-container": {

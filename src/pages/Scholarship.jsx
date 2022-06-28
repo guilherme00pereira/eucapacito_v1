@@ -1,29 +1,26 @@
 import { useState, useEffect } from "react";
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { Box } from "@mui/material";
 import Button from "../components/Button";
 import parse from "html-react-parser";
-
 import CourseCard from "../components/CourseCard";
-
 import apiService from "../services/apiService";
 
 
-const Oportunity = () => {
-  const [oportunityData, setOportunityData] = useState({
+const Scholarship = () => {
+  const [scholarshipData, setScholarshipData] = useState({
     featuredImg: "",
     title: "",
     description: "",
   });
-  const [oportunityCourses, setOportunityCourses] = useState([]);
+  const [courses, setCourses] = useState([]);
   const loggedId = sessionStorage.getItem('loggedIn');
   const { api } = apiService;
-  const { slug, id } = useParams();
+  const { slug } = useParams();
   let navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const type = searchParams.get("type");
 
-  const showForm = slug === 'introducao-a-ciencia-de-dados-exclusivo-para-pessoas-trans' && type === 'bolsa_de_estudo';
+
+  const showForm = slug === 'introducao-a-ciencia-de-dados-exclusivo-para-pessoas-trans';
 
   const handleCertificationUpload = () => {
     if(!loggedId) {
@@ -43,16 +40,16 @@ const Oportunity = () => {
 
   useEffect(() => {
     api
-      .get(`/wp/v2/${type}/${id}?_embed`)
+      .get(`/wp/v2/bolsa_de_estudo?slug=${slug}&_embed`)
       .then((res) => {
-        const post = res.data;
-        setOportunityData({
+        const post = res.data[0];
+        setScholarshipData({
           featuredImg: post.imagem.guid,
           title: parse(`${post.title.rendered}`),
           description: parse(`${post.content.rendered}`),
         });
         const fetchedCourses = [];
-        res.data.cursos_ec.forEach((course) => {
+        post.cursos_ec.forEach((course) => {
           fetchedCourses.push({
             id: course.id,
             url: course.url,
@@ -62,20 +59,20 @@ const Oportunity = () => {
             partnerLogoURL: course.responsavel,
           });
         });
-        setOportunityCourses(fetchedCourses);
+        setCourses(fetchedCourses);
       });
-  }, [id, api]);
+  }, [api]);
 
   return (
     <Box sx={styles.root}>
-      <h1>Empregabilidade</h1>
+      <h1>Bolsas de Estudo</h1>
       <hr />
 
       <Box sx={styles.texto}>
         <Box sx={styles.description}>
-          <h1>{oportunityData.title}</h1>
+          <h1>{scholarshipData.title}</h1>
 
-          <p>{oportunityData.description}</p>
+          <p>{scholarshipData.description}</p>
         </Box>
       </Box>
 
@@ -83,8 +80,8 @@ const Oportunity = () => {
 
       <Box sx={styles.cardsContainer}>
         
-          {oportunityCourses.length > 0 && 
-            oportunityCourses.map((course) => (
+          {courses.length > 0 && 
+            courses.map((course) => (
               <Box key={course.id} sx={styles.card}>
                 <CourseCard
                   url={course.url}
@@ -116,7 +113,7 @@ const Oportunity = () => {
   );
 };
 
-export default Oportunity;
+export default Scholarship;
 
 const styles = {
   root: {

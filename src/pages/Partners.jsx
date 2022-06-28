@@ -28,7 +28,7 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxTitle}>
-        <p>Mantenedores</p>
+        <h1>Mantenedores</h1>
         <hr />
       </Box>
 
@@ -43,7 +43,7 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxTitle}>
-        <p>Associados</p>
+        <h1>Associados</h1>
         <hr />
       </Box>
 
@@ -59,7 +59,7 @@ const Partners = () => {
       </Box>
 
       <Box sx={boxTitle}>
-        <p>Parceiros institucionais</p>
+        <h1>Parceiros institucionais</h1>
         <hr />
       </Box>
 
@@ -95,12 +95,13 @@ const boxTitle = {
         borderTop: "1px solid #77837F",
 
     },
-    "& p":{
+    "& h1":{
         fontSize:{
             md:"22px",
             xs:"16px",
         },
-        fontWeight:"700"
+        fontWeight:"700",
+        color: "#CAC8C8"
     }
 }
 

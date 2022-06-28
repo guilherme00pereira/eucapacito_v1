@@ -10,7 +10,7 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL }) => {
   let navigate = useNavigate();
 
   const handleCoursePage = () => {
-    navigate(`/curso/${slug}/${courseId}`);
+    navigate(`/curso-ec/${slug}`);
   };
 
   const icons = [
@@ -74,6 +74,7 @@ const styles = {
       md: "inline-block",
       xs: "flex",
     },
+    cursor: "pointer",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
