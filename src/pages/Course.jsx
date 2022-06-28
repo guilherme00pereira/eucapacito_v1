@@ -5,20 +5,9 @@ import {Box, CircularProgress, Grid} from "@mui/material";
 import {
     AccessTime,
 } from "@mui/icons-material";
-import licaoIcon from "../assets/icons/licaoIcon.png";
-import acessIcon from "../assets/icons/acessIcon.png";
-import audioIcon from "../assets/icons/audioIcon.png";
-import certificadoIcon from "../assets/icons/certificadoIcon.png";
-import nivelIcon from "../assets/icons/nivelIcon.png";
-import questIcon from "../assets/icons/questIcon.png";
-import techIcon from "../assets/icons/techIcon.png";
 import apiService from "../services/apiService";
 
 import Button from "../components/Button";
-// import CourseCurriculum from "../components/Course/CourseCurriculum";
-
-// import imagemFundo from "../assets/img/bg-desktop.png";
-import imagemFundo from "../assets/img/fundo_original-2.jpg";
 
 const Course = () => {
     const [courseData, setCourseData] = useState({
@@ -33,7 +22,7 @@ const Course = () => {
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
     const {api} = apiService;
-    const {id} = useParams();
+    const {slug} = useParams();
     let location = useLocation();
     let navigate = useNavigate();
 
@@ -47,8 +36,8 @@ const Course = () => {
     }
 
     useEffect(() => {
-        api.get(`/wp/v2/curso_ec/${id}?_embed`).then((res) => {
-            const course = res.data;
+        api.get(`/wp/v2/curso_ec?slug=${slug}&_embed`).then((res) => {
+            const course = res.data[0];
             setCourseData({
                 featuredImg: course["featured_image_src"],
                 subtitle: "Eu Capacito",
@@ -62,7 +51,7 @@ const Course = () => {
             });
             setIsLoading(false);
         });
-    }, [id, api]);
+    }, [api]);
 
     const handleRedirect = (e) => {
         e.preventDefault();

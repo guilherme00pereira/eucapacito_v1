@@ -131,7 +131,7 @@ const Home = () => {
                   key={course.id + Math.random()}
                 >
                   <CourseCard
-                    url={`/curso/${course.slug}/${course.id}`}
+                    url={`/curso-ec/${course.slug}`}
                     imagePath={course.featuredImg}
                     title={course.title}
                     subtitle="Cadastre-se"
@@ -172,7 +172,7 @@ const Home = () => {
                     key={course.id + Math.random()}
                   >
                     <CourseCard
-                      url={`/curso/${course.slug}/${course.id}`}
+                      url={`/curso-ec/${course.slug}`}
                       imagePath={course.featuredImg}
                       title={course.title}
                       subtitle="Cadastre-se"
@@ -188,7 +188,7 @@ const Home = () => {
                     key={course.id + Math.random()}
                   >
                     <CourseCard
-                      url={`/curso/${course.slug}/${course.id}`}
+                      url={`/curso-ec/${course.slug}`}
                       imagePath={course.featuredImg}
                       title={course.title}
                       subtitle="Cadastre-se"

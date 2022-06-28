@@ -6,7 +6,7 @@ import Link from "../Link";
 const BlogPost = ({ blog, sxContent, sxFull }) => {
   return (
       <Box sx={{...styles.post, ...sxFull}}>
-        <Link to={`/blog/${blog.slug}/${blog.id}`}>
+        <Link to={`/${blog.slug}`}>
           <Box sx={styles.post.image}>
             <img src={blog.featuredImg} alt="Placeholder Imagem" />
           </Box>

@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { Box, CircularProgress, Drawer } from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Box, CircularProgress, Drawer} from "@mui/material";
 import Filter from "../components/Search/Filter";
 import apiService from "../services/apiService";
 import { useSearchParams } from "react-router-dom";
 import { loading } from "../commonStyles/loading"
 import Button from "../components/Button";
-import CourseCard from "../components/Course/CourseCard";
+import CourseCard from "../components/CourseCard";
 import FilterIcon from "../assets/img/filter-icon.svg";
+import {ExpandMore} from "@mui/icons-material";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {swiper} from "../commonStyles/swiper";
+import {Autoplay, Pagination} from "swiper";
 
 const Courses = () => {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
-  const [isLoading, setIsLoading] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [journeys, setJourneys] = useState([]);
   const [filters, setFilters] = useState({
     levels: [],
     ranking: [],
@@ -25,13 +29,8 @@ const Courses = () => {
   const [title, setTitle] = useOutletContext();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const postsPerPage = "9";
   const { api } = apiService;
-
-  const handleLoadMore = () => {
-    if (!hideLoadMoreButton) {
-      setPage(page + 1);
-    }
-  };
 
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -50,7 +49,6 @@ const Courses = () => {
         sub: "Encontre um curso para aprender",
       });
 
-    setIsLoading(true);
     const ids = searchParams.get('t');
     let url = `/eucapacito/v1/search?page=${page}`;
     if(null !== ids) {
@@ -82,18 +80,30 @@ const Courses = () => {
           categories: res.data.filters.categoria_de_curso_ec,
           partners: res.data.filters.parceiro_ec
       })
-      if (page === 1) {
-          setCourses([...fetchedCourses]);
-      } else {
-          setCourses([...courses, ...fetchedCourses]);
-      }
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        return false;
+        if (page === 1) {
+            setCourses([...fetchedCourses]);
+        } else {
+            setCourses([...courses, ...fetchedCourses]);
+        }
+
       });
-  }, [page, token, searchParams]);
+
+    api.get(`/wp/v2/jornada?per_page=${postsPerPage}`).then((res) => {
+      const fetchedJourneys = [];
+
+      res.data.forEach((journey) => {
+        fetchedJourneys.push({
+          id: journey.id,
+          slug: journey.slug,
+          featuredImg: journey.image,
+          title: journey.title.rendered,
+          excerpt: journey.excerpt.rendered,
+        });
+        setJourneys([...fetchedJourneys]);
+      });
+    });
+
+  }, []);
 
   return (
     <Box sx={styles.root}>
@@ -124,25 +134,66 @@ const Courses = () => {
           <hr />
       </Box>
 
-      <Box sx={styles.tabPanelBox}>
-        {courses.length > 0 ? 
-          courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
+
+          <Swiper
+              className="mySwiper"
+              slidesPerView={1.2}
+              spaceBetween={25}
+              breakpoints={swiper.breakpoints}
+              autoplay={swiper.autoplay}
+              modules={[Pagination, Autoplay]}
+              pagination={{clickable:true}}
+          >
+           {courses.length > 0 &&
+                courses.map((course) => (
+                    <SwiperSlide
+                        className="card-desk"
+                        key={course.id + Math.random()}
+                    >
+                      <CourseCard
+                          url={`/curso-ec/${course.slug}`}
+                          imagePath={course.featuredImg}
+                          title={course.title}
+                          subtitle="Cadastre-se"
+                          logoPath={course.partnerLogoURL}
+                      />
+                    </SwiperSlide>
+                ))}
+          </Swiper>
+
+      <Box>
+        <div className="titulo">
+          <p>Jornadas</p>
+        </div>
+        <hr />
       </Box>
-      {isLoading && <CircularProgress sx={loading.circular} />}
-      {!isLoading && (
-        <Button
-          sx={
-            hideLoadMoreButton
-              ? styles.hideLoadMoreButton
-              : styles.loadMoreButton
-          }
-          onClick={handleLoadMore}
-        >
-          Ver mais
-        </Button>
-      )}
+
+      <Swiper
+          className="mySwiper"
+          slidesPerView={1.2}
+          spaceBetween={25}
+          breakpoints={swiper.breakpoints}
+          autoplay={swiper.autoplay}
+          modules={[Pagination, Autoplay]}
+          pagination={{clickable:true}}
+      >
+        {journeys.length > 0 &&
+            journeys.map((journey) => (
+                <SwiperSlide
+                    className="card-desk"
+                    key={journey.id + Math.random()}
+                >
+                  <CourseCard
+                      url={`/jornada/${journey.slug}`}
+                      imagePath={journey.featuredImg}
+                      title={journey.title}
+                      subtitle="Cadastre-se"
+                      logoPath={journey.partnerLogoURL}
+                  />
+                </SwiperSlide>
+            ))}
+      </Swiper>
+
     </Box>
   );
 };
@@ -174,6 +225,18 @@ const styles = {
         cursor: "pointer",
       },
     },
+    "& .swiper-pagination-bullet": {
+      background: "#33EDAC",
+    },
+    "& .swiper-pagination-bullet-active": {
+      background: "#33EDAC",
+    },
+    "& .swiper-slide": {
+      mb: {
+        xs: "0",
+        md: "50px",
+      },
+    }
   },
   tabPanelBox: {
     display: "flex",

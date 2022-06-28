@@ -72,7 +72,7 @@ const Oportunities = () => {
       setScholarships([...scholarships, ...fetchedScholarships]);
     });
 
-    // Jornadas
+    // JourneyCard
     // api.get(`/wp/v2/jornada?per_page=12`).then((res) => {
     //   const fetchedJourneys = [];
 
@@ -173,7 +173,7 @@ const Oportunities = () => {
       </Accordion>
 
       {/* <Box sx={styles.journey}>
-        <h2>Jornadas</h2>
+        <h2>JourneyCard</h2>
         <Swiper className="mySwiper" slidesPerView={1.2} spaceBetween={25}>
           {journeys.length > 0 &&
             journeys.map((journey) => (

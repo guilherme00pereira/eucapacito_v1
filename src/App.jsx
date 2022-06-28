@@ -34,6 +34,7 @@ import Video from "./pages/Video";
 import Videos from "./pages/Videos";
 import Ebooks from "./pages/Ebooks";
 import Finished from "./pages/Finished";
+import Journey from "./pages/Journey";
 
 function App() {
   // const navigate = useNavigate();
@@ -57,12 +58,13 @@ function App() {
                 <Route path="/procurar" element={<Search />} />
                 <Route path="/cursos" element={<Courses />} />
                 <Route path="/cursos-ec" element={<CoursesEC />} />
-                <Route path="/curso/:slug/:id" element={<Course />} />
+                <Route path="/curso-ec/:slug" element={<Course />} />
+                <Route path="/jornada/:slug" element={<Journey />} />
                 <Route path="/contato" element={<Contact />} />
                 <Route path="/faq" element={<Faq />} />
                 <Route path="/parceiros" element={<Partners />} />
                 <Route path="/conteudo" element={<Content />} />
-                <Route path="/blog/:slug/:id" element={<Blog />} />
+                <Route path="/:slug" element={<Blog />} />
                 <Route path="/blog" element={<Blogs />} />
                 <Route path="/video/:slug/:id" element={<Video />} />
                 <Route path="/videos" element={<Videos />} />

@@ -1,28 +1,43 @@
-import { NavLink } from "react-router-dom";
-import { Grid, Box } from "@mui/material";
+import {NavLink} from "react-router-dom";
+import {Box, Grid, Link} from "@mui/material";
 import parse from "html-react-parser";
 
-const CourseCard = ({ url, imagePath, title, subtitle, logoPath }) => {
+const CardContent = ({ imagePath, title, subtitle, logoPath }) => {
+  const hasLogoPath = typeof logoPath != 'undefined';
   return (
-    <NavLink to={url || "#"}>
-      <Box sx={styles.card}>
-        <Box sx={styles.card.image}>
-          <img src={imagePath} alt={`Curso - ${title}`} />
-        </Box>
-
-        <Grid container sx={styles.card.info}>
-          <Grid item className="desk-info">
-            <p>{parse(`${title}`)}</p>
-            <small>{parse(`${subtitle}`)}</small>
-          </Grid>
-
-          <Grid item>
-            <img src={logoPath} alt="Logo" />
-          </Grid>
-        </Grid>
+    <Box sx={styles.card}>
+      <Box sx={styles.card.image}>
+        <img src={imagePath} alt={`Curso - ${title}`}/>
       </Box>
-    </NavLink>
-  );
+
+      <Grid container sx={styles.card.info}>
+        <Grid item className="desk-info">
+          <p>{parse(`${title}`)}</p>
+          <small>{parse(`${subtitle}`)}</small>
+        </Grid>
+
+        {hasLogoPath &&
+            <Grid item>
+              <img src={logoPath} alt="Logo"/>
+            </Grid>
+        }
+
+      </Grid>
+    </Box>
+  )
+}
+
+
+const CourseCard = ({ url, imagePath, title, subtitle, logoPath }) => {
+
+
+  return url.includes('http') ?
+      <Link href={url || "#"} sx={{color: "#33EDAC", textDecoration: "none"}} target="_blank">
+        <CardContent imagePath={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
+      </Link> :
+      <NavLink to={url || "#"}>
+        <CardContent imagePath={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
+      </NavLink>;
 };
 
 export default CourseCard;

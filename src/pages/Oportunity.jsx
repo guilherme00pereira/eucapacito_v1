@@ -87,7 +87,7 @@ const Oportunity = () => {
             oportunityCourses.map((course) => (
               <Box key={course.id} sx={styles.card}>
                 <CourseCard
-                  coursePath={course.url}
+                  url={course.url}
                   imagePath={course.featuredImg}
                   title={course.title}
                   subtitle={course.subtitle}

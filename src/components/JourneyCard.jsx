@@ -13,7 +13,7 @@ import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
 import CourseLogoMicrosoft from "../assets/img/home-curso-logo-microsoft.png";
 import CourseLogoGoogle from "../assets/img/home-curso-logo-google.png";
 
-const Jornadas = () => {
+const JourneyCard = () => {
   return (
     <Container>
       <Box sx={styles.courses}>
@@ -70,7 +70,7 @@ const Jornadas = () => {
   );
 };
 
-export default Jornadas;
+export default JourneyCard;
 
 const styles = {
   swiper: {

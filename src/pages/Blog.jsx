@@ -19,7 +19,7 @@ const Blog = () => {
         description: "",
     });
     const {api} = apiService;
-    const {id} = useParams();
+    const {slug} = useParams();
 
     useEffect(() => {
         setTitle({
@@ -27,8 +27,8 @@ const Blog = () => {
             sub: "Leia o conteúdo da semana",
         });
 
-        api.get(`/wp/v2/posts/${id}?_embed`).then((res) => {
-            const blogData = res.data;
+        api.get(`/wp/v2/posts?slug=${slug}&_embed`).then((res) => {
+            const blogData = res.data[0];
             setBlog({
                 featuredImg: blogData.featured_image_src,
                 title: parse(`${blogData.title.rendered}`),
@@ -44,7 +44,7 @@ const Blog = () => {
             });
             setIsLoading(false);
         });
-    }, [id]);
+    }, [slug]);
 
     return (
         <>
