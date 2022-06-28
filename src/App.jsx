@@ -35,6 +35,7 @@ import Videos from "./pages/Videos";
 import Ebooks from "./pages/Ebooks";
 import Finished from "./pages/Finished";
 import Journey from "./pages/Journey";
+import CoursesListing from "./pages/CoursesListing";
 
 function App() {
   // const navigate = useNavigate();
@@ -56,6 +57,7 @@ function App() {
               <Route element={<TopBottomBars />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/procurar" element={<Search />} />
+                <Route path="/todos-os-cursos" element={<CoursesListing />} />
                 <Route path="/cursos" element={<Courses />} />
                 <Route path="/cursos-ec" element={<CoursesEC />} />
                 <Route path="/curso-ec/:slug" element={<Course />} />

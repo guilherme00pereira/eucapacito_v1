@@ -11,7 +11,7 @@ import { Pagination, Navigation, Autoplay } from "swiper";
 import parse from "html-react-parser";
 import { useOutletContext } from "react-router-dom";
 import apiService from "../services/apiService";
-import CourseCard from "../components/CourseCard";
+import ContentCard from "../components/ContentCard";
 import CourseImg3 from "../assets/img/home-curso3.png";
 import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
 import {swiper} from "../commonStyles/swiper";
@@ -105,7 +105,7 @@ const Oportunities = () => {
             {employabilities.length > 0 &&
               employabilities.map((employability) => (
                 <SwiperSlide key={employability.id}>
-                  <CourseCard
+                  <ContentCard
                     url={`/empregabilidade/${employability.slug}`}
                     imagePath={employability.featuredImg || CourseImg3}
                     title={employability.title}
@@ -139,7 +139,7 @@ const Oportunities = () => {
             {scholarships.length > 0 &&
               scholarships.map((scholarship) => (
                 <SwiperSlide key={scholarship.id}>
-                  <CourseCard
+                  <ContentCard
                     url={`/bolsa-de-estudo/${scholarship.slug}`}
                     imagePath={scholarship.featuredImg || CourseImg3}
                     title={scholarship.title}
@@ -158,7 +158,7 @@ const Oportunities = () => {
           {journeys.length > 0 &&
             journeys.map((journey) => (
               <SwiperSlide key={journey.id}>
-                <CourseCard
+                <ContentCard
                   url={`/oportunidade/${journey.slug}/${journey.id}?type=${journey.type}`}
                   imagePath={journey.featuredImg || CourseImg3}
                   title={journey.title}

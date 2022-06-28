@@ -2,7 +2,7 @@ import { Box, Container } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
 
-import CourseCard from "./CourseCard";
+import ContentCard from "./ContentCard";
 import Link from "./Link";
 
 import CourseImg1 from "../assets/img/home-curso1.png";
@@ -26,7 +26,7 @@ const JourneyCard = () => {
           navigation={true}
         >
           <SwiperSlide className="card-desk">
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg1}
               title="Design Thinking"
@@ -36,7 +36,7 @@ const JourneyCard = () => {
           </SwiperSlide>
 
           <SwiperSlide className="card-desk">
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg2}
               title="Marketing Digital"
@@ -46,7 +46,7 @@ const JourneyCard = () => {
           </SwiperSlide>
 
           <SwiperSlide className="card-desk">
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg3}
               title="Visualize dados no Power BI"
@@ -56,7 +56,7 @@ const JourneyCard = () => {
           </SwiperSlide>
 
           <SwiperSlide className="card-desk">
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg3}
               title="Empreendedorismo"

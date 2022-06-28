@@ -12,7 +12,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
 import Banners from "../components/Home/Banners";
 import Menu from "../components/Home/Menu";
-import CourseCard from "../components/CourseCard";
+import ContentCard from "../components/ContentCard";
 import Footer from "../layouts/Footer";
 import BlogPost from "../components/Content/BlogPost";
 
@@ -130,7 +130,7 @@ const Home = () => {
                   className="card-EC-desk"
                   key={course.id + Math.random()}
                 >
-                  <CourseCard
+                  <ContentCard
                     url={`/curso-ec/${course.slug}`}
                     imagePath={course.featuredImg}
                     title={course.title}
@@ -171,7 +171,7 @@ const Home = () => {
                     className="card-mobile"
                     key={course.id + Math.random()}
                   >
-                    <CourseCard
+                    <ContentCard
                       url={`/curso-ec/${course.slug}`}
                       imagePath={course.featuredImg}
                       title={course.title}
@@ -187,7 +187,7 @@ const Home = () => {
                     className="card-desk"
                     key={course.id + Math.random()}
                   >
-                    <CourseCard
+                    <ContentCard
                       url={`/curso-ec/${course.slug}`}
                       imagePath={course.featuredImg}
                       title={course.title}
@@ -253,7 +253,7 @@ const Home = () => {
               {scholarships.length > 0 &&
                 scholarships.map((scholarship) => (
                   <SwiperSlide key={scholarship.id}>
-                    <CourseCard
+                    <ContentCard
                       url={`/oportunidade/${scholarship.slug}/${scholarship.id}?type=${scholarship.type}`}
                       imagePath={CourseImg3}
                       title={scholarship.title}

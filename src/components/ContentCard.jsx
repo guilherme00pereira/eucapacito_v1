@@ -28,7 +28,7 @@ const CardContent = ({ imagePath, title, subtitle, logoPath }) => {
 }
 
 
-const CourseCard = ({ url, imagePath, title, subtitle, logoPath }) => {
+const ContentCard = ({ url, imagePath, title, subtitle, logoPath }) => {
 
 
   return url.includes('http') ?
@@ -40,7 +40,7 @@ const CourseCard = ({ url, imagePath, title, subtitle, logoPath }) => {
       </NavLink>;
 };
 
-export default CourseCard;
+export default ContentCard;
 
 const styles = {
   card: {

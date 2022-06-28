@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import { Box } from "@mui/material";
 import Button from "../components/Button";
 import parse from "html-react-parser";
-import CourseCard from "../components/CourseCard";
+import ContentCard from "../components/ContentCard";
 import apiService from "../services/apiService";
 
 
@@ -83,7 +83,7 @@ const Scholarship = () => {
           {courses.length > 0 && 
             courses.map((course) => (
               <Box key={course.id} sx={styles.card}>
-                <CourseCard
+                <ContentCard
                   url={course.url}
                   imagePath={course.featuredImg}
                   title={course.title}

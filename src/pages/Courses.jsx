@@ -4,7 +4,7 @@ import {Box} from "@mui/material";
 import apiService from "../services/apiService";
 import { useSearchParams } from "react-router-dom";
 import ContentTitle from "../components/Content/ContentTitle";
-import CourseCard from "../components/CourseCard";
+import ContentCard from "../components/ContentCard";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {swiper} from "../commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
@@ -103,7 +103,7 @@ const Courses = () => {
 
   return (
     <Box sx={styles.root}>
-      <ContentTitle title="Cursos" to={'/procurar?search='} linkText="Todos os cursos" />
+      <ContentTitle title="Cursos" to={'/todos-os-cursos'} linkText="Todos os cursos" />
         <Swiper
               className="mySwiper"
               slidesPerView={1.2}
@@ -119,7 +119,7 @@ const Courses = () => {
                         className="card-desk"
                         key={course.id + Math.random()}
                     >
-                      <CourseCard
+                      <ContentCard
                           url={`/curso-ec/${course.slug}`}
                           imagePath={course.featuredImg}
                           title={course.title}
@@ -152,7 +152,7 @@ const Courses = () => {
                     className="card-desk"
                     key={journey.id + Math.random()}
                 >
-                  <CourseCard
+                  <ContentCard
                       url={`/jornada/${journey.slug}`}
                       imagePath={journey.featuredImg}
                       title={journey.title}

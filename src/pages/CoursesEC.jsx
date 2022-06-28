@@ -8,7 +8,7 @@ import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
 
-import CourseCard from "../components/CourseCard";
+import ContentCard from "../components/ContentCard";
 
 import EuCapacitoLogo from "../assets/img/logo.png";
 import EuCapacitoLogoVertical from "../assets/img/logo-vertical.png";
@@ -47,7 +47,7 @@ const CoursesEC = () => {
             modules={[Pagination, Navigation, Autoplay]}
           >
             <SwiperSlide>
-              <CourseCard
+              <ContentCard
                 url={"#"}
                 imagePath={CourseImg1}
                 title="Design Thinking"
@@ -57,7 +57,7 @@ const CoursesEC = () => {
             </SwiperSlide>
 
             <SwiperSlide>
-              <CourseCard
+              <ContentCard
                 url={"#"}
                 imagePath={CourseImg2}
                 title="Marketing Digital"
@@ -67,7 +67,7 @@ const CoursesEC = () => {
             </SwiperSlide>
 
             <SwiperSlide>
-              <CourseCard
+              <ContentCard
                 url={"#"}
                 imagePath={CourseImg3}
                 title="Visualize dados no Power BI"
@@ -77,7 +77,7 @@ const CoursesEC = () => {
             </SwiperSlide>
 
             <SwiperSlide>
-              <CourseCard
+              <ContentCard
                 url={"#"}
                 imagePath={CourseImg4}
                 title="Empreendedorismo"
@@ -105,7 +105,7 @@ const CoursesEC = () => {
           modules={[Pagination, Navigation, Autoplay]}
         >
           <SwiperSlide>
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg1}
               title="Design Thinking"
@@ -115,7 +115,7 @@ const CoursesEC = () => {
           </SwiperSlide>
 
           <SwiperSlide>
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg2}
               title="Marketing Digital"
@@ -125,7 +125,7 @@ const CoursesEC = () => {
           </SwiperSlide>
 
           <SwiperSlide>
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg3}
               title="Visualize dados no Power BI"
@@ -135,7 +135,7 @@ const CoursesEC = () => {
           </SwiperSlide>
 
           <SwiperSlide>
-            <CourseCard
+            <ContentCard
               url={"#"}
               imagePath={CourseImg4}
               title="Empreendedorismo"
