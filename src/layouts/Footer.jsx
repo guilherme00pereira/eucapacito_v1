@@ -61,19 +61,19 @@ const Footer = () => {
           </MuiLink>
         </Box>
         <Box>
-          <MuiLink href="https://www.facebook.com/eucapacito/">
+          <MuiLink href="https://www.facebook.com/eucapacito/" target="_blank">
             <Facebook sx={styles.email} />
           </MuiLink>
 
-          <MuiLink href="https://www.instagram.com/eucapacito/">
+          <MuiLink href="https://www.instagram.com/eucapacito/" target="_blank">
             <Instagram sx={styles.email} />
           </MuiLink>
 
-          <MuiLink href="https://www.youtube.com/c/EuCapacito">
+          <MuiLink href="https://www.youtube.com/c/EuCapacito" target="_blank">
             <YouTube sx={styles.email} />
           </MuiLink>
 
-          <MuiLink href="https://www.linkedin.com/company/eucapacito/">
+          <MuiLink href="https://www.linkedin.com/company/eucapacito/" target="_blank">
             <LinkedIn sx={styles.email} />
           </MuiLink>
         </Box>

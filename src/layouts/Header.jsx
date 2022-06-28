@@ -9,7 +9,7 @@ import {
   Button,
   InputBase,
   InputAdornment,
-  Drawer,
+  Drawer, Link as MuiLink,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "../components/Link";
@@ -21,6 +21,8 @@ import SearchIcon from "../assets/img/header-search-icon.png";
 import EuCapacitoLogo from "../assets/img/logo.png";
 
 import MenuDesk from "../components/Home/MenuDesktop";
+import {Facebook, Instagram, LinkedIn} from "@mui/icons-material";
+import YouTube from "@mui/icons-material/YouTube";
 
 const Header = ({ title, subtitle }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -129,6 +131,24 @@ const Header = ({ title, subtitle }) => {
               onChange={handleSearch}
               onKeyUp={handleSearchResults}
             />
+
+            <Box sx={styles.socialdesk}>
+              <MuiLink href="https://www.facebook.com/eucapacito/" target="_blank">
+                <Facebook sx={styles.email} />
+              </MuiLink>
+
+              <MuiLink href="https://www.instagram.com/eucapacito/" target="_blank">
+                <Instagram sx={styles.email} />
+              </MuiLink>
+
+              <MuiLink href="https://www.youtube.com/c/EuCapacito" target="_blank">
+                <YouTube sx={styles.email} />
+              </MuiLink>
+
+              <MuiLink href="https://www.linkedin.com/company/eucapacito/" target="_blank">
+                <LinkedIn sx={styles.email} />
+              </MuiLink>
+            </Box>
 
             <Box sx={styles.subheaderdesk}>
               {token && location.length <= 1 ? (
@@ -286,6 +306,18 @@ const styles = {
       fontSize: "12px",
       fontWeight: 500,
     },
+  },
+  socialdesk: {
+    display: { xs: "none", md: "block" },
+    position: "absolute",
+    top: "10px",
+    right: "40px",
+    "& a": {
+      mx: 1,
+      mt: "12px",
+      color: "#77837F",
+      fontSize: "32px",
+    }
   },
   deskcadastro: {
     display: { xs: "none", md: "block" },
