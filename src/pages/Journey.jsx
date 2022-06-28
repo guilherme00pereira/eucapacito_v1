@@ -145,7 +145,6 @@ const styles = {
         alignItems: "flex-start"
     },
     card: {
-        flex: "1 auto",
         width: {
             md: "30%",
             xs: "100%"
