@@ -7,7 +7,7 @@ const CourseCard = ({ course }) => {
   // const courseProgress = Math.floor(Math.random() * 100);
 
   return (
-    <Link to={`/curso/${course.slug}/${course.id}`} sx={styles.container}>
+    <Link to={`/curso-ec/${course.slug}`} sx={styles.container}>
       <Box sx={styles.image}>
         <img src={course.featuredImg} alt="Imagem Curso" />
       </Box>

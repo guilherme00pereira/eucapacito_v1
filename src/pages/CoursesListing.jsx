@@ -6,9 +6,8 @@ import apiService from "../services/apiService";
 import {useSearchParams} from "react-router-dom";
 import {loading} from "../commonStyles/loading"
 import Button from "../components/Button";
-import CourseCard from "../components/Course/CourseCard";
 import FilterIcon from "../assets/img/filter-icon.svg";
-import ContentCard from "../components/ContentCard";
+import CourseCard from "../components/Course/CourseCard";
 
 const Courses = () => {
     const [token, setToken] = useState(sessionStorage.getItem("token"));
@@ -128,13 +127,7 @@ const Courses = () => {
             <Box sx={styles.tabPanelBox}>
                 {courses.length > 0 ?
                     courses.map((course) => (
-                        <ContentCard
-                            url={`/curso-ec/${course.slug}`}
-                            imagePath={course.featuredImg}
-                            title={course.title}
-                            subtitle="Cadastre-se"
-                            logoPath={course.partnerLogoURL}
-                        />
+                        <CourseCard course={course} key={course.id} />
                     )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
             </Box>
             {isLoading && <CircularProgress sx={loading.circular}/>}
