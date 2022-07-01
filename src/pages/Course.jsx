@@ -28,6 +28,9 @@ const Course = () => {
 
     const calcDuration = (v) => {
         v = parseInt(v, 10);
+        if(isNaN(v)) {
+            return "Não informado"
+        }
         const h = Math.floor(v / 3600);
         const m = Math.floor((v - (h * 3600)) / 60);
         let text = h + " horas";
@@ -90,79 +93,14 @@ const Course = () => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <p><AccessTime sx={styles.description.block.icons}/> {courseData.duration}
+                                <p style={{textAlign: "left"}}>
+                                    <AccessTime sx={styles.description.block.icons}/>
+                                    {courseData.duration}
                                 </p>
                             </Grid>
                         </Grid>
 
                         <div className="description">{courseData.description}</div>
-
-                        {/*<Box sx={styles.description.desktopBonus}>
-              <p>O que você vai conseguir</p>
-              <p>
-                <Box>
-                  <img src={licaoIcon} alt="" /> 25 lições
-                </Box>
-                <Box>
-                  <img src={techIcon} alt="" />
-                  Acesso no celular, desktop
-                </Box>
-                <Box>
-                  <img src={nivelIcon} alt="" />
-                  Nível iniciante
-                </Box>
-                <Box>
-                  <img src={audioIcon} alt="" />
-                  Áudio / Vídeo
-                </Box>
-                <Box>
-                  <img src={acessIcon} alt="" />
-                  Acesso vitalício
-                </Box>
-                <Box>
-                  <img src={questIcon} alt="" />
-                  Questionários
-                </Box>
-                <Box>
-                  <img src={certificadoIcon} alt="" />
-                  Certificado
-                </Box>
-              </p>
-            </Box>
-
-            <Box
-              sx={{
-                display: { xs: "none", md: "block" },
-                "& p": { fontSize: "20px", fontWeight: "500" },
-              }}
-            >
-              <p>Currículo</p>
-              <Box sx={styles.description.desktopBonus.containerButton}>
-                <Button
-                  href={courseData.courseUrl}
-                  target="_blank"
-                  sx={styles.description.desktopBonus.button}
-                >
-                  Conteúdo Programático
-                </Button>
-
-                <Button
-                  href={courseData.courseUrl}
-                  target="_blank"
-                  sx={styles.description.desktopBonus.button}
-                >
-                  Informações Básicas
-                </Button>
-
-                <Button
-                  href={courseData.courseUrl}
-                  target="_blank"
-                  sx={styles.description.desktopBonus.button}
-                >
-                  F.A.Q
-                </Button>
-              </Box>
-            </Box>*/}
 
                         <Box sx={styles.description.button}>
                             {token && (
@@ -186,76 +124,6 @@ const Course = () => {
                         </Box>
                     </Box>
 
-                    {/* <Box sx={styles.specs}>
-            <h2>O que você vai conseguir</h2>
-
-            <Grid container>
-              <Grid item xs={12}>
-                <p>
-                  <MenuBook /> 25 lições
-                </p>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  <ScreenRotation /> Acesso no celular, desktop e TV
-                </p>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  <SignalCellularAlt /> Nível iniciante
-                </p>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  <OndemandVideo /> Áudio / Vídeo
-                </p>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  <AllInclusive /> Acesso vitalício
-                </p>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  <Extension /> Questionários
-                </p>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  <WorkspacePremium /> Certificado de conclusão
-                </p>
-              </Grid>
-            </Grid>
-          </Box> */}
-
-                    {/* <Box sx={styles.curriculum}>
-            <h2>Currículo</h2>
-
-            <CourseCurriculum
-              number="01"
-              title="Introdução"
-              duration="1:43"
-              link="#"
-            />
-            <CourseCurriculum
-              number="02"
-              title="Ferramentas"
-              duration="1:43"
-              link="#"
-            />
-            <CourseCurriculum
-              number="03"
-              title="Professores"
-              duration="1:43"
-              link="#"
-            />
-            <CourseCurriculum
-              number="04"
-              title="Começando"
-              duration="1:43"
-              link="#"
-            />
-          </Box> */}
                 </Box>
             </Box>)}
         </>
@@ -351,6 +219,7 @@ const styles = {
                 md: "nowrap",
                 xs: "wrap",
             },
+            alignItems: "center",
             textAlign: "right",
             "& p": {
                 m: 0,
@@ -366,6 +235,10 @@ const styles = {
                     xs: "0.5rem",
                 },
                 textAlign: "left",
+            },
+            "& .MuiGrid-item:first-of-type": {
+                display: "flex",
+                alignItems: "center !important"
             },
             "& .MuiGrid-item:nth-of-type(2) p": {
                 fontSize: {md: "1.5rem", xs: "24px"},
@@ -418,9 +291,6 @@ const styles = {
                 xs: "none",
                 md: "1px solid #77837f",
             },
-            alignItems: {
-                md: "flex-end",
-            },
             "& .description-desk": {
                 display: {
                     md: "flex",
@@ -440,7 +310,7 @@ const styles = {
                         xs: "-10px",
                     },
                     verticalAlign: {
-                        md: "top",
+                        md: "text-bottom",
                         xs: "super",
                     },
                 },

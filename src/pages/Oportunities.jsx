@@ -251,7 +251,7 @@ const styles = {
     },
     "& .swiper-slide": {
       mb: {
-        xs: "0",
+        xs: "50px",
         md: "50px",
       },
     },
