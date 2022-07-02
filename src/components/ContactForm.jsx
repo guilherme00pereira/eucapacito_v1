@@ -17,10 +17,13 @@ const ContactForm = () => {
     message: "",
   });
 
+
   const handleFieldChange = (field) => (e) =>
     setFields({ ...fields, [field]: e.target.value });
 
-  const handleSubmit = (e) => {}
+  const handleSubmit = (e) => {
+
+  }
 
   useEffect(() => {
     const script = document.createElement("script");

@@ -109,39 +109,10 @@ const changePassword = async (formData) => {
   }
 }
 
-const getCourses = async (token) => {
-  await api
-    .get("/wp/v2/curso_ec?_embed", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((res) => {
-      const fetchedCourses = [];
-
-      res.data.forEach((course) => {
-        const newCourse = {
-          id: course.id,
-          slug: course.slug,
-          featuredImg: course["_embedded"]["wp:featuredmedia"][0]["source_url"],
-          title: course.title.rendered,
-          subtitle: "Eu Capacito",
-          logo: "EC",
-        };
-
-        fetchedCourses.push(newCourse);
-      });
-
-      return fetchedCourses;
-    })
-    .catch((error) => {
-      return false;
-    });
-};
-
 const apiService = {
   api,
   login,
   logout,
-  getCourses,
   validateToken,
   register,
   updateProfile,

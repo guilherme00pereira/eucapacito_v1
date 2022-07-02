@@ -7,11 +7,11 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import apiService from "../../services/apiService";
+
 import Button from "../../components/Button";
 
 const Filter = ({handleModal, filters}) => {
-  //const {api} = apiService;
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [categoryIDs, setCategoryIDs] = useState([]);
   let navigate = useNavigate();

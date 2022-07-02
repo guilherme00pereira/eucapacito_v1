@@ -34,7 +34,6 @@ const Banners = () => {
                 autoplay={swiper.autoplay}
                 modules={[Pagination, Autoplay]}
                 slidesPerView={1}
-                // pagination={{ clickable: true, renderBullet: (index, className) => {} }}
             >
                 {banners.length > 0 &&
                     banners.map((banner) => (
@@ -67,21 +66,20 @@ const styles = {
             alignItems: "center"
         },
         "& .swiper-slide": {
-            display: "flex !important",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
         },
         "& .bannerDesk": {
             display: {
-                md: "block",
+                md: "flex",
                 xs: "none",
             }
         },
         "& .bannerMobile": {
             display: {
                 md: "none",
-                xs: "block",
+                xs: "flex",
             },
         },
     },

@@ -144,7 +144,7 @@ const Content = () => {
       </Box>
 
       <Box sx={styles.ebook}>
-        <ContentTitle title="Ebook" to={'/ebook'} linkText="Todos os ebooks" />
+        <ContentTitle title="Ebook" to={'/ebooks'} linkText="Todos os ebooks" />
         <Swiper
           className="mySwiper"
           breakpoints={swiper.breakpoints}
@@ -208,7 +208,7 @@ const styles = {
     },
     "& .swiper-slide": {
       mb: {
-        xs: "0",
+        xs: "50px",
         md: "50px",
       },
     },

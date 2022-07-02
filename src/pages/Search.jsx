@@ -19,6 +19,8 @@ const Search = () => {
     const [total, setTotal] = useState(0);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [page, setPage] = useState(1);
+    const [term, setTerm] = useState('');
+    const [ids, setIds] = useState('');
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const { api } = apiService;
@@ -36,8 +38,11 @@ const Search = () => {
     const handleModal = (status) => setDrawerOpen(status);
 
     useEffect(() => {
-        const term = searchParams.get('search');
-        const ids = searchParams.get('t');
+        if (page === 1) {
+            setCourses([]);
+        }
+        setTerm(searchParams.get('search'));
+        setIds(searchParams.get('t'));
         let url = `/eucapacito/v1/search?page=${page}`;
         if(null !== ids) {
             url += `&t=${ids}`;
@@ -69,11 +74,9 @@ const Search = () => {
                     categories: res.data.filters.categoria_de_curso_ec,
                     partners: res.data.filters.parceiro_ec
                 })
-                if (page === 1) {
-                    setCourses([...fetchedCourses]);
-                } else {
-                    setCourses([...courses, ...fetchedCourses]);
-                }
+
+                setCourses([...courses, ...fetchedCourses]);
+
                 setIsLoading(false);
             })
                 .catch((error) => {
@@ -81,7 +84,7 @@ const Search = () => {
                     return false;
                 });
         }
-    }, [page, searchParams]);
+    }, [ids, term, page, searchParams]);
 
     return (
 
@@ -112,6 +115,7 @@ const Search = () => {
                 </div>
 
                 <hr />
+
                 {courses.length > 0 ? 
                     courses.map((course) => (
                     <CourseBox

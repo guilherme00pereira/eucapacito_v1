@@ -68,9 +68,9 @@ function App() {
                 <Route path="/conteudo" element={<Content />} />
                 <Route path="/:slug" element={<Blog />} />
                 <Route path="/blog" element={<Blogs />} />
-                <Route path="/video/:slug/:id" element={<Video />} />
+                <Route path="/video/:slug" element={<Video />} />
                 <Route path="/videos" element={<Videos />} />
-                <Route path="/ebook" element={<Ebooks />} />
+                <Route path="/ebooks/" element={<Ebooks />} />
                 <Route path="/noticias" element={<News />} />
                 <Route path="/quem-somos" element={<About />} />
                 <Route path="/bolsa-de-estudo/:slug" element={<Scholarship />} />

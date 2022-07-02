@@ -7,7 +7,7 @@ const VideoPost = ({ video, sxFull }) => {
     <Box sx={{...styles.post,...sxFull}}>
       <h2>{video.title}</h2>
 
-      <Link to={`/video/${video.slug}/${video.id}`}>
+      <Link to={`/video/${video.slug}`}>
         <div className="image">
           <img src={video.featuredImg} alt="Video Placeholder" />
           <PlayCircleOutline sx={styles.post.playIcon} />

@@ -13,7 +13,7 @@ const Video = () => {
   });
 
   const { api } = apiService;
-  const { id } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
     setTitle({
@@ -21,8 +21,8 @@ const Video = () => {
       sub: false,
     });
 
-    api.get(`/wp/v2/video/${id}?_embed`).then((res) => {
-      const videoData = res.data;
+    api.get(`/wp/v2/video?slug=${slug}&_embed`).then((res) => {
+      const videoData = res.data[0];
 
       setVideo({
         title: parse(videoData.title.rendered),
