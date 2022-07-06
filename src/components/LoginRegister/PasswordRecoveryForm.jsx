@@ -12,9 +12,12 @@ import { styled } from "@mui/material/styles";
 import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
+import SendMessageImage from "../../assets/img/mensagem-enviada.png"
+import {messageReturn} from "../../commonStyles/messageReturn";
 
-const PasswordRecoveryForm = () => {
+const PasswordRecoveryForm = ({registerMessage}) => {
   const [email, setEmail] = useState("");
+  const [hideMessage, setHideMessage] = useState(true);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("false");
   const [alertType, setAlertType] = useState("success");
@@ -30,12 +33,13 @@ const PasswordRecoveryForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await apiService.recoverPassword(email);
-    if(response.status)
-      setAlertType('success')
-    else
+    if(response.status) {
+      setHideMessage(false)
+    } else {
       setAlertType('error');
-    setAlertMessage(response.message);
-    setAlertOpen(true);
+      setAlertMessage(response.message);
+      setAlertOpen(true);
+    }
   }
 
   return (
@@ -49,6 +53,7 @@ const PasswordRecoveryForm = () => {
         },
       }}
     >
+      {hideMessage ?
       <Box sx={{ mx: 1 }}>
         <h2>Recuperar senha</h2>
         <p>Coloque seu e-mail</p>
@@ -76,7 +81,7 @@ const PasswordRecoveryForm = () => {
             <Box sx={{ display: "inline-block" }}>
               <p>
                 Já tem uma conta?{" "}
-                <Link to="/login">
+                <Link to="/login" onClick={() => registerMessage(false)}>
                   Conecte-se
                   <ArrowRight
                     sx={{ fontSize: "1.7rem", verticalAlign: "middle" }}
@@ -87,6 +92,13 @@ const PasswordRecoveryForm = () => {
           </FormCtrl>
         </form>
       </Box>
+          :
+      <Box sx={messageReturn}>
+        <img src={SendMessageImage} alt={"senha enviada"} />
+        <h2>Senha Enviada</h2>
+        <span>Sua nova senha foi direcionado ao email cadastrado</span>
+      </Box>
+      }
       <Snackbar
           open={alertOpen}
           onClose={handleCloseAlert}>

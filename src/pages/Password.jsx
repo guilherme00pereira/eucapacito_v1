@@ -19,6 +19,8 @@ import {
     VisibilityOff,
 } from "@mui/icons-material";
 import apiService from "../services/apiService";
+import {messageReturn} from "../commonStyles/messageReturn";
+import SendMessageImage from "../assets/img/mensagem-enviada.png";
 
 const Password = () => {
     const [fields, setFields] = useState({
@@ -31,6 +33,7 @@ const Password = () => {
     });
 
     const [alertOpen, setAlertOpen] = useState(false);
+    const [hideMessage, setHideMessage] = useState(true);
     const [alertMessage, setAlertMessage] = useState("false");
     const [alertType, setAlertType] = useState("success");
 
@@ -64,12 +67,13 @@ const Password = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await apiService.changePassword(fields);
-        if (response.status)
-            setAlertType('success')
-        else
+        if (response.status) {
+            setHideMessage(false)
+        } else {
             setAlertType('error');
-        setAlertMessage(response.message);
-        setAlertOpen(true);
+            setAlertMessage(response.message);
+            setAlertOpen(true);
+        }
     }
 
     return (
@@ -79,6 +83,7 @@ const Password = () => {
             </Box>
             <img src={Logo} alt="logo"/>
 
+            {hideMessage ?
             <form sx={styles.form}>
                 <FormControl>
                     <InputLabel htmlFor="password">Senha Antiga</InputLabel>
@@ -134,6 +139,14 @@ const Password = () => {
 
                 <Button onClick={handleSubmit} sx={styles.button}>Alterar</Button>
             </form>
+                :
+                <Box sx={messageReturn}>
+                    <img src={SendMessageImage} alt={"senha enviada"} />
+                    <h2>Senha Redefinida</h2>
+                    <span>Sua nova senha foi direcionado ao email cadastrado</span>
+                </Box>
+            }
+
             <Snackbar
                 open={alertOpen}
                 onClose={handleCloseAlert}>

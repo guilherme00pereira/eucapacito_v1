@@ -281,7 +281,7 @@ const styles = {
     "& .swiper-pagination-bullet-active": {
       background: "#33EDAC",
     },
-    "& .swiper-slide": {
+      "& .swiper-slide": {
       mb: {
         xs: "50px",
         md: "50px",

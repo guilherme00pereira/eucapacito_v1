@@ -24,7 +24,7 @@ import Button from "../Button";
 import apiService from "../../services/apiService";
 import {useNavigate} from "react-router-dom";
 
-const RegisterForm = () => {
+const RegisterForm = ({registerMessage}) => {
     const [fields, setFields] = useState({
         name: "",
         email: "",
@@ -65,13 +65,14 @@ const RegisterForm = () => {
         }
         const response = await apiService.register(fields);
         if (response.status) {
-            navigate("/perfil");
+            registerMessage(true)
+            navigate("/login");
         } else {
             setAlertType('error')
             setAlertMessage(response.message);
             setAlertOpen(true);
-
         }
+
     }
 
     return (

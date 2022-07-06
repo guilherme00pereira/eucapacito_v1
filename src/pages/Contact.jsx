@@ -38,18 +38,7 @@ const Contact = () => {
           <p>Avenida Chedid Jafet Nº 222 Bloco B, 1 andar São Paulo - SP</p>
         </Box>
 
-        <Box
-          sx={{
-            mt: {
-              xs: "0",
-              md: "65px",
-            },
-            "& h2": {
-              marginLeft: {md:"120px", xs:"0"},
-              fontSize: { xs: "16px", md: "22px" },
-            },
-          }}
-        >
+        <Box sx={styles.mapbox}>
           <h2>Mapa</h2>
           <img src={mapa} alt="" />
         </Box>
@@ -71,29 +60,7 @@ const Contact = () => {
           }}
         >
           <h2>Contato</h2>
-          <MuiLink
-            href="mailto:eucapacito@institutoitmidia.com.br"
-            sx={{
-              textDecoration: "none",
-              color: "#77837F",
-              position: {
-                md: "absolute",
-                xs: "relative",
-              },
-              top: {
-                md: "100%",
-                xs: "0",
-              },
-              marginLeft: {
-                md: "20px",
-                xs: "0",
-              },
-              fontSize: "14px",
-              fontStyle: "italic",
-              fontWeight: "500",
-            }}
-         
-          >
+          <MuiLink href="mailto:eucapacito@institutoitmidia.com.br" sx={styles.mailLink}>
             eucapacito@institutoitmidia.com.br
           </MuiLink>
 
@@ -295,6 +262,35 @@ const styles = {
             fontStyle: "italic",
             color: "#77837F",
         },
+    },
+    mapbox: {
+        mt: {
+            xs: "0",
+            md: "65px",
+        },
+        "& h2": {
+            marginLeft: {md:"120px", xs:"0"},
+            fontSize: { xs: "16px", md: "22px" },
+        },
+    },
+    mailLink: {
+        textDecoration: "none",
+        color: "#77837F",
+        position: {
+            md: "absolute",
+            xs: "relative",
+        },
+        top: {
+            md: "100%",
+            xs: "0",
+        },
+        marginLeft: {
+            md: "20px",
+            xs: "0",
+        },
+        fontSize: "14px",
+        fontStyle: "italic",
+        fontWeight: "500",
     },
   email: {
     mx: 1,

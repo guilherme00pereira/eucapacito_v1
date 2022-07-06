@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Button from "./Button";
+import {messageReturn} from "../commonStyles/messageReturn";
+import SendMessageImage from "../assets/img/mensagem-enviada.png";
 
 const ContactForm = () => {
   const [fields, setFields] = useState({
@@ -16,14 +18,12 @@ const ContactForm = () => {
     subject: "",
     message: "",
   });
+    const [hideMessage, setHideMessage] = useState(true);
 
 
   const handleFieldChange = (field) => (e) =>
     setFields({ ...fields, [field]: e.target.value });
 
-  const handleSubmit = (e) => {
-
-  }
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -33,35 +33,14 @@ const ContactForm = () => {
 }, [])
 
   return (
-    <Container maxWidth="md" sx={{ p: 0, input: {}, color: "#77837F", "& .title-form":{fontSize:"16px", fontWeight:"500"} }}>
+    <Container maxWidth="md" sx={styles.container}>
+        {hideMessage ?
       <Box>
         <p className="title-form">Insira suas informações</p>
 
-        <form onSubmit={handleSubmit}>
-          <FormCtrl
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                //css desktop
-                padding: {
-                  md: "5px 14px",
-                },
-              },
-            }}
-          >
-            <InputLabel
-              htmlFor="name"
-              sx={{
-                //css desktop
-                top: { md: "-9px" },
-                color: "#77837F",
-                fontSize: { md: "14px", xs: "1rem" },
-                fontWeight: {
-                  md: "500",
-                  xs: "400",
-                },
-                lineHeight:{md:"24px", xs:"auto"}
-              }}
-            >
+        <form>
+          <FormCtrl sx={styles.formControl}>
+            <InputLabel htmlFor="name" sx={styles.nameInput}>
               Nome Completo
             </InputLabel>
             <OutlinedInput
@@ -74,29 +53,10 @@ const ContactForm = () => {
             />
           </FormCtrl>
 
-          <FormCtrl
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                //css desktop
-                padding: {
-                  md: "5px 14px",
-                },
-              },
-            }}
-          >
+        <FormCtrl sx={styles.formControl}>
             <InputLabel
               htmlFor="email"
-              sx={{
-                //css desktop
-                top: { md: "-9px" },
-                color: "#77837F",
-                fontSize: { md: "14px", xs: "1rem" },
-                fontWeight: {
-                  md: "500",
-                  xs: "400",
-                },
-                lineHeight:{md:"24px", xs:"auto"}
-              }}
+              sx={styles.mailInput}
             >
               E-mail
             </InputLabel>
@@ -110,30 +70,8 @@ const ContactForm = () => {
             />
           </FormCtrl>
 
-          <FormCtrl
-            sx={{
-              "& .MuiOutlinedInput-input": {
-                //css desktop
-                padding: {
-                  md: "5px 14px",
-                },
-              },
-            }}
-          >
-            <InputLabel
-              htmlFor="subject"
-              sx={{
-                //css desktop
-                top: { md: "-9px" },
-                color: "#77837F",
-                fontSize: { md: "14px", xs: "1rem" },
-                fontWeight: {
-                  md: "500",
-                  xs: "400",
-                },
-                lineHeight:{md:"24px", xs:"auto"}
-              }}
-            >
+        <FormCtrl sx={styles.formControl}>
+            <InputLabel htmlFor="subject" sx={styles.subjectInput}>
               Assunto
             </InputLabel>
             <OutlinedInput
@@ -147,18 +85,7 @@ const ContactForm = () => {
           </FormCtrl>
 
           <FormCtrl>
-            <InputLabel
-              htmlFor="message"
-              sx={{
-                color: "#77837F",
-                fontSize: { md: "14px", xs: "1rem" },
-                fontWeight: {
-                  md: "500",
-                  xs: "400",
-                },
-                lineHeight:{md:"24px", xs:"auto"}
-              }}
-            >
+            <InputLabel htmlFor="message" sx={styles.messageInput}>
               Mensagem
             </InputLabel>
             <OutlinedInput
@@ -184,23 +111,19 @@ const ContactForm = () => {
               },
             }}
           >
-            <Button
-              type="submit"
-              sx={{
-                mt: {
-                  md: "50x",
-                },
-                //css desktop
-                padding: {
-                  md: "10px 116px",
-                },
-              }}
-            >
+            <Button type="submit" sx={styles.button} onClick={() => setHideMessage(false)}>
               Enviar
             </Button>
           </FormCtrl>
         </form>
       </Box>
+            :
+            <Box sx={{...messageReturn, my: "5em" }}>
+                <img src={SendMessageImage} alt={"mensagem enviada"} />
+                <h2>Mensagem Enviada</h2>
+                <span>Fique de olho em sua caixa de entrada, logo responderemos a mensagem.</span>
+            </Box>
+        }
     </Container>
   );
 };
@@ -211,3 +134,65 @@ const FormCtrl = styled(FormControl)(`
   width: 100%;
   margin: 0.35rem 0;
 `);
+
+const styles = {
+    container: { p: 0, input: {}, color: "#77837F", "& .title-form":{fontSize:"16px", fontWeight:"500"} },
+    formControl: {
+        "& .MuiOutlinedInput-input": {
+            //css desktop
+            padding: {
+                md: "5px 14px",
+            },
+        },
+    },
+    nameInput: {
+        //css desktop
+        top: {md: "-9px"},
+        color: "#77837F",
+        fontSize: {md: "14px", xs: "1rem"},
+        fontWeight: {
+            md: "500",
+            xs: "400",
+        },
+    },
+    mailInput: {
+        //css desktop
+        top: { md: "-9px" },
+        color: "#77837F",
+        fontSize: { md: "14px", xs: "1rem" },
+        fontWeight: {
+            md: "500",
+            xs: "400",
+        },
+        lineHeight:{md:"24px", xs:"auto"}
+    },
+    subjectInput: {
+        //css desktop
+        top: { md: "-9px" },
+        color: "#77837F",
+        fontSize: { md: "14px", xs: "1rem" },
+        fontWeight: {
+            md: "500",
+            xs: "400",
+        },
+        lineHeight:{md:"24px", xs:"auto"}
+    },
+    messageInput: {
+        color: "#77837F",
+        fontSize: {md: "14px", xs: "1rem"},
+        fontWeight: {
+            md: "500",
+            xs: "400",
+        },
+        lineHeight: {md: "24px", xs: "auto"}
+    },
+    button: {
+        mt: {
+            md: "50x",
+        },
+        //css desktop
+        padding: {
+            md: "10px 116px",
+        },
+    }
+}

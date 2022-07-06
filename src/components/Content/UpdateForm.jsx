@@ -3,17 +3,19 @@ import {Box, FormControl, OutlinedInput, InputAdornment} from "@mui/material";
 import {PersonOutlined, MailOutlined} from "@mui/icons-material";
 import {styled} from "@mui/material/styles";
 import Button from "../Button";
+import {messageReturn} from "../../commonStyles/messageReturn";
+import SendMessageImage from "../../assets/img/mensagem-enviada.png";
+import CheckImage from "../../assets/img/check.png";
 
 const UpdateForm = () => {
     const [fields, setFields] = useState({
         name: "",
         email: "",
     });
+    const [hideMessage, setHideMessage] = useState(true);
 
     const handleFieldChange = (field) => (e) =>
         setFields({...fields, [field]: e.target.value});
-
-    const handleSubmit = (e) => {}
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -25,76 +27,71 @@ const UpdateForm = () => {
     return (
         <Box sx={styles.form}>
             <Box>
-                <Box
-                    sx={{
-                        m: "2.5rem 1.5rem 2rem",
-                        "& p": {
-                            textAlign: "center",
-                            fontSize: "12px",
-                            fontWeight: "300"
-                        },
-                        "& .MuiOutlinedInput-input": {
-                            padding: "10px 7px",
-                            fontSize: "14px",
-                            fontWeight: "500"
-                        },
-                    }}
-                >
-                    <p>Inscreva-se para receber atualizações</p>
+                {hideMessage ?
+                    <Box sx={styles.formWrapper}>
 
-                    <form onSubmit={handleSubmit}>
-                        <FormCtrl>
-                            <OutlinedInput
-                                required
-                                id="name"
-                                type="text"
-                                value={fields.name}
-                                onChange={handleFieldChange("name")}
-                                placeholder="Nome"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <PersonOutlined/>
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormCtrl>
+                        <p>Inscreva-se para receber atualizações</p>
 
-                        <FormCtrl>
-                            <OutlinedInput
-                                required
-                                id="email"
-                                type="email"
-                                value={fields.email}
-                                onChange={handleFieldChange("email")}
-                                placeholder="E-mail"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <MailOutlined/>
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormCtrl>
+                        <form>
+                            <FormCtrl>
+                                <OutlinedInput
+                                    required
+                                    id="name"
+                                    type="text"
+                                    value={fields.name}
+                                    onChange={handleFieldChange("name")}
+                                    placeholder="Nome"
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <PersonOutlined/>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormCtrl>
 
-                        <FormCtrl
-                            sx={{
-                                //css desktop
-                                alignItems: {
-                                    md: "center",
-                                },
-                                //css desktop
-                                "& .MuiButton-root": {
-                                    padding: {
-                                        md: "6px 116px",
+                            <FormCtrl>
+                                <OutlinedInput
+                                    required
+                                    id="email"
+                                    type="email"
+                                    value={fields.email}
+                                    onChange={handleFieldChange("email")}
+                                    placeholder="E-mail"
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MailOutlined/>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormCtrl>
+
+                            <FormCtrl
+                                sx={{
+                                    //css desktop
+                                    alignItems: {
+                                        md: "center",
                                     },
-                                },
-                            }}
-                        >
-                            <Button type="submit" sx={{mt: 2}}>
-                                Enviar
-                            </Button>
-                        </FormCtrl>
-                    </form>
-                </Box>
+                                    //css desktop
+                                    "& .MuiButton-root": {
+                                        padding: {
+                                            md: "6px 116px",
+                                        },
+                                    },
+                                }}
+                            >
+                                <Button type="submit" sx={{mt: 2}} onClick={() => setHideMessage(false)}>
+                                    Enviar
+                                </Button>
+                            </FormCtrl>
+                        </form>
+                    </Box>
+                    :
+                    <Box sx={messageReturn}>
+                        <img src={CheckImage} alt={"inscrição concluída"} />
+                        <h2>Inscrição Concluída</h2>
+                        <span>Obrigado por se inscrever em nossa newsletter</span>
+                    </Box>
+                }
             </Box>
         </Box>
     );
@@ -112,6 +109,19 @@ const FormCtrl = styled(FormControl)(`
 `);
 
 const styles = {
+    formWrapper: {
+        m: "2.5rem 1.5rem 2rem",
+        "& p": {
+            textAlign: "center",
+            fontSize: "12px",
+            fontWeight: "300"
+        },
+        "& .MuiOutlinedInput-input": {
+            padding: "10px 7px",
+            fontSize: "14px",
+            fontWeight: "500"
+        },
+    },
     form: {
         "& .MuiBox-root": {
             margin: {

@@ -23,7 +23,7 @@ import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 
-const LoginForm = () => {
+const LoginForm = ({registerMessage}) => {
   const [fields, setFields] = useState({
     email: "",
     password: "",
@@ -208,7 +208,7 @@ const LoginForm = () => {
             <Box sx={styles.infoFooter}>
               <p>
                 Não tem uma conta?{" "}
-                <Link to="/registrar">
+                <Link to="/registrar" onClick={() => registerMessage(false)}>
                   Inscrever-se
                   <ArrowRight
                     sx={{ fontSize: "1.7rem", verticalAlign: "middle" }}
