@@ -123,6 +123,7 @@ const styles = {
         },
     },
     form: {
+        maxWidth: "900px",
         "& .MuiBox-root": {
             margin: {
                 md: "6.5rem 5.5rem 2rem",
