@@ -10,7 +10,6 @@ const TermsForm = ({form, handler}) => {
     const data_nascimento = `${form.day}/${form.month}/${form.year}`
 
     const handleSubmit = () => {
-        document.forms["comece-agora-data"].submit();
         navigate('/concluido');
     }
 

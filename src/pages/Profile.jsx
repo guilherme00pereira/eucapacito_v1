@@ -15,6 +15,8 @@ const Profile = () => {
   const token = sessionStorage.getItem('loggedIn');
   let navigate = useNavigate();
 
+  const profileImage = sessionStorage.getItem('avatarURL') && UserIcon
+
   useEffect(() => {
     if (!token) {
       return navigate('/login');
@@ -36,7 +38,7 @@ const Profile = () => {
   return (
     <Box sx={styles.root}>
       <Box sx={styles.user}>
-        <img src={sessionStorage.getItem('avatarURL')} alt="Foto de perfil" />
+        <img src={profileImage} alt="Foto de perfil" />
         <h2>{sessionStorage.getItem('username')}</h2>
         <Badge value="VIP" />
       </Box>

@@ -19,6 +19,7 @@ import "./Header.css";
 
 import SearchIcon from "../assets/img/header-search-icon.png";
 import EuCapacitoLogo from "../assets/img/logo.png";
+import UserIcon from "../assets/img/perfil-menu-usuario.png";
 
 import MenuDesk from "../components/Home/MenuDesktop";
 import {Facebook, Instagram, LinkedIn} from "@mui/icons-material";
@@ -31,6 +32,8 @@ const Header = ({ title, subtitle }) => {
   const [userFirstName, setUserFirstName] = useState(
     sessionStorage.getItem("username")
   );
+
+  const profileImage = sessionStorage.getItem('avatarURL') && UserIcon
 
   let navigate = useNavigate();
   let location = useLocation().pathname;
@@ -181,7 +184,7 @@ const Header = ({ title, subtitle }) => {
                 <Link to="/perfil">
                   <div className="profile-photo">
                     <img
-                      src={sessionStorage.getItem("avatarURL")}
+                      src={profileImage}
                       alt="Foto de perfil"
                     />
                     <div className="online-status"></div>
@@ -209,7 +212,7 @@ const Header = ({ title, subtitle }) => {
                     <img src={EuCapacitoLogo} alt="Logo Eu Capacito" />
                     <div className="profile-photo">
                       <img
-                        src={sessionStorage.getItem("avatarURL")}
+                        src={profileImage}
                         alt="Foto de perfil"
                       />
                       <div className="online-status"></div>

@@ -79,7 +79,7 @@ const EmployabilityRegister = () => {
                     <Box>
                         <MobileStepper
                             variant="progress"
-                            steps={8}
+                            steps={9}
                             position="static"
                             activeStep={currentStep}
                             sx={styles.stepper}
