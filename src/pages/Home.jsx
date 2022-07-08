@@ -16,7 +16,6 @@ import ContentCard from "../components/ContentCard";
 import Footer from "../layouts/Footer";
 import BlogPost from "../components/Content/BlogPost";
 
-import CourseImg3 from "../assets/img/home-curso3.png";
 import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
 import {swiper} from "../commonStyles/swiper";
 
@@ -90,10 +89,10 @@ const Home = () => {
         const newScholarship = {
           id: scholarship.id,
           slug: scholarship.slug,
-          featuredImg: scholarship["featured_image_src"],
+          featuredImg: scholarship.imagem.guid,
           title: scholarship.title.rendered,
           subtitle: "Eu Capacito",
-          logo: "EC",
+          logo: scholarship.responsavel,
           type: scholarship.type,
         };
 
@@ -157,6 +156,7 @@ const Home = () => {
           </AccordionSummary>
           <AccordionDetails sx={styles.accordion.details}>
             <Swiper
+                slidesOffsetBefore={10}
               className="mySwiper"
               slidesPerView={1.2}
               spaceBetween={25}
@@ -255,10 +255,10 @@ const Home = () => {
                   <SwiperSlide key={scholarship.id}>
                     <ContentCard
                       url={`/oportunidade/${scholarship.slug}/${scholarship.id}?type=${scholarship.type}`}
-                      imagePath={CourseImg3}
+                      imagePath={scholarship.featuredImg}
                       title={scholarship.title}
                       subtitle="Cadastre-se"
-                      logoPath={CourseLogoFiap}
+                      logoPath={scholarship.logo}
                     />
                   </SwiperSlide>
                 ))}
@@ -373,6 +373,9 @@ const styles = {
       "& span": {
         textAlign: "right",
         mb: "10px",
+      },
+      "& :first": {
+        ml: "10px"
       },
       margin: "30px 0",
       "& .MuiGrid-container": {

@@ -9,6 +9,7 @@ import apiService from "../services/apiService";
 import PlayIcon from "../assets/img/perfil-menu-play.png";
 import UserIcon from "../assets/img/perfil-menu-usuario.png";
 import KeyIcon from "../assets/img/perfil-menu-chave.png";
+import TermsIcon from "../assets/img/perfil-menu-termos.png"
 
 const Profile = () => {
   const [title, setTitle] = useOutletContext();
@@ -91,6 +92,22 @@ const Profile = () => {
           </Box>
         </NavLink>
 
+        <NavLink to="/termos-e-servicos">
+          <Box sx={styles.menu}>
+            <Box sx={styles.menu.left}>
+              <img src={TermsIcon} alt="Ícone - Termos" />
+              <p>Termos de Uso</p>
+            </Box>
+            <ArrowForwardIos
+                sx={{
+                  //css desktop
+                  marginLeft: { md: "55px" },
+                }}
+            />
+
+          </Box>
+        </NavLink>
+
         
       </Box>
       <NavLink to="/" onClick={handleLogout}>
@@ -148,12 +165,15 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-
+    marginTop: "1rem",
     marginBottom: "1rem",
     border: "1px solid #77837F",
     borderRadius: "0.5rem",
     padding: "0.5rem 0.75rem",
-
+    width: {
+      md: "300px",
+      xs: "100%"
+    },
     left: {
       display: "flex",
       "& p": {

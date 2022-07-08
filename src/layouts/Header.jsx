@@ -171,10 +171,10 @@ const Header = ({ title, subtitle }) => {
             </Box>
             {!token && (
               <Box sx={styles.deskcadastro}>
-                <Link to="/registrar">
+                <Link to="/login">
                   {" "}
                   <PersonIcon htmlColor="#33EDAC" />
-                  <p>Cadastre-se</p>{" "}
+                  <p>Entrar</p>{" "}
                 </Link>
               </Box>
             )}

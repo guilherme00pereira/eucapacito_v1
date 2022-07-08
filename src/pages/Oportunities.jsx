@@ -13,7 +13,6 @@ import { useOutletContext } from "react-router-dom";
 import apiService from "../services/apiService";
 import ContentCard from "../components/ContentCard";
 import CourseImg3 from "../assets/img/home-curso3.png";
-import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
 import {swiper} from "../commonStyles/swiper";
 
 
@@ -41,7 +40,7 @@ const Oportunities = () => {
           featuredImg: employability.imagem.guid,
           title: parse(`${employability.title.rendered}`),
           subtitle: "Eu Capacito",
-          logo: "EC",
+          logo: employability.responsavel,
         };
 
         fetchedEmployabilities.push(newEmployability);
@@ -62,7 +61,7 @@ const Oportunities = () => {
           featuredImg: scholarship.imagem.guid,
           title: parse(`${scholarship.title.rendered}`),
           subtitle: "Eu Capacito",
-          logo: "EC",
+          logo: scholarship.responsavel,
         };
 
         fetchedScholarships.push(newScholarship);
@@ -110,7 +109,7 @@ const Oportunities = () => {
                     imagePath={employability.featuredImg || CourseImg3}
                     title={employability.title}
                     subtitle="Cadastre-se"
-                    logoPath={CourseLogoFiap}
+                    logoPath={employability.logo}
                   />
                 </SwiperSlide>
               ))}
@@ -144,7 +143,7 @@ const Oportunities = () => {
                     imagePath={scholarship.featuredImg || CourseImg3}
                     title={scholarship.title}
                     subtitle="Cadastre-se"
-                    logoPath={CourseLogoFiap}
+                    logoPath={scholarship.logo}
                   />
                 </SwiperSlide>
               ))}

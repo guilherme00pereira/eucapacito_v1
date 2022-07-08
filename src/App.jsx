@@ -36,6 +36,7 @@ import Ebooks from "./pages/Ebooks";
 import Finished from "./pages/Finished";
 import Journey from "./pages/Journey";
 import CoursesListing from "./pages/CoursesListing";
+import TermsAndServices from "./pages/TermsAndServices"
 
 function App() {
   // const navigate = useNavigate();
@@ -82,6 +83,7 @@ function App() {
                 <Route path="/filtro" element={<Filter />} />
                 <Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />
                 <Route path="/concluido" element={<Finished />} />
+                <Route path="/termos-e-servicos" element={<TermsAndServices />} />
               </Route>
             </Route>
 
