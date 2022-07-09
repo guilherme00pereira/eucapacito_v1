@@ -33,7 +33,7 @@ const Header = ({ title, subtitle }) => {
     sessionStorage.getItem("username")
   );
 
-  const profileImage = sessionStorage.getItem('avatarURL') && UserIcon
+  const profileImage = sessionStorage.getItem('avatarURL') || UserIcon
 
   let navigate = useNavigate();
   let location = useLocation().pathname;

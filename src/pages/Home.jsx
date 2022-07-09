@@ -315,6 +315,11 @@ const styles = {
         fontWeight: "500",
       },
     },
+    "& .mySwiper": {
+      padding: {
+        md:"0 10px",
+      },
+    },
     "& .mySwiperEC": {
       "& .swiper-wrapper": {
         width: "100%",

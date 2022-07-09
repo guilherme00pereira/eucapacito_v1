@@ -16,7 +16,7 @@ const Profile = () => {
   const token = sessionStorage.getItem('loggedIn');
   let navigate = useNavigate();
 
-  const profileImage = sessionStorage.getItem('avatarURL') && UserIcon
+  const profileImage = sessionStorage.getItem('avatarURL') || UserIcon
 
   useEffect(() => {
     if (!token) {
