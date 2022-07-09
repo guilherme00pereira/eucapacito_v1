@@ -156,7 +156,6 @@ const Home = () => {
           </AccordionSummary>
           <AccordionDetails sx={styles.accordion.details}>
             <Swiper
-                slidesOffsetBefore={10}
               className="mySwiper"
               slidesPerView={1.2}
               spaceBetween={25}
