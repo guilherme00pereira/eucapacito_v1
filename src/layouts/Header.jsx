@@ -32,7 +32,7 @@ const Header = ({ title, subtitle }) => {
   const [userFirstName, setUserFirstName] = useState(
     sessionStorage.getItem("username")
   );
-  const [avatar, setAvatar] = useState(UserIcon)
+  //const [avatar, setAvatar] = useState(UserIcon)
 
 
   let navigate = useNavigate();
@@ -43,9 +43,9 @@ const Header = ({ title, subtitle }) => {
       setSearch("");
     }
 
-    if(sessionStorage.getItem('avatarURL').includes("jpeg")) {
-      setAvatar(sessionStorage.getItem('avatarURL'))
-    }
+    // if(sessionStorage.getItem('avatarURL').includes("jpeg")) {
+    //   setAvatar(sessionStorage.getItem('avatarURL'))
+    // }
   }, [location]);
 
   const handleLogout = (e) => {
@@ -216,7 +216,7 @@ const Header = ({ title, subtitle }) => {
                     <img src={EuCapacitoLogo} alt="Logo Eu Capacito" />
                     <div className="profile-photo">
                       <img
-                        src={avatar}
+                        src={UserIcon}
                         alt="Foto de perfil"
                       />
                       <div className="online-status"></div>
