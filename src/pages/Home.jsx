@@ -253,7 +253,7 @@ const Home = () => {
                 scholarships.map((scholarship) => (
                   <SwiperSlide key={scholarship.id}>
                     <ContentCard
-                      url={`/oportunidade/${scholarship.slug}/${scholarship.id}?type=${scholarship.type}`}
+                      url={`/bolsa-de-estudo/${scholarship.slug}`}
                       imagePath={scholarship.featuredImg}
                       title={scholarship.title}
                       subtitle="Cadastre-se"

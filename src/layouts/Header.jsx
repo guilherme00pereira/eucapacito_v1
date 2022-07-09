@@ -32,8 +32,8 @@ const Header = ({ title, subtitle }) => {
   const [userFirstName, setUserFirstName] = useState(
     sessionStorage.getItem("username")
   );
+  const [avatar, setAvatar] = useState(UserIcon)
 
-  const profileImage = sessionStorage.getItem('avatarURL') || UserIcon
 
   let navigate = useNavigate();
   let location = useLocation().pathname;
@@ -41,6 +41,10 @@ const Header = ({ title, subtitle }) => {
   useEffect(() => {
     if (!location.includes("/procurar")) {
       setSearch("");
+    }
+
+    if(sessionStorage.getItem('avatarURL').includes("jpeg")) {
+      setAvatar(sessionStorage.getItem('avatarURL'))
     }
   }, [location]);
 
@@ -184,7 +188,7 @@ const Header = ({ title, subtitle }) => {
                 <Link to="/perfil">
                   <div className="profile-photo">
                     <img
-                      src={profileImage}
+                      src={UserIcon}
                       alt="Foto de perfil"
                     />
                     <div className="online-status"></div>
@@ -212,7 +216,7 @@ const Header = ({ title, subtitle }) => {
                     <img src={EuCapacitoLogo} alt="Logo Eu Capacito" />
                     <div className="profile-photo">
                       <img
-                        src={profileImage}
+                        src={avatar}
                         alt="Foto de perfil"
                       />
                       <div className="online-status"></div>

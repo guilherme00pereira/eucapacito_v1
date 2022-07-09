@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import { Box } from "@mui/material";
 import { NavLink, useNavigate, useOutletContext } from "react-router-dom";
 import { ArrowForwardIos } from "@mui/icons-material";
@@ -15,18 +15,20 @@ const Profile = () => {
   const [title, setTitle] = useOutletContext();
   const token = sessionStorage.getItem('loggedIn');
   let navigate = useNavigate();
-
-  const profileImage = sessionStorage.getItem('avatarURL') || UserIcon
+  const [avatar, setAvatar] = useState(UserIcon)
 
   useEffect(() => {
     if (!token) {
       return navigate('/login');
     }
-
     setTitle({
       main: "Perfil",
       sub: false,
     });
+
+    if(sessionStorage.getItem('avatarURL').includes("jpeg")) {
+      setAvatar(sessionStorage.getItem('avatarURL'))
+    }
   }, [token, navigate]);
 
   const handleLogout = (e) => {
@@ -39,7 +41,7 @@ const Profile = () => {
   return (
     <Box sx={styles.root}>
       <Box sx={styles.user}>
-        <img src={profileImage} alt="Foto de perfil" />
+        <img src={avatar} alt="Foto de perfil" />
         <h2>{sessionStorage.getItem('username')}</h2>
         <Badge value="VIP" />
       </Box>
