@@ -1,11 +1,13 @@
-import {useState, useEffect} from "react";
-import {useParams, useLocation, useNavigate} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import apiService from "../services/apiService";
 import parse from "html-react-parser";
-import {Box, CircularProgress, Grid} from "@mui/material";
-import {AccessTime, PlayCircleOutlined} from "@mui/icons-material";
+import { Timeline, TimelineConnector, TimelineContent, TimelineSeparator } from '@mui/lab';
+import { Box, CircularProgress, Grid } from "@mui/material";
+import { AccessTime, PlayCircleOutlined, CheckCircle } from "@mui/icons-material";
 import Button from "../components/Button";
 import LessonCard from "../components/Course/LessonCard";
+import { TimelineDot, TimelineItem } from "@mui/lab";
 
 const Lessons = () => {
     const [courseData, setCourseData] = useState({
@@ -16,8 +18,8 @@ const Lessons = () => {
     const [lessons, setLessons] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
-    const {api} = apiService;
-    const {id} = useParams();
+    const { api } = apiService;
+    const { id } = useParams();
 
     useEffect(() => {
         api.get(`/ldlms/v1/sfwd-lessons?course=${id}`, {
@@ -51,34 +53,43 @@ const Lessons = () => {
             {!isLoading && (
                 <Box sx={styles.root}>
                     <Box sx={styles.image}>
-                        <img src={courseData.featuredImg} alt={courseData.title}/>
+                        <img src={courseData.featuredImg} alt={courseData.title} />
                     </Box>
 
                     <Box sx={styles.container}>
                         <Box sx={styles.description}>
                             <h1>{courseData.title}</h1>
                             <Grid container sx={styles.topinfo}>
-                                <Grid item xs={2}>
+                                <Grid item xs={4} md={2}>
                                     <p>
-                                        <PlayCircleOutlined sx={styles.topinfo.icons}/>
+                                        <PlayCircleOutlined sx={styles.topinfo.icons} />
                                         {lessons.length} Vídeos
                                     </p>
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={4} md={2}>
                                     <p>
-                                        <AccessTime sx={styles.topinfo.icons}/>
+                                        <AccessTime sx={styles.topinfo.icons} />
                                         {courseData.duration}
                                     </p>
                                 </Grid>
                             </Grid>
 
-                            <Grid>
-                                {lessons.length > 0 &&
-                                    lessons.map((lesson) => (
-                                        <LessonCard lesson={lesson} />
-                                    ))
-                                }
-                            </Grid>
+                            <Timeline sx={styles.timeline} position="right">
+                                {lessons.map((lesson, index) => (
+                                    <TimelineItem key={index}>
+                                        <TimelineSeparator>
+                                            <TimelineDot>
+                                                <CheckCircle />
+                                            </TimelineDot>
+                                            <TimelineConnector />
+                                        </TimelineSeparator>
+                                        <TimelineContent>
+                                            <LessonCard key={index} lesson={lesson} />
+                                        </TimelineContent>
+                                    </TimelineItem>
+                                ))}
+                            </Timeline>
+
 
                             <Box sx={styles.button}>
                                 {token && (
@@ -102,6 +113,26 @@ export default Lessons;
 
 
 const styles = {
+    timeline: {
+        padding: "0",
+        mt: "2rem",
+        "& .MuiTimelineItem-root:before": {
+            content: "none"
+        },
+        "& .MuiTimelineDot-root": {
+            color: "#33EDAC",
+            backgroundColor: "white",
+            borderRadius: "50%",
+            border: "0px",
+            padding: "0px"
+        },
+        "& .MuiTimelineConnector-root": {
+            margin: "-10px 0"
+        },
+        "& .MuiTimelineContent-root": {
+            
+        }
+    },
     root: {
         mx: "-16px",
         mt: {
@@ -109,8 +140,8 @@ const styles = {
             xs: "-24px"
         },
         h1: {
-            fontSize: {xs: "16px", md: "32px"},
-            fontWeight: {md: "500", xs: "700"},
+            fontSize: { xs: "16px", md: "32px" },
+            fontWeight: { md: "500", xs: "700" },
             color: "#CAC8C8",
             textAlign: {
                 md: "center",
@@ -160,43 +191,43 @@ const styles = {
         zIndex: 9,
     },
     topinfo: {
+        //css desktop
+        flexWrap: {
+            md: "nowrap",
+            xs: "wrap",
+        },
+        alignItems: "left",
+        textAlign: "left",
+        "& p": {
+            m: "0 0 0 -20px",
+            fontWeight: "500",
+            color: "#33EDAC",
+            display: "flex",
             //css desktop
-            flexWrap: {
-                md: "nowrap",
-                xs: "wrap",
+            justifyContent: {
+                md: "flex-start",
+                xs: "flex-start",
             },
-            alignItems: "center",
-            textAlign: "left",
-            "& p": {
-                m: 0,
-                fontWeight: "500",
-                color: "#33EDAC",
-                display: "flex",
-                //css desktop
-                justifyContent: {
-                    md: "flex-start",
-                    xs: "flex-end",
-                },
-                fontSize: {
-                    md: "18px",
-                    xs: "14px",
-                },
-                alignItems: "center",
+            fontSize: {
+                md: "18px",
+                xs: "14px",
             },
-            icons: {
-                ml: "0.85rem",
-                mr: "0.35rem",
-                fontSize: {
-                    md: "2.2rem",
-                    xs: "1.2rem",
-                },
-            },
-            //css desktop
-            pb: {
-                md: "38px",
-                xs: "0",
+            alignItems: "left",
+        },
+        icons: {
+            ml: "0.85rem",
+            mr: "0.35rem",
+            fontSize: {
+                md: "2.2rem",
+                xs: "1.2rem",
             },
         },
+        //css desktop
+        pb: {
+            md: "38px",
+            xs: "0",
+        },
+    },
     "& .MuiGrid-root + p": {
         color: "#77837F",
         lineHeight: "1.625rem",
