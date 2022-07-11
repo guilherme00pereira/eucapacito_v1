@@ -84,7 +84,7 @@ const Lessons = () => {
                                             <TimelineConnector />
                                         </TimelineSeparator>
                                         <TimelineContent>
-                                            <LessonCard key={index} lesson={lesson} />
+                                            <LessonCard index={index} lesson={lesson} />
                                         </TimelineContent>
                                     </TimelineItem>
                                 ))}
