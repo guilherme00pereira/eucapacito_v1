@@ -8,6 +8,7 @@ import {
 import apiService from "../services/apiService";
 import Button from "../components/Button";
 import {coursePage} from "../commonStyles/coursePage";
+import {calculateTime} from "../services/helper"
 
 const Course = () => {
     const [courseData, setCourseData] = useState({
@@ -26,17 +27,6 @@ const Course = () => {
     let location = useLocation();
     let navigate = useNavigate();
 
-    const calcDuration = (v) => {
-        v = parseInt(v, 10);
-        if(isNaN(v)) {
-            return "Não informado"
-        }
-        const h = Math.floor(v / 3600);
-        const m = Math.floor((v - (h * 3600)) / 60);
-        let text = h + " horas";
-        if(m > 0) text += " e " + m + " minutos";
-        return (text)
-    }
 
     useEffect(() => {
         api.get(`/wp/v2/curso_ec?slug=${slug}&_embed`).then((res) => {
@@ -48,7 +38,7 @@ const Course = () => {
                 category: course.categories.map((category) => category.name).join(", "),
                 partnerLogoURL: course.responsavel.guid,
                 price: "",
-                duration: calcDuration(course.duration),
+                duration: calculateTime(course.duration),
                 description: parse(`${course.content.rendered}`),
                 courseUrl: course.url,
             });

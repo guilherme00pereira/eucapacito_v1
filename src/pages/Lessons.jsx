@@ -10,28 +10,49 @@ import LessonCard from "../components/Course/LessonCard";
 import { TimelineDot, TimelineItem } from "@mui/lab";
 
 const Lessons = () => {
+    const userID = sessionStorage.getItem("userID");
     const [courseData, setCourseData] = useState({
         featuredImg: "",
         title: "",
         duration: "",
     });
     const [lessons, setLessons] = useState([]);
+    const [userSteps, setUserSteps] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
     const { api } = apiService;
     const { id } = useParams();
 
+    const getIcon = (id) => {
+
+    }
+
     useEffect(() => {
         api.get(`/ldlms/v1/sfwd-lessons?course=${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
-            const fetchedVideos = []
-            res.data.forEach((video) => {
-                fetchedVideos.push({
-                    id: video.id,
-                    title: video.title.rendered
+            const fetchedLessons = []
+            res.data.forEach((lesson) => {
+                fetchedLessons.push({
+                    id: lesson.id,
+                    title: lesson.title.rendered,
+                    slug: lesson.slug
                 })
-                setLessons([...fetchedVideos]);
+                setLessons([...fetchedLessons]);
+            })
+            setIsLoading(false);
+        });
+
+        api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
+            headers: { Authorization: `Bearer ${token}` },
+        }).then((res) => {
+            const fetchedSteps = []
+            res.data[0].forEach((step) => {
+                fetchedSteps.push({
+                    step: step.step,
+                    status: step.step_status
+                })
+                setUserSteps([...fetchedSteps]);
             })
             setIsLoading(false);
         });
@@ -45,7 +66,7 @@ const Lessons = () => {
             });
             setIsLoading(false);
         });
-    }, [api]);
+    }, []);
 
     return (
         <>
@@ -74,6 +95,13 @@ const Lessons = () => {
                                 </Grid>
                             </Grid>
 
+                            <Grid container sx={styles.topinfo}>
+                                <div>
+                                    <span>Lições</span>
+                                    <span>Teste</span>
+                                </div>
+                            </Grid>
+
                             <Timeline sx={styles.timeline} position="right">
                                 {lessons.map((lesson, index) => (
                                     <TimelineItem key={index}>
@@ -84,7 +112,9 @@ const Lessons = () => {
                                             <TimelineConnector />
                                         </TimelineSeparator>
                                         <TimelineContent>
-                                            <LessonCard index={index} lesson={lesson} />
+                                            <LessonCard
+                                                index={index}
+                                                lesson={lesson} />
                                         </TimelineContent>
                                     </TimelineItem>
                                 ))}
@@ -121,7 +151,7 @@ const styles = {
         },
         "& .MuiTimelineDot-root": {
             color: "#33EDAC",
-            backgroundColor: "white",
+            backgroundColor: "#101010",
             borderRadius: "50%",
             border: "0px",
             padding: "0px"
@@ -227,6 +257,9 @@ const styles = {
             md: "38px",
             xs: "0",
         },
+    },
+    toptabs: {
+
     },
     "& .MuiGrid-root + p": {
         color: "#77837F",

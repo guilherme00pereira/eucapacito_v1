@@ -1,22 +1,24 @@
-import React from 'react';
+import {NavLink} from "react-router-dom";
 import {Box} from "@mui/material";
 
 const LessonCard = ({index, lesson}) => {
     return (
-        <Box sx={styles.root}>
-            <Box sx={styles.info}>
-                <Box sx={styles.info.index}>
-                    {(index + 1).toString().padStart(2,'0')}
+        <NavLink to={`/lessons/${lesson.slug}`}>
+            <Box sx={styles.root}>
+                <Box sx={styles.info}>
+                    <Box sx={styles.info.index}>
+                        {(index + 1).toString().padStart(2,'0')}
+                    </Box>
+                    <Box>
+                        {lesson.title}
+                    </Box>
+                    <Box>
+
+                    </Box>
+
                 </Box>
-                <Box>
-                    {lesson.title}
-                </Box>
-                <Box>
-                    
-                </Box>
-                
             </Box>
-        </Box>
+        </NavLink>
     );
 };
 

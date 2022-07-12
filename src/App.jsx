@@ -36,6 +36,7 @@ import CoursesListing from "./pages/CoursesListing";
 import TermsAndServices from "./pages/TermsAndServices"
 import CourseLD from "./pages/CourseLD";
 import Lessons from "./pages/Lessons"
+import Lesson from "./pages/Lesson";
 
 function App() {
   // const navigate = useNavigate();
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/todos-os-cursos" element={<CoursesListing />} />
                 <Route path="/cursos" element={<Courses />} />
                 <Route path="/course-ec/:slug/:id" element={<CourseLD />} />
+                <Route path="/lessons/:slug" element={<Lesson />} />
                 <Route path=":slug/aulas/:id" element={<Lessons />} />
                 <Route path="/curso-ec/:slug" element={<Course />} />
                 <Route path="/jornada/:slug" element={<Journey />} />
