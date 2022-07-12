@@ -9,7 +9,7 @@ const NewsPost = ({key, post}) => {
       </Grid>
       <Grid item sx={styles.column2} xs={8}>
         <h2>{post.title}</h2>
-        <Link to={`/blog/${post.slug}/${post.id}`} sx={styles.link}>
+        <Link to={`/${post.slug}`} sx={styles.link}>
           Saiba mais
         </Link>
         <div style={styles.decoration}></div>

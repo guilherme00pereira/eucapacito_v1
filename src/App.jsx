@@ -36,7 +36,9 @@ import Ebooks from "./pages/Ebooks";
 import Finished from "./pages/Finished";
 import Journey from "./pages/Journey";
 import CoursesListing from "./pages/CoursesListing";
-import TermsAndServices from "./pages/TermsAndServices"
+import TermsAndServices from "./pages/TermsAndServices";
+import Temp from "./pages/Temp";
+
 
 function App() {
   // const navigate = useNavigate();
@@ -84,6 +86,7 @@ function App() {
                 <Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />
                 <Route path="/concluido" element={<Finished />} />
                 <Route path="/termos-e-servicos" element={<TermsAndServices />} />
+                <Route path="/pesquisa-de-satisfacao" element={<Temp />} />
               </Route>
             </Route>
 
