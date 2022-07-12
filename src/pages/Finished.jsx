@@ -1,4 +1,3 @@
-
 import {Box, Container} from "@mui/material";
 import {Link} from "react-router-dom";
 import EuCapacitoLogo from "../assets/img/logo.png";

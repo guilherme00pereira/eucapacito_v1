@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import apiService from "../services/apiService";
 import parse from "html-react-parser";
 import { Timeline, TimelineConnector, TimelineContent, TimelineSeparator } from '@mui/lab';
 import { Box, CircularProgress, Grid } from "@mui/material";
-import { AccessTime, PlayCircleOutlined, CheckCircle } from "@mui/icons-material";
+import { AccessTime, PlayCircleOutlined, CheckCircle, Adjust } from "@mui/icons-material";
 import Button from "../components/Button";
 import LessonCard from "../components/Course/LessonCard";
 import { TimelineDot, TimelineItem } from "@mui/lab";
@@ -23,9 +23,9 @@ const Lessons = () => {
     const { api } = apiService;
     const { id } = useParams();
 
-    const getIcon = (id) => {
-
-    }
+    const lessonCompleted = (id) => 'completed' === userSteps[id]
+    const allCompleted = () => userSteps.every( (v) => 'completed' === v)
+    const showConnector = (arr, index) =>  arr.length - 1 === index
 
     useEffect(() => {
         api.get(`/ldlms/v1/sfwd-lessons?course=${id}`, {
@@ -43,20 +43,18 @@ const Lessons = () => {
             setIsLoading(false);
         });
 
-        api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
+        api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps?_embed`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
             const fetchedSteps = []
+            console.log(res.data[0])
             res.data[0].forEach((step) => {
-                fetchedSteps.push({
-                    step: step.step,
-                    status: step.step_status
-                })
-                setUserSteps([...fetchedSteps]);
+                fetchedSteps[step.step] = step.step_status
             })
+            setUserSteps([...fetchedSteps]);
             setIsLoading(false);
         });
-
+        
         api.get(`/ldlms/v2/sfwd-courses/${id}`).then((res) => {
             const course = res.data;
             setCourseData({
@@ -66,6 +64,7 @@ const Lessons = () => {
             });
             setIsLoading(false);
         });
+        
     }, []);
 
     return (
@@ -103,34 +102,39 @@ const Lessons = () => {
                             </Grid>
 
                             <Timeline sx={styles.timeline} position="right">
-                                {lessons.map((lesson, index) => (
+                                {lessons.map((lesson, index, arr) => (
                                     <TimelineItem key={index}>
                                         <TimelineSeparator>
-                                            <TimelineDot>
-                                                <CheckCircle />
+                                            <TimelineDot sx={lessonCompleted(lesson.id) ? styles.timeline.iconActive : styles.timeline.iconInactive}>
+                                                {lessonCompleted(lesson.id) ? <CheckCircle /> : <Adjust />}
                                             </TimelineDot>
-                                            <TimelineConnector />
+                                            {showConnector(arr, index) ||
+                                                <TimelineConnector />
+                                            }
                                         </TimelineSeparator>
                                         <TimelineContent>
                                             <LessonCard
                                                 index={index}
-                                                lesson={lesson} />
+                                                lesson={lesson}
+                                                active={lessonCompleted(lesson.id)} />
                                         </TimelineContent>
                                     </TimelineItem>
                                 ))}
                             </Timeline>
 
+                            {allCompleted() && 
+                                <Box sx={styles.button}>
+                                    {token && (
+                                        <Button
+                                            href="/quizzes/teste-seu-conhecimento-persuasao"
+                                            sx={styles.courseLink}
+                                        >
+                                            Iniciar Prova
+                                        </Button>
+                                    )}
+                                </Box>                            
+                            }
 
-                            <Box sx={styles.button}>
-                                {token && (
-                                    <Button
-                                        href="#"
-                                        sx={styles.courseLink}
-                                    >
-                                        Iniciar Prova
-                                    </Button>
-                                )}
-                            </Box>
                         </Box>
 
                     </Box>
@@ -146,15 +150,20 @@ const styles = {
     timeline: {
         padding: "0",
         mt: "2rem",
-        "& .MuiTimelineItem-root:before": {
-            content: "none"
+        iconActive: {
+            color: "#33EDAC",
+        },
+        iconInactive: {
+            color: "#77837F",
         },
         "& .MuiTimelineDot-root": {
-            color: "#33EDAC",
             backgroundColor: "#101010",
             borderRadius: "50%",
             border: "0px",
             padding: "0px"
+        },
+        "& .MuiTimelineItem-root:before": {
+            content: "none"
         },
         "& .MuiTimelineConnector-root": {
             margin: "-10px 0"

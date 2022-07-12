@@ -53,7 +53,6 @@ const Courses = () => {
             api.get(`/ldlms/v2/users/${userID}/courses`, {
                 headers: { Authorization: `Bearer ${token}` },
             }).then((res) => {
-                console.log(res.data)
                 const myFetchedCourses = [];
                 res.data.forEach((course) => {
                     myFetchedCourses.push({
@@ -144,7 +143,7 @@ const Courses = () => {
                         modules={[Pagination, Autoplay]}
                         pagination={{clickable: true}}
                     >
-                        {myCourses.length > 0 ?
+                        {myCourses.length > 0 &&
                             myCourses.map((course) => (
                                 <SwiperSlide
                                     className="card-desk"
@@ -158,7 +157,7 @@ const Courses = () => {
                                         logoPath={course.partnerLogoURL}
                                     />
                                 </SwiperSlide>
-                            )) : <p>Não há cursos</p>
+                            ))
                         }
                     </Swiper>
                 </>

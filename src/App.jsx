@@ -37,6 +37,10 @@ import TermsAndServices from "./pages/TermsAndServices"
 import CourseLD from "./pages/CourseLD";
 import Lessons from "./pages/Lessons"
 import Lesson from "./pages/Lesson";
+import Quizz from "./pages/Quizz";
+import QuizzComplete from "./pages/QuizzComplete";
+import Certification from "./pages/Certification";
+
 
 function App() {
   // const navigate = useNavigate();
@@ -63,6 +67,9 @@ function App() {
                 <Route path="/course-ec/:slug/:id" element={<CourseLD />} />
                 <Route path="/lessons/:slug" element={<Lesson />} />
                 <Route path=":slug/aulas/:id" element={<Lessons />} />
+                <Route path="/quizzes/:slug" element={<Quizz />} />
+                <Route path="/teste-concluido" element={<QuizzComplete />} />
+                <Route path="/certificado/:id" element={<Certification />} />
                 <Route path="/curso-ec/:slug" element={<Course />} />
                 <Route path="/jornada/:slug" element={<Journey />} />
                 <Route path="/contato" element={<Contact />} />
