@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import Link from "../Link";
 
-const NewsPost = ({key, post}) => {
+const NewsPost = ({post}) => {
   return (
     <Grid container sx={styles.post}>
       <Grid item sx={styles.column1} xs={4}>

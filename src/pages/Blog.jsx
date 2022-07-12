@@ -57,17 +57,16 @@ const Blog = () => {
                     <Box sx={styles.image}>
                         <img src={blog.featuredImg} alt="Placeholder Blog"/>
                     </Box>
-
                     <Box sx={styles.content}>
                         <Box sx={styles.content.info}>
                             <small>{blog.date}</small>
                             <small>{blog.cats}</small>
                         </Box>
-
                         <hr/>
-
                         <h1>{blog.title}</h1>
-                        <div className="content">{blog.content}</div>
+                        <div className="content">
+                            {blog.content}
+                        </div>
                     </Box>
                     <BlogSidebar/>
                 </Box>
@@ -156,7 +155,7 @@ const styles = {
         },
         "& .content": {
             color: "#77837F",
-            fontSize: {xs: "10px", md: "24px"},
+            fontSize: {xs: "10px", md: "18px"},
             fontStyle: {
                 md: "normal",
                 xs: "italic",
@@ -167,11 +166,6 @@ const styles = {
             pl: {
                 xs: "0",
                 md: "35px",
-            },
-            "& p": {
-                fontSize: "18px",
-                fontFamily: "Gotham",
-                fontWeight: 500,
             },
         },
         "& p+h2": {
