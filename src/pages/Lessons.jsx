@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import apiService from "../services/apiService";
 import parse from "html-react-parser";
 import { Timeline, TimelineConnector, TimelineContent, TimelineSeparator } from '@mui/lab';
-import { Box, CircularProgress, Grid } from "@mui/material";
+import { Stack, Box, CircularProgress, Grid } from "@mui/material";
 import { AccessTime, PlayCircleOutlined, CheckCircle, Adjust } from "@mui/icons-material";
 import Button from "../components/Button";
 import LessonCard from "../components/Course/LessonCard";
@@ -94,12 +94,12 @@ const Lessons = () => {
                                 </Grid>
                             </Grid>
 
-                            <Grid container sx={styles.topinfo}>
+                            <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
                                 <div>
                                     <span>Lições</span>
                                     <span>Teste</span>
                                 </div>
-                            </Grid>
+                            </Stack>
 
                             <Timeline sx={styles.timeline} position="right">
                                 {lessons.map((lesson, index, arr) => (
@@ -220,8 +220,8 @@ const styles = {
             xs: "drop-shadow(0px -6px 44px #33EDAC)",
         },
         minHeight: {
-            md: "calc(100vh - 600px)",
-            xs: "calc(100vh - 250px)",
+            md: "100%", //"calc(100vh - 600px)",
+            xs: "100%", //"calc(100vh - 250px)",
         },
         backgroundImage: "linear-gradient(to right, #0E0E0E, #292C2F)", //`url(${imagemFundo})`,
         backgroundSize: "cover",

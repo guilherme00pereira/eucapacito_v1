@@ -47,8 +47,8 @@ export const coursePage = {
             xs: "drop-shadow(0px -6px 44px #33EDAC)",
         },
         minHeight: {
-            md: "calc(100vh - 600px)",
-            xs: "calc(100vh - 250px)",
+            md: "100%",// "calc(100vh - 600px)",
+            xs: "100%", //"calc(100vh - 250px)",
         },
         backgroundImage: "linear-gradient(to right, #0E0E0E, #292C2F)", //`url(${imagemFundo})`,
         backgroundSize: "cover",
@@ -206,7 +206,7 @@ export const coursePage = {
         },
         courseLink: {
             width: {
-                md: "28%",
+                md: "30%",
                 xs: "100%",
             },
             padding: {

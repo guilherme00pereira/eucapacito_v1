@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {useParams, useLocation, useNavigate} from "react-router-dom";
+import {useParams, useLocation, useNavigate, useOutletContext} from "react-router-dom";
 import parse from "html-react-parser";
 import {Box, CircularProgress, Grid} from "@mui/material";
 import {
@@ -11,6 +11,7 @@ import {coursePage} from "../commonStyles/coursePage";
 
 const CourseLD = () => {
     const [courseData, setCourseData] = useState({
+        id: "",
         featuredImg: "",
         title: "",
         category: "",
@@ -19,29 +20,45 @@ const CourseLD = () => {
         duration: "",
         description: "",
     });
+    const [title, setTitle] = useOutletContext();
     const [isLoading, setIsLoading] = useState(true);
+    const [isEnrolled, setIsEnrolled] = useState(false);
     const token = sessionStorage.getItem("token");
     const {api} = apiService;
-    const {slug, id} = useParams();
+    const {slug} = useParams();
     let location = useLocation();
     let navigate = useNavigate();
 
     useEffect(() => {
-        api.get(`/ldlms/v2/sfwd-courses/${id}`).then((res) => {
-            const course = res.data;
+        api.get(`/ldlms/v2/sfwd-courses?slug=${slug}`).then((res) => {
+            const course = res.data[0];
             setCourseData({
+                id: course.id,
+                slug: course.slug,
                 featuredImg: course.image,
                 title: parse(`${course.title.rendered}`),
                 //category: course.categories.map((category) => category.name).join(", "),
                 duration: course.duracao,
                 description: parse(`${course.content.rendered}`),
             });
+            setTitle({
+                main: "Curso",
+                sub: courseData.title,
+              });
+            const myEnrollments = sessionStorage.getItem("userCourses");
+            setIsEnrolled( myEnrollments.includes(course.id))
             setIsLoading(false);
         });
-    }, [api]);
+        
+    }, []);
 
-    const handleAssignment = () => {
-
+    const handleAssignment = ( id ) => {
+        api.post("/eucapacito/v1/enroll-user-to-course", {
+            user: sessionStorage.getItem("userID"),
+            course: id
+        }).then((res) => {
+            navigate(`/${slug}/aulas/${id}`)
+        })
     }
 
     const handleRedirect = (e) => {
@@ -91,11 +108,10 @@ const CourseLD = () => {
                             <Box sx={coursePage.description.button}>
                                 {token && (
                                     <Button
-                                        href={`/${slug}/aulas/${id}`}
-                                        onClick={handleAssignment}
+                                        onClick={() => handleAssignment(courseData.id)}
                                         sx={coursePage.description.courseLink}
                                     >
-                                        Comece agora
+                                        {isEnrolled ? "Continuar curso" : "Comece agora"}
                                     </Button>
                                 )}
 

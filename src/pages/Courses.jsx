@@ -64,6 +64,7 @@ const Courses = () => {
                         partnerLogoURL: course.logo,
                     });
                 });
+                sessionStorage.setItem("userCourses", myFetchedCourses.map((course) => course.id))
                 setMyCourses([...myFetchedCourses]);
             });
         }
@@ -88,6 +89,7 @@ const Courses = () => {
                     title: course.title,
                     subtitle: "Eu Capacito",
                     partnerLogoURL: course.logo,
+                    type: course.type
                 });
             });
 
@@ -150,7 +152,7 @@ const Courses = () => {
                                     key={course.id + Math.random()}
                                 >
                                     <ContentCard
-                                        url={`/course-ec/${course.slug}/${course.id}`}
+                                        url={`/course-ec/${course.slug}`}
                                         imagePath={course.featuredImg}
                                         title={course.title}
                                         subtitle="Cadastre-se"
@@ -181,7 +183,7 @@ const Courses = () => {
                             key={course.id + Math.random()}
                         >
                             <ContentCard
-                                url={`/curso-ec/${course.slug}`}
+                                url={course.type === 'curso_ec' ? `/curso-ec/${course.slug}` : `/course-ec/${course.slug}`}
                                 imagePath={course.featuredImg}
                                 title={course.title}
                                 subtitle="Cadastre-se"

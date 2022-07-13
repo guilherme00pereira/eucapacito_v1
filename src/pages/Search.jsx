@@ -62,8 +62,9 @@ const Search = () => {
                         id: course.id,
                         slug: course.slug,
                         title: course.title,
-                        subtitle: course.type === "curso_ec" ? "Eu Capacito" : "Parceiro",
-                        partnerLogoURL: course.logo
+                        subtitle: course.type === "curso_ec" ? "Parceiro" : "Eu Capacito",
+                        partnerLogoURL: course.logo,
+                        type: course.type
                     };
                     fetchedCourses.push(newCourse);
                 });
@@ -125,6 +126,7 @@ const Search = () => {
                         title={course.title}
                         company="Eu Capacito"
                         logoURL={course.partnerLogoURL}
+                        type={course.type}
                     />
                 )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
                 {isLoading && <CircularProgress sx={styles.loading} />}

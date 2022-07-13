@@ -6,11 +6,11 @@ import archiveIcon from "../../assets/img/procurar-icon-archive.svg";
 import editIcon from "../../assets/img/procurar-icon-edit.svg";
 import layersIcon from "../../assets/img/procurar-icon-layers.svg";
 
-const CourseBox = ({ courseId, slug, icon, title, company, logoURL }) => {
+const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
   let navigate = useNavigate();
 
-  const handleCoursePage = () => {
-    navigate(`/curso-ec/${slug}`);
+  const handleCoursePage = (type, slug) => {
+    navigate(type === 'curso_ec' ? `/curso-ec/${slug}` : `/course-ec/${slug}`);
   };
 
   const icons = [
@@ -25,7 +25,7 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL }) => {
   const randomIndex = Math.trunc(Math.random() * (6 - 1) + 1);
 
   return (
-    <Box sx={styles.box} onClick={handleCoursePage}>
+    <Box sx={styles.box} onClick={() => handleCoursePage(type, slug)}>
       <Box sx={styles.box.info}>
         <Box sx={styles.box.info.icon}>
           <img src={icons[randomIndex - 1]} alt="Ícone" />

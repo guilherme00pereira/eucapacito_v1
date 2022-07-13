@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-@media(min-width:1440px){
+/* @media(min-width:1440px){
     #root >.MuiContainer-root{
         max-width: 1440px;
         padding: 0;
@@ -12,7 +12,7 @@
         max-width: 1389px;
         padding: 0;
     }
-}
+} */
 
 
 body {
