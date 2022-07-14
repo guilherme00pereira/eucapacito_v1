@@ -8,6 +8,7 @@ import { AccessTime, PlayCircleOutlined, CheckCircle, Adjust } from "@mui/icons-
 import Button from "../components/Button";
 import LessonCard from "../components/Course/LessonCard";
 import { TimelineDot, TimelineItem } from "@mui/lab";
+import useCheckMobileScreen from "../services/useCheckMobileScreen"
 
 const Lessons = () => {
     const userID = sessionStorage.getItem("userID");
@@ -20,13 +21,14 @@ const Lessons = () => {
     const [lessons, setLessons] = useState([]);
     const [userSteps, setUserSteps] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [allCompleted, setAllCompleted] = useState(false);
     const token = sessionStorage.getItem("token");
     const { api } = apiService;
     const { id } = useParams();
     let navigate = useNavigate();
+    const isMobile = useCheckMobileScreen();
 
     const lessonCompleted = (id) => 'completed' === userSteps[id]
-    const allCompleted = () => true//userSteps.every( (v) => 'completed' === v)
     const showConnector = (arr, index) =>  arr.length - 1 === index
 
     useEffect(() => {
@@ -51,8 +53,11 @@ const Lessons = () => {
         }).then((res) => {
             const fetchedSteps = []
             res.data[0].forEach((step) => {
-                fetchedSteps[step.step] = step.step_status
+                if('sfwd-lessons' === step.post_type) {
+                    fetchedSteps[step.step] = step.step_status
+                }
             })
+            setAllCompleted(fetchedSteps.every( (v) => 'completed' === v))
             setUserSteps([...fetchedSteps]);
             setIsLoading(false);
         });
@@ -60,6 +65,7 @@ const Lessons = () => {
         api.get(`/ldlms/v2/sfwd-courses/${id}`).then((res) => {
             const course = res.data
             setCourseData({
+                id: course.id,
                 featuredImg: course.image,
                 title: parse(`${course.title.rendered}`),
                 duration: course.duracao,
@@ -101,12 +107,15 @@ const Lessons = () => {
                                 </Grid>
                             </Grid>
 
-                            <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
-                                <div>
-                                    <span>Lições</span>
-                                    <span>Teste</span>
-                                </div>
-                            </Stack>
+                            {isMobile && 
+                                <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
+                                    <div>
+                                        <span>Lições</span>
+                                        <span>Teste</span>
+                                    </div>
+                                </Stack>
+                            }
+                            
 
                             <Timeline sx={styles.timeline} position="right">
                                 {lessons.map((lesson, index, arr) => (
@@ -123,13 +132,14 @@ const Lessons = () => {
                                             <LessonCard
                                                 index={index}
                                                 lesson={lesson}
-                                                active={lessonCompleted(lesson.id)} />
+                                                active={lessonCompleted(lesson.id)}
+                                                course={courseData.id} />
                                         </TimelineContent>
                                     </TimelineItem>
                                 ))}
                             </Timeline>
 
-                            {allCompleted() && 
+                            {allCompleted && 
                                 <Box sx={styles.button}>
                                     {token && (
                                         <Button

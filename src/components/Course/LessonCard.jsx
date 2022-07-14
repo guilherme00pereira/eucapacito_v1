@@ -2,9 +2,11 @@ import {NavLink} from "react-router-dom";
 import {Box} from "@mui/material";
 import { PlayCircleOutlined } from "@mui/icons-material";
 
-const LessonCard = ({index, lesson, active}) => {
+const LessonCard = ({index, lesson, active, course}) => {
+
+
     return (
-        <NavLink to={`/lessons/${lesson.slug}`}>
+        <NavLink to={`/lessons/${lesson.slug}/${course}`}>
             <Box sx={styles.root}>
                 <Box sx={styles.info} style={active ? {border: "1px solid #33EDAC"} : {border: "1px solid #77837F"} }>
                     <Box sx={styles.info.index} style={active ? {color: "#33EDAC"} : {color: "#77837F"} }>

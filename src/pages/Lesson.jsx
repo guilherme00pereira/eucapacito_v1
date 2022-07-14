@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Box, Container, CircularProgress } from "@mui/material";
 import Button from "../components/Button";
 import apiService from "../services/apiService";
@@ -12,19 +12,21 @@ const Lesson = () => {
         content: "",
         video: ""
     });
+    const [next, setNext] = useState("");
     const { api } = apiService;
     const { slug, id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
+    let navigate = useNavigate();
 
 
-    const getNext = (id) => {
-        const steps = sessionStorage.getItem("")
+    const getNext = (lesson) => {
+        navigate(`/lessons/${lesson.next}/${lesson.course}`)
     }
 
     useEffect(() => {
 
-        api.get(`/ldlms/v1/sfwd-lessons?slug=${slug}`, {
+        api.get(`/ldlms/v1/sfwd-lessons/?course=${id}&slug=${slug}`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
             const lesson = res.data[0];
@@ -32,7 +34,9 @@ const Lesson = () => {
                 id: lesson.id,
                 title: lesson.title.rendered,
                 content: lesson.content.rendered,
-                video: lesson.video
+                video: lesson.video,
+                course: lesson.course,
+                next: lesson.next
             })
             setIsLoading(false);
         });
@@ -42,7 +46,7 @@ const Lesson = () => {
     const handleComplete = (lid) => {
         api.post("/eucapacito/v1/lesson-complete", {
             user: sessionStorage.getItem("userID"),
-            course: 10730,
+            course: id,
             lesson: lid
         })
     }
