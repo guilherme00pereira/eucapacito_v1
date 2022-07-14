@@ -8,13 +8,15 @@ import apiService from "../services/apiService";
 const Quizz = () => {
     const [questions, setQuestions] = useState([]);
     const { api } = apiService;
+    const { id } = useParams();
     const token = sessionStorage.getItem("token");
 
     useEffect(() => {
-        api.get(`/ldlms/v2/sfwd-question?quiz=13160`, {
+        api.get(`/ldlms/v2/sfwd-question?quiz=${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
             const fetchedQuestions = [];
+            console.log(res.data)
             res.data.forEach(question => {
                 fetchedQuestions.push({
                     id: question.id,

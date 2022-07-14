@@ -49,16 +49,20 @@ const CourseLD = () => {
             setIsEnrolled( myEnrollments.includes(course.id))
             setIsLoading(false);
         });
-        
+
     }, []);
 
-    const handleAssignment = ( id ) => {
-        api.post("/eucapacito/v1/enroll-user-to-course", {
-            user: sessionStorage.getItem("userID"),
-            course: id
-        }).then((res) => {
-            navigate(`/${slug}/aulas/${id}`)
-        })
+    const handleAssignment = ( course ) => {
+        if(!isEnrolled) {
+            api.post("/eucapacito/v1/enroll-user-to-course", {
+                user: sessionStorage.getItem("userID"),
+                course: course.id
+            }).then((res) => {
+                navigate(`/${slug}/aulas/${course.id}`)
+            })
+        } else {
+            navigate(`/${slug}/aulas/${course.id}`)
+        }
     }
 
     const handleRedirect = (e) => {
@@ -108,7 +112,7 @@ const CourseLD = () => {
                             <Box sx={coursePage.description.button}>
                                 {token && (
                                     <Button
-                                        onClick={() => handleAssignment(courseData.id)}
+                                        onClick={() => handleAssignment(courseData)}
                                         sx={coursePage.description.courseLink}
                                     >
                                         {isEnrolled ? "Continuar curso" : "Comece agora"}

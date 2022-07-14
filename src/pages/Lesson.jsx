@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, Container, CircularProgress } from "@mui/material";
 import Button from "../components/Button";
 import apiService from "../services/apiService";
 import parse from 'html-react-parser';
+import ReactPlayer from "react-player";
 
 const Lesson = () => {
     const [lesson, setLesson] = useState({
@@ -12,42 +13,60 @@ const Lesson = () => {
         video: ""
     });
     const { api } = apiService;
-    const { slug } = useParams();
+    const { slug, id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
 
+
+    const getNext = (id) => {
+        const steps = sessionStorage.getItem("")
+    }
+
     useEffect(() => {
+
         api.get(`/ldlms/v1/sfwd-lessons?slug=${slug}`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
             const lesson = res.data[0];
             setLesson({
+                id: lesson.id,
                 title: lesson.title.rendered,
                 content: lesson.content.rendered,
-                video: ""
+                video: lesson.video
             })
             setIsLoading(false);
         });
+
     }, []);
+
+    const handleComplete = (lid) => {
+        api.post("/eucapacito/v1/lesson-complete", {
+            user: sessionStorage.getItem("userID"),
+            course: 10730,
+            lesson: lid
+        })
+    }
 
     return (
         <>
             {isLoading && <CircularProgress sx={styles.loading} />}
             {!isLoading && (
-                <Box sx={styles.root}>
+                <Container sx={styles.root}>
                     <Box sx={styles.texto}>
                         <Box>
                         <h1>{lesson.title}</h1>
-
                         {parse(lesson.content)}
                         </Box>
                     </Box>
+                    <Box sx={styles.video}>
+                        <ReactPlayer onPlay={() => handleComplete(lesson.id)} url={lesson.video} />
+                    </Box>
                     <Box sx={styles.button}>
-                        <Button href="#" sx={styles.courseLink}>
+                        <Button onClick={() => getNext(lesson.id)} sx={styles.courseLink}>
                             Próxima
                         </Button>
                     </Box>   
-                </Box>
+                </Container>
                 
             )}
         </>
@@ -59,7 +78,8 @@ export default Lesson;
 
 const styles = {
     root: {
-        h1: { marginTop: "2rem", fontSize: "22px", color: "#CAC8C8" },
+        paddingTop: "0",
+        h1: { marginTop: "0.5rem", fontSize: "22px", color: "#CAC8C8", textAlign: "center" },
         h2: {
           fontSize: "1.15rem",
           fontWeight: 500,
@@ -88,6 +108,12 @@ const styles = {
           color: "#CAC8C8",
         },
       },
+    video: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
       button: {
         textAlign: "center",
         mt: {

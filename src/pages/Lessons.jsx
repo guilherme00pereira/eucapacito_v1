@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import apiService from "../services/apiService";
 import parse from "html-react-parser";
 import { Timeline, TimelineConnector, TimelineContent, TimelineSeparator } from '@mui/lab';
@@ -15,6 +15,7 @@ const Lessons = () => {
         featuredImg: "",
         title: "",
         duration: "",
+        quizz: "",
     });
     const [lessons, setLessons] = useState([]);
     const [userSteps, setUserSteps] = useState([]);
@@ -22,9 +23,10 @@ const Lessons = () => {
     const token = sessionStorage.getItem("token");
     const { api } = apiService;
     const { id } = useParams();
+    let navigate = useNavigate();
 
     const lessonCompleted = (id) => 'completed' === userSteps[id]
-    const allCompleted = () => userSteps.every( (v) => 'completed' === v)
+    const allCompleted = () => true//userSteps.every( (v) => 'completed' === v)
     const showConnector = (arr, index) =>  arr.length - 1 === index
 
     useEffect(() => {
@@ -36,36 +38,41 @@ const Lessons = () => {
                 fetchedLessons.push({
                     id: lesson.id,
                     title: lesson.title.rendered,
-                    slug: lesson.slug
+                    slug: lesson.slug,
+                    duration: lesson.duracao
                 })
                 setLessons([...fetchedLessons]);
             })
             setIsLoading(false);
         });
 
-        api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps?_embed`, {
+        api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
             const fetchedSteps = []
-            console.log(res.data[0])
             res.data[0].forEach((step) => {
                 fetchedSteps[step.step] = step.step_status
             })
             setUserSteps([...fetchedSteps]);
             setIsLoading(false);
         });
-        
+
         api.get(`/ldlms/v2/sfwd-courses/${id}`).then((res) => {
-            const course = res.data;
+            const course = res.data
             setCourseData({
                 featuredImg: course.image,
                 title: parse(`${course.title.rendered}`),
                 duration: course.duracao,
+                quizz: course.quizz
             });
             setIsLoading(false);
         });
-        
+
     }, []);
+
+    const handleBeginTest = () => {
+        navigate(`/quizzes/${courseData.quizz.slug}/${courseData.quizz.id}`)
+    }
 
     return (
         <>
@@ -81,16 +88,16 @@ const Lessons = () => {
                             <h1>{courseData.title}</h1>
                             <Grid container sx={styles.topinfo}>
                                 <Grid item xs={4} md={2}>
-                                    <p>
+                                    <div>
                                         <PlayCircleOutlined sx={styles.topinfo.icons} />
                                         {lessons.length} Vídeos
-                                    </p>
+                                    </div>
                                 </Grid>
                                 <Grid item xs={4} md={2}>
-                                    <p>
+                                    <div>
                                         <AccessTime sx={styles.topinfo.icons} />
                                         {courseData.duration}
-                                    </p>
+                                    </div>
                                 </Grid>
                             </Grid>
 
@@ -126,7 +133,7 @@ const Lessons = () => {
                                 <Box sx={styles.button}>
                                     {token && (
                                         <Button
-                                            href="/quizzes/teste-seu-conhecimento-persuasao"
+                                            onClick={handleBeginTest}
                                             sx={styles.courseLink}
                                         >
                                             Iniciar Prova
@@ -166,10 +173,10 @@ const styles = {
             content: "none"
         },
         "& .MuiTimelineConnector-root": {
-            margin: "-10px 0"
+            margin: "-10px 0 -30px"
         },
-        "& .MuiTimelineContent-root": {
-            
+        "& .MuiTimelineSeparator-root": {
+            mt: "18px"
         }
     },
     root: {
@@ -231,13 +238,14 @@ const styles = {
     },
     topinfo: {
         //css desktop
+        display: "flex",
         flexWrap: {
             md: "nowrap",
             xs: "wrap",
         },
         alignItems: "left",
         textAlign: "left",
-        "& p": {
+        "& div": {
             m: "0 0 0 -20px",
             fontWeight: "500",
             color: "#33EDAC",
@@ -251,7 +259,7 @@ const styles = {
                 md: "18px",
                 xs: "14px",
             },
-            alignItems: "left",
+            alignItems: "center",
         },
         icons: {
             ml: "0.85rem",

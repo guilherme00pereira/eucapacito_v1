@@ -9,3 +9,4 @@ export const calculateTime = (v) => {
     if(m > 0) text += " e " + m + " minutos";
     return (text)
 }
+
