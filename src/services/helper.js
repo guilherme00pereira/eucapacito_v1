@@ -10,3 +10,14 @@ export const calculateTime = (v) => {
     return (text)
 }
 
+export const formatDuration = (v) => {
+    let text = "";
+    const time = v.split(":");
+    if(time[0] !== "00")
+        text += time[0] + " horas"
+    if(time[0] !== "00" && time[1] !== "00")
+        text += " e "
+    if(time[1] !== "00")
+        text += time[1] + " minutos"
+    return text;
+}

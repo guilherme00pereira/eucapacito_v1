@@ -13,16 +13,13 @@ const Lesson = () => {
         video: ""
     });
     const [next, setNext] = useState("");
+    const [back, setBack] = useState("");
     const { api } = apiService;
     const { slug, id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
     let navigate = useNavigate();
 
-
-    const getNext = (lesson) => {
-        navigate(`/lessons/${lesson.next}/${lesson.course}`)
-    }
 
     useEffect(() => {
 
@@ -38,6 +35,8 @@ const Lesson = () => {
                 course: lesson.course,
                 next: lesson.next
             })
+            slug === lesson.next ? setBack(`/${lesson.course}/aulas/${id}`) : setNext(`/lessons/${lesson.next}/${id}`)
+
             setIsLoading(false);
         });
 
@@ -66,9 +65,15 @@ const Lesson = () => {
                         <ReactPlayer onPlay={() => handleComplete(lesson.id)} url={lesson.video} />
                     </Box>
                     <Box sx={styles.button}>
-                        <Button onClick={() => getNext(lesson.id)} sx={styles.courseLink}>
-                            Próxima
-                        </Button>
+                        {"" === next ?
+                            <Button href={back} sx={styles.courseLink}>
+                                Ver Aulas
+                            </Button> :
+                            <Button href={next} sx={styles.courseLink}>
+                                Próxima
+                            </Button>
+                        }
+
                     </Box>   
                 </Container>
                 

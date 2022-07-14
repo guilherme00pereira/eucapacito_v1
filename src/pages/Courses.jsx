@@ -155,7 +155,7 @@ const Courses = () => {
                                         url={`/course-ec/${course.slug}`}
                                         imagePath={course.featuredImg}
                                         title={course.title}
-                                        subtitle="Cadastre-se"
+                                        subtitle="Acessar"
                                         logoPath={course.partnerLogoURL}
                                     />
                                 </SwiperSlide>

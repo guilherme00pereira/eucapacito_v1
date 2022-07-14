@@ -49,7 +49,9 @@ const Lessons = () => {
         });
 
         api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
         }).then((res) => {
             const fetchedSteps = []
             res.data[0].forEach((step) => {
