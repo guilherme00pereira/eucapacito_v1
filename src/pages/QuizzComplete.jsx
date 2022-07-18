@@ -7,6 +7,7 @@ const QuizzComplete = () => {
         <Container sx={styles.container}>
             <Box elevation={0} sx={{mt: '25px', mb: '50px', textAlign: 'center'}}>
                 <img src={TestProgress} alt="progresso" />
+                <span>10/10</span>
             </Box>
             <Box>
                 <h2>Parabéns</h2>

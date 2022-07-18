@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import LessonCard from "../components/Course/LessonCard";
 import { TimelineDot, TimelineItem } from "@mui/lab";
 import useCheckMobileScreen from "../services/useCheckMobileScreen"
+import {formatDuration} from "../services/helper";
 
 const Lessons = () => {
     const userID = sessionStorage.getItem("userID");
@@ -70,7 +71,7 @@ const Lessons = () => {
                 id: course.id,
                 featuredImg: course.image,
                 title: parse(`${course.title.rendered}`),
-                duration: course.duracao,
+                duration: formatDuration(course.duracao),
                 quizz: course.quizz
             });
             setIsLoading(false);
