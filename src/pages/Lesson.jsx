@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Container, CircularProgress } from "@mui/material";
+import { Box, Container, CircularProgress, Stack } from "@mui/material";
 import Button from "../components/Button";
 import apiService from "../services/apiService";
 import parse from 'html-react-parser';
@@ -13,7 +13,8 @@ const Lesson = () => {
         video: ""
     });
     const [next, setNext] = useState("");
-    const [back, setBack] = useState("");
+    const [prev, setPrev] = useState("");
+    const [btnAlign, setBtnAlign] = useState("space-between")
     const { api } = apiService;
     const { slug, id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
@@ -33,10 +34,12 @@ const Lesson = () => {
                 content: lesson.content.rendered,
                 video: lesson.video,
                 course: lesson.course,
+                prev: lesson.prev,
                 next: lesson.next
             })
-            slug === lesson.next ? setBack(`/${lesson.course}/aulas/${id}`) : setNext(`/lessons/${lesson.next}/${id}`)
-
+            slug === lesson.prev || setPrev(`/lessons/${lesson.prev}/${id}`)
+            slug === lesson.next || setNext(`/lessons/${lesson.next}/${id}`)
+            if(slug === lesson.prev || slug === lesson.next) setBtnAlign("center")
             setIsLoading(false);
         });
 
@@ -64,17 +67,21 @@ const Lesson = () => {
                     <Box sx={styles.video}>
                         <ReactPlayer onPlay={() => handleComplete(lesson.id)} url={lesson.video} />
                     </Box>
-                    <Box sx={styles.button}>
-                        {"" === next ?
-                            <Button href={back} sx={styles.courseLink}>
-                                Ver Aulas
-                            </Button> :
-                            <Button href={next} sx={styles.courseLink}>
-                                Próxima
+                    <Stack direction="row" justifyContent={btnAlign} alignItems="flex-end">
+                        {"" === prev ||
+                            <Button href={prev} sx={styles.courseLink}>
+                                Anterior
                             </Button>
                         }
+                        <Box sx={styles.button}>
+                            {"" === next ||
+                                <Button href={next} sx={styles.courseLink}>
+                                    Próxima
+                                </Button>
+                            }
 
-                    </Box>   
+                        </Box>   
+                    </Stack>
                 </Container>
                 
             )}

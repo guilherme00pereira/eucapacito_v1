@@ -68,7 +68,7 @@ function App() {
                 <Route path="/lessons/:slug/:id" element={<Lesson />} />
                 <Route path=":slug/aulas/:id" element={<Lessons />} />
                 <Route path="/quizzes/:slug/:id" element={<Quizz />} />
-                <Route path="/teste-concluido" element={<QuizzComplete />} />
+                <Route path="/teste-concluido/:id" element={<QuizzComplete />} />
                 <Route path="/certificado/:id" element={<Certification />} />
                 <Route path="/curso-ec/:slug" element={<Course />} />
                 <Route path="/jornada/:slug" element={<Journey />} />

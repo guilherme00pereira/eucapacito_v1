@@ -11,6 +11,7 @@ export const calculateTime = (v) => {
 }
 
 export const formatDuration = (v) => {
+    v = v.replace(/[^\d:]+/g, '')
     let text = "";
     const time = v.split(":");
     if(time[0] !== "00")
