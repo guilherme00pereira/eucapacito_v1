@@ -5,37 +5,36 @@ import {Box, CircularProgress, Container, Stack, Typography} from "@mui/material
 import Button from "../components/Button";
 
 const QuizzComplete = () => {
-    const [certificate, setCertificate] = useState("");
+    const [certificate, setCertificate] = useState("https://eucapacito.local/certificates/cinco-habilidades-essenciais-para-impulsionar-a-sua-carreira/?course_id=10730&cert-nonce=b7147acbd1");
     const {api} = apiService;
     const { id } = useParams();
-    const token = sessionStorage.getItem("token");
     const userID = sessionStorage.getItem("userID");
 
-    useEffect(() => {
-        api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
-            setCertificate(res.data)
-        });
-    }, []);
+    // useEffect(() => {
+    //     api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
+    //         setCertificate(res.data)
+    //     });
+    // }, []);
 
     return (
         <Container sx={styles.container}>
             <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                <CircularProgress variant="determinate" size="8rem" value={80} sx={styles.circular} />
+                <CircularProgress variant="determinate" size="8rem" value={100} sx={styles.circular} />
                 <Box sx={styles.circular.box}>
                     <Typography variant="h5" align="center" sx={styles.circular.percent}>
-                        80%
+                        100%
                     </Typography>
                     <Typography variant="caption" align="center" component="small" sx={styles.circular.number}>
-                        8/10
+                        2/2
                     </Typography>
                 </Box>
             </Box>
             <Stack justifyContent="center" alignItems="center" spacing={3} sx={styles.message}>
                 <h2>Parabéns</h2>
-                <span>Você passou em todas as perguntas sobre Marketing Digital.</span>
+                <span>Você passou em todas as perguntas sobre Teste seu conhecimento – Persuasão.</span>
             </Stack>
             <Box>
-                <Button href={certificate} sx={styles.courseLink}>
+                <Button href={certificate} target="_blank" sx={styles.courseLink}>
                     Gerar Certificado
                 </Button>
             </Box>

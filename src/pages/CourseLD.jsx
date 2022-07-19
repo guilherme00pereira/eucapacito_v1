@@ -8,7 +8,6 @@ import {
 import apiService from "../services/apiService";
 import Button from "../components/Button";
 import {coursePage} from "../commonStyles/coursePage";
-import {formatDuration} from "../services/helper";
 
 const CourseLD = () => {
     const [courseData, setCourseData] = useState({
@@ -39,7 +38,7 @@ const CourseLD = () => {
                 featuredImg: course.image,
                 title: parse(`${course.title.rendered}`),
                 //category: course.categories.map((category) => category.name).join(", "),
-                duration: formatDuration(course.duracao),
+                duration: course.duracao,
                 description: parse(`${course.content.rendered}`),
             });
             setTitle({
