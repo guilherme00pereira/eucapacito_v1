@@ -48,16 +48,12 @@ const Lessons = () => {
             setIsLoading(false);
         });
 
-        api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-        }).then((res) => {
+        //api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
+            api.get(`eucapacito/v1/get-user-progress?user=${userID}&course=${id}`).then((res) => {
             const fetchedSteps = []
-            res.data[0].forEach((step) => {
-                if('sfwd-lessons' === step.post_type) {
-                    fetchedSteps[step.step] = step.step_status
-                }
+            console.log(res.data)
+            res.data.forEach((step) => {
+                fetchedSteps[step.id] = step.status
             })
             setAllCompleted(fetchedSteps.every( (v) => 'completed' === v))
             setUserSteps([...fetchedSteps]);
