@@ -128,7 +128,8 @@ const styles = {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        my: "50px"
     },
       button: {
         textAlign: "center",

@@ -5,7 +5,7 @@ import {Box, CircularProgress, Container, Stack, Typography} from "@mui/material
 import Button from "../components/Button";
 
 const QuizzComplete = () => {
-    const [certificate, setCertificate] = useState("https://eucapacito.local/certificates/cinco-habilidades-essenciais-para-impulsionar-a-sua-carreira/?course_id=10730&cert-nonce=b7147acbd1");
+    const [certificate, setCertificate] = useState("https://wp.eucapacito.com.br/certificates/cinco-habilidades-essenciais-para-impulsionar-a-sua-carreira/?quiz=9841&cert-nonce=097bbc7731");
     const {api} = apiService;
     const { id } = useParams();
     const userID = sessionStorage.getItem("userID");
