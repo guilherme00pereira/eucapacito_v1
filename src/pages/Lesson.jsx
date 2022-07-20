@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link, Box, Container, CircularProgress, Stack } from "@mui/material";
 import Button from "../components/Button";
 import apiService from "../services/apiService";
@@ -18,6 +18,7 @@ const Lesson = () => {
     const [prev, setPrev] = useState("");
     const [btnAlign, setBtnAlign] = useState("space-between")
     const { api } = apiService;
+    let navigate = useNavigate();
     const { slug, id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
@@ -54,16 +55,20 @@ const Lesson = () => {
         })
     }
 
+    const handleNavBack = () => {
+        navigate(`/${lesson.course}/aulas/${id}`)
+    }
+
     return (
         <>
             {isLoading && <CircularProgress sx={styles.loading} />}
             {!isLoading && (
                 <Container sx={styles.root}>
                     <Box>
-                        <Link component={NavLink} to={''}  sx={styles.backLessons}>
+                        <Link component="button" onClick={handleNavBack}  sx={styles.backLessons}>
                             <span>
-                                <img src={ArrowLeftOutlined} alt="arrow-left-outlined" width={24} height={28} />
-                                <img src={ArrowLeft} alt="arrow-left" style={{marginLeft: "-15px"}} width={24} height={28}  />
+                                <img src={ArrowLeftOutlined} alt="arrow-left-outlined" width={22} height={26} />
+                                <img src={ArrowLeft} alt="arrow-left" style={{marginLeft: "-12px"}} width={22} height={26}  />
                             </span>
                             <div style={{paddingLeft: "15px", border: "none", fontWeight: "700"}}>
                                 <p>Retornar às Aulas</p>
@@ -121,6 +126,7 @@ const styles = {
             xs: "0",
           },
         },
+        hr: { border: 0, borderTop: "1px solid #77837F" },
       },
       texto: {
         margin: "70px auto",
@@ -160,6 +166,7 @@ const styles = {
         justifyContent: "flex-start",
         alignItems: "center",
         p: {
+            fontSize: "18px",
             textDecoration: "none",
             color: "#CACAC8"
         }

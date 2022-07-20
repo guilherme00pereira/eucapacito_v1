@@ -51,7 +51,6 @@ const Lessons = () => {
         //api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
             api.get(`eucapacito/v1/get-user-progress?user=${userID}&course=${id}`).then((res) => {
             const fetchedSteps = []
-            console.log(res.data)
             res.data.forEach((step) => {
                 fetchedSteps[step.id] = step.status
             })
