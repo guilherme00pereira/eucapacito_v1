@@ -1,32 +1,24 @@
 import { useState, useEffect } from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useOutletContext, useParams} from "react-router-dom";
 import apiService from "../services/apiService";
 import parse from "html-react-parser";
 import { Timeline, TimelineConnector, TimelineContent, TimelineSeparator } from '@mui/lab';
-import { Stack, Box, CircularProgress, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import { AccessTime, PlayCircleOutlined, CheckCircle, Adjust } from "@mui/icons-material";
 import Button from "../components/Button";
 import LessonCard from "../components/Course/LessonCard";
 import { TimelineDot, TimelineItem } from "@mui/lab";
-import useCheckMobileScreen from "../services/useCheckMobileScreen"
 
 const Lessons = () => {
+    const [title, setTitle, courseData, setCourseData, userSteps, setUserSteps] = useOutletContext();
     const userID = sessionStorage.getItem("userID");
-    const [courseData, setCourseData] = useState({
-        featuredImg: "",
-        title: "",
-        duration: "",
-        quizz: "",
-    });
     const [lessons, setLessons] = useState([]);
-    const [userSteps, setUserSteps] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [allCompleted, setAllCompleted] = useState(false);
     const token = sessionStorage.getItem("token");
     const { api } = apiService;
     const { id } = useParams();
     let navigate = useNavigate();
-    const isMobile = useCheckMobileScreen();
 
     const lessonCompleted = (id) => 'completed' === userSteps[id]
     const showConnector = (arr, index) =>  arr.length - 1 === index
@@ -55,7 +47,7 @@ const Lessons = () => {
                 fetchedSteps[step.id] = step.status
             })
             setAllCompleted(fetchedSteps.every( (v) => 'completed' === v))
-            setUserSteps([...fetchedSteps]);
+            setUserSteps(fetchedSteps);
             setIsLoading(false);
         });
 
@@ -103,16 +95,6 @@ const Lessons = () => {
                                     </div>
                                 </Grid>
                             </Grid>
-
-                            {isMobile && 
-                                <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
-                                    <div>
-                                        <span>Lições</span>
-                                        <span>Teste</span>
-                                    </div>
-                                </Stack>
-                            }
-                            
 
                             <Timeline sx={styles.timeline} position="right">
                                 {lessons.map((lesson, index, arr) => (
@@ -253,7 +235,10 @@ const styles = {
         alignItems: "left",
         textAlign: "left",
         "& div": {
-            m: "0 0 0 -20px",
+            m: {
+               md: "0 0 0 -20px",
+               xs: "0"
+            },
             fontWeight: "500",
             color: "#33EDAC",
             display: "flex",

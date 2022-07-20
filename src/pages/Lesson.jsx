@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useOutletContext, useNavigate } from "react-router-dom";
 import { Link, Box, Container, CircularProgress, Stack } from "@mui/material";
 import Button from "../components/Button";
 import apiService from "../services/apiService";
@@ -9,13 +9,16 @@ import ArrowLeftOutlined from "../assets/img/arrow-left-outlined.png"
 import ArrowLeft from "../assets/img/arrow-left.png"
 
 const Lesson = () => {
+    const [title, setTitle, courseData, setCourseData, userSteps, setUserSteps] = useOutletContext();
     const [lesson, setLesson] = useState({
         title: "",
         content: "",
         video: ""
     });
+    const userID = sessionStorage.getItem("userID");
     const [next, setNext] = useState("");
     const [prev, setPrev] = useState("");
+    const [end, setEnd] = useState(false);
     const [btnAlign, setBtnAlign] = useState("space-between")
     const { api } = apiService;
     let navigate = useNavigate();
@@ -44,6 +47,26 @@ const Lesson = () => {
             if(slug === lesson.prev || slug === lesson.next) setBtnAlign("center")
             setIsLoading(false);
         });
+        userSteps.length === 0 && api.get(`eucapacito/v1/get-user-progress?user=${userID}&course=${id}`).then((res) => {
+            const fetchedSteps = []
+            res.data.forEach((step) => {
+                fetchedSteps[step.id] = step.status
+            })
+            setUserSteps(fetchedSteps);
+        });
+
+        courseData.quizz === "" && api.get(`/ldlms/v2/sfwd-courses/${id}`).then((res) => {
+            const course = res.data
+            setCourseData({
+                id: course.id,
+                featuredImg: course.image,
+                title: parse(`${course.title.rendered}`),
+                duration: course.duracao,
+                quizz: course.quizz
+            });
+        });
+
+        setEnd( userSteps.every( (v) => 'completed' === v ) && getLastElement(userSteps) == lesson.id )
 
     }, []);
 
@@ -57,6 +80,15 @@ const Lesson = () => {
 
     const handleNavBack = () => {
         navigate(`/${lesson.course}/aulas/${id}`)
+    }
+
+    const handleBeginTest = () => {
+        navigate(`/quizzes/${courseData.quizz.slug}/${courseData.quizz.id}`)
+    }
+
+    const getLastElement = (arr) => {
+        const keys = Object.keys(arr)
+        return keys[keys.length -1]
     }
 
     return (
@@ -85,21 +117,29 @@ const Lesson = () => {
                     <Box sx={styles.video}>
                         <ReactPlayer onPlay={() => handleComplete(lesson.id)} url={lesson.video} />
                     </Box>
-                    <Stack direction="row" justifyContent={btnAlign} alignItems="flex-end">
-                        {"" === prev ||
-                            <Button href={prev} sx={styles.courseLink}>
-                                Anterior
+                    {end ? 
+                        <Stack direction="row" justifyContent={btnAlign} alignItems="center">
+                            <Button onClick={handleBeginTest} sx={styles.courseLink}>
+                                Iniciar Prova
                             </Button>
-                        }
-                        <Box sx={styles.button}>
-                            {"" === next ||
-                                <Button href={next} sx={styles.courseLink}>
-                                    Próxima
+                        </Stack>
+                        :
+                        <Stack direction="row" justifyContent={btnAlign} alignItems="flex-end">
+                            {"" === prev ||
+                                <Button href={prev} sx={styles.courseLink}>
+                                    Anterior
                                 </Button>
                             }
-
-                        </Box>   
-                    </Stack>
+                            <Box sx={styles.button}>
+                                {"" === next ||
+                                    <Button href={next} sx={styles.courseLink}>
+                                        Próxima
+                                    </Button>
+                                }
+                            </Box>   
+                        </Stack>
+                    }
+                    
                 </Container>
                 
             )}
