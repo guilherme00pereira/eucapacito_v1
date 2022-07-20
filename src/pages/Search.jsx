@@ -19,8 +19,8 @@ const Search = () => {
     const [total, setTotal] = useState(0);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [page, setPage] = useState(1);
-    const [term, setTerm] = useState('');
-    const [ids, setIds] = useState('');
+    // const [term, setTerm] = useState('');
+    // const [ids, setIds] = useState('');
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const { api } = apiService;
@@ -38,53 +38,51 @@ const Search = () => {
     const handleModal = (status) => setDrawerOpen(status);
 
     useEffect(() => {
-        if (page === 1) {
-            setCourses([]);
-        }
-        setTerm(searchParams.get('search'));
-        setIds(searchParams.get('t'));
+        const term = searchParams.get('search');
+        const ids = searchParams.get('t');
         let url = `/eucapacito/v1/search?page=${page}`;
         if(null !== ids) {
             url += `&t=${ids}`;
-          }
+        }
         if (term === "" || term.length > 3) {
             url += `&search=${term}`;
-            setIsLoading(true);
-            api.get(url).then((res) => {
-                if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
-                    setHideLoadMoreButton(true);
-                } else {
-                    setHideLoadMoreButton(false);
-                }
-                const fetchedCourses = [];
-                res.data.courses.forEach((course) => {
-                    const newCourse = {
-                        id: course.id,
-                        slug: course.slug,
-                        title: course.title,
-                        subtitle: course.type === "curso_ec" ? "Eu Capacito" : "Parceiro",
-                        partnerLogoURL: course.logo
-                    };
-                    fetchedCourses.push(newCourse);
-                });
-                setTotal(res.data.total);
-                setFilters({
-                    levels: res.data.filters.nivel,
-                    ranking: res.data.filters.avaliao,
-                    categories: res.data.filters.categoria_de_curso_ec,
-                    partners: res.data.filters.parceiro_ec
-                })
-
-                setCourses([...courses, ...fetchedCourses]);
-
-                setIsLoading(false);
-            })
-                .catch((error) => {
-                    setIsLoading(false);
-                    return false;
-                });
         }
-    }, [ids, term, page, searchParams]);
+        setIsLoading(true);
+        api.get(url).then((res) => {
+            if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
+                setHideLoadMoreButton(true);
+            } else {
+                setHideLoadMoreButton(false);
+            }
+            const fetchedCourses = [];
+            res.data.courses.forEach((course) => {
+                const newCourse = {
+                    id: course.id,
+                    slug: course.slug,
+                    title: course.title,
+                    subtitle: course.type === "curso_ec" ? "Parceiro" : "Eu Capacito",
+                    partnerLogoURL: course.logo,
+                    type: course.type
+                };
+                fetchedCourses.push(newCourse);
+            });
+            setTotal(res.data.total);
+            setFilters({
+                levels: res.data.filters.nivel,
+                ranking: res.data.filters.avaliao,
+                categories: res.data.filters.categoria_de_curso_ec,
+                partners: res.data.filters.parceiro_ec
+            })
+
+            page === 1 ? setCourses([...fetchedCourses]) : setCourses([...courses, ...fetchedCourses]);
+
+            setIsLoading(false);
+        })
+            .catch((error) => {
+                setIsLoading(false);
+                return false;
+            });
+    }, [page, searchParams]);
 
     return (
 
@@ -116,17 +114,18 @@ const Search = () => {
 
                 <hr />
 
-                {courses.length > 0 ? 
+                {courses.length > 0 ?
                     courses.map((course) => (
-                    <CourseBox
-                        key={course.id}
-                        courseId={course.id}
-                        slug={course.slug}
-                        title={course.title}
-                        company="Eu Capacito"
-                        logoURL={course.partnerLogoURL}
-                    />
-                )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
+                        <CourseBox
+                            key={course.id}
+                            courseId={course.id}
+                            slug={course.slug}
+                            title={course.title}
+                            company="Eu Capacito"
+                            logoURL={course.partnerLogoURL}
+                            type={course.type}
+                        />
+                    )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
                 {isLoading && <CircularProgress sx={styles.loading} />}
                 {!isLoading && (
                     <Button
