@@ -1,8 +1,19 @@
-import React from 'react';
+import { useContext } from "react";
 import {FormGroup, FormControl, FormControlLabel, Radio, Stack, RadioGroup} from "@mui/material";
 import formStyle from "../../commonStyles/formStyle";
+import {QuizContext} from "../../ApplicationContexts"
 
-const SingleAnswer = ({answers}) => {
+const SingleAnswer = ({question, answers}) => {
+    const [validation, setValidation] = useContext(QuizContext);
+
+
+    const handleValidateAnswer = (e) => {
+        const v = e.target.value.split("_")[1]
+        const obj = { q: question, a: v === "true" }
+        const newArr = validation.filter(x => x.q !== question)
+        setValidation([...newArr, obj])
+    }
+
     return (
         <Stack>
             <FormGroup>
@@ -12,11 +23,12 @@ const SingleAnswer = ({answers}) => {
                             answers.map((answer, index) => (
                                 <FormControlLabel
                                     key={index}
-                                    value={answer._answer}
+                                    value={index + "_" + answer._correct}
                                     control={<Radio/>}
                                     label={answer._answer}
                                     sx={styles.checkbox}
                                     style={{color: "#CAC8C8"}}
+                                    onChange={(e) => handleValidateAnswer(e)}
                                 />
                             ))
                         }

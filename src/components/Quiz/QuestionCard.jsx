@@ -1,32 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {Box, CircularProgress} from "@mui/material";
 import parse from "html-react-parser";
 import apiService from "../../services/apiService";
 import MultipleAnswer from "./MultipleAnswer";
 import SingleAnswer from "./SingleAnswer";
+import {QuizContext} from "../../ApplicationContexts"
+import { genHash } from "../../services/helper";
 
 const QuestionCard = ({id}) => {
+    const [validation, setValidation] = useContext(QuizContext);
     const [question, setQuestion] = useState({
+        id: "",
         title: "",
         statement: "",
-        answers: []
+        answers: [],
+        type: ""
     });
     const { api } = apiService;
     const token = sessionStorage.getItem("token");
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-
         api.get(`/ldlms/v1/sfwd-questions/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
             setQuestion({
+                id: res.data._id,
                 title: parse(res.data.question_post_title),
                 statement: parse(res.data._question),
                 answers: res.data._answerData,
-                type: res.data._answerType
-
+                type: res.data._answerType,
             })
+            console.log(validation)
             setIsLoading(false);
         });
     }, []);
@@ -34,9 +39,9 @@ const QuestionCard = ({id}) => {
     const renderAnswer = (question) => {
         switch (question.type) {
             case "multiple":
-                return <MultipleAnswer answers={question.answers} />
+                return <MultipleAnswer question={question.id} answers={question.answers} />
             default:
-                return <SingleAnswer answers={question.answers} />
+                return <SingleAnswer question={question.id} answers={question.answers} />
         }
     }
 

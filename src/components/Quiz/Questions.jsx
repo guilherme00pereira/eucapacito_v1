@@ -1,28 +1,23 @@
-import {useState, useEffect} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useState, useEffect, useContext} from "react";
+import {useParams} from "react-router-dom";
 import {Container, Box, Stack, Pagination, CircularProgress} from "@mui/material";
-import Button from "../components/Button";
-import apiService from "../services/apiService";
-import QuestionCard from "../components/Quiz/QuestionCard";
-import { QuizContext } from "../ApplicationContexts";
+import Button from "../Button";
+import apiService from "../../services/apiService";
+import QuestionCard from "./QuestionCard";
 
-
-const Quizz = () => {
+const Questions = ({setFinish}) => {
     const [questions, setQuestions] = useState([]);
-    const [answers, setAnswers] = useState([]);
     const [current, setCurrent] = useState(1);
     const [end, setEnd] = useState(false);
     const {api} = apiService;
     const {id} = useParams();
     const token = sessionStorage.getItem("token");
     const [isLoading, setIsLoading] = useState(true);
-    let navigate = useNavigate();
 
     useEffect(() => {
         api.get(`/ldlms/v2/sfwd-question?quiz=${id}`, {
             headers: {Authorization: `Bearer ${token}`},
         }).then((res) => {
-            console.log(res.data)
             const fetchedQuestions = [];
             res.data.forEach(question => {
                 fetchedQuestions.push({
@@ -36,7 +31,7 @@ const Quizz = () => {
     }, []);
 
     const renderCard = () => {
-        return <QuestionCard key={questions[current - 1].id} id={questions[current - 1].id}/>
+        return <QuestionCard key={questions[current - 1].id} id={questions[current - 1].id} />
     }
 
     const handlePagination = (e, v) => {
@@ -49,13 +44,11 @@ const Quizz = () => {
     }
 
     const handleEndQuiz = () => {
-        navigate(`/teste-concluido/${id}`);
+        setFinish(true)
     }
 
-
     return (
-        <QuizContext.Provider value={{answers, setAnswers}}>
-            <Container sx={styles.root}>
+        <Container sx={styles.root}>
                 {isLoading && <CircularProgress sx={styles.loading}/>}
                 {!isLoading && (
                     <>
@@ -94,12 +87,10 @@ const Quizz = () => {
                     </>
                 )}
             </Container>
-        </QuizContext.Provider>
     );
 };
 
-export default Quizz;
-
+export default Questions;
 
 const styles = {
     root: {

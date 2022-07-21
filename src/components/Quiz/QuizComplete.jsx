@@ -1,20 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import apiService from "../services/apiService";
+import apiService from "../../services/apiService";
 import {Box, CircularProgress, Container, Stack, Typography} from "@mui/material";
-import Button from "../components/Button";
+import Button from "../Button";
+import {QuizContext} from "../../ApplicationContexts"
 
-const QuizzComplete = () => {
+const QuizComplete = () => {
+    const [validation, setValidation] = useContext(QuizContext);
     const [certificate, setCertificate] = useState("https://wp.eucapacito.com.br/certificates/cinco-habilidades-essenciais-para-impulsionar-a-sua-carreira/?quiz=9841&cert-nonce=097bbc7731");
+    const [total, setTotal] = useState(1)
+    const [correct, setCorrect] = useState(1)
     const {api} = apiService;
     const { id } = useParams();
     const userID = sessionStorage.getItem("userID");
 
-    // useEffect(() => {
-    //     api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
-    //         setCertificate(res.data)
-    //     });
-    // }, []);
+    useEffect(() => {
+        /* api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
+            setCertificate(res.data)
+        }); */
+        setTotal(validation.length)
+        //setCorrect(validation.every((x) => x.a === 'true'))
+        setCorrect(validation.length)
+    }, []);
 
     return (
         <Container sx={styles.container}>
@@ -25,7 +32,7 @@ const QuizzComplete = () => {
                         100%
                     </Typography>
                     <Typography variant="caption" align="center" component="small" sx={styles.circular.number}>
-                        2/2
+                        {correct}/{total}
                     </Typography>
                 </Box>
             </Box>
@@ -42,7 +49,7 @@ const QuizzComplete = () => {
     );
 };
 
-export default QuizzComplete;
+export default QuizComplete;
 
 
 const styles = {

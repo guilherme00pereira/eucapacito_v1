@@ -36,8 +36,8 @@ const Banners = () => {
                 slidesPerView={1}
             >
                 {banners.length > 0 &&
-                    banners.map((banner) => (
-                        <SwiperSlide className={banner.deviceClass}>
+                    banners.map((banner, index) => (
+                        <SwiperSlide key={index} className={banner.deviceClass}>
                             <Link component={RouterLink} to={banner.link}>
                                 {
                                     banner.type === 'video' ? 

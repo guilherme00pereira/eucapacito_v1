@@ -37,8 +37,7 @@ import TermsAndServices from "./pages/TermsAndServices"
 import CourseLD from "./pages/CourseLD";
 import Lessons from "./pages/Lessons"
 import Lesson from "./pages/Lesson";
-import Quizz from "./pages/Quizz";
-import QuizzComplete from "./pages/QuizzComplete";
+import Quiz from "./pages/Quiz";
 import Certification from "./pages/Certification";
 import Temp from "./pages/Temp";
 
@@ -68,8 +67,7 @@ function App() {
                 <Route path="/course-ec/:slug" element={<CourseLD />} />
                 <Route path="/lessons/:slug/:id" element={<Lesson />} />
                 <Route path=":slug/aulas/:id" element={<Lessons />} />
-                <Route path="/quizzes/:slug/:id" element={<Quizz />} />
-                <Route path="/teste-concluido/:id" element={<QuizzComplete />} />
+                <Route path="/quizzes/:slug/:id" element={<Quiz />} />
                 <Route path="/certificado/:id" element={<Certification />} />
                 <Route path="/curso-ec/:slug" element={<Course />} />
                 <Route path="/jornada/:slug" element={<Journey />} />
