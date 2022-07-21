@@ -1,6 +1,6 @@
 import {Grid, FormGroup, FormControlLabel, Checkbox} from "@mui/material";
 import Button from "../Button";
-import formStyle from "./formStyle";
+import formStyle from "../../commonStyles/formStyle";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 

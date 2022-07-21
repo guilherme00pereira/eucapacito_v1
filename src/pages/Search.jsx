@@ -43,7 +43,7 @@ const Search = () => {
         let url = `/eucapacito/v1/search?page=${page}`;
         if(null !== ids) {
             url += `&t=${ids}`;
-        }
+          }
         if (term === "" || term.length > 3) {
             url += `&search=${term}`;
         }
@@ -78,10 +78,10 @@ const Search = () => {
 
             setIsLoading(false);
         })
-            .catch((error) => {
-                setIsLoading(false);
-                return false;
-            });
+        .catch((error) => {
+            setIsLoading(false);
+            return false;
+        });
     }, [page, searchParams]);
 
     return (
@@ -114,18 +114,18 @@ const Search = () => {
 
                 <hr />
 
-                {courses.length > 0 ?
+                {courses.length > 0 ? 
                     courses.map((course) => (
-                        <CourseBox
-                            key={course.id}
-                            courseId={course.id}
-                            slug={course.slug}
-                            title={course.title}
-                            company="Eu Capacito"
-                            logoURL={course.partnerLogoURL}
-                            type={course.type}
-                        />
-                    )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
+                    <CourseBox
+                        key={course.id}
+                        courseId={course.id}
+                        slug={course.slug}
+                        title={course.title}
+                        company="Eu Capacito"
+                        logoURL={course.partnerLogoURL}
+                        type={course.type}
+                    />
+                )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
                 {isLoading && <CircularProgress sx={styles.loading} />}
                 {!isLoading && (
                     <Button

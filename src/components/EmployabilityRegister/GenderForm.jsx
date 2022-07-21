@@ -1,5 +1,5 @@
 import {Grid, FormGroup, FormControl, Select, MenuItem} from "@mui/material";
-import formStyle from "./formStyle";
+import formStyle from "../../commonStyles/formStyle";
 
 const genderSelect = [
     "Mulher (Cisgênero)",

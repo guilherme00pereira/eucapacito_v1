@@ -7,13 +7,10 @@ import Theme from './Theme';
 import AppSettings from './AppSettings';
 import LoginRegister from "./pages/LoginRegister";
 import TopBottomBars from "./layouts/TopBottomBars";
-import BottomBar from "./layouts/BottomBar";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Course from "./pages/Course";
 import Courses from "./pages/Courses";
-import CoursesEC from "./pages/CoursesEC";
-import CourseClass from "./pages/CourseClass";
 import Contact from "./pages/Contact";
 import Faq from "./pages/Faq";
 import Partners from "./pages/Partners";
@@ -36,7 +33,13 @@ import Ebooks from "./pages/Ebooks";
 import Finished from "./pages/Finished";
 import Journey from "./pages/Journey";
 import CoursesListing from "./pages/CoursesListing";
-import TermsAndServices from "./pages/TermsAndServices";
+import TermsAndServices from "./pages/TermsAndServices"
+import CourseLD from "./pages/CourseLD";
+import Lessons from "./pages/Lessons"
+import Lesson from "./pages/Lesson";
+import Quizz from "./pages/Quizz";
+import QuizzComplete from "./pages/QuizzComplete";
+import Certification from "./pages/Certification";
 import Temp from "./pages/Temp";
 
 
@@ -62,7 +65,12 @@ function App() {
                 <Route path="/procurar" element={<Search />} />
                 <Route path="/todos-os-cursos" element={<CoursesListing />} />
                 <Route path="/cursos" element={<Courses />} />
-                <Route path="/cursos-ec" element={<CoursesEC />} />
+                <Route path="/course-ec/:slug" element={<CourseLD />} />
+                <Route path="/lessons/:slug/:id" element={<Lesson />} />
+                <Route path=":slug/aulas/:id" element={<Lessons />} />
+                <Route path="/quizzes/:slug/:id" element={<Quizz />} />
+                <Route path="/teste-concluido/:id" element={<QuizzComplete />} />
+                <Route path="/certificado/:id" element={<Certification />} />
                 <Route path="/curso-ec/:slug" element={<Course />} />
                 <Route path="/jornada/:slug" element={<Journey />} />
                 <Route path="/contato" element={<Contact />} />
@@ -90,9 +98,6 @@ function App() {
               </Route>
             </Route>
 
-            <Route element={<BottomBar />}>
-              <Route path="/aula" element={<CourseClass />} />
-            </Route>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

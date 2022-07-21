@@ -21,7 +21,11 @@ const Blog = () => {
     const {api} = apiService;
     const {slug} = useParams();
 
+
     useEffect(() => {
+        // if(slug === 'pesquisa-de-satisfacao') {
+        //     window.location.href = "";
+        // }
         setTitle({
             main: "Blog",
             sub: "Leia o conteúdo da semana",

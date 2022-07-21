@@ -9,18 +9,25 @@ const TopBottomBars = () => {
     main: '',
     sub: '',
   });
+  const [courseData, setCourseData] = useState({
+      featuredImg: "",
+      title: "",
+      duration: "",
+      quizz: "",
+  });
+  const [userSteps, setUserSteps] = useState([]);
   const path = useLocation().pathname;
 
   // Código para ajustar a imagem da mulher de megafone com o menu inferior
-  const paddingBottom =
-    path === "/noticias" || path.includes("/oportunidade") ? "3.5rem" : 10;
+  /* const paddingBottom =
+    path === "/noticias" || path.includes("/oportunidade") ? "3.5rem" : 10; */
 
   return (
     <>
       <Header title={title.main} subtitle={title.sub} />
 
-      <Container sx={{ pt: 3, pb: paddingBottom }}>
-        <Outlet context={[title, setTitle]} />
+      <Container sx={{ pt: 3, pb: 10 }}>
+        <Outlet context={[title, setTitle, courseData, setCourseData, userSteps, setUserSteps]} />
       </Container>
 
       <FooterBar />

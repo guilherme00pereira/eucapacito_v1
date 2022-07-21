@@ -1,5 +1,5 @@
 import { Grid, FormGroup, FormControl, OutlinedInput } from "@mui/material";
-import formStyle from "./formStyle";
+import formStyle from "../../commonStyles/formStyle";
 
 const CpfForm = ({form, handler}) => {
 
