@@ -31,7 +31,6 @@ const QuestionCard = ({id}) => {
                 answers: res.data._answerData,
                 type: res.data._answerType,
             })
-            console.log(validation)
             setIsLoading(false);
         });
     }, []);

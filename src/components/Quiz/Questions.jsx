@@ -4,8 +4,10 @@ import {Container, Box, Stack, Pagination, CircularProgress} from "@mui/material
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import QuestionCard from "./QuestionCard";
+import {QuizContext} from "../../ApplicationContexts";
 
 const Questions = ({setFinish}) => {
+    const [validation, setValidation] = useContext(QuizContext);
     const [questions, setQuestions] = useState([]);
     const [current, setCurrent] = useState(1);
     const [end, setEnd] = useState(false);
@@ -24,6 +26,7 @@ const Questions = ({setFinish}) => {
                     id: question.id
                 })
                 setQuestions([...fetchedQuestions])
+                setValidation([...validation, { q: question.id, a: false }])
             });
             fetchedQuestions.length === 1 && setEnd(true)
             setIsLoading(false);

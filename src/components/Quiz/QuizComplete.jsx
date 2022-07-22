@@ -7,43 +7,78 @@ import {QuizContext} from "../../ApplicationContexts"
 
 const QuizComplete = () => {
     const [validation, setValidation] = useContext(QuizContext);
-    const [certificate, setCertificate] = useState("https://wp.eucapacito.com.br/certificates/cinco-habilidades-essenciais-para-impulsionar-a-sua-carreira/?quiz=9841&cert-nonce=097bbc7731");
-    const [total, setTotal] = useState(1)
-    const [correct, setCorrect] = useState(1)
+    const [certificate, setCertificate] = useState("");//https://wp.eucapacito.com.br/certificates/cinco-habilidades-essenciais-para-impulsionar-a-sua-carreira/?quiz=9841&cert-nonce=097bbc7731
+    const [result, setResult] = useState({
+        total: 1,
+        points: 1,
+        percent: 100
+    })
+    const [message, setMessage] = useState({
+        title: "",
+        summary: "",
+        passed: false
+    })
     const {api} = apiService;
     const { id } = useParams();
     const userID = sessionStorage.getItem("userID");
 
     useEffect(() => {
-        /* api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
+        api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
             setCertificate(res.data)
-        }); */
-        setTotal(validation.length)
-        //setCorrect(validation.every((x) => x.a === 'true'))
-        setCorrect(validation.length)
+        });
+        const pts = countPoints(validation)
+        const pct = ( pts/validation.length ) * 100
+        setResult({
+            total: validation.length,
+            points: pts,
+            percent: pct
+        })
+        if( pct > 69 ) {
+            setMessage({
+                title: "Parabéns",
+                summary: 'Você passou em todas as perguntas',
+                passed: true
+            })
+        } else {
+            setMessage({
+                title: "Não foi desta vez",
+                summary: 'Refaça a prova e tente novamente',
+                passed: false
+            })
+        }
     }, []);
+
+    const countPoints = (arr) => {
+        let i = 0;
+        arr.forEach( (item) => {
+            item.a && i++
+        })
+        return i
+    }
 
     return (
         <Container sx={styles.container}>
             <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                <CircularProgress variant="determinate" size="8rem" value={100} sx={styles.circular} />
+                <CircularProgress variant="determinate" size="8rem" value={result.percent} sx={styles.circular} />
                 <Box sx={styles.circular.box}>
                     <Typography variant="h5" align="center" sx={styles.circular.percent}>
-                        100%
+                        {result.percent}%
                     </Typography>
                     <Typography variant="caption" align="center" component="small" sx={styles.circular.number}>
-                        {correct}/{total}
+                        {result.points}/{result.total}
                     </Typography>
                 </Box>
             </Box>
             <Stack justifyContent="center" alignItems="center" spacing={3} sx={styles.message}>
-                <h2>Parabéns</h2>
-                <span>Você passou em todas as perguntas sobre Teste seu conhecimento – Persuasão.</span>
+                <h2>{message.title}</h2>
+                <span>{message.summary}</span>
             </Stack>
             <Box>
-                <Button href={certificate} target="_blank" sx={styles.courseLink}>
-                    Gerar Certificado
-                </Button>
+                {message.passed &&
+                    <Button href={certificate} target="_blank" sx={styles.courseLink}>
+                        Gerar Certificado
+                    </Button>
+                }
             </Box>
         </Container>
     );

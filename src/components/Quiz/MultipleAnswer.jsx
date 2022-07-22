@@ -8,7 +8,6 @@ const MultipleAnswer = ({question, answers}) => {
     const [options, setOptions] = useState([])
 
     const handleValidateAnswer = (e) => {
-        console.log(options)
         let answer = true
         const v = e.target.value.split("_")
         const item = { idx: v[0], a: v[1] }
