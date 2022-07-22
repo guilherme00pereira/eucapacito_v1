@@ -10,7 +10,26 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
   let navigate = useNavigate();
 
   const handleCoursePage = (type, slug) => {
-    navigate(type === 'curso_ec' ? `/curso-ec/${slug}` : `/course-ec/${slug}`);
+    switch(type) {
+      case 'curso-ec':
+        navigate(`/curso-ec/${slug}`);
+        break;
+      case 'sfwc-courses':
+        navigate(`/course-ec/${slug}`);
+        break;
+      case 'bolsa_de_estudo':
+        navigate(`/bolsa_de_estudo/${slug}`);
+        break;
+      case 'empregabilidade':
+        navigate(`/empregabilidade/${slug}`);
+        break;
+      case 'jornada':
+        navigate(`/jprnada/${slug}`);
+        break;
+      default:
+        navigate(`/${slug}`);  
+        break;
+    }
   };
 
   const icons = [
@@ -58,13 +77,13 @@ const styles = {
     },
     mb: {
       md: "40px",
-      xs: "0.5rem",
+      xs: "1.5rem",
     },
     border: "1px solid #77837F",
     borderRadius: "8px",
     padding: {
-      md: "1% 1rem",
-      xs: "0.625rem 1rem",
+      md: "1%",
+      xs: "3%",
     },
     height: {
       md: "98px",
@@ -77,7 +96,7 @@ const styles = {
     cursor: "pointer",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     fontSize: "1.3rem",
     info: {
       display: "flex",

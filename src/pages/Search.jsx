@@ -113,7 +113,7 @@ const Search = () => {
                 </div>
 
                 <hr />
-
+                        
                 {courses.length > 0 ? 
                     courses.map((course) => (
                     <CourseBox
