@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import PersonIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, matchPath } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -64,7 +64,12 @@ const Header = ({ title, subtitle }) => {
 
   const handleSearchResults = (e) => {
     if (e.key === "Enter") {
-      navigate(`/procurar?search=${search}`, {replace: true});
+      console.log(location)
+      if( location === "/cursos" || location.includes("pesquisa-cursos") ) {
+         navigate(`/pesquisa-cursos?search=${search}`, {replace: true})
+      } else {
+        navigate(`/procurar?search=${search}`, {replace: true});
+      }
     }
   };
 

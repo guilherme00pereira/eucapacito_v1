@@ -70,7 +70,7 @@ const Courses = () => {
         }
 
         const ids = searchParams.get('t');
-        let url = `/eucapacito/v1/search?page=${page}`;
+        let url = `/eucapacito/v1/search?page=${page}&course=true`;
         if (null !== ids) {
             url += `&t=${ids}`;
         }

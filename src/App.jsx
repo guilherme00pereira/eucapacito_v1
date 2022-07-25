@@ -62,7 +62,7 @@ function App() {
               <Route element={<TopBottomBars />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/procurar" element={<Search />} />
-                <Route path="/todos-os-cursos" element={<CoursesListing />} />
+                <Route path="/pesquisa-cursos" element={<CoursesListing />} />
                 <Route path="/cursos" element={<Courses />} />
                 <Route path="/course-ec/:slug" element={<CourseLD />} />
                 <Route path="/lessons/:slug/:id" element={<Lesson />} />

@@ -11,10 +11,10 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
 
   const handleCoursePage = (type, slug) => {
     switch(type) {
-      case 'curso-ec':
+      case 'curso_ec':
         navigate(`/curso-ec/${slug}`);
         break;
-      case 'sfwc-courses':
+      case 'sfwd_courses':
         navigate(`/course-ec/${slug}`);
         break;
       case 'bolsa_de_estudo':
@@ -24,7 +24,7 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
         navigate(`/empregabilidade/${slug}`);
         break;
       case 'jornada':
-        navigate(`/jprnada/${slug}`);
+        navigate(`/jornada/${slug}`);
         break;
       default:
         navigate(`/${slug}`);  

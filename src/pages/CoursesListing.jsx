@@ -51,10 +51,14 @@ const Courses = () => {
             });
 
         setIsLoading(true);
+        const term = searchParams.get('search');
         const ids = searchParams.get('t');
-        let url = `/eucapacito/v1/search?page=${page}`;
-        if (null !== ids) {
+        let url = `/eucapacito/v1/search?page=${page}&course=true`;
+        if(null !== ids) {
             url += `&t=${ids}`;
+        }
+        if (term === "" || term.length > 3) {
+            url += `&search=${term}`;
         }
         api.get(url).then((res) => {
             if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
