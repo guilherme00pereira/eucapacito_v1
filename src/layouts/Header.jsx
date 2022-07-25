@@ -33,8 +33,6 @@ const Header = ({ title, subtitle }) => {
     sessionStorage.getItem("username")
   );
   //const [avatar, setAvatar] = useState(UserIcon)
-
-
   let navigate = useNavigate();
   let location = useLocation().pathname;
 
@@ -66,9 +64,9 @@ const Header = ({ title, subtitle }) => {
     if (e.key === "Enter") {
       console.log(location)
       if( location === "/cursos" || location.includes("pesquisa-cursos") ) {
-         navigate(`/pesquisa-cursos?search=${search}`, {replace: true})
+         navigate(`/pesquisa-cursos?s=${search}`, {replace: true})
       } else {
-        navigate(`/procurar?search=${search}`, {replace: true});
+        navigate(`/procurar?s=${search}`, {replace: true});
       }
     }
   };

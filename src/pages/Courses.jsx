@@ -17,26 +17,13 @@ const Courses = () => {
     const [myCourses, setMyCourses] = useState([]);
     const [courses, setCourses] = useState([]);
     const [journeys, setJourneys] = useState([]);
-    const [filters, setFilters] = useState({
-        levels: [],
-        ranking: [],
-        categories: [],
-        partners: []
-    });
     const [searchParams, setSearchParams] = useSearchParams();
     const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const [title, setTitle] = useOutletContext();
-    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const postsPerPage = "9";
     const {api} = apiService;
-
-    const handleDrawer = () => {
-        setDrawerOpen(!drawerOpen);
-    }
-
-    const handleModal = (status) => setDrawerOpen(status);
 
     useEffect(() => {
         token
@@ -92,13 +79,6 @@ const Courses = () => {
                     type: course.type
                 });
             });
-
-            setFilters({
-                levels: res.data.filters.nivel,
-                ranking: res.data.filters.avaliao,
-                categories: res.data.filters.categoria_de_curso_ec,
-                partners: res.data.filters.parceiro_ec
-            })
             if (page === 1) {
                 setCourses([...fetchedCourses]);
             } else {
@@ -166,7 +146,7 @@ const Courses = () => {
             }
 
 
-            <ContentTitle title="Cursos" to={'/todos-os-cursos'} linkText="Todos os cursos"/>
+            <ContentTitle title="Cursos" to={'/pesquisa-cursos'} linkText="Todos os cursos"/>
             <Swiper
                 className="mySwiper"
                 slidesPerView={1.2}

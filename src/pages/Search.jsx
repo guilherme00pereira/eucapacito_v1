@@ -5,7 +5,7 @@ import apiService from "../services/apiService";
 import Filter from "../components/Search/Filter";
 import Button from "../components/Button";
 import CourseBox from "../components/Search/CourseBox";
-import { useSearchParams } from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 const Search = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +24,7 @@ const Search = () => {
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const { api } = apiService;
+    let navigate = useNavigate();
 
     const handleLoadMore = () => {
         if (!hideLoadMoreButton) {
@@ -38,7 +39,8 @@ const Search = () => {
     const handleModal = (status) => setDrawerOpen(status);
 
     useEffect(() => {
-        const term = searchParams.get('search');
+        let term = searchParams.get('s');
+        if(term === null) term = ""
         const ids = searchParams.get('t');
         let url = `/eucapacito/v1/search?page=${page}`;
         if(null !== ids) {

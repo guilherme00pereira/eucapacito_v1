@@ -2,12 +2,12 @@ import {NavLink} from "react-router-dom";
 import {Box, Grid, Link} from "@mui/material";
 import parse from "html-react-parser";
 
-const CardContent = ({ imagePath, title, subtitle, logoPath }) => {
+const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
   const logoPathAbsent = (typeof logoPath === 'undefined') || logoPath === false;
   return (
     <Box sx={styles.card}>
       <Box sx={styles.card.image}>
-        <img src={imagePath} alt={`Curso - ${title}`}/>
+        <img src={imageUrl} alt={`Curso - ${title}`}/>
       </Box>
 
       <Grid container sx={styles.card.info}>
@@ -33,10 +33,10 @@ const ContentCard = ({ url, imagePath, title, subtitle, logoPath }) => {
 
   return url.includes('http') ?
       <Link href={url || "#"} sx={{color: "#33EDAC", textDecoration: "none"}} target="_blank">
-        <CardContent imagePath={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
+        <CardContent imageUrl={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
       </Link> :
       <NavLink to={url || "#"}>
-        <CardContent imagePath={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
+        <CardContent imageUrl={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
       </NavLink>;
 };
 

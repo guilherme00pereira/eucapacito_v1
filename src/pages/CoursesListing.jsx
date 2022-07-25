@@ -51,7 +51,8 @@ const Courses = () => {
             });
 
         setIsLoading(true);
-        const term = searchParams.get('search');
+        let term = searchParams.get('s');
+        if(term === null) term = ""
         const ids = searchParams.get('t');
         let url = `/eucapacito/v1/search?page=${page}&course=true`;
         if(null !== ids) {
