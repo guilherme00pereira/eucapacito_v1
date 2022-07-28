@@ -8,7 +8,6 @@ import {QuizContext} from "../../ApplicationContexts"
 import { genHash } from "../../services/helper";
 
 const QuestionCard = ({id}) => {
-    const [validation, setValidation] = useContext(QuizContext);
     const [question, setQuestion] = useState({
         id: "",
         title: "",
@@ -21,7 +20,6 @@ const QuestionCard = ({id}) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        console.log(id)
         api.get(`/ldlms/v1/sfwd-questions/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {

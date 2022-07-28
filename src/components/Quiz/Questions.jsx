@@ -43,7 +43,9 @@ const Questions = ({setFinish}) => {
     }
 
     const handleNextQuestion = () => {
-
+        const v = current+1
+        setCurrent(v)
+        v === questions.length ? setEnd(true) : setEnd(false)
     }
 
     const handleEndQuiz = () => {

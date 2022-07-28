@@ -23,12 +23,11 @@ const QuizComplete = () => {
     const userID = sessionStorage.getItem("userID");
 
     useEffect(() => {
-        console.log(validation)
         api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
             setCertificate(res.data)
         });
         const pts = countPoints(validation)
-        const pct = (( pts/validation.length ) * 100).toFixed(2)
+        const pct = Math.round(( pts/validation.length ) * 100)
         setResult({
             total: validation.length,
             points: pts,
