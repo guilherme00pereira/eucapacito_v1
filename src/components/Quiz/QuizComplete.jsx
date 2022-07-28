@@ -23,17 +23,18 @@ const QuizComplete = () => {
     const userID = sessionStorage.getItem("userID");
 
     useEffect(() => {
+        console.log(validation)
         api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
             setCertificate(res.data)
         });
         const pts = countPoints(validation)
-        const pct = ( pts/validation.length ) * 100
+        const pct = (( pts/validation.length ) * 100).toFixed(2)
         setResult({
             total: validation.length,
             points: pts,
             percent: pct
         })
-        if( pct > 69 ) {
+        if( pct >= 70 ) {
             setMessage({
                 title: "Parabéns",
                 summary: 'Você passou em todas as perguntas',

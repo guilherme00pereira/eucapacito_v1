@@ -42,7 +42,7 @@ const Questions = ({setFinish}) => {
         v === questions.length ? setEnd(true) : setEnd(false)
     }
 
-    const handleSubmitAnswer = () => {
+    const handleNextQuestion = () => {
 
     }
 
@@ -66,13 +66,13 @@ const Questions = ({setFinish}) => {
 
 
                         <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
-                            <Box>Eu Capacito Logo</Box>
+                            <Box>Eu Capacito</Box>
                             <Box>
                                 {end ?
                                     <Button onClick={handleEndQuiz} sx={styles.courseLink}>
                                         Finalizar
                                     </Button> :
-                                    <Button onClick={handleSubmitAnswer} sx={styles.courseLink}>
+                                    <Button onClick={handleNextQuestion} sx={styles.courseLink}>
                                         Próxima
                                     </Button>
                                 }

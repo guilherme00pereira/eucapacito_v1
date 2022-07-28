@@ -21,11 +21,12 @@ const QuestionCard = ({id}) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        console.log(id)
         api.get(`/ldlms/v1/sfwd-questions/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
             setQuestion({
-                id: res.data._id,
+                id: res.data.question_id,
                 title: parse(res.data.question_post_title),
                 statement: parse(res.data._question),
                 answers: res.data._answerData,
