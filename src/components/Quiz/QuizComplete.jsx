@@ -23,9 +23,6 @@ const QuizComplete = () => {
     const userID = sessionStorage.getItem("userID");
 
     useEffect(() => {
-        api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
-            setCertificate(res.data)
-        });
         const pts = countPoints(validation)
         const pct = Math.round(( pts/validation.length ) * 100)
         setResult({
@@ -33,19 +30,31 @@ const QuizComplete = () => {
             points: pts,
             percent: pct
         })
-        if( pct >= 70 ) {
-            setMessage({
-                title: "Parabéns",
-                summary: 'Você passou em todas as perguntas',
-                passed: true
-            })
-        } else {
-            setMessage({
-                title: "Não foi desta vez",
-                summary: 'Refaça a prova e tente novamente',
-                passed: false
-            })
-        }
+        api.post('/eucapacito/v1/set-quiz-progress', {
+            quiz: id,
+            user: userID,
+            percentage: pct,
+            score: pts,
+            total: validation.length
+        }).then( (res) => {
+            if(res.data.passed) {
+                api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
+                    setCertificate(res.data)
+                });
+                setMessage({
+                    title: "Parabéns",
+                    summary: 'Você passou em todas as perguntas',
+                    passed: true
+                })
+            } else {
+                setMessage({
+                    title: "Não foi desta vez",
+                    summary: 'Refaça a prova e tente novamente',
+                    passed: false
+                })
+            }
+        })
+
     }, []);
 
     const countPoints = (arr) => {
