@@ -131,7 +131,7 @@ const Home = () => {
         <Box sx={styles.boxSwiperWraper}>
             <TitlesLink to="/cursos" title="Cursos" />
             <Swiper
-              className="mySwiper"
+              className="mySwiper SwiperEC"
               slidesPerView={1.2}
               spaceBetween={25}
               breakpoints={swiper.breakpoints}
@@ -256,13 +256,10 @@ const styles = {
   },
   boxSwiperWraper: {
     display: {
-      xs: "none",
+      xs: "block",
       md: "block",
     },
-    p: {
-      xs: 0,
-      md: "0.5rem 0px 1rem",
-    },
+    padding: "0.5rem 0px 1rem",
     borderTop: "1px solid #77837F",
   },
   courses: {
@@ -356,7 +353,6 @@ const styles = {
         borderRadius: "8px",
         padding: "33px",
         minHeight: "150px",
-        // justifyContent: "end",
       },
       "& .desk-info + div": {
         alignSelf: "flex-end",
@@ -412,6 +408,9 @@ const styles = {
       fontSize: "20px",
       fontWeight: "bold",
       color: "#33EDAC",
+    },
+    "& .SwiperEC": {
+      pt: { xs: "1rem", md: "0" }
     },
     "& .SwiperOportunidade": {
         pt: "1rem !important"
