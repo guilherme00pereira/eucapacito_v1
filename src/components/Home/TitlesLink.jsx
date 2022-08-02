@@ -14,9 +14,6 @@ const TitlesLink = ({ to, title }) => {
 export default TitlesLink;
 
 const styles = {
-    box: {
-        m: "15px 0 0 15px"
-    },
     link: {
         color: "#CAC8C8",
         fontWeight: "700",

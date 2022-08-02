@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import {Box} from "@mui/material";
+import {
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import { useOutletContext } from "react-router-dom";
 import apiService from "../services/apiService";
 import { ExpandMore } from "@mui/icons-material";
@@ -47,7 +52,7 @@ const Home = () => {
         fetchedCourses.push(newCourse);
       });
 
-      setCourses([...fetchedCourses]);
+      setCourses([...courses, ...fetchedCourses]);
     });
 
     // Conteúdo
@@ -74,7 +79,7 @@ const Home = () => {
         fetchedBlogs.push(newBlog);
       });
 
-      setBlogs([...fetchedBlogs]);
+      setBlogs([...blogs, ...fetchedBlogs]);
     });
 
     // Bolsa de estudos
@@ -95,7 +100,7 @@ const Home = () => {
         fetchedScholarship.push(newScholarship);
       });
 
-      setScholarships([...fetchedScholarship]);
+      setScholarships([...scholarships, ...fetchedScholarship]);
     });
   }, []);
 
@@ -106,7 +111,15 @@ const Home = () => {
       <Banners />
 
       <Box sx={styles.courses}>
-        <Box sx={styles.boxSwiperWraper}>
+        <Box
+          sx={{
+            display: {
+              xs: "none",
+              md: "block",
+            },
+            borderTop: "1px solid #77837F",
+          }}
+        >
           <h2>Lançamento da semana</h2>
 
           <Swiper className="mySwiperEC" slidesPerView={1.2} spaceBetween={25}>
@@ -128,10 +141,22 @@ const Home = () => {
           </Swiper>
         </Box>
 
-        <Box sx={styles.boxSwiperWraper}>
+        <Accordion
+          defaultExpanded={true}
+          sx={{
+            borderTop: "1px solid #77837F",
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="meus-cursos-content"
+            id="meus-cursos-header"
+          >
             <TitlesLink to="/cursos" title="Cursos" />
+          </AccordionSummary>
+          <AccordionDetails sx={styles.accordion.details}>
             <Swiper
-              className="mySwiper SwiperEC"
+              className="mySwiper"
               slidesPerView={1.2}
               spaceBetween={25}
               breakpoints={swiper.breakpoints}
@@ -171,11 +196,18 @@ const Home = () => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-        </Box>
+          </AccordionDetails>
+        </Accordion>
 
-        <Box sx={styles.boxSwiperWraper}>
-          <TitlesLink to="/conteudo" title="Conteúdo" />
-
+        <Accordion defaultExpanded={true}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="cursos-ec-content"
+            id="cursos-ec-header"
+          >
+            <TitlesLink to="/conteudo" title="Conteúdo" />
+          </AccordionSummary>
+          <AccordionDetails sx={styles.accordion.details}>
             <Swiper
               sx={swiper.pagination}
               className="mySwiper"
@@ -196,11 +228,18 @@ const Home = () => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-        </Box>
+          </AccordionDetails>
+        </Accordion>
 
-        <Box sx={styles.boxSwiperWraper}>
-          <TitlesLink to="/oportunidades" title="Oportunidades" />
-
+        <Accordion defaultExpanded={true}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="cursos-parceiros-content"
+            id="cursos-parceiros-header"
+          >
+            <TitlesLink to="/oportunidades" title="Oportunidades" />
+          </AccordionSummary>
+          <AccordionDetails sx={{ ...styles.accordion.details, pb: "3rem" }}>
             <Swiper
               className="mySwiper SwiperOportunidade"
               slidesPerView={1.2}
@@ -223,9 +262,9 @@ const Home = () => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-        </Box>
+          </AccordionDetails>
+        </Accordion>
       </Box>
-
       <Footer />
     </Box>
   );
@@ -254,13 +293,11 @@ const styles = {
       md: "none",
     },
   },
-  boxSwiperWraper: {
-    display: {
-      xs: "block",
-      md: "block",
+  accordion: {
+    details: {
+      xs: { px: 0 },
+      md: { px: "50px" },
     },
-    padding: "0.5rem 0px 1rem",
-    borderTop: "1px solid #77837F",
   },
   courses: {
     "& small": {
@@ -284,10 +321,9 @@ const styles = {
       },
     },
     "& .mySwiperEC": {
-      pt: "15px",
       "& .swiper-wrapper": {
         width: "100%",
-        ml: "0"
+        ml: "0",
       },
     },
     "& .card-EC-desk": {
@@ -353,6 +389,7 @@ const styles = {
         borderRadius: "8px",
         padding: "33px",
         minHeight: "150px",
+        // justifyContent: "end",
       },
       "& .desk-info + div": {
         alignSelf: "flex-end",
@@ -409,11 +446,10 @@ const styles = {
       fontWeight: "bold",
       color: "#33EDAC",
     },
-    "& .SwiperEC": {
-      pt: { xs: "1rem", md: "0" }
-    },
     "& .SwiperOportunidade": {
-        pt: "1rem !important"
+      "& .desk-info": {
+        maxWidth: "85%",
+      },
     },
     blogSxContent: {
       h2: {
