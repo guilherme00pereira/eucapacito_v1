@@ -32,6 +32,7 @@ const CourseLD = () => {
     useEffect(() => {
         api.get(`/ldlms/v2/sfwd-courses?slug=${slug}`).then((res) => {
             const course = res.data[0];
+            console.log(course)
             setCourseData({
                 id: course.id,
                 slug: course.slug,
@@ -46,7 +47,9 @@ const CourseLD = () => {
                 sub: courseData.title,
               });
             const myEnrollments = sessionStorage.getItem("userCourses");
-            setIsEnrolled( myEnrollments.includes(course.id))
+            if(myEnrollments !== null) {
+                setIsEnrolled(myEnrollments.includes(course.id))
+            }
             setIsLoading(false);
         });
 
