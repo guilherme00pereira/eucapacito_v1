@@ -28,9 +28,12 @@ export const coursePage = {
         },
     },
     image: {
-        minHeight: "350px",
+        minHeight: {
+            xs: "250px",
+            md: "350px"
+        },
         maxHeight: "650px",
-        mt: "-24px",
+        //mt: "-24px",
         img: {
             width: "100%",
         },
@@ -44,7 +47,7 @@ export const coursePage = {
         borderRadius: "20px 20px 0 0",
         filter: {
             md: "drop-shadow(0px -6px 12px #33EDAC)",
-            xs: "drop-shadow(0px -6px 44px #33EDAC)",
+            xs: "drop-shadow(0px -6px 16px #33EDAC)",
         },
         minHeight: {
             md: "100%",// "calc(100vh - 600px)",

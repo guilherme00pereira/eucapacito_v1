@@ -266,7 +266,7 @@ const styles = {
       xs: "auto",
     },
     //css desktop
-    boxShadow: "0px 0px 50px 5px #33EDAC",
+    boxShadow: "0px 0px 25px 5px #33EDAC",
 
     homepage: {
       "@media (min-width: 900px)": {
