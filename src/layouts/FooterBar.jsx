@@ -23,9 +23,9 @@ const FooterBar = () => {
       case "/":
         setValue(0);
         break;
-      // case "/procurar":
-      //   setValue(1);
-      //   break;
+      case "/procurar":
+        setValue(1);
+        break;
       case "/cursos":
         setValue(2);
         break;
@@ -33,7 +33,7 @@ const FooterBar = () => {
         setValue(3);
         break;
       default:
-        setValue(1);
+        setValue(9);
         break;
     }
   }, [token, path]);
