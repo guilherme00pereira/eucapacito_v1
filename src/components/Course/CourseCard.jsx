@@ -52,7 +52,7 @@ const styles = {
       width: "100%",
       height: {
         xs: "105px",
-        md: "250px",
+        md: "200px",
       },
     },
   },
