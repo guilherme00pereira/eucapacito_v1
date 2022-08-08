@@ -2,9 +2,14 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
 
-import archiveIcon from "../../assets/img/procurar-icon-archive.svg";
-import editIcon from "../../assets/img/procurar-icon-edit.svg";
-import layersIcon from "../../assets/img/procurar-icon-layers.svg";
+import IconBlog from "../../assets/img/icon_blog.png";
+import IconBolsaEstudo from "../../assets/img/icon_bolsa_de_estudo.png";
+import IconCursos from "../../assets/img/icon_cursos.png";
+import IconEbook from "../../assets/img/icon_ebook.png";
+import IconEmpregabilidade from "../../assets/img/icon_empregabilidade.png";
+import IconJornada from "../../assets/img/icon_jornada.png";
+import IconVideo from "../../assets/img/icon_video.png";
+
 
 const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
   let navigate = useNavigate();
@@ -32,22 +37,30 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
     }
   };
 
-  const icons = [
-    archiveIcon,
-    editIcon,
-    layersIcon,
-    archiveIcon,
-    editIcon,
-    layersIcon,
-  ];
-
-  const randomIndex = Math.trunc(Math.random() * (6 - 1) + 1);
+  const renderIcon = (type) => {
+    switch (type) {
+      case 'post':
+        return IconBlog;
+      case 'video':
+        return IconVideo;
+      case 'e-book':
+        return IconEbook;
+      case 'bolsa_de_estudo':
+        return IconBolsaEstudo;
+      case 'empregabilidade':
+        return IconEmpregabilidade;
+      case 'jornada':
+        return IconJornada;
+      default:
+        return IconCursos;
+    }
+  };
 
   return (
     <Box sx={styles.box} onClick={() => handleCoursePage(type, slug)}>
       <Box sx={styles.box.info}>
         <Box sx={styles.box.info.icon}>
-          <img src={icons[randomIndex - 1]} alt="Ícone" />
+          <img src={renderIcon(type)} width="58" height="58" alt="Ícone" />
         </Box>
 
         <Box sx={styles.box.info.description}>

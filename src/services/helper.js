@@ -5,8 +5,8 @@ export const calculateTime = (v) => {
     }
     const h = Math.floor(v / 3600);
     const m = Math.floor((v - (h * 3600)) / 60);
-    let text = h + " horas";
-    if(m > 0) text += " e " + m + " minutos";
+    let text = h + (h === 1 ? " hora" : " horas");
+    if(m > 0) text += " e " + m + (m === 1 ? " minuto" : " minutos");
     return (text)
 }
 
