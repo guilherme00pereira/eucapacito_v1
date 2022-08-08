@@ -272,7 +272,7 @@ const styles = {
       filter: "grayscale(1)",
 
       maxWidth: {
-        md: "100%",
+        md: "80%",
         xs: "85px",
       },
       maxHeight: {
