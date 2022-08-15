@@ -29,6 +29,7 @@ import AccountEdition from "./pages/AccountEdition";
 import Filter from "./components/Search/Filter";
 import Video from "./pages/Video";
 import Videos from "./pages/Videos";
+import Ebook from "./pages/Ebook";
 import Ebooks from "./pages/Ebooks";
 import Finished from "./pages/Finished";
 import Journey from "./pages/Journey";
@@ -79,6 +80,7 @@ function App() {
                 <Route path="/blog" element={<Blogs />} />
                 <Route path="/video/:slug" element={<Video />} />
                 <Route path="/videos" element={<Videos />} />
+                <Route path="/e-book/:slug" element={<Ebook />} />
                 <Route path="/ebooks/" element={<Ebooks />} />
                 <Route path="/noticias" element={<News />} />
                 <Route path="/quem-somos" element={<About />} />

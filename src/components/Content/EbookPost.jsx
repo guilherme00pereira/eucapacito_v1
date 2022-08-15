@@ -1,31 +1,23 @@
-import { useState } from "react";
 import parse from "html-react-parser";
 import { Box } from "@mui/material";
 import Link from "../Link";
 
 const EbookPost = ({ ebook, sxFull }) => {
-  const [token, setToken] = useState(sessionStorage.getItem("token"));
 
   return (
     <Box sx={{...styles.post,...sxFull}}>
-      <Box sx={styles.post.image}>
-        <img src={ebook.featuredImg} alt="Imagem Placeholder" />
-      </Box>
-      <Box sx={styles.post.content}>
-        <h2>{ebook.title}</h2>
-        {parse(`${ebook.excerpt}`)}
-
-        <Box sx={styles.post.content.footer}>
-          <p>{ebook.date}</p>
-          {token && (
-            <a href={ebook.download} target="_blank" download>
-              Baixar Aqui
-            </a>
-          )}
-
-          {!token && <Link to="/login">Logar</Link>}
+      <Link to={`/e-book/${ebook.slug}`}>
+        <Box sx={styles.post.image}>
+          <img src={ebook.featuredImg} alt="Imagem Placeholder" />
         </Box>
-      </Box>
+        <Box sx={styles.post.content}>
+          <h2>{ebook.title}</h2>
+          {parse(`${ebook.excerpt}`)}
+
+          <Box sx={styles.post.content.footer}>
+          </Box>
+        </Box>
+      </Link>
     </Box>
   );
 };
