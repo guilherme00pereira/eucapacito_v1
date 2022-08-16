@@ -62,7 +62,6 @@ const Header = ({ title, subtitle }) => {
 
   const handleSearchResults = (e) => {
     if (e.key === "Enter") {
-      console.log(location)
       if( location === "/cursos" || location.includes("pesquisa-cursos") ) {
          navigate(`/pesquisa-cursos?s=${search}`, {replace: true})
       } else {

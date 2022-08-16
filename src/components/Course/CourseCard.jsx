@@ -3,11 +3,11 @@ import parse from "html-react-parser";
 import { Box } from "@mui/material";
 // import { LinearProgress } from "@mui/material";
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ url, course }) => {
   // const courseProgress = Math.floor(Math.random() * 100);
 
   return (
-    <Link to={`/curso-ec/${course.slug}`} sx={styles.container}>
+    <Link to={`/${url}/${course.slug}`} sx={styles.container}>
       <Box sx={styles.image}>
         <img src={course.featuredImg} alt="Imagem Curso" />
       </Box>

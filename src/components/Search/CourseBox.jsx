@@ -19,7 +19,7 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
       case 'curso_ec':
         navigate(`/curso-ec/${slug}`);
         break;
-      case 'sfwd_courses':
+      case 'sfwd-courses':
         navigate(`/course-ec/${slug}`);
         break;
       case 'bolsa_de_estudo':

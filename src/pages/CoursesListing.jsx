@@ -76,11 +76,12 @@ const Courses = () => {
                     title: course.title,
                     subtitle: "Eu Capacito",
                     partnerLogoURL: course.logo,
+                    type: course.type
                 };
 
                 fetchedCourses.push(newCourse);
             });
-
+            console.log(fetchedCourses)
             setFilters({
                 levels: res.data.filters.nivel,
                 ranking: res.data.filters.avaliao,
@@ -132,7 +133,7 @@ const Courses = () => {
             <Box sx={styles.tabPanelBox}>
                 {courses.length > 0 ?
                     courses.map((course) => (
-                        <CourseCard course={course} key={course.id} />
+                        <CourseCard url={course.type === 'curso_ec' ? 'curso-ec' : 'course-ec'} course={course} key={course.id} />
                     )) : <p>Nenhum curso retornado para o(s) filtro(s) selecionado(s)</p>}
             </Box>
             {isLoading && <CircularProgress sx={loading.circular}/>}

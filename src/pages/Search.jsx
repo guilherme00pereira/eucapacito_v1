@@ -75,6 +75,7 @@ const Search = () => {
                 categories: res.data.filters.categoria_de_curso_ec,
                 partners: res.data.filters.parceiro_ec
             })
+            console.log(fetchedCourses)
 
             page === 1 ? setCourses([...fetchedCourses]) : setCourses([...courses, ...fetchedCourses]);
 
