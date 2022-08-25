@@ -62,12 +62,12 @@ const Menu = () => {
         <MenuLink
           to="/oportunidades"
           imagePath={OportunidadeIcon}
-          title="Oportunidade"
+          title="Oportunidades"
         />
       </Paper>
 
       <Paper sx={menuOption}>
-        <MenuLink to="/conteudo" imagePath={ConteudoIcon} title="Conteúdo" />
+        <MenuLink to="/conteudo" imagePath={ConteudoIcon} title="Conteúdos" />
       </Paper>
 
       <Paper sx={menuOption}>

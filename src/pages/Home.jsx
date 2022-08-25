@@ -464,7 +464,7 @@ const styles = {
         overflow: "hidden",
         textOverflow: "ellipsis",
         wordBreak: "break-word",
-        maxHeight: "38px",
+        maxHeight: "42px",
       },
       a: {
         fontSize: {

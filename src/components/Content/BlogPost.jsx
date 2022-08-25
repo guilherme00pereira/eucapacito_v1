@@ -68,12 +68,12 @@ const styles = {
         fontWeight: 500,
         lineHeight: "1.5rem",
         textTransform: "uppercase",
-        height: "40px",
+        height: "42px",
       },
       "& div": {
         margin: "0 0 0.75rem",
         color: "#77837F",
-        fontSize: "10px",
+        fontSize: "14px",
         fontWeight: 400,
         lineHeight: "20px",
         textAlign: "justify",
@@ -91,7 +91,7 @@ const styles = {
       "& div+p": {
         margin: "0 0 0.75rem",
         color: "#77837F",
-        fontSize: "7px",
+        fontSize: "14px",
         fontWeight: 400,
         lineHeight: "1.5rem",
       },
