@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useOutletContext, useParams} from "react-router-dom";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CircularProgress, Stack} from "@mui/material";
 import parse from "html-react-parser";
 import apiService from "../services/apiService";
 import BlogSidebar from "../components/Content/BlogSidebar";
@@ -17,6 +17,7 @@ const Blog = () => {
         price: "",
         duration: "",
         description: "",
+        tags: []
     });
     const {api} = apiService;
     const {slug} = useParams();
@@ -45,6 +46,7 @@ const Blog = () => {
                 cats: blogData.categories_object
                     .map((category) => category.name)
                     .join(", "),
+                tags: blogData.tag_object.map((tag) => tag.name)
             });
             setIsLoading(false);
         });
@@ -54,26 +56,30 @@ const Blog = () => {
         <>
             {isLoading && <CircularProgress sx={loading.circular}/>}
             {!isLoading && (
-                <Box sx={styles.root}>
+                <Stack sx={styles.root}>
                     <Box sx={styles.titlepage}>
                         <h1>Blog</h1>
                     </Box>
-                    <Box sx={styles.image}>
-                        <img src={blog.featuredImg} alt="Placeholder Blog"/>
-                    </Box>
-                    <Box sx={styles.content}>
-                        <Box sx={styles.content.info}>
-                            <small>{blog.date}</small>
-                            <small>{blog.cats}</small>
+                    <Stack direction="row" justifyContent="">
+                        <Box sx={styles.mainColumn}>
+                            <Box sx={styles.image}>
+                                <img src={blog.featuredImg} alt="Placeholder Blog"/>
+                            </Box>
+                            <Box sx={styles.content}>
+                                <Box sx={styles.content.info}>
+                                    <small>{blog.date}</small>
+                                    <small>{blog.cats}</small>
+                                </Box>
+                                <hr/>
+                                <h1>{blog.title}</h1>
+                                <div className="content">
+                                    {blog.content}
+                                </div>
+                            </Box>
                         </Box>
-                        <hr/>
-                        <h1>{blog.title}</h1>
-                        <div className="content">
-                            {blog.content}
-                        </div>
-                    </Box>
-                    <BlogSidebar/>
-                </Box>
+                        <BlogSidebar tags={blog.tags}/>
+                    </Stack>
+                </Stack>
             )}
         </>
     );
@@ -83,16 +89,16 @@ export default Blog;
 
 const styles = {
     root: {
-        width: {
-            xs: "100%",
-            md: "61%",
-        },
-        position: "relative",
         "h1, h2": {
             color: "#CAC8C8",
             fontWeight: 500,
             textTransform: "uppercase",
         },
+    },
+    mainColumn: {
+        flex: "2",
+        mr: "50px",
+        mt: "20px"
     },
     image: {
         img: {
@@ -122,7 +128,7 @@ const styles = {
                     textTransform: "uppercase",
                     textAlign: "right",
                     maxWidth: {
-                        md: "70%",
+                        md: "50%",
                         xs: "100%",
                     },
                 },
@@ -186,7 +192,6 @@ const styles = {
             fontWeight: "700",
             textTransform: "none",
             borderBottom: "1px solid #77837F",
-            width: "166%",
             pb: "13px",
         },
     },

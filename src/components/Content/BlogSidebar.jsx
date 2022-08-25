@@ -1,10 +1,10 @@
 import {useState, useEffect} from "react";
 import apiService from "../../services/apiService";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, Stack, CircularProgress} from "@mui/material";
 import NewsPost from "./NewsPost";
 import {loading} from "../../commonStyles/loading";
 
-const BlogSidebar = () => {
+const BlogSidebar = ({ tags }) => {
     const {api} = apiService;
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -23,24 +23,30 @@ const BlogSidebar = () => {
                     }
                     fetchedPosts.push(newPost);
                 })
-                setPosts([...posts, ...fetchedPosts]);
+                setPosts([...fetchedPosts]);
                 setIsLoading(false);
             })
     }, [])
     return (
-        <Box sx={styles.newsContainer}>
-            <p>Últimas notícias</p>
-            {isLoading && <CircularProgress sx={loading.circular}/>}
-            {!isLoading && (
-                <Box container sx={styles.news}>
-                    {posts.length > 0 &&
-                        posts.map((post) => (
-                            <NewsPost key={post.id} post={post}/>
-                        ))
-                    }
-                </Box>
-            )}
-        </Box>
+        <Stack sx={styles.sideColumn}>
+            <Stack sx={styles.newsContainer}>
+                <h3>Últimas notícias</h3>
+                {isLoading && <CircularProgress sx={loading.circular}/>}
+                {!isLoading && (
+                    <Box container sx={styles.news}>
+                        {posts.length > 0 &&
+                            posts.map((post) => (
+                                <NewsPost key={post.id} post={post}/>
+                            ))
+                        }
+                    </Box>
+                )}
+            </Stack>
+            <Box>
+                <h3>Tags</h3>
+                {tags.map((tag) => (<div>{tag}</div>))}
+            </Box>
+        </Stack>
 
     );
 };
@@ -48,25 +54,23 @@ const BlogSidebar = () => {
 export default BlogSidebar;
 
 const styles = {
-    newsContainer: {
-        display: {
-            md: "block",
-            xs: "none",
-        },
-        margin: "0 auto 130px auto",
-        position: "absolute",
-        top: "3%",
-        left: "105%",
-        width: "57%",
-        "& p": {
+    sideColumn: {
+        flex: "1",
+        borderLeft: "1px solid #77837F",
+        pl: "20px",
+        "& h3": {
             textTransform: "uppercase",
             color: "#33EDAC",
             fontWeight: "400",
             fontSize: "18px",
             mt: "20px",
         },
-        borderLeft: "1px solid #77837F",
-        pl: "20px",
+    },
+    newsContainer: {
+        display: {
+            md: "flex",
+            xs: "none",
+        },
     },
     news: {
         display: {
