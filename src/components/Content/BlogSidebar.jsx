@@ -4,7 +4,7 @@ import {Box, Stack, CircularProgress} from "@mui/material";
 import NewsPost from "./NewsPost";
 import {loading} from "../../commonStyles/loading";
 
-const BlogSidebar = ({ tags }) => {
+const BlogSidebar = () => {
     const {api} = apiService;
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -42,10 +42,6 @@ const BlogSidebar = ({ tags }) => {
                     </Box>
                 )}
             </Stack>
-            <Box>
-                <h3>Tags</h3>
-                {tags.map((tag) => (<div>{tag}</div>))}
-            </Box>
         </Stack>
 
     );

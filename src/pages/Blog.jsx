@@ -60,7 +60,7 @@ const Blog = () => {
                     <Box sx={styles.titlepage}>
                         <h1>Blog</h1>
                     </Box>
-                    <Stack direction="row" justifyContent="">
+                    <Stack direction={{md: "row", xs: "column"}} justifyContent="">
                         <Box sx={styles.mainColumn}>
                             <Box sx={styles.image}>
                                 <img src={blog.featuredImg} alt="Placeholder Blog"/>
@@ -76,8 +76,14 @@ const Blog = () => {
                                     {blog.content}
                                 </div>
                             </Box>
+                            <Stack sx={styles.tags}>
+                                <h3>TAGS:</h3>
+                                <Stack direction="row" sx={styles.tagRow}>
+                                    { blog.tags.map( (tag) => <Box sx={styles.tagBadge}>{tag}</Box> ) }
+                                </Stack>
+                            </Stack>
                         </Box>
-                        <BlogSidebar tags={blog.tags}/>
+                        <BlogSidebar />
                     </Stack>
                 </Stack>
             )}
@@ -148,7 +154,7 @@ const styles = {
         },
         h1: {
             fontSize: {
-                xs: "12px",
+                xs: "18px",
                 md: "26px",
             },
             pl: {
@@ -159,13 +165,13 @@ const styles = {
         h2: {
             fontSize: "0.8rem",
             pl: {
-                xs: "0",
+                xs: "16",
                 md: "35px",
             },
         },
         "& .content": {
             color: "#77837F",
-            fontSize: {xs: "10px", md: "18px"},
+            fontSize: {xs: "14px", md: "18px"},
             fontStyle: {
                 md: "normal",
                 xs: "italic",
@@ -195,4 +201,29 @@ const styles = {
             pb: "13px",
         },
     },
+    tags: {
+        fontStyle: "italic",
+        borderLeft: "1px solid #77837F",
+        pl: "20px",
+        h3: {
+            fontSize: {
+                md: "1.25em",
+                xs: "1em"
+            },
+        },
+    },
+    tagRow: {
+        justifyContent: "flex-start",
+        flexWrap: "wrap"
+    },
+    tagBadge: {
+        border: "1px solid #77837F",
+        borderRadius: "0.5rem",
+        padding: "5px",
+        margin: "5px",
+        fontSize: {
+            md: "1em",
+            xs: "0.875em"
+        },
+    }
 };
