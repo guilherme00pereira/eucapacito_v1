@@ -28,11 +28,9 @@ import YouTube from "@mui/icons-material/YouTube";
 const Header = ({ title, subtitle }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { search, setSearch } = useContext(SearchContext);
-  const [token, setToken] = useState(sessionStorage.getItem("token"));
-  const [userFirstName, setUserFirstName] = useState(
-    sessionStorage.getItem("username")
-  );
-  //const [avatar, setAvatar] = useState(UserIcon)
+  const token = sessionStorage.getItem("token");
+  const userFirstName = sessionStorage.getItem("username");
+  const avatar = sessionStorage.getItem("avatarURL") ?? UserIcon;
   let navigate = useNavigate();
   let location = useLocation().pathname;
 
@@ -190,7 +188,7 @@ const Header = ({ title, subtitle }) => {
                 <Link to="/perfil">
                   <div className="profile-photo">
                     <img
-                      src={UserIcon}
+                      src={avatar}
                       alt="Foto de perfil"
                     />
                     <div className="online-status"></div>
@@ -218,7 +216,7 @@ const Header = ({ title, subtitle }) => {
                     <img src={EuCapacitoLogo} alt="Logo Eu Capacito" />
                     <div className="profile-photo">
                       <img
-                        src={UserIcon}
+                        src={avatar}
                         alt="Foto de perfil"
                       />
                       <div className="online-status"></div>

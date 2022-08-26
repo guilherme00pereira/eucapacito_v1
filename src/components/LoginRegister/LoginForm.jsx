@@ -9,6 +9,7 @@ import {
   InputAdornment,
   Snackbar,
   Alert,
+    CircularProgress
 } from "@mui/material";
 import {
   MailOutlined,
@@ -30,6 +31,7 @@ const LoginForm = ({registerMessage}) => {
     showPassword: false,
   });
   const [alertOpen, setAlertOpen] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("false");
   let navigate = useNavigate();
 
@@ -56,7 +58,7 @@ const LoginForm = ({registerMessage}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setBtnLoading(true)
     if (fields.email === "" || fields.password === "") {
       setAlertMessage("Preencha todos os campos!");
       setAlertOpen(true);
@@ -68,12 +70,14 @@ const LoginForm = ({registerMessage}) => {
     if (token === 403) {
       setAlertMessage("E-mail e/ou senha incorreto(s).");
       setAlertOpen(true);
+      setBtnLoading(false)
       return;
     }
 
     if (!token) {
       setAlertMessage("Houve um erro ao tentar logar.");
       setAlertOpen(true);
+      setBtnLoading(false)
       return;
     }
 
@@ -87,25 +91,16 @@ const LoginForm = ({registerMessage}) => {
     navigate("/");
   };
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
-    script.async = true;
-    document.body.appendChild(script);
-}, [])
+//   useEffect(() => {
+//     const script = document.createElement("script");
+//     script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
+//     script.async = true;
+//     document.body.appendChild(script);
+// }, [])
 
 
   return (
-    <Container
-      maxWidth=""
-      sx={{
-        //css desktop
-        width: {
-          sx: "100%",
-          md: "60%",
-        },
-      }}
-    >
+    <Container maxWidth="" sx={{ width: { sx: "100%", md: "60%" } }} >
       <Box sx={styles.container}>
         <h2>Login</h2>
         <p>Insira suas informações reais</p>
@@ -128,17 +123,7 @@ const LoginForm = ({registerMessage}) => {
             />
           </FormCtrl>
 
-          <FormCtrl
-            sx={{
-              //css desktop
-              "& .MuiInputBase-root": {
-                width: {
-                  xs: "100%",
-                  md: "50%",
-                },
-              },
-            }}
-          >
+          <FormCtrl sx={{ "& .MuiInputBase-root": { width: { xs: "100%", md: "50%" } } }}>
             <InputLabel htmlFor="password">Senha</InputLabel>
             <OutlinedInput
               required
@@ -165,45 +150,14 @@ const LoginForm = ({registerMessage}) => {
               }
             />
 
-            <Link
-              to="/recuperar-senha"
-              sx={{
-                textAlign: "right",
-                //css desktop
-                mr: {
-                  md: "50%",
-                },
-                fontSize: "16px",
-              }}
-            >
+            <Link to="/recuperar-senha" sx={{ textAlign: "right", mr: { md: "50%" }, fontSize: "16px" }} >
               Esqueceu a senha
             </Link>
           </FormCtrl>
 
-          <FormCtrl
-            sx={{
-              //css desktop
-              alignItems: "center",
-              "& .MuiButton-root": {
-                padding: {
-                  md: "6px 116px",
-                },
-              },
-            }}
-          >
-            <Button
-              type="submit"
-              onClick={handleSubmit}
-              sx={{
-                mt: 3,
-                //css desktop
-                width: {
-                  sx: "100%",
-                  md: "60%",
-                },
-              }}
-            >
-              Entrar
+          <FormCtrl sx={{ alignItems: "center", "& .MuiButton-root": { padding: { md: "6px 116px" } } }}>
+            <Button sx={styles.loginBtn} type="submit" onClick={handleSubmit}>
+              {btnLoading ? <CircularProgress color="inherit" /> : "Entrar" }
             </Button>
             <Box sx={styles.infoFooter}>
               <p>
@@ -271,4 +225,18 @@ const styles = {
       fontSize: "14px",
     },
   },
+  loginBtn: {
+    // boxShadow: "0px 16px 30px rgb(77 197 145 / 30%)",
+    // borderRadius: "10px",
+    // backgroundColor: "#33EDAC",
+    // color: "#ffffff",
+    // fontSize: "20px",
+    // fontWeight: "500",
+    // textTransform: "none",
+    // "&:hover": {
+    //   backgroundColor: "#2AB383",
+    // },
+    // padding: "6px 16px",
+    mt: 3, width: { sx: "100%", md: "60%" }
+    }
 };

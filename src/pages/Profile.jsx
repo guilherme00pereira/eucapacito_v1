@@ -15,7 +15,7 @@ const Profile = () => {
   const [title, setTitle] = useOutletContext();
   const token = sessionStorage.getItem('loggedIn');
   let navigate = useNavigate();
-  //const [avatar, setAvatar] = useState(UserIcon)
+  const avatar = sessionStorage.getItem("avatarURL") ?? UserIcon;
 
   useEffect(() => {
     if (!token) {
@@ -25,10 +25,6 @@ const Profile = () => {
       main: "Perfil",
       sub: false,
     });
-
-    // if(sessionStorage.getItem('avatarURL').includes("jpeg")) {
-    //   setAvatar(sessionStorage.getItem('avatarURL'))
-    // }
   }, [token, navigate]);
 
   const handleLogout = (e) => {
@@ -41,7 +37,7 @@ const Profile = () => {
   return (
     <Box sx={styles.root}>
       <Box sx={styles.user}>
-        <img src={UserIcon} alt="Foto de perfil" />
+        <img src={avatar} alt="Foto de perfil" />
         <h2>{sessionStorage.getItem('username')}</h2>
         <Badge value="VIP" />
       </Box>

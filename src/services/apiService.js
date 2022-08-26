@@ -39,8 +39,10 @@ const login = async (loginData) => {
   }
 
   try {
-    const response = await api.get(`/wp/v2/users/${tokenData.user_id}?_embed`, {
-      headers: { Authorization: `Bearer ${tokenData.token}` },
+    const response = await api.get(`/wp/v2/users/${tokenData.user_id}`, {
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+      },
     });
     const data = response.data;
     sessionStorage.setItem("token", tokenData.token);
