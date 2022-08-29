@@ -41,6 +41,7 @@ import Lesson from "./pages/Lesson";
 import Quiz from "./pages/Quiz";
 import Certification from "./pages/Certification";
 import Temp from "./pages/Temp";
+import Tag from "./pages/Tag";
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/procurar" element={<Search />} />
                 <Route path="/pesquisa-cursos" element={<CoursesListing />} />
+                <Route path="/tag/:slug/:id" element={<Tag />} />
                 <Route path="/cursos" element={<Courses />} />
                 <Route path="/course-ec/:slug" element={<CourseLD />} />
                 <Route path="/lessons/:slug/:id" element={<Lesson />} />

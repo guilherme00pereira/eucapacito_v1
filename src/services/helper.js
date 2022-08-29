@@ -34,3 +34,13 @@ export const genHash = (str, seed = 0) => {
     h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
     return 4294967296 * (2097151 & h2) + (h1>>>0);
 }
+
+export const capitalizeFirstLetterSlug = (str) => {
+    str = str.replaceAll('-', ' ');
+    console.log(str)
+    const words = str.split(" ");
+    for (var i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+    return words.join(" ");
+}

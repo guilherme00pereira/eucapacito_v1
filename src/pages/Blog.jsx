@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {useOutletContext, useParams} from "react-router-dom";
 import {Box, CircularProgress, Stack} from "@mui/material";
+import Link from "../components/Link";
 import parse from "html-react-parser";
 import apiService from "../services/apiService";
 import BlogSidebar from "../components/Content/BlogSidebar";
@@ -46,7 +47,11 @@ const Blog = () => {
                 cats: blogData.categories_object
                     .map((category) => category.name)
                     .join(", "),
-                tags: blogData.tag_object.map((tag) => tag.name)
+                tags: blogData.tag_object.map((tag) => ({
+                    name: tag.name,
+                    slug: tag.slug,
+                    id: tag.term_id
+                }))
             });
             setIsLoading(false);
         });
@@ -79,7 +84,13 @@ const Blog = () => {
                             <Stack sx={styles.tags}>
                                 <h3>TAGS:</h3>
                                 <Stack direction="row" sx={styles.tagRow}>
-                                    { blog.tags.map( (tag) => <Box sx={styles.tagBadge}>{tag}</Box> ) }
+                                    { blog.tags.map( (tag) => 
+                                        <Box sx={styles.tagBadge}>
+                                            <Link to={`/tag/${tag.slug}/${tag.id}`}>
+                                                {tag.name}
+                                            </Link>
+                                        </Box> 
+                                    ) }
                                 </Stack>
                             </Stack>
                         </Box>
