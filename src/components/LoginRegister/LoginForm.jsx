@@ -91,12 +91,12 @@ const LoginForm = ({registerMessage}) => {
     navigate("/");
   };
 
-//   useEffect(() => {
-//     const script = document.createElement("script");
-//     script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
-//     script.async = true;
-//     document.body.appendChild(script);
-// }, [])
+   useEffect(() => {
+     const script = document.createElement("script");
+     script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
+     script.async = true;
+     document.body.appendChild(script);
+ }, [])
 
 
   return (
