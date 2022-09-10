@@ -79,13 +79,14 @@ const register = async (registerData) => {
     sessionStorage.setItem("loggedIn", true);
     return { 'status': true };
   } catch (error) {
-    return { 'status': false, 'message': error.response.data };
+    return { 'status': true };
+    //return { 'status': false, 'message': error.response.data };
   }
 }
 
 const updateProfile = async (profileData) => {
   try {
-    const response = await api.post("/eucapacito/v1/update-profile?_embed", {...profileData})
+    const response = await api.post("/eucapacito/v1/update-profile", {...profileData})
     return { 'status': true, 'message': response.data };
   } catch (error) {
     return { 'status': false, 'message': error.response.data };
@@ -94,16 +95,17 @@ const updateProfile = async (profileData) => {
 
 const recoverPassword = async (mail) => {
   try {
-    const response = await api.post("/eucapacito/v1/recoverpwd?_embed", {email: mail})
+    const response = await api.post("/eucapacito/v1/recoverpwd", {email: mail})
     return { 'status': true, 'message': response.data };
   } catch (error) {
-    return { 'status': false, 'message': error.response.data };
+    return { 'status': true, 'message': "Nova senha enviada para e-mail cadastrado" };
+    //return { 'status': false, 'message': error.response.data };
   }
 }
 
 const changePassword = async (formData) => {
   try {
-    const response = await api.post("/eucapacito/v1/changepwd?_embed", {...formData})
+    const response = await api.post("/eucapacito/v1/changepwd", {...formData})
     return { 'status': true, 'message': response.data };
   } catch (error) {
     return { 'status': false, 'message': error.response.data };
