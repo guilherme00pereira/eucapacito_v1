@@ -23,6 +23,7 @@ import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import {useNavigate} from "react-router-dom";
+import SocialLoginBox from "./SocialLoginBox";
 
 const RegisterForm = ({registerMessage}) => {
     const [fields, setFields] = useState({
@@ -163,6 +164,12 @@ const RegisterForm = ({registerMessage}) => {
                         />
                     </FormCtrl>
 
+                    <FormCtrl>
+                        <p>Ao inscrever-se, concordo com os Termos de uso e Política de
+                        privacidade do Eu Capacito e com os Termos de uso e Política
+                            de privacidade da plataforma de aprendizagem.</p>
+                    </FormCtrl>
+
                     <FormCtrl
                         sx={{
                             //css desktop
@@ -187,20 +194,11 @@ const RegisterForm = ({registerMessage}) => {
                         >
                             Inscrever-se
                         </Button>
-
-                        <Box sx={styles.infoFooter}>
-                            <p>
-                                Já tem uma conta?{" "}
-                                <Link to="/login">
-                                    Conecte-se
-                                    <ArrowRight
-                                        sx={{fontSize: "1.7rem", verticalAlign: "middle"}}
-                                    />
-                                </Link>
-                            </p>
-                        </Box>
                     </FormCtrl>
                 </form>
+            </Box>
+            <Box>
+                <SocialLoginBox login={false} registerMessage={registerMessage} />
             </Box>
             <Snackbar
                 open={alertOpen}

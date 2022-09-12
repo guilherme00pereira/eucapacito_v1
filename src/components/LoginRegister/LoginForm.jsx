@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
+import SocialLoginBox from "./SocialLoginBox";
 
 const LoginForm = ({registerMessage}) => {
   const [fields, setFields] = useState({
@@ -159,19 +160,12 @@ const LoginForm = ({registerMessage}) => {
             <Button sx={styles.loginBtn} type="submit" onClick={handleSubmit}>
               {btnLoading ? <CircularProgress color="inherit" /> : "Entrar" }
             </Button>
-            <Box sx={styles.infoFooter}>
-              <p>
-                Não tem uma conta?{" "}
-                <Link to="/registrar" onClick={() => registerMessage(false)}>
-                  Inscrever-se
-                  <ArrowRight
-                    sx={{ fontSize: "1.7rem", verticalAlign: "middle" }}
-                  />
-                </Link>
-              </p>
-            </Box>
           </FormCtrl>
         </form>
+      </Box>
+
+      <Box>
+        <SocialLoginBox login={true} registerMessage={registerMessage} />
       </Box>
 
       <Snackbar

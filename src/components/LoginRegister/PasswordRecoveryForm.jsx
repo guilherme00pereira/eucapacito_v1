@@ -5,7 +5,7 @@ import {
   FormControl,
   OutlinedInput,
   InputLabel,
-  InputAdornment, Alert, Snackbar,
+  InputAdornment, Alert, Snackbar, CircularProgress,
 } from "@mui/material";
 import { MailOutlined, ArrowRight } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
@@ -21,6 +21,7 @@ const PasswordRecoveryForm = ({registerMessage}) => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("false");
   const [alertType, setAlertType] = useState("success");
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -32,6 +33,7 @@ const PasswordRecoveryForm = ({registerMessage}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setBtnLoading(true)
     const response = await apiService.recoverPassword(email);
     if(response.status) {
       setHideMessage(false)
@@ -40,6 +42,7 @@ const PasswordRecoveryForm = ({registerMessage}) => {
       setAlertMessage(response.message);
       setAlertOpen(true);
     }
+    setBtnLoading(false)
   }
 
   return (
@@ -77,7 +80,9 @@ const PasswordRecoveryForm = ({registerMessage}) => {
           </FormCtrl>
 
           <FormCtrl>
-            <Button onClick={handleSubmit} sx={{ mt: 3 }}>Recuperar</Button>
+            <Button onClick={handleSubmit} sx={{ mt: 3 }}>
+              {btnLoading ? <CircularProgress color="inherit" /> : "Recuperar" }
+            </Button>
             <Box sx={{ display: "inline-block" }}>
               <p>
                 Já tem uma conta?{" "}

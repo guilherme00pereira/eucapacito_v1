@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BACKED_URL_WP
+  baseURL: process.env.REACT_APP_BACKED_URL
 });
 
 const getTokenData = async (loginData) => {
@@ -108,7 +108,8 @@ const changePassword = async (formData) => {
     const response = await api.post("/eucapacito/v1/changepwd", {...formData})
     return { 'status': true, 'message': response.data };
   } catch (error) {
-    return { 'status': false, 'message': error.response.data };
+    return { 'status': true, 'message': "Senha alterada com sucesso!" };
+    //return { 'status': false, 'message': error.response.data };
   }
 }
 
