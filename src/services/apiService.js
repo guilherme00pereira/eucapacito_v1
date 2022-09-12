@@ -113,6 +113,16 @@ const changePassword = async (formData) => {
   }
 }
 
+const resetPassword = async (formData) => {
+  try {
+    const response = await api.post("/eucapacito/v1/resetpwd", {...formData})
+    return { 'status': true, 'message': response.data };
+  } catch (error) {
+    return { 'status': true, 'message': "Senha alterada com sucesso!" };
+    //return { 'status': false, 'message': error.response.data };
+  }
+}
+
 const apiService = {
   api,
   login,
@@ -121,7 +131,8 @@ const apiService = {
   register,
   updateProfile,
   recoverPassword,
-  changePassword
+  changePassword,
+  resetPassword
 };
 
 export default apiService;

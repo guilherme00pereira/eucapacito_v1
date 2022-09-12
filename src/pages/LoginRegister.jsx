@@ -5,6 +5,7 @@ import EuCapacitoLogo from "../assets/img/logo.png";
 import LoginForm from "../components/LoginRegister/LoginForm";
 import RegisterForm from "../components/LoginRegister/RegisterForm";
 import PasswordRecoveryForm from "../components/LoginRegister/PasswordRecoveryForm";
+import PasswordReset from "../components/LoginRegister/PasswordReset";
 import {messageReturn} from "../commonStyles/messageReturn";
 import CheckImage from "../assets/img/check.png";
 
@@ -45,6 +46,7 @@ const LoginRegister = () => {
         {path === "/login" && <LoginForm registerMessage={setShowRegisterMessage} />}
         {path === "/registrar" && <RegisterForm registerMessage={setShowRegisterMessage} />}
         {path === "/recuperar-senha" && <PasswordRecoveryForm registerMessage={setShowRegisterMessage}/>}
+        {path === "/redefinir-senha" && <PasswordReset />}
       </Box>
     </Container>
   );

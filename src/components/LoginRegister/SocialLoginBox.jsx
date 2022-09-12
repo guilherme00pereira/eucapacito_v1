@@ -67,7 +67,10 @@ const styles = {
     buttonsBox: {
         my: "10px",
         "& .MuiButton-root": {
-            mx: "14px"
+            mx: "14px",
+            width: "130px",
+            padding: "8px 12px",
+            borderRadius: "0.5em"
         },
         "& span": {
             ml: "10px",
@@ -76,14 +79,10 @@ const styles = {
     },
     facebook: {
         border: "2px solid #507CC0",
-        padding: "8px 12px",
         color: "#507CC0",
-        borderRadius: "0.5em"
     },
     google: {
         border: "2px solid #DF4930",
-        padding: "8px 12px",
         color: "#DF4930",
-        borderRadius: "0.5em"
     }
 }

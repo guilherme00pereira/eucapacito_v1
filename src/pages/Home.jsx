@@ -111,7 +111,7 @@ const Home = () => {
       <Banners />
 
       <Box sx={styles.courses}>
-        <Box
+        {/* <Box
           sx={{
             display: {
               xs: "none",
@@ -139,7 +139,7 @@ const Home = () => {
                 </SwiperSlide>
               ))}
           </Swiper>
-        </Box>
+        </Box> */}
 
         <Accordion
           defaultExpanded={true}

@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Box,
@@ -9,7 +9,7 @@ import {
   InputAdornment,
   Snackbar,
   Alert,
-    CircularProgress
+  CircularProgress
 } from "@mui/material";
 import {
   MailOutlined,
@@ -25,7 +25,7 @@ import Button from "../Button";
 import apiService from "../../services/apiService";
 import SocialLoginBox from "./SocialLoginBox";
 
-const LoginForm = ({registerMessage}) => {
+const LoginForm = ({ registerMessage }) => {
   const [fields, setFields] = useState({
     email: "",
     password: "",
@@ -45,8 +45,6 @@ const LoginForm = ({registerMessage}) => {
       showPassword: !fields.showPassword,
     });
   };
-
-  const handleMouseDownPassword = (e) => e.preventDefault();
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -92,12 +90,12 @@ const LoginForm = ({registerMessage}) => {
     navigate("/");
   };
 
-   useEffect(() => {
-     const script = document.createElement("script");
-     script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
-     script.async = true;
-     document.body.appendChild(script);
- }, [])
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, [])
 
 
   return (
@@ -143,7 +141,7 @@ const LoginForm = ({registerMessage}) => {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleShowPassword}
-                    onMouseDown={handleMouseDownPassword}
+                    onMouseDown={(e) => e.preventDefault()}
                   >
                     {fields.showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -158,7 +156,7 @@ const LoginForm = ({registerMessage}) => {
 
           <FormCtrl sx={{ alignItems: "center", "& .MuiButton-root": { padding: { md: "6px 116px" } } }}>
             <Button sx={styles.loginBtn} type="submit" onClick={handleSubmit}>
-              {btnLoading ? <CircularProgress color="inherit" /> : "Entrar" }
+              {btnLoading ? <CircularProgress color="inherit" /> : "Entrar"}
             </Button>
           </FormCtrl>
         </form>
@@ -220,17 +218,6 @@ const styles = {
     },
   },
   loginBtn: {
-    // boxShadow: "0px 16px 30px rgb(77 197 145 / 30%)",
-    // borderRadius: "10px",
-    // backgroundColor: "#33EDAC",
-    // color: "#ffffff",
-    // fontSize: "20px",
-    // fontWeight: "500",
-    // textTransform: "none",
-    // "&:hover": {
-    //   backgroundColor: "#2AB383",
-    // },
-    // padding: "6px 16px",
-    mt: 3, width: { sx: "100%", md: "60%" }
-    }
+    mt: 3, width: { sx: "100%", md: "50%" }
+  }
 };
