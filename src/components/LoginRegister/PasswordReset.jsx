@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
     Container,
     Box,
@@ -66,12 +66,6 @@ const PasswordReset = () => {
         }
     };
 
-    useEffect(() => {
-        const response = apiService.verifyResetHash(code);
-        if(response.status === 401) {
-
-        }
-    }, [])
 
 
     return (
