@@ -16,7 +16,6 @@ import {
   LockOpenRounded,
   Visibility,
   VisibilityOff,
-  ArrowRight,
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +23,7 @@ import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import SocialLoginBox from "./SocialLoginBox";
+import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
 
 const LoginForm = ({ registerMessage }) => {
   const [fields, setFields] = useState({
@@ -99,7 +99,7 @@ const LoginForm = ({ registerMessage }) => {
 
 
   return (
-    <Container maxWidth="" sx={{ width: { sx: "100%", md: "60%" } }} >
+    <Container maxWidth="" sx={loginRegisterStyles.container} >
       <Box sx={styles.container}>
         <h2>Login</h2>
         <p>Insira suas informações reais</p>
@@ -115,7 +115,7 @@ const LoginForm = ({ registerMessage }) => {
               value={fields.email}
               onChange={handleFieldChange("email")}
               startAdornment={
-                <InputAdornment position="start" sx={styles.iconBorder}>
+                <InputAdornment position="start" sx={loginRegisterStyles.iconBorder}>
                   <MailOutlined />
                 </InputAdornment>
               }
@@ -132,7 +132,7 @@ const LoginForm = ({ registerMessage }) => {
               value={fields.password}
               onChange={handleFieldChange("password")}
               startAdornment={
-                <InputAdornment position="start" sx={styles.iconBorder}>
+                <InputAdornment position="start" sx={loginRegisterStyles.iconBorder}>
                   <LockOpenRounded />
                 </InputAdornment>
               }
@@ -154,8 +154,8 @@ const LoginForm = ({ registerMessage }) => {
             </Link>
           </FormCtrl>
 
-          <FormCtrl sx={{ alignItems: "center", "& .MuiButton-root": { padding: { md: "6px 116px" } } }}>
-            <Button sx={styles.loginBtn} type="submit" onClick={handleSubmit}>
+          <FormCtrl sx={loginRegisterStyles.formControlAction}>
+            <Button sx={loginRegisterStyles.btnAction} type="submit" onClick={handleSubmit}>
               {btnLoading ? <CircularProgress color="inherit" /> : "Entrar"}
             </Button>
           </FormCtrl>
@@ -188,12 +188,6 @@ const FormCtrl = styled(FormControl)(`
 `);
 
 const styles = {
-  iconBorder: {
-    marginRight: "16px",
-    borderRight: "1px solid rgba(119, 131, 127, 0.6)",
-    paddingRight: "12px",
-    height: "32px",
-  },
   container: {
     mx: 1,
     "& h2": {
@@ -217,7 +211,4 @@ const styles = {
       fontSize: "14px",
     },
   },
-  loginBtn: {
-    mt: 3, width: { sx: "100%", md: "50%" }
-  }
 };

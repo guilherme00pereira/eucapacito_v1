@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     Container,
     Box,
@@ -16,14 +16,13 @@ import {
     LockOpenRounded,
     Visibility,
     VisibilityOff,
-    ArrowRight,
 } from "@mui/icons-material";
 import {styled} from "@mui/material/styles";
-import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import {useNavigate} from "react-router-dom";
 import SocialLoginBox from "./SocialLoginBox";
+import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
 
 const RegisterForm = ({registerMessage}) => {
     const [fields, setFields] = useState({
@@ -76,17 +75,15 @@ const RegisterForm = ({registerMessage}) => {
 
     }
 
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
+        script.async = true;
+        document.body.appendChild(script);
+    }, [])
+
     return (
-        <Container
-            maxWidth=""
-            sx={{
-                //css desktop
-                width: {
-                    sx: "100%",
-                    md: "60%",
-                },
-            }}
-        >
+        <Container maxWidth="" sx={loginRegisterStyles.container}>
             <Box sx={styles.container}>
                 <h2>Inscrever-se</h2>
                 <p>Insira suas informações reais</p>
@@ -102,7 +99,7 @@ const RegisterForm = ({registerMessage}) => {
                             value={fields.name}
                             onChange={handleFieldChange("name")}
                             startAdornment={
-                                <InputAdornment position="start" sx={styles.iconBorder}>
+                                <InputAdornment position="start" sx={loginRegisterStyles.iconBorder}>
                                     <PersonOutlined/>
                                 </InputAdornment>
                             }
@@ -119,24 +116,14 @@ const RegisterForm = ({registerMessage}) => {
                             value={fields.email}
                             onChange={handleFieldChange("email")}
                             startAdornment={
-                                <InputAdornment position="start" sx={styles.iconBorder}>
+                                <InputAdornment position="start" sx={loginRegisterStyles.iconBorder}>
                                     <MailOutlined/>
                                 </InputAdornment>
                             }
                         />
                     </FormCtrl>
 
-                    <FormCtrl
-                        sx={{
-                            //css desktop
-                            "& .MuiInputBase-root": {
-                                width: {
-                                    sx: "100%",
-                                    md: "50%",
-                                },
-                            },
-                        }}
-                    >
+                    <FormCtrl sx={loginRegisterStyles.formControlPassword}>
                         <InputLabel htmlFor="password">Senha</InputLabel>
                         <OutlinedInput
                             required
@@ -170,28 +157,8 @@ const RegisterForm = ({registerMessage}) => {
                             de privacidade da plataforma de aprendizagem.</p>
                     </FormCtrl>
 
-                    <FormCtrl
-                        sx={{
-                            //css desktop
-                            alignItems: "center",
-                            "& .MuiButton-root": {
-                                padding: {
-                                    md: "6px 116px",
-                                },
-                            },
-                        }}
-                    >
-                        <Button
-                            onClick={handleSubmit}
-                            sx={{
-                                mt: 3,
-                                //css desktop
-                                width: {
-                                    sx: "100%",
-                                    md: "60%",
-                                },
-                            }}
-                        >
+                    <FormCtrl sx={loginRegisterStyles.formControlAction}>
+                        <Button onClick={handleSubmit} sx={loginRegisterStyles.btnAction}>
                             Inscrever-se
                         </Button>
                     </FormCtrl>
@@ -222,12 +189,6 @@ const FormCtrl = styled(FormControl)(`
 `);
 
 const styles = {
-    iconBorder: {
-        marginRight: "16px",
-        borderRight: "1px solid rgba(119, 131, 127, 0.6)",
-        paddingRight: "12px",
-        height: "32px",
-    },
     container: {
         mx: "1",
         "& h2": {

@@ -14,6 +14,7 @@ import Button from "../Button";
 import apiService from "../../services/apiService";
 import SendMessageImage from "../../assets/img/mensagem-enviada.png"
 import {messageReturn} from "../../commonStyles/messageReturn";
+import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
 
 const PasswordRecoveryForm = ({registerMessage}) => {
   const [email, setEmail] = useState("");
@@ -46,16 +47,7 @@ const PasswordRecoveryForm = ({registerMessage}) => {
   }
 
   return (
-    <Container
-      maxWidth=""
-      sx={{
-        //css desktop
-        width: {
-          sx: "100%",
-          md: "60%",
-        },
-      }}
-    >
+    <Container maxWidth="" sx={loginRegisterStyles.container}>
       {hideMessage ?
       <Box sx={{ mx: 1 }}>
         <h2>Recuperar senha</h2>
@@ -79,8 +71,8 @@ const PasswordRecoveryForm = ({registerMessage}) => {
             />
           </FormCtrl>
 
-          <FormCtrl>
-            <Button onClick={handleSubmit} sx={{ mt: 3 }}>
+          <FormCtrl sx={loginRegisterStyles.formControlAction}>
+            <Button onClick={handleSubmit} sx={loginRegisterStyles.btnAction}>
               {btnLoading ? <CircularProgress color="inherit" /> : "Recuperar" }
             </Button>
             <Box sx={{ display: "inline-block" }}>

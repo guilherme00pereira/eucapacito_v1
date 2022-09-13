@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BACKED_URL
+  baseURL: process.env.REACT_APP_BACKED_URL_WP
 });
 
 const getTokenData = async (loginData) => {
@@ -123,6 +123,15 @@ const resetPassword = async (formData) => {
   }
 }
 
+const verifyResetHash = async (code) => {
+  try {
+    const response = await api.get("/eucapacito/v1/verify-reset?code=" + code)
+    return { 'status': response.status, 'flag': response.data };
+  } catch (error) {
+    return { 'status': 200, 'flag': false };
+  }
+}
+
 const apiService = {
   api,
   login,
@@ -132,7 +141,8 @@ const apiService = {
   updateProfile,
   recoverPassword,
   changePassword,
-  resetPassword
+  resetPassword,
+  verifyResetHash
 };
 
 export default apiService;
