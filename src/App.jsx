@@ -59,7 +59,7 @@ function App() {
               <Route path="/login" element={<LoginRegister />} />
               <Route path="/registrar" element={<LoginRegister />} />
               <Route path="/recuperar-senha" element={<LoginRegister />} />
-              <Route path="/redefinir-senha/:code" element={<LoginRegister />} />
+              <Route path="/redefinir-senha" element={<LoginRegister />} />
               <Route path="/empregabilidade/registrar" element={<EmployabilityRegister />} />
 
               <Route element={<TopBottomBars />}>

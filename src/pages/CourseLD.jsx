@@ -32,7 +32,6 @@ const CourseLD = () => {
     useEffect(() => {
         api.get(`/ldlms/v2/sfwd-courses?slug=${slug}`).then((res) => {
             const course = res.data[0];
-            console.log(course)
             setCourseData({
                 id: course.id,
                 slug: course.slug,

@@ -17,37 +17,37 @@ import {
     VisibilityOff,
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import apiService from "../../services/apiService";
-import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
+import { loginRegisterStyles } from "../../commonStyles/loginRegisterStyles";
+import { useEffect } from "react";
 
 const PasswordReset = () => {
-
+    const params = new URLSearchParams(window.location.search)
+    const code = params.get('c')
     const [fields, setFields] = useState({
         password: "",
         confirmPassword: "",
         showPassword: false,
-        showConfirmPassword: false
+        showConfirmPassword: false,
+        code: code
 
     });
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("false");
     const [alertType, setAlertType] = useState("success");
     const [btnLoading, setBtnLoading] = useState(false);
-    
     let navigate = useNavigate();
-    const {code} = useParams();
 
     const handleFieldChange = (field) => (e) =>
         setFields({ ...fields, [field]: e.target.value });
 
-    
+
     const handleCloseAlert = (event, reason) => {
         if (reason === "clickaway") {
             return;
         }
-
         setAlertOpen(false);
         setAlertMessage("");
     };
@@ -67,7 +67,6 @@ const PasswordReset = () => {
     };
 
 
-
     return (
         <Container maxWidth="" sx={loginRegisterStyles.container} >
             <Box sx={styles.container}>
@@ -75,7 +74,7 @@ const PasswordReset = () => {
                 <p>Informe a sua nova senha e em seguida faça o login</p>
 
                 <form onSubmit={handleSubmit}>
-                <FormCtrl sx={loginRegisterStyles.formControlPassword}>
+                    <FormCtrl sx={loginRegisterStyles.formControlPassword}>
                         <InputLabel htmlFor="password">Senha</InputLabel>
                         <OutlinedInput
                             required
@@ -142,9 +141,12 @@ const PasswordReset = () => {
                     </FormCtrl>
 
                     <FormCtrl sx={loginRegisterStyles.formControlAction}>
-                        <Button sx={loginRegisterStyles.btnAction} type="submit" onClick={handleSubmit}>
-                            {btnLoading ? <CircularProgress color="inherit" /> : "Salvar"}
-                        </Button>
+                        {code === null ? 
+                            <p>Link inválido</p> :
+                            <Button sx={loginRegisterStyles.btnAction} type="submit" onClick={handleSubmit}>
+                                {btnLoading ? <CircularProgress color="inherit" /> : "Salvar"}
+                            </Button>
+                        }
                     </FormCtrl>
                 </form>
             </Box>

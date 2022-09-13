@@ -9,6 +9,8 @@ import {
     InputAdornment,
     Alert,
     Snackbar,
+    Checkbox,
+    FormControlLabel
 } from "@mui/material";
 import {
     PersonOutlined,
@@ -30,6 +32,7 @@ const RegisterForm = ({registerMessage}) => {
         email: "",
         password: "",
         showPassword: false,
+        agree: false
     });
 
     const [alertOpen, setAlertOpen] = useState(false);
@@ -151,10 +154,20 @@ const RegisterForm = ({registerMessage}) => {
                         />
                     </FormCtrl>
 
-                    <FormCtrl>
-                        <p>Ao inscrever-se, concordo com os Termos de uso e Política de
-                        privacidade do Eu Capacito e com os Termos de uso e Política
-                            de privacidade da plataforma de aprendizagem.</p>
+                    <FormCtrl sx={styles.agree}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    value={fields.agree}
+                                    onChange={handleFieldChange("agree")}
+                                />
+                            }
+                            label="Eu aceito receber e-mail promocionais e com instruções do Eu Capacito"
+                            sx={styles.checkbox}
+                        />
+                            <p>Ao inscrever-se, concordo com os Termos de uso e Política de
+                            privacidade do Eu Capacito e com os Termos de uso e Política
+                                de privacidade da plataforma de aprendizagem.</p>
                     </FormCtrl>
 
                     <FormCtrl sx={loginRegisterStyles.formControlAction}>
@@ -211,4 +224,7 @@ const styles = {
             fontSize: "14px",
         },
     },
+    agree: {
+        px: "30px",
+    }
 };
