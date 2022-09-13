@@ -17,19 +17,19 @@ const SocialLoginBox = ({login, registerMessage}) => {
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={styles.wrapper}>
-            {/*<Box>*/}
-            {/*    Ou inscreva-se com*/}
-            {/*</Box>*/}
-            {/*<Stack direction="row" sx={styles.buttonsBox}>*/}
-            {/*    <Button sx={styles.facebook} onClick={handleFacebookClick}>*/}
-            {/*        <img src={FacebookIcon} alt="Facebook Icon" />*/}
-            {/*        <span>Facebook</span>*/}
-            {/*    </Button>*/}
-            {/*    <Button sx={styles.google} onClick={handleGoogleClick}>*/}
-            {/*        <img src={GoogleIcon} alt="Google Icon" />*/}
-            {/*        <span>Google</span>*/}
-            {/*    </Button>*/}
-            {/*</Stack>*/}
+            <Box>
+                Ou inscreva-se com
+            </Box>
+            <Stack direction="row" sx={styles.buttonsBox}>
+                <Button sx={styles.facebook} onClick={handleFacebookClick}>
+                    <img src={FacebookIcon} alt="Facebook Icon" />
+                    <span>Facebook</span>
+                </Button>
+                <Button sx={styles.google} onClick={handleGoogleClick}>
+                    <img src={GoogleIcon} alt="Google Icon" />
+                    <span>Google</span>
+                </Button>
+            </Stack>
             <Stack direction="row">
                 <p>
                     {login ? "Não" : "Já"}  tem uma conta?
