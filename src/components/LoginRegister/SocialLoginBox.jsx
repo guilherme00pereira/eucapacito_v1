@@ -4,15 +4,16 @@ import {ArrowRight} from "@mui/icons-material";
 import Link from "../Link";
 import FacebookIcon from './../../assets/img/facebook-icon-btn.png'
 import GoogleIcon from './../../assets/img/google-icon-button.png'
+import SocialButton from "./SocialButton";
 
 const SocialLoginBox = ({login, registerMessage}) => {
 
-    const handleFacebookClick = {
-
+    const handleSocialLogin = (user) => {
+        console.log(user);
     }
 
-    const handleGoogleClick = {
-
+    const handleSocialLoginFailure = (error) => {
+        console.error(error);
     }
 
     return (
@@ -21,14 +22,23 @@ const SocialLoginBox = ({login, registerMessage}) => {
                 Ou inscreva-se com
             </Box>
             <Stack direction="row" sx={styles.buttonsBox}>
-                <Button sx={styles.facebook} onClick={handleFacebookClick}>
+                <Button sx={styles.facebook}>
                     <img src={FacebookIcon} alt="Facebook Icon" />
                     <span>Facebook</span>
                 </Button>
-                <Button sx={styles.google} onClick={handleGoogleClick}>
+                <Button sx={styles.google}>
                     <img src={GoogleIcon} alt="Google Icon" />
                     <span>Google</span>
                 </Button>
+                {/*<SocialButton sx={styles.google}*/}
+                {/*    provider="google"*/}
+                {/*    appId="376570950611-gndhntjl95lbst43nhsbkl0b22e5qcp1.apps.googleusercontent.com"*/}
+                {/*    onLoginSuccess={handleSocialLogin}*/}
+                {/*    onLoginFailure={handleSocialLoginFailure}*/}
+                {/*>*/}
+                {/*        <img src={GoogleIcon} alt="Google Icon" />*/}
+                {/*        <span>Google</span>*/}
+                {/*</SocialButton>*/}
             </Stack>
             <Stack direction="row">
                 <p>
