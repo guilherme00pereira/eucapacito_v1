@@ -1,8 +1,7 @@
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_BACKED_URL
+    baseURL: process.env.REACT_APP_BACKED_URL_WP
 });
 
 const getTokenData = async (loginData) => {
