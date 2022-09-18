@@ -30,7 +30,7 @@ const SocialLoginBox = ({login, registerMessage}) => {
             </Box>
             <Stack direction="row" sx={styles.buttonsBox}>
                 <LoginSocialGoogle
-                    client_id="376570950611-gndhntjl95lbst43nhsbkl0b22e5qcp1.apps.googleusercontent.com"
+                    client_id="449941794756-14e3ile2nkbsi8qlsu7os0624s8ro75t.apps.googleusercontent.com"
                     scope="openid profile email"
                     discoveryDocs="claims_supported"
                     access_type="offline"
