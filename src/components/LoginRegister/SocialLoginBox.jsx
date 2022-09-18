@@ -1,44 +1,54 @@
-import React from 'react';
-import {Box, Button, Stack} from "@mui/material";
+import React, {useState} from 'react';
+import {Box, Button, CircularProgress, Stack} from "@mui/material";
 import {ArrowRight} from "@mui/icons-material";
 import Link from "../Link";
-import FacebookIcon from './../../assets/img/facebook-icon-btn.png'
 import GoogleIcon from './../../assets/img/google-icon-button.png'
-import SocialButton from "./SocialButton";
+import {LoginSocialGoogle} from "reactjs-social-login";
+import apiService from "../../services/apiService";
+import {useNavigate} from "react-router-dom";
 
 const SocialLoginBox = ({login, registerMessage}) => {
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
-    const handleSocialLogin = (user) => {
-        console.log(user);
-    }
-
-    const handleSocialLoginFailure = (error) => {
-        console.error(error);
+    const handleSocialLogin = (resp) => {
+        setLoading(true)
+        sessionStorage.setItem('avatarURL', resp.data.picture);
+        apiService.socialLoginOrRegister({
+            name: resp.data.name,
+            email: resp.data.email,
+            password: resp.data.id
+        }).then(resp => {
+            navigate("/")
+        })
     }
 
     return (
         <Stack justifyContent="center" alignItems="center" sx={styles.wrapper}>
             <Box>
-                Ou inscreva-se com
+                Ou {login ? "entre" : "inscreva-se"} com
             </Box>
             <Stack direction="row" sx={styles.buttonsBox}>
-                <Button sx={styles.facebook}>
-                    <img src={FacebookIcon} alt="Facebook Icon" />
-                    <span>Facebook</span>
-                </Button>
-                <Button sx={styles.google}>
-                    <img src={GoogleIcon} alt="Google Icon" />
-                    <span>Google</span>
-                </Button>
-                {/*<SocialButton sx={styles.google}*/}
-                {/*    provider="google"*/}
-                {/*    appId="376570950611-gndhntjl95lbst43nhsbkl0b22e5qcp1.apps.googleusercontent.com"*/}
-                {/*    onLoginSuccess={handleSocialLogin}*/}
-                {/*    onLoginFailure={handleSocialLoginFailure}*/}
-                {/*>*/}
-                {/*        <img src={GoogleIcon} alt="Google Icon" />*/}
-                {/*        <span>Google</span>*/}
-                {/*</SocialButton>*/}
+                <LoginSocialGoogle
+                    client_id="376570950611-gndhntjl95lbst43nhsbkl0b22e5qcp1.apps.googleusercontent.com"
+                    scope="openid profile email"
+                    discoveryDocs="claims_supported"
+                    access_type="offline"
+                    onReject={err => {
+                        console.log(err)
+                    }}
+                    onResolve={(resp) => handleSocialLogin(resp)}
+                >
+                    <Button sx={styles.google}>
+                        {loading ?
+                            <CircularProgress color="inherit" /> :
+                            <>
+                                <img src={GoogleIcon} alt="Google Icon" />
+                                <span>Google</span>
+                            </>
+                        }
+                    </Button>
+                </LoginSocialGoogle>
             </Stack>
             <Stack direction="row">
                 <p>

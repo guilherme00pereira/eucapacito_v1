@@ -190,6 +190,7 @@ const Header = ({ title, subtitle }) => {
                     <img
                       src={avatar}
                       alt="Foto de perfil"
+                      referrerPolicy="no-referrer"
                     />
                     <div className="online-status"></div>
                   </div>

@@ -21,7 +21,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import { loginRegisterStyles } from "../../commonStyles/loginRegisterStyles";
-import { useEffect } from "react";
 
 const PasswordReset = () => {
     const params = new URLSearchParams(window.location.search)

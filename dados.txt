@@ -1,0 +1,19 @@
+{
+    "provider": "google",
+    "data": {
+        "access_token": "ya29.a0Aa4xrXPLc-pKn107JJljBrKrI69cYTvefLyK3Y5ifrfhC0lqdTL7yz8V7WkR2GVlUbpYPR_ihZ26dOSVHBwd3_CFxauiGqsPK1UUe8cBpXfsQluaPTk-Za8NzNcvKDGC-lQF1Lkr3qiw2AqOOSroXclpKFfeaCgYKATASARASFQEjDvL9PiNR2vtShhahAwJncXaVcA0163",
+        "token_type": "Bearer",
+        "expires_in": 3599,
+        "scope": "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+        "authuser": "0",
+        "prompt": "consent",
+        "id": "112659650743547675865",
+        "email": "guilherme00pereira@gmail.com",
+        "verified_email": true,
+        "name": "Guilherme Pereira",
+        "given_name": "Guilherme",
+        "family_name": "Pereira",
+        "picture": "https://lh3.googleusercontent.com/a-/AFdZucoX-VpuMSz_IEcvvxjm_TfXrkC4graXwL1hOvchUA=s96-c",
+        "locale": "pt-BR"
+    }
+}

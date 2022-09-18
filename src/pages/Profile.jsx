@@ -37,7 +37,7 @@ const Profile = () => {
   return (
     <Box sx={styles.root}>
       <Box sx={styles.user}>
-        <img src={avatar} alt="Foto de perfil" />
+        <img src={avatar} alt="Foto de perfil" referrerPolicy="no-referrer" />
         <h2>{sessionStorage.getItem('username')}</h2>
         <Badge value="VIP" />
       </Box>
