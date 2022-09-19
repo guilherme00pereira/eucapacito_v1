@@ -32,7 +32,7 @@ const validateToken = async (token) => {
 };
 
 const login = async (loginData) => {
-    const tokenData = getTokenData(loginData);
+    const tokenData = await getTokenData(loginData);
     if (tokenData === 403) {
         return tokenData;
     }
