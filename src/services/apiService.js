@@ -33,7 +33,6 @@ const validateToken = async (token) => {
 
 const login = async (loginData) => {
     const tokenData = await getTokenData(loginData);
-    console.log(tokenData)
     if (tokenData === 403) {
         return tokenData;
     }
