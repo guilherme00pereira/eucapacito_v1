@@ -19,6 +19,8 @@ import BlogPost from "../components/Content/BlogPost";
 import CourseLogoFiap from "../assets/img/home-curso-logo-fiap.png";
 import {swiper} from "../commonStyles/swiper";
 import TitlesLink from "../components/Home/TitlesLink";
+import { useContext } from "react";
+import { MetadataContext } from '../ApplicationContexts';
 
 
 const Home = () => {
@@ -26,6 +28,7 @@ const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [scholarships, setScholarships] = useState([]);
   const [title, setTitle] = useOutletContext();
+  const setHeaderMetadata = useContext(MetadataContext)
 
   const { api } = apiService;
 
@@ -35,6 +38,18 @@ const Home = () => {
       sub: "Encontre um curso para aprender",
     });
     const postsPerPage = "9";
+    
+    api.get('/wp/v2/pages/6208').then((res) => {
+      console.log( res.data )
+      setHeaderMetadata({
+        title: res.data.yoast_head_json.og_title,
+        description: res.data.yoast_head_json.description,
+        og_title: res.data.yoast_head_json.og_title,
+        og_description: res.data.yoast_head_json.og_description,
+        article_modified_time: res.data.yoast_head_json.article_modified_time
+      })
+    });
+
     // Cursos EC
     api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`).then((res) => {
       const fetchedCourses = [];
