@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 import { Helmet } from "react-helmet";
 import { MetadataContext } from './ApplicationContexts';
+import apiService from './services/apiService';
 
 import './App.css';
 
@@ -19,6 +20,15 @@ const AppSettings = () => {
   });
   ReactGA.initialize(TRACKING_ID);
   ReactGA.send("pageview");
+
+  const { api } = apiService;
+
+  useEffect( () => {
+    
+    api.get('eucapacito/v1/config').then( res => {
+      console.log(res.data)  
+    })
+  }, [])
 
   return (
     <MetadataContext.Provider value={setHeaderMetadata}>
