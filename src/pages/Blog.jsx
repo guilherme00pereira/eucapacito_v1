@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import apiService from "../services/apiService";
 import BlogSidebar from "../components/Content/BlogSidebar";
 import {loading} from "../commonStyles/loading";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Blog = () => {
     const [title, setTitle] = useOutletContext();
@@ -18,8 +19,10 @@ const Blog = () => {
         price: "",
         duration: "",
         description: "",
-        tags: []
+        tags: [],
+        yoast: {}
     });
+    
     const {api} = apiService;
     const {slug} = useParams();
 
@@ -35,6 +38,7 @@ const Blog = () => {
 
         api.get(`/wp/v2/posts?slug=${slug}&_embed`).then((res) => {
             const blogData = res.data[0];
+            
             setBlog({
                 featuredImg: blogData.featured_image_src,
                 title: parse(`${blogData.title.rendered}`),
@@ -51,7 +55,8 @@ const Blog = () => {
                     name: tag.name,
                     slug: tag.slug,
                     id: tag.term_id
-                }))
+                })),
+                yoast: blogData.yoast_head_json
             });
             setIsLoading(false);
         });
@@ -59,6 +64,7 @@ const Blog = () => {
 
     return (
         <>
+        <MetadataManager ispage={false} value={blog.yoast} />
             {isLoading && <CircularProgress sx={loading.circular}/>}
             {!isLoading && (
                 <Stack sx={styles.root}>

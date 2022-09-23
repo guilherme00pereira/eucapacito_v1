@@ -8,7 +8,7 @@ import ContentCard from "../components/ContentCard";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {swiper} from "../commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
-import parse from "html-react-parser";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Courses = () => {
     const token = sessionStorage.getItem("token");
@@ -24,6 +24,7 @@ const Courses = () => {
 
     const postsPerPage = "9";
     const {api} = apiService;
+
 
     useEffect(() => {
         token
@@ -106,6 +107,7 @@ const Courses = () => {
 
     return (
         <Box sx={styles.root}>
+            <MetadataManager ispage={true} value="cursos" />
 
             {token &&
                 <>

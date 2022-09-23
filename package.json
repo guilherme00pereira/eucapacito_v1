@@ -1,6 +1,6 @@
 {
   "name": "eucapacito",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",

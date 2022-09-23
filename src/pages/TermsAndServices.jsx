@@ -11,8 +11,8 @@ const TermsAndServices = () => {
 
     useEffect(() => {
         setTitle({
-            main: "Quem Somos",
-            sub: "Saiba mais sobre",
+            main: "Termos e Serviços",
+            sub: "Política de privacidade",
         });
         api.get('/eucapacito/v1/terms-and-services').then( (res) => {
             setContent(res.data.items[0].items[0].value.content)

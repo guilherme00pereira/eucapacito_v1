@@ -24,10 +24,11 @@ const AppSettings = () => {
   const { api } = apiService;
 
   useEffect( () => {
-    
-    api.get('eucapacito/v1/config').then( res => {
-      console.log(res.data)  
-    })
+    if( sessionStorage.getItem( 'pages_metadata' ) === null ) {
+      api.get('eucapacito/v1/config').then( res => {
+        sessionStorage.setItem( "pages_metadata", JSON.stringify(res.data) )
+      })
+    }
   }, [])
 
   return (

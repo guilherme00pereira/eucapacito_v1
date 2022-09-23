@@ -17,9 +17,7 @@ import Footer from "../layouts/Footer";
 import BlogPost from "../components/Content/BlogPost";
 import {swiper} from "../commonStyles/swiper";
 import TitlesLink from "../components/Home/TitlesLink";
-import { useContext } from "react";
-import { MetadataContext } from '../ApplicationContexts';
-import { metadataManager } from "../services/metadataManager";
+import MetadataManager from "../layouts/MetadataManager";
 
 
 const Home = () => {
@@ -27,7 +25,6 @@ const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [scholarships, setScholarships] = useState([]);
   const [title, setTitle] = useOutletContext();
-  const setHeaderMetadata = useContext(MetadataContext)
 
   const { api } = apiService;
 
@@ -37,7 +34,7 @@ const Home = () => {
       sub: "Encontre um curso para aprender",
     });
     const postsPerPage = "9";
-    metadataManager( '/wp/v2/pages/6208', setHeaderMetadata );
+    
     // Cursos EC
     api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`).then((res) => {
       const fetchedCourses = [];
@@ -109,6 +106,8 @@ const Home = () => {
 
   return (
     <Box sx={styles.root}>
+      <MetadataManager ispage={true} value="home" />
+
       <Menu sx={styles.menu} />
 
       <Banners />
