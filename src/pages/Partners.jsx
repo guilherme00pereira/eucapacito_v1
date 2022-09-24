@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import apiService from "../services/apiService";
 import SendMessageImage from "../assets/img/mensagem-enviada.png"
 import {messageReturn} from "../commonStyles/messageReturn";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Partners = () => {
   const [fields, setFields] = useState({
@@ -55,6 +56,9 @@ const Partners = () => {
 
   return (
     <Box sx={styles.styleParagraph}>
+
+      <MetadataManager ispage={true} value="parceiros" />
+
       <Box sx={{ textAlign: "center", mb: "48px" }}>
         <p className="subtitle">Conheça quem apoia o Eu Capacito</p>
       </Box>

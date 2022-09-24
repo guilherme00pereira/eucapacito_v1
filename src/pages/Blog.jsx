@@ -64,10 +64,10 @@ const Blog = () => {
 
     return (
         <>
-        <MetadataManager ispage={false} value={blog.yoast} />
             {isLoading && <CircularProgress sx={loading.circular}/>}
             {!isLoading && (
                 <Stack sx={styles.root}>
+                    <MetadataManager ispage={false} value={blog.yoast} />
                     <Box sx={styles.titlepage}>
                         <h1>Blog</h1>
                     </Box>

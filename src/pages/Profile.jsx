@@ -10,6 +10,7 @@ import PlayIcon from "../assets/img/perfil-menu-play.png";
 import UserIcon from "../assets/img/perfil-menu-usuario.png";
 import KeyIcon from "../assets/img/perfil-menu-chave.png";
 import TermsIcon from "../assets/img/perfil-menu-termos.png"
+import MetadataManager from "../layouts/MetadataManager";
 
 const Profile = () => {
   const [title, setTitle] = useOutletContext();
@@ -36,6 +37,7 @@ const Profile = () => {
 
   return (
     <Box sx={styles.root}>
+      <MetadataManager ispage={true} value="default" />
       <Box sx={styles.user}>
         <img src={avatar} alt="Foto de perfil" referrerPolicy="no-referrer" />
         <h2>{sessionStorage.getItem('username')}</h2>

@@ -6,6 +6,7 @@ import Filter from "../components/Search/Filter";
 import Button from "../components/Button";
 import CourseBox from "../components/Search/CourseBox";
 import {useNavigate, useSearchParams} from "react-router-dom";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Search = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -90,7 +91,7 @@ const Search = () => {
     return (
 
         <Box sx={styles.root}>
-
+            <MetadataManager ispage={true} value="default" />
 
             <Box>
                 <div className="titulo">

@@ -8,6 +8,7 @@ import PasswordRecoveryForm from "../components/LoginRegister/PasswordRecoveryFo
 import PasswordReset from "../components/LoginRegister/PasswordReset";
 import {messageReturn} from "../commonStyles/messageReturn";
 import CheckImage from "../assets/img/check.png";
+import MetadataManager from "../layouts/MetadataManager";
 
 const LoginRegister = () => {
   const path = window.location.pathname;
@@ -27,6 +28,7 @@ const LoginRegister = () => {
 
   return (
     <Container>
+      <MetadataManager ispage={true} value="default" />
       <Box elevation={0} sx={{ mt: "100px", mb: "50px", textAlign: "center" }}>
         <Link to="/">
           <img src={EuCapacitoLogo} alt="Logo EuCapacito" />

@@ -6,6 +6,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import Link from "../components/Link";
 import ContactForm from "../components/ContactForm";
 import mapa from "../assets/img/mapa.png";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Contact = () => {
   const [title, setTitle] = useOutletContext();
@@ -19,6 +20,9 @@ const Contact = () => {
 
   return (
     <Box sx={styles.boxSx}>
+
+        <MetadataManager ispage={true} value="contato" />
+
       <Container sx={styles.container}>
         <Box sx={styles.header}>
           <h1>Mensagem</h1>

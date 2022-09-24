@@ -7,6 +7,7 @@ import BlogPost from "../components/Content/BlogPost";
 import { postListStyles } from '../commonStyles/postListStyles';
 import {loading} from "../commonStyles/loading";
 import { capitalizeFirstLetterSlug } from '../services/helper'
+import MetadataManager from "../layouts/MetadataManager";
 
 const Tag = () => {
     const [blogs, setBlogs] = useState([]);
@@ -59,6 +60,7 @@ const Tag = () => {
 
     return (
         <Box sx={postListStyles.root}>
+            <MetadataManager ispage={true} value="default" />
             <h1>{ capitalizeFirstLetterSlug(slug) }</h1>
             <hr />
             <Box sx={postListStyles.tabPanelBox}>

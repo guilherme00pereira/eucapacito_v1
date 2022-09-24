@@ -14,6 +14,7 @@ import apiService from "../services/apiService";
 import ContentCard from "../components/ContentCard";
 import CourseImg3 from "../assets/img/home-curso3.png";
 import {swiper} from "../commonStyles/swiper";
+import MetadataManager from "../layouts/MetadataManager";
 
 
 const Oportunities = () => {
@@ -75,6 +76,9 @@ const Oportunities = () => {
 
   return (
     <Box sx={styles.root}>
+
+      <MetadataManager ispage={true} value="oportunidades" />
+
       <Box sx={styles.description}>
         <p>
           Nossos parceiros tem oportunidades exclusivas para quem é aluno

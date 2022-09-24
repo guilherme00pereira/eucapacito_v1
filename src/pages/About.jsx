@@ -19,6 +19,7 @@ import Imagem1 from "../assets/img/image1-quem-somos.png";
 import Imagem2 from "../assets/img/image2-quem-somos.png";
 import Imagem3 from "../assets/img/image3-quem-somos.png";
 import Imagem4 from "../assets/img/image4-quem-somos.png";
+import MetadataManager from "../layouts/MetadataManager";
 
 const About = () => {
   const [title, setTitle] = useOutletContext();
@@ -67,6 +68,8 @@ const About = () => {
 
   return (
     <Box sx={styles.root}>
+      <MetadataManager ispage={true} value="about" />
+
       <h1>Sobre o Eu Capacito</h1>
       <hr />
 

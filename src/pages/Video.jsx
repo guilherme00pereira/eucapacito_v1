@@ -3,6 +3,7 @@ import { useOutletContext, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 import parse from "html-react-parser";
 import apiService from "../services/apiService";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Video = () => {
   const [title, setTitle] = useOutletContext();
@@ -10,7 +11,9 @@ const Video = () => {
     title: "",
     description: "",
     embedURL: "",
+    yoast: {}
   });
+  const [renderMeta, setRenderMeta] = useState(false)
 
   const { api } = apiService;
   const { slug } = useParams();
@@ -23,16 +26,20 @@ const Video = () => {
 
     api.get(`/wp/v2/video?slug=${slug}&_embed`).then((res) => {
       const videoData = res.data[0];
-
       setVideo({
         title: parse(videoData.title.rendered),
         description: parse(videoData.content.rendered),
+        yoast: videoData.yoast_head_json
       });
+      setRenderMeta(true)
     });
   }, []);
 
   return (
     <Box sx={styles.root}>
+      {renderMeta &&
+          <MetadataManager ispage={false} value={video.yoast}/>
+      }
       <h1 className="title">{video.title}</h1>
       <div className="description">{video.description}</div>
     </Box>

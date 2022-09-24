@@ -21,6 +21,7 @@ import {
 import apiService from "../services/apiService";
 import {messageReturn} from "../commonStyles/messageReturn";
 import SendMessageImage from "../assets/img/mensagem-enviada.png";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Password = () => {
     const [fields, setFields] = useState({
@@ -78,6 +79,7 @@ const Password = () => {
 
     return (
         <Container sx={styles}>
+            <MetadataManager ispage={true} value="default" />
             <Box sx={styles.pagetitle}>
                 <h1>Alteração de senha</h1>
             </Box>

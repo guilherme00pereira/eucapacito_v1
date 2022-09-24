@@ -12,6 +12,7 @@ import {
 
 import {useEffect, useState, useRef} from "react";
 import apiService from "../services/apiService";
+import MetadataManager from "../layouts/MetadataManager";
 
 const extractBirthdate = (data) => {
     let [bd, bm, by] = "";
@@ -145,7 +146,7 @@ const Account = () => {
             {isLoading && <CircularProgress sx={styles.loading}/>}
             {!isLoading && (
                 <Container sx={styles}>
-
+                    <MetadataManager ispage={true} value="default" />
                     <Box sx={styles.pagetitle}>
                         <h1>Edição da conta</h1>
                     </Box>

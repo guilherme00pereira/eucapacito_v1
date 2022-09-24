@@ -8,6 +8,7 @@ import {
 import apiService from "../services/apiService";
 import Button from "../components/Button";
 import {coursePage} from "../commonStyles/coursePage";
+import MetadataManager from "../layouts/MetadataManager";
 
 const CourseLD = () => {
     const [courseData, setCourseData] = useState({
@@ -19,6 +20,7 @@ const CourseLD = () => {
         price: "",
         duration: "",
         description: "",
+        yoast: {}
     });
     const [title, setTitle] = useOutletContext();
     const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +42,7 @@ const CourseLD = () => {
                 //category: course.categories.map((category) => category.name).join(", "),
                 duration: course.duracao,
                 description: parse(`${course.content.rendered}`),
+                yoast: course.yoast_head_json
             });
             setTitle({
                 main: "Curso",
@@ -78,6 +81,7 @@ const CourseLD = () => {
             {isLoading && <CircularProgress sx={coursePage.loading} />}
             {!isLoading && (
                 <Box sx={coursePage.root}>
+                    <MetadataManager ispage={false} value={courseData.yoast} />
                     <Box sx={coursePage.image}>
                         <img src={courseData.featuredImg} alt={courseData.title}/>
                     </Box>

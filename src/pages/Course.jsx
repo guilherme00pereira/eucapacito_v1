@@ -9,6 +9,7 @@ import apiService from "../services/apiService";
 import Button from "../components/Button";
 import {coursePage} from "../commonStyles/coursePage";
 import {calculateTime} from "../services/helper"
+import MetadataManager from "../layouts/MetadataManager";
 
 const Course = () => {
     const [courseData, setCourseData] = useState({
@@ -19,6 +20,7 @@ const Course = () => {
         price: "",
         duration: "",
         description: "",
+        yoast: {}
     });
     const [isLoading, setIsLoading] = useState(true);
     const token = sessionStorage.getItem("token");
@@ -41,6 +43,7 @@ const Course = () => {
                 duration: calculateTime(course.duration),
                 description: parse(`${course.content.rendered}`),
                 courseUrl: course.url,
+                yoast: course.yoast_head_json
             });
             setIsLoading(false);
         });
@@ -58,6 +61,7 @@ const Course = () => {
             {isLoading && <CircularProgress sx={coursePage.loading} />}
             {!isLoading && (
             <Box sx={coursePage.root}>
+                <MetadataManager ispage={false} value={courseData.yoast} />
                 <Box sx={coursePage.image}>
                     <img src={courseData.featuredImg} alt={courseData.title}/>
                 </Box>

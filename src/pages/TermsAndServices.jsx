@@ -3,6 +3,7 @@ import parse from 'html-react-parser';
 import apiService from "../services/apiService";
 import {useOutletContext} from "react-router-dom";
 import {Box} from "@mui/material";
+import MetadataManager from "../layouts/MetadataManager";
 
 const TermsAndServices = () => {
     const [title, setTitle] = useOutletContext();
@@ -21,6 +22,9 @@ const TermsAndServices = () => {
 
     return (
         <Box sx={styles.root}>
+
+            <MetadataManager ispage={true} value="terms" />
+
             <h1>Política de Privacidade - LGPD</h1>
             <hr />
             {parse(content)}

@@ -7,6 +7,7 @@ import parse from "html-react-parser";
 import ContentCard from "../components/ContentCard";
 
 import apiService from "../services/apiService";
+import MetadataManager from "../layouts/MetadataManager";
 
 
 const Scholarship = () => {
@@ -14,7 +15,9 @@ const Scholarship = () => {
     featuredImg: "",
     title: "",
     description: "",
+    yoast: {}
   });
+  const [renderMeta, setRenderMeta] = useState(false)
   const [courses, setCourses] = useState([]);
   const loggedId = sessionStorage.getItem('loggedIn');
   const { api } = apiService;
@@ -46,6 +49,7 @@ const Scholarship = () => {
           featuredImg: post.imagem.guid,
           title: parse(`${post.title.rendered}`),
           description: parse(`${post.content.rendered}`),
+          yoast: post.yoast_head_json
         });
         const fetchedCourses = [];
         post.cursos_ec.forEach((course) => {
@@ -59,11 +63,15 @@ const Scholarship = () => {
           });
         });
         setCourses(fetchedCourses);
+        setRenderMeta(true)
       });
   }, [api]);
 
   return (
     <Box sx={styles.root}>
+      {renderMeta &&
+          <MetadataManager ispage={false} value={employabilityData.yoast}/>
+      }
       <h1>Empregabilidade</h1>
       <hr />
 

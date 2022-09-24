@@ -11,6 +11,7 @@ import { Pagination, Autoplay } from "swiper";
 import {swiper} from "../commonStyles/swiper";
 
 import apiService from "../services/apiService";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Content = () => {
   const [title, setTitle] = useOutletContext();
@@ -103,6 +104,8 @@ const Content = () => {
 
   return (
     <Box sx={root}>
+      <MetadataManager ispage={true} value="conteudos" />
+
       <Box sx={blog}>
         <ContentTitle title="Blog" to={'/blog'} linkText="Todos os posts" />
           <Swiper

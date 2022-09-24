@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import parse from "html-react-parser";
 import apiService from "../services/apiService";
 import Button from "../components/Button";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Ebook = () => {
     const token = sessionStorage.getItem('token');
@@ -11,7 +12,9 @@ const Ebook = () => {
     const [ebook, setEbook] = useState({
         title: "",
         content: "",
+        yoast: {}
     });
+    const [renderMeta, setRenderMeta] = useState(false)
 
     const { api } = apiService;
     const { slug } = useParams();
@@ -30,7 +33,9 @@ const Ebook = () => {
                 title: parse(ebookData.title.rendered),
                 content: parse(ebookData.content.rendered),
                 download: ebookData.arquivo.guid,
+                yoast: ebookData.yoast_head_json
             });
+            setRenderMeta(true)
         });
     }, []);
 
@@ -42,6 +47,9 @@ const Ebook = () => {
 
     return (
         <Box sx={styles.root}>
+            {renderMeta &&
+                <MetadataManager ispage={false} value={ebook.yoast}/>
+            }
             <h1 className="title">{ebook.title}</h1>
             <div className="description">{ebook.content}</div>
             <Box sx={styles.button}>

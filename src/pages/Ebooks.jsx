@@ -8,6 +8,7 @@ import UpdateForm from "../components/Content/UpdateForm";
 
 import { postListStyles } from '../commonStyles/postListStyles';
 import {loading} from "../commonStyles/loading";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Ebooks = () => {
     const [ebooks, setEbooks] = useState([]);
@@ -58,6 +59,7 @@ const Ebooks = () => {
 
     return (
         <Box sx={postListStyles.root}>
+            <MetadataManager ispage={true} value="ebooks" />
             <h1>Ebook</h1>
             <hr />
             <Box sx={postListStyles.tabPanelBox}>

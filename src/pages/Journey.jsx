@@ -7,13 +7,16 @@ import parse from "html-react-parser";
 import ContentCard from "../components/ContentCard";
 
 import apiService from "../services/apiService";
+import MetadataManager from "../layouts/MetadataManager";
 
 const Journey = () => {
     const [journeyData, setJourneyData] = useState({
         featuredImg: "",
         title: "",
         description: "",
+        yoast: {}
     });
+    const [renderMeta, setRenderMeta] = useState(false)
     const loggedId = sessionStorage.getItem('loggedIn');
     let navigate = useNavigate();
     const [courses, setCourses] = useState([]);
@@ -36,6 +39,7 @@ const Journey = () => {
                     featuredImg: res.data[0].image,
                     title: parse(`${res.data[0].title.rendered}`),
                     description: parse(`${res.data[0].content.rendered}`),
+                    yoast: res.data[0].yoast_head_json
                 });
                 const fetchedCourses = [];
                 res.data[0].cursos_ec.forEach((course) => {
@@ -49,11 +53,15 @@ const Journey = () => {
                     });
                 });
                 setCourses([...fetchedCourses]);
+                setRenderMeta(true)
             });
     }, [api]);
 
     return (
         <Box sx={styles.root}>
+            {renderMeta &&
+                <MetadataManager ispage={false} value={journeyData.yoast}/>
+            }
 
             <Box sx={styles.texto}>
                 <Box>
