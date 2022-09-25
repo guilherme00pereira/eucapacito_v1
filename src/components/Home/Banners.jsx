@@ -6,6 +6,7 @@ import {Box, Link} from "@mui/material";
 import {swiper} from "../../commonStyles/swiper";
 import {Link as RouterLink} from "react-router-dom";
 import ReactPlayer from "react-player";
+import BannerLink from "./BannerLink";
 
 const Banners = () => {
     const [banners, setBanners] = useState([]);
@@ -38,14 +39,13 @@ const Banners = () => {
                 {banners.length > 0 &&
                     banners.map((banner, index) => (
                         <SwiperSlide key={index} className={banner.deviceClass}>
-                            <Link component={RouterLink} to={banner.link}>
+                            <BannerLink to={banner.link}>
                                 {
-                                    banner.type === 'video' ? 
-                                    <ReactPlayer url={banner.link} /> :
-                                    <img src={banner.image} alt="Banner" />
+                                    banner.type === 'video' ?
+                                        <ReactPlayer url={banner.link}/> :
+                                        <img src={banner.image} alt="Banner"/>
                                 }
-                                
-                            </Link>
+                            </BannerLink>
                         </SwiperSlide>
                     ))
                 }

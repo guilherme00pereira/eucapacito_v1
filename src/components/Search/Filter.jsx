@@ -62,7 +62,11 @@ const Filter = ({handleModal, filters}) => {
                       filters.categories.map((item) => ( 
                         <FormControlLabel
                             label={item.name}
-                            control={<Checkbox onChange={handleCheckbox} />}
+                            control={ item.selected ?
+                                <Checkbox onChange={handleCheckbox} defaultChecked />
+                                :
+                                <Checkbox onChange={handleCheckbox} />
+                            }
                             name="category"
                             value={item.id}
                         />
@@ -79,7 +83,11 @@ const Filter = ({handleModal, filters}) => {
                         filters.levels.map((item) => ( 
                           <FormControlLabel
                               label={item.name}
-                              control={<Checkbox onChange={handleCheckbox} />}
+                              control={ item.selected ?
+                                  <Checkbox onChange={handleCheckbox} defaultChecked />
+                                  :
+                                  <Checkbox onChange={handleCheckbox} />
+                              }
                               name="level"
                               value={item.id}
                           />
@@ -98,7 +106,11 @@ const Filter = ({handleModal, filters}) => {
                         filters.ranking.map((item) => ( 
                           <FormControlLabel
                               label={item.name}
-                              control={<Checkbox onChange={handleCheckbox} />}
+                              control={ item.selected ?
+                                  <Checkbox onChange={handleCheckbox} defaultChecked />
+                                  :
+                                  <Checkbox onChange={handleCheckbox} />
+                              }
                               name="ranking"
                               value={item.id}
                           />
@@ -116,7 +128,11 @@ const Filter = ({handleModal, filters}) => {
                         filters.partners.map((item) => ( 
                           <FormControlLabel
                               label={item.name}
-                              control={<Checkbox onChange={handleCheckbox} />}
+                              control={ item.selected ?
+                                <Checkbox onChange={handleCheckbox} defaultChecked />
+                                  :
+                                  <Checkbox onChange={handleCheckbox} />
+                                  }
                               name="partners"
                               value={item.id}
                           />

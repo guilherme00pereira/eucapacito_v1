@@ -65,9 +65,7 @@ const Courses = () => {
             if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
                 setHideLoadMoreButton(true);
             }
-
             const fetchedCourses = [];
-
             res.data.courses.forEach((course) => {
                 const newCourse = {
                     id: course.id,
@@ -81,7 +79,6 @@ const Courses = () => {
 
                 fetchedCourses.push(newCourse);
             });
-            console.log(fetchedCourses)
             setFilters({
                 levels: res.data.filters.nivel,
                 ranking: res.data.filters.avaliao,
