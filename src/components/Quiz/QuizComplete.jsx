@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import apiService from "../../services/apiService";
 import {Box, CircularProgress, Container, Stack, Typography} from "@mui/material";
 import Button from "../Button";
-import {QuizContext} from "../../ApplicationContexts"
+import {QuizContext} from "../../services/context"
 
 const QuizComplete = () => {
     const [validation, setValidation] = useContext(QuizContext);

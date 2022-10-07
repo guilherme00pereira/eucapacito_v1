@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 import parse from "html-react-parser";
 import apiService from "../services/apiService";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Video = () => {
+const DynamicPage = () => {
   const [title, setTitle] = useOutletContext();
   const [video, setVideo] = useState({
     title: "",
@@ -14,9 +13,7 @@ const Video = () => {
     yoast: {}
   });
   const [renderMeta, setRenderMeta] = useState(false)
-
   const { api } = apiService;
-  const { slug } = useParams();
 
   useEffect(() => {
     setTitle({
@@ -46,7 +43,7 @@ const Video = () => {
   );
 };
 
-export default Video;
+export default DynamicPage;
 
 const styles = {
   root: {

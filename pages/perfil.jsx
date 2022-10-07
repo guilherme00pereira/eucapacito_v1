@@ -12,7 +12,7 @@ import KeyIcon from "../assets/img/perfil-menu-chave.png";
 import TermsIcon from "../assets/img/perfil-menu-termos.png"
 import MetadataManager from "../layouts/MetadataManager";
 
-const Profile = () => {
+const Perfil = () => {
   const [title, setTitle] = useOutletContext();
   const token = sessionStorage.getItem('loggedIn');
   let navigate = useNavigate();
@@ -119,7 +119,7 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Perfil;
 
 const styles = {
   root: {

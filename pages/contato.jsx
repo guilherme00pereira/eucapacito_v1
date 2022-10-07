@@ -8,7 +8,7 @@ import ContactForm from "../components/ContactForm";
 import mapa from "../assets/img/mapa.png";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Contact = () => {
+const Contato = () => {
   const [title, setTitle] = useOutletContext();
 
   useEffect(() => {
@@ -202,7 +202,7 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Contato;
 
 const styles = {
     boxSx: {

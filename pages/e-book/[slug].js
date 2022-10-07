@@ -6,7 +6,7 @@ import apiService from "../services/apiService";
 import Button from "../components/Button";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Ebook = () => {
+const DynamicPage = () => {
     const token = sessionStorage.getItem('token');
     const [title, setTitle] = useOutletContext();
     const [ebook, setEbook] = useState({
@@ -71,7 +71,7 @@ const Ebook = () => {
     );
 };
 
-export default Ebook;
+export default DynamicPage;
 
 const styles = {
     root: {

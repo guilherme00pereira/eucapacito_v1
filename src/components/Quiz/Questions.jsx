@@ -4,7 +4,7 @@ import {Container, Box, Stack, Pagination, CircularProgress} from "@mui/material
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import QuestionCard from "./QuestionCard";
-import {QuizContext} from "../../ApplicationContexts";
+import {QuizContext} from "../../services/context";
 
 const Questions = ({setFinish}) => {
     const [validation, setValidation] = useContext(QuizContext);

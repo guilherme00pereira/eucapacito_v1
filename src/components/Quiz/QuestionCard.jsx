@@ -4,7 +4,7 @@ import parse from "html-react-parser";
 import apiService from "../../services/apiService";
 import MultipleAnswer from "./MultipleAnswer";
 import SingleAnswer from "./SingleAnswer";
-import {QuizContext} from "../../ApplicationContexts"
+import {QuizContext} from "../../services/context"
 import { genHash } from "../../services/helper";
 
 const QuestionCard = ({id}) => {

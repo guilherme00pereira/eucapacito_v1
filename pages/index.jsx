@@ -6,21 +6,21 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import { useOutletContext } from "react-router-dom";
-import apiService from "../services/apiService";
+import apiService from "../src/services/apiService";
 import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
-import Banners from "../components/Home/Banners";
-import Menu from "../components/Home/Menu";
-import ContentCard from "../components/ContentCard";
-import Footer from "../layouts/Footer";
-import BlogPost from "../components/Content/BlogPost";
-import {swiper} from "../commonStyles/swiper";
-import TitlesLink from "../components/Home/TitlesLink";
-import MetadataManager from "../layouts/MetadataManager";
+import Banners from "../src/components/Home/Banners";
+import Menu from "../src/components/Home/Menu";
+import ContentCard from "../src/components/ContentCard";
+import Footer from "../src/layouts/Footer";
+import BlogPost from "../src/components/Content/BlogPost";
+import {swiper} from "../src/commonStyles/swiper";
+import TitlesLink from "../src/components/Home/TitlesLink";
+import MetadataManager from "../src/layouts/MetadataManager";
 
 
-const Home = () => {
+const Index = () => {
   const [courses, setCourses] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [scholarships, setScholarships] = useState([]);
@@ -272,7 +272,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Index;
 
 const styles = {
   root: {

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import {FormGroup, FormControl, FormControlLabel, Radio, Stack, RadioGroup} from "@mui/material";
 import formStyle from "../../commonStyles/formStyle";
-import {QuizContext} from "../../ApplicationContexts"
+import {QuizContext} from "../../services/context"
 
 const SingleAnswer = ({question, answers}) => {
     const [validation, setValidation] = useContext(QuizContext);

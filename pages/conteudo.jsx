@@ -13,7 +13,7 @@ import {swiper} from "../commonStyles/swiper";
 import apiService from "../services/apiService";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Content = () => {
+const Conteudo = () => {
   const [title, setTitle] = useOutletContext();
   const [blogs, setBlogs] = useState([]);
   const [ebooks, setEbooks] = useState([]);
@@ -171,7 +171,7 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default Conteudo;
 
 
 const styles = {

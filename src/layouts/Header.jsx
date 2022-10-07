@@ -14,7 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "../components/Link";
 import apiService from "../services/apiService";
-import { SearchContext } from "../ApplicationContexts";
+import { SearchContext } from "../services/context";
 import "./Header.css";
 
 import SearchIcon from "../assets/img/header-search-icon.png";

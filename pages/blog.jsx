@@ -9,7 +9,7 @@ import { postListStyles } from '../commonStyles/postListStyles';
 import {loading} from "../commonStyles/loading";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Blogs = () => {
+const Blog = () => {
     const [blogs, setBlogs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(1);
@@ -82,5 +82,5 @@ const Blogs = () => {
     )
 }
 
-export default Blogs;
+export default Blog;
 

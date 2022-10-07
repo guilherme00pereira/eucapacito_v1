@@ -8,7 +8,7 @@ import SendMessageImage from "../assets/img/mensagem-enviada.png"
 import {messageReturn} from "../commonStyles/messageReturn";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Partners = () => {
+const Parceiros = () => {
   const [fields, setFields] = useState({
     name: "",
     company: "",
@@ -183,7 +183,7 @@ const Partners = () => {
   );
 };
 
-export default Partners;
+export default Parceiros;
 
 const FormCtrl = styled(FormControl)(`
   width: 100%;

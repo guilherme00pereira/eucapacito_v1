@@ -17,7 +17,7 @@ import {swiper} from "../commonStyles/swiper";
 import MetadataManager from "../layouts/MetadataManager";
 
 
-const Oportunities = () => {
+const Oportunidades = () => {
   const [title, setTitle] = useOutletContext();
   const [employabilities, setEmployabilities] = useState([]);
   const [scholarships, setScholarships] = useState([]);
@@ -176,7 +176,7 @@ const Oportunities = () => {
   );
 };
 
-export default Oportunities;
+export default Oportunidades;
 
 const styles = {
   accordion: {

@@ -10,7 +10,7 @@ import {swiper} from "../commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Courses = () => {
+const Cursos = () => {
     const token = sessionStorage.getItem("token");
     const userID = sessionStorage.getItem("userID");
 
@@ -212,7 +212,7 @@ const Courses = () => {
     );
 };
 
-export default Courses;
+export default Cursos;
 
 const styles = {
     root: {

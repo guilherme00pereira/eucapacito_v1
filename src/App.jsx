@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
-import { SearchContext } from './ApplicationContexts';
+import { SearchContext } from './services/context';
 
 import Theme from './Theme';
-import AppSettings from './AppSettings';
+import AppSettings from './layout';
 import LoginRegister from "./pages/LoginRegister";
 import TopBottomBars from "./layouts/TopBottomBars";
 import Home from "./pages/Home";
@@ -63,33 +63,33 @@ function App() {
               <Route path="/empregabilidade/registrar" element={<EmployabilityRegister />} />
 
               <Route element={<TopBottomBars />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/procurar" element={<Search />} />
-                <Route path="/pesquisa-cursos" element={<CoursesListing />} />
+                {/* <Route path="/" element={<Home />} /> */}
+                {/* <Route path="/procurar" element={<Search />} /> */}
+                {/* <Route path="/pesquisa-cursos" element={<CoursesListing />} /> */}
                 <Route path="/tag/:slug/:id" element={<Tag />} />
-                <Route path="/cursos" element={<Courses />} />
-                <Route path="/course-ec/:slug" element={<CourseLD />} />
+                {/* <Route path="/cursos" element={<Courses />} /> */}
+                {/* <Route path="/course-ec/:slug" element={<CourseLD />} /> */}
                 <Route path="/lessons/:slug/:id" element={<Lesson />} />
                 <Route path=":slug/aulas/:id" element={<Lessons />} />
                 <Route path="/quizzes/:slug/:id" element={<Quiz />} />
                 <Route path="/certificado/:id" element={<Certification />} />
-                <Route path="/curso-ec/:slug" element={<Course />} />
-                <Route path="/jornada/:slug" element={<Journey />} />
-                <Route path="/contato" element={<Contact />} />
+               {/*  <Route path="/curso-ec/:slug" element={<Course />} /> */}
+                {/* <Route path="/jornada/:slug" element={<Journey />} /> */}
+                {/* <Route path="/contato" element={<Contact />} /> */}
                 <Route path="/faq" element={<Faq />} />
-                <Route path="/parceiros" element={<Partners />} />
-                <Route path="/conteudo" element={<Content />} />
-                <Route path="/:slug" element={<Blog />} />
-                <Route path="/blog" element={<Blogs />} />
-                <Route path="/video/:slug" element={<Video />} />
-                <Route path="/videos" element={<Videos />} />
-                <Route path="/e-book/:slug" element={<Ebook />} />
-                <Route path="/ebooks/" element={<Ebooks />} />
+                {/* <Route path="/parceiros" element={<Partners />} /> */}
+                {/* <Route path="/conteudo" element={<Content />} /> */}
+                {/* <Route path="/:slug" element={<Blog />} /> */}
+                {/* <Route path="/blog" element={<Blogs />} /> */}
+                {/* <Route path="/video/:slug" element={<Video />} /> */}
+                {/* <Route path="/videos" element={<Videos />} /> */}
+               {/*  <Route path="/e-book/:slug" element={<Ebook />} /> */}
+               {/*  <Route path="/ebooks/" element={<Ebooks />} /> */}
                 <Route path="/noticias" element={<News />} />
-                <Route path="/quem-somos" element={<About />} />
-                <Route path="/bolsa-de-estudo/:slug" element={<Scholarship />} />
-                <Route path="/empregabilidade/:slug" element={<Employability />} />
-                <Route path="/oportunidades" element={<Oportunities />} />
+                {/* <Route path="/quem-somos" element={<About />} /> */}
+                {/* <Route path="/bolsa-de-estudo/:slug" element={<Scholarship />} /> */}
+                {/* <Route path="/empregabilidade/:slug" element={<Employability />} /> */}
+                {/* <Route path="/oportunidades" element={<Oportunities />} /> */}
                 <Route path="/perfil" element={<Profile />} />
                 <Route path="/editar-senha" element={<Password />} />
                 <Route path="/editar-conta" element={<AccountEdition />} />

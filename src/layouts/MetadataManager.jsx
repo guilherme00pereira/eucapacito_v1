@@ -1,6 +1,6 @@
 import {useContext, useEffect} from "react";
 import apiService from "../services/apiService";
-import {MetadataContext} from '../ApplicationContexts';
+import {MetadataContext} from '../services/context';
 
 const MetadataManager = ({ispage, value}) => {
     const setHeaderMetadata = useContext(MetadataContext)

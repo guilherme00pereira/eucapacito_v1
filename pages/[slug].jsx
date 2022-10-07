@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useOutletContext, useParams} from "react-router-dom";
+import { useRouter } from "next/router"
 import {Box, CircularProgress, Stack} from "@mui/material";
 import Link from "../components/Link";
 import parse from "html-react-parser";
@@ -8,7 +8,9 @@ import BlogSidebar from "../components/Content/BlogSidebar";
 import {loading} from "../commonStyles/loading";
 import MetadataManager from "../layouts/MetadataManager";
 
-const Blog = () => {
+const DynamicBlog = () => {
+    const router = useRouter();
+    const { query: {slug} } = router
     const [title, setTitle] = useOutletContext();
     const [isLoading, setIsLoading] = useState(true);
     const [blog, setBlog] = useState({
@@ -24,8 +26,6 @@ const Blog = () => {
     });
     
     const {api} = apiService;
-    const {slug} = useParams();
-
 
     useEffect(() => {
         // if(slug === 'pesquisa-de-satisfacao') {
@@ -108,7 +108,7 @@ const Blog = () => {
     );
 };
 
-export default Blog;
+export default DynamicBlog;
 
 const styles = {
     root: {

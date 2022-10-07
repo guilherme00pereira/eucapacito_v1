@@ -21,7 +21,7 @@ import Imagem3 from "../assets/img/image3-quem-somos.png";
 import Imagem4 from "../assets/img/image4-quem-somos.png";
 import MetadataManager from "../layouts/MetadataManager";
 
-const About = () => {
+const QuemSomos = () => {
   const [title, setTitle] = useOutletContext();
   const [content, setContent] = useState({
     video: '',
@@ -178,22 +178,11 @@ const About = () => {
         </MuiLink>
       </Box>
 
-      {/* <Box sx={styles.stayTuned}>
-        <Grid container>
-          <Grid item xs={6}>
-            <img src={StayTunedImg} alt="Estrelas" />
-          </Grid>
-
-          <Grid item xs={6}>
-            <img src={MegaphoneImg} alt="Mulher com megafone" />
-          </Grid>
-        </Grid>
-      </Box> */}
     </Box>
   );
 };
 
-export default About;
+export default QuemSomos;
 
 const styles = {
   containerParaQuem: {
