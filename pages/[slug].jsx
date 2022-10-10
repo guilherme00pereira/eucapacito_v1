@@ -1,17 +1,16 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import { useRouter } from "next/router"
 import {Box, CircularProgress, Stack} from "@mui/material";
-import Link from "../components/Link";
+import Link from "../src/components/Link";
 import parse from "html-react-parser";
-import apiService from "../services/apiService";
-import BlogSidebar from "../components/Content/BlogSidebar";
-import {loading} from "../commonStyles/loading";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../src/services/apiService";
+import BlogSidebar from "../src/components/Content/BlogSidebar";
+import {loading} from "../src/commonStyles/loading";
 
 const DynamicBlog = () => {
     const router = useRouter();
-    const { query: {slug} } = router
-    const [title, setTitle] = useOutletContext();
+    const { slug } = router
+    const ctx = useContext(AppContext);
     const [isLoading, setIsLoading] = useState(true);
     const [blog, setBlog] = useState({
         featuredImg: "",
@@ -31,7 +30,7 @@ const DynamicBlog = () => {
         // if(slug === 'pesquisa-de-satisfacao') {
         //     window.location.href = "";
         // }
-        setTitle({
+        ctx.setTitle({
             main: "Blog",
             sub: "Leia o conteúdo da semana",
         });
@@ -67,7 +66,6 @@ const DynamicBlog = () => {
             {isLoading && <CircularProgress sx={loading.circular}/>}
             {!isLoading && (
                 <Stack sx={styles.root}>
-                    <MetadataManager ispage={false} value={blog.yoast} />
                     <Box sx={styles.titlepage}>
                         <h1>Blog</h1>
                     </Box>

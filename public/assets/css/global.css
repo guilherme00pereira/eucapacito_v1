@@ -5,44 +5,44 @@
 @font-face {
     font-family: "Gotham";
     src: local("GothamBook"),
-     url("./assets/fonts/Gotham/GothamBook.ttf") format("truetype");
+     url("../fonts/Gotham/GothamBook.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
   }    
   @font-face {
     font-family: "Gotham";
     src: local("GothamMedium"),
-     url("./assets/fonts/Gotham/GothamMedium.ttf") format("truetype");
+     url("../fonts/Gotham/GothamMedium.ttf") format("truetype");
     font-weight: 500;
     font-style: normal;
   }
   @font-face {
     font-family: "Gotham";
     src: local("GothamBold"),
-     url("./assets/fonts/Gotham/GothamBold.ttf") format("truetype"),
-     url("./assets/fonts/Gotham/Gotham-Bold.otf") format("opentype");
+     url("../fonts/Gotham/GothamBold.ttf") format("truetype"),
+     url("../fonts/Gotham/Gotham-Bold.otf") format("opentype");
     font-weight: 700;
     font-style: normal;
   }
   @font-face {
     font-family: "Gotham";
     src: local("GothamBookItalic"),
-     url("./assets/fonts/Gotham/GothamBookItalic.ttf") format("truetype"),
-     url("./assets/fonts/Gotham/Gotham-BookItalic.otf") format("opentype");
+     url("../fonts/Gotham/GothamBookItalic.ttf") format("truetype"),
+     url("../fonts/Gotham/Gotham-BookItalic.otf") format("opentype");
     font-weight: 400;
     font-style: italic;
   }    
   @font-face {
     font-family: "Gotham";
     src: local("GothamMediumItalic"),
-     url("./assets/fonts/Gotham/GothamMediumItalic.ttf") format("truetype");
+     url("../fonts/Gotham/GothamMediumItalic.ttf") format("truetype");
     font-weight: 500;
     font-style: italic;
   }
   @font-face {
     font-family: "Gotham";
     src: local("GothamBoldItalic"),
-     url("./assets/fonts/Gotham/GothamBoldItalic.ttf") format("truetype");
+     url("../fonts/Gotham/GothamBoldItalic.ttf") format("truetype");
     font-weight: 700;
     font-style: italic;
   }
@@ -52,7 +52,7 @@ body {
     font-family: 'Montserrat', 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image: linear-gradient(to right, #0E0E0E, #292C2F); /*url('./assets/img/fundo_original-2.jpg');*/
+    background-image: linear-gradient(to right, #0E0E0E, #292C2F); /*url('../img/fundo_original-2.jpg');*/
     background-size: cover;
     background-position: 50%;
     color: #CAC8C8;
@@ -81,4 +81,18 @@ body::-webkit-scrollbar-thumb {
 a {
     color: #33EDAC;
     text-decoration: none;
+}
+
+.appbar {
+  background-image: linear-gradient(to right, #0E0E0E, #292C2F);/*url('../assets/img/fundo_original-2.jpg') !important;*/
+  background-size: cover;
+  background-position: 55%;
+  min-height: 100px;
+  justify-content: center;
+}
+
+@media(min-width:1024px) {
+  .appbar {
+      background-image: none !important;
+  }
 }

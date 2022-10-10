@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import Link from 'next/link';
 import { Link as MuiLink } from "@mui/material";
 
 const BannerLink = ({ children, to }) => {
@@ -14,12 +14,11 @@ const BannerLink = ({ children, to }) => {
                      {children}
                  </MuiLink>
                  :
-                 <MuiLink
-                     component={RouterLink}
-                     to={to}
-                 >
-                     {children}
-                 </MuiLink>
+                <Link href={to}>
+                    <MuiLink to={to}>
+                        {children}
+                    </MuiLink>
+                </Link>
         }
         </>
     );

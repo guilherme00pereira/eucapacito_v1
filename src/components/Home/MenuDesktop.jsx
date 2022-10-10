@@ -1,15 +1,53 @@
 import { Box, Paper } from "@mui/material";
 import MenuLink from "./MenuLink";
 
-import CursosIcon from "../../assets/img/home-desk-curso.png";
-import OportunidadeIcon from "../../assets/img/home-desk-oportunidade.png";
-import ConteudoIcon from "../../assets/img/home-desk-conteudo.png";
-import ParceirosIcon from "../../assets/img/home-desk-parceiros.png";
-import ECIcon from "../../assets/img/home-desk-eucp.png";
-import InfoIcon from "../../assets/img/home-desk-info.png";
+import CursosIcon from "../../../public/assets/img/home-desk-curso.png";
+import OportunidadeIcon from "../../../public/assets/img/home-desk-oportunidade.png";
+import ConteudoIcon from "../../../public/assets/img/home-desk-conteudo.png";
+import ParceirosIcon from "../../../public/assets/img/home-desk-parceiros.png";
+import ECIcon from "../../../public/assets/img/home-desk-eucp.png";
+import InfoIcon from "../../../public/assets/img/home-desk-info.png";
 
 const Menu = () => {
-  const container = {
+  
+
+  return (
+    <Box sx={styles.container}>
+      <Paper sx={{ ...styles.menuOption, borderRadius: "0 0 0 21px" }}>
+        <MenuLink to="/cursos" imagePath={CursosIcon} title="Cursos" />
+      </Paper>
+
+      <Paper sx={styles.menuOption}>
+        <MenuLink
+          to="/oportunidades"
+          imagePath={OportunidadeIcon}
+          title="Oportunidades"
+        />
+      </Paper>
+
+      <Paper sx={styles.menuOption}>
+        <MenuLink to="/conteudo" imagePath={ConteudoIcon} title="Conteúdos" />
+      </Paper>
+
+      <Paper sx={styles.menuOption}>
+        <MenuLink to="/parceiros" imagePath={ParceirosIcon} title="Parceiros" />
+      </Paper>
+
+      <Paper sx={styles.menuOption}>
+        <MenuLink to="/contato" imagePath={InfoIcon} title="Contato" />
+      </Paper>
+
+      <Paper sx={{ ...styles.menuOption, borderRadius: "0 0 21px 0" }}>
+        <MenuLink to="/quem-somos" imagePath={ECIcon} title="Quem somos" />
+      </Paper>
+    </Box>
+  );
+};
+
+export default Menu;
+
+const styles = {
+  container: {
     display: {
       md: "flex",
       xs: "none",
@@ -24,9 +62,8 @@ const Menu = () => {
     height: "58px",
     position: "relative",
     zIndex: "8",
-  };
-
-  const menuOption = {
+  },
+  menuOption: {
     display: {
       md: "flex",
     },
@@ -50,39 +87,5 @@ const Menu = () => {
     img: {
       display: "none",
     },
-  };
-
-  return (
-    <Box sx={container}>
-      <Paper sx={{ ...menuOption, borderRadius: "0 0 0 21px" }}>
-        <MenuLink to="/cursos" imagePath={CursosIcon} title="Cursos" />
-      </Paper>
-
-      <Paper sx={menuOption}>
-        <MenuLink
-          to="/oportunidades"
-          imagePath={OportunidadeIcon}
-          title="Oportunidades"
-        />
-      </Paper>
-
-      <Paper sx={menuOption}>
-        <MenuLink to="/conteudo" imagePath={ConteudoIcon} title="Conteúdos" />
-      </Paper>
-
-      <Paper sx={menuOption}>
-        <MenuLink to="/parceiros" imagePath={ParceirosIcon} title="Parceiros" />
-      </Paper>
-
-      <Paper sx={menuOption}>
-        <MenuLink to="/contato" imagePath={InfoIcon} title="Contato" />
-      </Paper>
-
-      <Paper sx={{ ...menuOption, borderRadius: "0 0 21px 0" }}>
-        <MenuLink to="/quem-somos" imagePath={ECIcon} title="Quem somos" />
-      </Paper>
-    </Box>
-  );
-};
-
-export default Menu;
+  }
+}

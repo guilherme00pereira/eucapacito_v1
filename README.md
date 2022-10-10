@@ -7,6 +7,7 @@ Aplicação em React.js do site eucapacito.com.br
 ### Versão 0.8
 
 <ul>
+<li>v_0.8.1 - implementação Next - pages</li>
 <li>v_0.8.0 - início da implementação do Next.js</li>
 </ul>
 

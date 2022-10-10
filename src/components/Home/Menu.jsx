@@ -4,15 +4,11 @@ import MenuLink from "./MenuLink";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
-import CursosIcon from "../../assets/img/home-cursos.png";
-import CursosECIcon from "../../assets/img/home-cursos-ec.png";
-import InfoIcon from "../../assets/img/home-informacao.png";
-import OportunidadeIcon from "../../assets/img/home-oportunidade.png";
-import CarreirasIcon from "../../assets/img/home-carreiras.png";
-import ConteudoIcon from "../../assets/img/home-conteudo.png";
-import NoticiasIcon from "../../assets/img/home-noticias.png";
-import ParceirosIcon from "../../assets/img/home-parceiros.png";
-import ContatoIcon from "../../assets/img/home-contato.png";
+import CursosIcon from "../../../public/assets/img/home-cursos.png";
+import OportunidadeIcon from "../../../public/assets/img/home-oportunidade.png";
+import ConteudoIcon from "../../../public/assets/img/home-conteudo.png";
+import ParceirosIcon from "../../../public/assets/img/home-parceiros.png";
+import ContatoIcon from "../../../public/assets/img/home-contato.png";
 
 const Menu = ({ sx }) => {
   return (

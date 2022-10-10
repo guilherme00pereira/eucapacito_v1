@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import apiService from "../../services/apiService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {Autoplay, Pagination} from "swiper";
-import {Box, Link} from "@mui/material";
+import {Box} from "@mui/material";
 import {swiper} from "../../commonStyles/swiper";
-import {Link as RouterLink} from "react-router-dom";
 import ReactPlayer from "react-player";
 import BannerLink from "./BannerLink";
 

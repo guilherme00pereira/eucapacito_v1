@@ -1,6 +1,6 @@
 import {createContext} from 'react';
 
-export const SearchContext = createContext('');
+export const AppContext = createContext();
 
 export const StepsContext = createContext({
     steps: [],

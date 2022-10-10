@@ -1,10 +1,9 @@
 import { Link, Box } from "@mui/material";
-import { NavLink } from "react-router-dom";
 
 const TitlesLink = ({ to, title }) => {
     return (
         <Box sx={styles.box}>
-            <Link component={NavLink} to={to} sx={styles.link}>
+            <Link to={to} sx={styles.link}>
                 {title}
             </Link>
         </Box>

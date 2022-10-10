@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   Box,
   Accordion,
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import { useOutletContext } from "react-router-dom";
 import apiService from "../src/services/apiService";
 import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,19 +16,19 @@ import Footer from "../src/layouts/Footer";
 import BlogPost from "../src/components/Content/BlogPost";
 import {swiper} from "../src/commonStyles/swiper";
 import TitlesLink from "../src/components/Home/TitlesLink";
-import MetadataManager from "../src/layouts/MetadataManager";
+import { AppContext } from "../src/services/context";
 
 
 const Index = () => {
   const [courses, setCourses] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [scholarships, setScholarships] = useState([]);
-  const [title, setTitle] = useOutletContext();
+  const ctx = useContext(AppContext);
 
   const { api } = apiService;
 
   useEffect(() => {
-    setTitle({
+    ctx.setTitle({
       main: "Olá Seja Bem Vindo",
       sub: "Encontre um curso para aprender",
     });
@@ -106,12 +105,9 @@ const Index = () => {
 
   return (
     <Box sx={styles.root}>
-      <MetadataManager ispage={true} value="home" />
 
       <Menu sx={styles.menu} />
-
       <Banners />
-
       <Box sx={styles.courses}>
         {/* <Box
           sx={{

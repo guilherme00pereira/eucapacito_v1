@@ -1,9 +1,8 @@
 import { Link } from "@mui/material";
-import { NavLink } from "react-router-dom";
 
 const MenuLink = ({ to, title }) => {
   return (
-    <Link component={NavLink} to={to} sx={styles.link}>
+    <Link href={to} sx={styles.link}>
       <p>{title}</p>
     </Link>
   );

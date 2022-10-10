@@ -1,10 +1,10 @@
-import { Link as RouterLink } from "react-router-dom";
+import {Link as NextLink} from "next/link";
 import { Link as MuiLink } from "@mui/material";
 
 const Link = ({ children, to, sx, onClick }) => {
   return (
     <MuiLink
-      component={RouterLink}
+      component={NextLink}
       to={to}
       sx={{ color: "#33EDAC", textDecoration: "none", ...sx }}
       onClick={onClick}

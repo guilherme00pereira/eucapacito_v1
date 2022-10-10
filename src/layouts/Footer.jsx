@@ -1,7 +1,7 @@
 import {Paper, Box, Container, Link as MuiLink} from "@mui/material";
 import {Instagram, Facebook, LinkedIn} from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
-import rodapeLogos from "../assets/img/logo-eucapacito-itmidia.png";
+import rodapeLogos from "../../public/assets/img/logo-eucapacito-itmidia.png";
 
 const Footer = () => {
     return (

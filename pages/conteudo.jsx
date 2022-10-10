@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {Box} from "@mui/material";
-import { useOutletContext } from "react-router-dom";
 import BlogPost from "../components/Content/BlogPost";
 import VideoPost from "../components/Content/VideoPost";
 import EbookPost from "../components/Content/EbookPost";
@@ -14,12 +13,11 @@ import apiService from "../services/apiService";
 import MetadataManager from "../layouts/MetadataManager";
 
 const Conteudo = () => {
-  const [title, setTitle] = useOutletContext();
   const [blogs, setBlogs] = useState([]);
   const [ebooks, setEbooks] = useState([]);
   const [videos, setVideos] = useState([]);
 
-  const { root, blog, ebook, form } = styles;
+  const { root, blog } = styles;
   const { api } = apiService;
 
   useEffect(() => {

@@ -1,38 +1,39 @@
-import {useState, useEffect} from "react";
-import {useOutletContext} from "react-router-dom";
+import {useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router"
 import {Box} from "@mui/material";
-import apiService from "../services/apiService";
-import {useSearchParams} from "react-router-dom";
-import ContentTitle from "../components/Content/ContentTitle";
-import ContentCard from "../components/ContentCard";
+import { AppContext } from "../src/services/context";
+import apiService from "../src//services/apiService";
+import ContentTitle from "../src/components/Content/ContentTitle";
+import ContentCard from "../src/components/ContentCard";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {swiper} from "../commonStyles/swiper";
+import {swiper} from "../src/commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
-import MetadataManager from "../layouts/MetadataManager";
 
 const Cursos = () => {
-    const token = sessionStorage.getItem("token");
-    const userID = sessionStorage.getItem("userID");
-
     const [myCourses, setMyCourses] = useState([]);
     const [courses, setCourses] = useState([]);
     const [journeys, setJourneys] = useState([]);
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [logged, setLogged] = useState(false);
+    const router = useRouter();
+    const { t } = router.query;
     const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
-    const [title, setTitle] = useOutletContext();
+    const ctx = useContext(AppContext);
 
     const postsPerPage = "9";
     const {api} = apiService;
 
 
     useEffect(() => {
+        const token = sessionStorage.getItem("token");
+        setLogged(token?true:false);
+        const userID = sessionStorage.getItem("userID");
         token
-            ? setTitle({
+            ? ctx.setTitle({
                 main: "Meus Cursos",
                 sub: "Pesquisar um curso iniciado",
             })
-            : setTitle({
+            : ctx.setTitle({
                 main: "Cursos",
                 sub: "Encontre um curso para aprender",
             });
@@ -57,7 +58,7 @@ const Cursos = () => {
             });
         }
 
-        const ids = searchParams.get('t');
+        const ids = t;
         let url = `/eucapacito/v1/search?page=${page}&course=true`;
         if (null !== ids) {
             url += `&t=${ids}`;
@@ -107,9 +108,8 @@ const Cursos = () => {
 
     return (
         <Box sx={styles.root}>
-            <MetadataManager ispage={true} value="cursos" />
 
-            {token &&
+            {logged &&
                 <>
                     <Box>
                         <div className="titulo">

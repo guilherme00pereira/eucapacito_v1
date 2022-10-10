@@ -1,16 +1,16 @@
 import {useState, useEffect} from "react";
-import {useOutletContext} from "react-router-dom";
+import { AppContext } from "../src/services/context";
 import {Box, CircularProgress, Drawer} from "@mui/material";
-import Filter from "../components/Search/Filter";
-import apiService from "../services/apiService";
-import {useSearchParams} from "react-router-dom";
-import {loading} from "../commonStyles/loading"
-import Button from "../components/Button";
-import FilterIcon from "../assets/img/filter-icon.svg";
-import CourseCard from "../components/Course/CourseCard";
+import Filter from "../src/components/Search/Filter";
+import apiService from "../src/services/apiService";
+import {loading} from "../src/commonStyles/loading"
+import Button from "../src/components/Button";
+import FilterIcon from "../public/assets/img/filter-icon.svg";
+import CourseCard from "../src/components/Course/CourseCard";
 
 const PesquisaCursos = () => {
-    const [token, setToken] = useState(sessionStorage.getItem("token"));
+    const router = useRouter();
+    const { s, t } = router.query;
     const [isLoading, setIsLoading] = useState(false);
     const [courses, setCourses] = useState([]);
     const [filters, setFilters] = useState({
@@ -19,11 +19,10 @@ const PesquisaCursos = () => {
         categories: [],
         partners: []
     });
-    const [searchParams, setSearchParams] = useSearchParams();
     const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
-    const [title, setTitle] = useOutletContext();
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const ctx = useContext(AppContext);
 
     const {api} = apiService;
 
@@ -40,12 +39,13 @@ const PesquisaCursos = () => {
     const handleModal = (status) => setDrawerOpen(status);
 
     useEffect(() => {
+        const token = sessionStorage.getItem("token")
         token
-            ? setTitle({
+            ? ctx.setTitle({
                 main: "Meus Cursos",
                 sub: "Pesquisar um curso iniciado",
             })
-            : setTitle({
+            : ctx.setTitle({
                 main: "Cursos",
                 sub: "Encontre um curso para aprender",
             });

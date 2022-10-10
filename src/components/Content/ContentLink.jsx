@@ -1,14 +1,16 @@
-import { Link } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link as MuiLink } from "@mui/material";
+import Link from 'next/link';
 import {ArrowForwardIos} from "@mui/icons-material";
 
 const ContentLink = ({ to, title }) => {
     return (
-        <Link component={NavLink} to={to} sx={styles.link}>
-            <div>{title}</div>
-            <span>
-                <ArrowForwardIos sx={styles.arrow} />
-            </span>
+        <Link href={to}>
+            <MuiLink to={to} sx={styles.link}>
+                <div>{title}</div>
+                <span>
+                    <ArrowForwardIos sx={styles.arrow} />
+                </span>
+            </MuiLink>
         </Link>
     );
 }

@@ -1,4 +1,3 @@
-import {NavLink} from "react-router-dom";
 import {Box, Grid, Link} from "@mui/material";
 import parse from "html-react-parser";
 
@@ -35,9 +34,9 @@ const ContentCard = ({ url, imagePath, title, subtitle, logoPath }) => {
       <Link href={url || "#"} sx={{color: "#33EDAC", textDecoration: "none"}} target="_blank">
         <CardContent imageUrl={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
       </Link> :
-      <NavLink to={url || "#"}>
+      <Link to={url || "#"}>
         <CardContent imageUrl={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
-      </NavLink>;
+      </Link>;
 };
 
 export default ContentCard;

@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router"
+import { AppContext } from "../services/context";
+import Image from 'next/image';
 import PersonIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { useLocation, useNavigate, matchPath } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -14,35 +16,37 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "../components/Link";
 import apiService from "../services/apiService";
-import { SearchContext } from "../services/context";
-import "./Header.css";
 
-import SearchIcon from "../assets/img/header-search-icon.png";
-import EuCapacitoLogo from "../assets/img/logo.png";
-import UserIcon from "../assets/img/perfil-menu-usuario.png";
+import SearchIcon from "../../public/assets/img/header-search-icon.png";
+import EuCapacitoLogo from "../../public/assets/img/logo.png";
+import UserIcon from "../../public/assets/img/perfil-menu-usuario.png";
 
 import MenuDesk from "../components/Home/MenuDesktop";
 import {Facebook, Instagram, LinkedIn} from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
 
-const Header = ({ title, subtitle }) => {
+const Header = () => {
+  const router = useRouter();
+  const [search, setSearch] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { search, setSearch } = useContext(SearchContext);
-  const token = sessionStorage.getItem("token");
-  const userFirstName = sessionStorage.getItem("username");
-  const avatar = sessionStorage.getItem("avatarURL") ?? UserIcon;
-  let navigate = useNavigate();
-  let location = useLocation().pathname;
+  const [logged, setLogged] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const ctx = useContext(AppContext);
 
   useEffect(() => {
-    if (!location.includes("/procurar")) {
+    const token = sessionStorage.getItem("token");
+    setLogged(token?true:false);
+    setFirstName(sessionStorage.getItem("username"));
+    setAvatar(sessionStorage.getItem("avatarURL") ?? UserIcon);
+    if (!router.pathname.includes("/procurar")) {
       setSearch("");
     }
 
     // if(sessionStorage.getItem('avatarURL').includes("jpeg")) {
     //   setAvatar(sessionStorage.getItem('avatarURL'))
     // }
-  }, [location]);
+  }, []);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -98,27 +102,27 @@ const Header = ({ title, subtitle }) => {
           <Toolbar disableGutters sx={styles.toolbar}>
             <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
               <Link to="/">
-                <img src={EuCapacitoLogo} alt="Logo EuCapacito" />
+                <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
               </Link>
             </Box>
 
             <Box sx={styles.toolbar.mobileLogo}>
               <Link to="/">
-                <img src={EuCapacitoLogo} alt="Logo EuCapacito" />
+                <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
               </Link>
             </Box>
           </Toolbar>
 
           <Box sx={styles.subheader}>
-            {token && location.length <= 1 ? (
+            {logged && location.length <= 1 ? (
               <p>Olá, {userFirstName.split(" ")[0]}!</p>
-            ) : title !== "" ? (
-              <p>{title}</p>
+            ) : ctx.title.main !== "" ? (
+              <p>{ctx.title.main}</p>
             ) : (
               <p>Seja bem vindo</p>
             )}
-            {subtitle !== "" && location.length > 1 ? (
-              <p>{subtitle}</p>
+            {ctx.title.sub !== "" && location.length > 1 ? (
+              <p>{ctx.title.sub}</p>
             ) : (
               <p>Encontre um curso para aprender</p>
             )}
@@ -130,7 +134,7 @@ const Header = ({ title, subtitle }) => {
               inputProps={{ "aria-label": "search eu capacito" }}
               startAdornment={
                 <InputAdornment position="start" sx={{ m: "0.875rem" }}>
-                  <img src={SearchIcon} alt="Ícone - Lupa" />
+                  <Image src={SearchIcon} alt="Ícone - Lupa" />
                 </InputAdornment>
               }
               sx={styles.searchBar.input}
@@ -158,22 +162,22 @@ const Header = ({ title, subtitle }) => {
             </Box>
 
             <Box sx={styles.subheaderdesk}>
-              {token && location.length <= 1 ? (
+              {logged && location.length <= 1 ? (
                 <p>Olá, {userFirstName.split(" ")[0]}!</p>
-              ) : title !== "" ? (
-                <p>{title}</p>
+              ) : ctx.title.main !== "" ? (
+                <p>{ctx.title.main}</p>
               ) : (
                 <p>Seja bem vindo</p>
               )}
-              {subtitle && location.length > 1 ? (
-                <p>{subtitle}</p>
-              ) : !subtitle && location.length > 1 ? (
+              {ctx.title.sub && location.length > 1 ? (
+                <p>{ctx.title.sub}</p>
+              ) : !ctx.title.sub && location.length > 1 ? (
                 ""
               ) : (
                 <p>Encontre um curso para aprender</p>
               )}
             </Box>
-            {!token && (
+            {!logged && (
               <Box sx={styles.deskcadastro}>
                 <Link to="/login">
                   {" "}
@@ -183,7 +187,7 @@ const Header = ({ title, subtitle }) => {
               </Box>
             )}
 
-            {token && (
+            {logged && (
               <Box sx={styles.headerPerfil}>
                 <Link to="/perfil">
                   <div className="profile-photo">
@@ -198,7 +202,7 @@ const Header = ({ title, subtitle }) => {
               </Box>
             )}
 
-            {token && (
+            {logged && (
               <Box sx={styles.drawer}>
                 <Button onClick={handleDrawer}>
                   <MenuIcon htmlColor="#33EDAC" />
