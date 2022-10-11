@@ -1,30 +1,15 @@
 import {useEffect, useState, useContext} from "react";
-import { useRouter } from "next/router"
 import {Box, CircularProgress, Stack} from "@mui/material";
 import Link from "../src/components/Link";
 import parse from "html-react-parser";
 import apiService from "../src/services/apiService";
 import BlogSidebar from "../src/components/Content/BlogSidebar";
 import {loading} from "../src/commonStyles/loading";
+import { AppContext } from "../src/services/context";
 
-const DynamicBlog = () => {
-    const router = useRouter();
-    const { slug } = router
+const DynamicBlog = ({blog, posts}) => {
     const ctx = useContext(AppContext);
-    const [isLoading, setIsLoading] = useState(true);
-    const [blog, setBlog] = useState({
-        featuredImg: "",
-        title: "",
-        category: "",
-        offered: "",
-        price: "",
-        duration: "",
-        description: "",
-        tags: [],
-        yoast: {}
-    });
-    
-    const {api} = apiService;
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // if(slug === 'pesquisa-de-satisfacao') {
@@ -34,32 +19,7 @@ const DynamicBlog = () => {
             main: "Blog",
             sub: "Leia o conteúdo da semana",
         });
-
-        api.get(`/wp/v2/posts?slug=${slug}&_embed`).then((res) => {
-            const blogData = res.data[0];
-            
-            setBlog({
-                featuredImg: blogData.featured_image_src,
-                title: parse(`${blogData.title.rendered}`),
-                content: parse(`${blogData.content.rendered}`),
-                date: new Date(blogData.date).toLocaleDateString("pt-BR", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                }),
-                cats: blogData.categories_object
-                    .map((category) => category.name)
-                    .join(", "),
-                tags: blogData.tag_object.map((tag) => ({
-                    name: tag.name,
-                    slug: tag.slug,
-                    id: tag.term_id
-                })),
-                yoast: blogData.yoast_head_json
-            });
-            setIsLoading(false);
-        });
-    }, [slug]);
+    }, []);
 
     return (
         <>
@@ -82,7 +42,7 @@ const DynamicBlog = () => {
                                 <hr/>
                                 <h1>{blog.title}</h1>
                                 <div className="content">
-                                    {blog.content}
+                                    {parse(blog.content)}
                                 </div>
                             </Box>
                             <Stack sx={styles.tags}>
@@ -98,7 +58,7 @@ const DynamicBlog = () => {
                                 </Stack>
                             </Stack>
                         </Box>
-                        <BlogSidebar />
+                        <BlogSidebar posts={posts} />
                     </Stack>
                 </Stack>
             )}
@@ -106,7 +66,50 @@ const DynamicBlog = () => {
     );
 };
 
+export async function getServerSideProps(context) {
+    const {api}     = apiService;
+    
+    let res       = await api.get(`/wp/v2/posts?slug=${context.params.slug}&_embed`)
+    const blogData  = res.data[0]
+    const blog = {
+        featuredImg: blogData.featured_image_src,
+        title: blogData.title.rendered,
+        content: blogData.content.rendered,
+        date: new Date(blogData.date).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+        }),
+        cats: blogData.categories_object
+            .map((category) => category.name)
+            .join(", "),
+        tags: blogData.tag_object.map((tag) => ({
+            name: tag.name,
+            slug: tag.slug,
+            id: tag.term_id
+        })),
+        yoast: blogData.yoast_head_json
+    }
+
+    const posts     = []
+    res             = await api.get('/wp/v2/posts?per_page=4&order=desc&orderby=date')
+    const items     = res.data
+    items.forEach(item => {
+        posts.push({
+            id: item.id,
+            title: item.title.rendered,
+            slug: item.slug,
+            image_url: item.featured_image_src
+        });
+    })
+
+    return { props: { blog, posts }}
+}
+
+
 export default DynamicBlog;
+
+
 
 const styles = {
     root: {

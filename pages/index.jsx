@@ -12,7 +12,6 @@ import { Pagination, Navigation, Autoplay } from "swiper";
 import Banners from "../src/components/Home/Banners";
 import Menu from "../src/components/Home/Menu";
 import ContentCard from "../src/components/ContentCard";
-import Footer from "../src/layouts/Footer";
 import BlogPost from "../src/components/Content/BlogPost";
 import {swiper} from "../src/commonStyles/swiper";
 import TitlesLink from "../src/components/Home/TitlesLink";
@@ -263,7 +262,6 @@ const Index = () => {
           </AccordionDetails>
         </Accordion>
       </Box>
-      <Footer />
     </Box>
   );
 };

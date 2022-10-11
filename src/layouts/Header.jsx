@@ -53,7 +53,7 @@ const Header = () => {
 
     setDrawerOpen(!drawerOpen);
     apiService.logout();
-    return navigate("/login");
+    return router.push("/login");
   };
 
   const handleDrawer = () => setDrawerOpen(!drawerOpen);
@@ -64,10 +64,10 @@ const Header = () => {
 
   const handleSearchResults = (e) => {
     if (e.key === "Enter") {
-      if( location === "/cursos" || location.includes("pesquisa-cursos") ) {
-         navigate(`/pesquisa-cursos?s=${search}`, {replace: true})
+      if( router.pathname === "/cursos" || router.pathname.includes("pesquisa-cursos") ) {
+         router.push(`/pesquisa-cursos?s=${search}`, {replace: true})
       } else {
-        navigate(`/procurar?s=${search}`, {replace: true});
+        router.push(`/procurar?s=${search}`, {replace: true});
       }
     }
   };
@@ -79,7 +79,7 @@ const Header = () => {
         id="appbar"
         position="relative"
         sx={
-          location !== "/"
+          router.pathname !== "/"
             ? styles.appbar
             : { ...styles.appbar, ...styles.appbar.homepage }
         }
@@ -101,27 +101,27 @@ const Header = () => {
         >
           <Toolbar disableGutters sx={styles.toolbar}>
             <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
-              <Link to="/">
+              <Link href="/">
                 <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
               </Link>
             </Box>
 
             <Box sx={styles.toolbar.mobileLogo}>
-              <Link to="/">
+              <Link href="/">
                 <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
               </Link>
             </Box>
           </Toolbar>
 
           <Box sx={styles.subheader}>
-            {logged && location.length <= 1 ? (
+            {logged && router.pathname.length <= 1 ? (
               <p>Olá, {userFirstName.split(" ")[0]}!</p>
             ) : ctx.title.main !== "" ? (
               <p>{ctx.title.main}</p>
             ) : (
               <p>Seja bem vindo</p>
             )}
-            {ctx.title.sub !== "" && location.length > 1 ? (
+            {ctx.title.sub !== "" && router.pathname.length > 1 ? (
               <p>{ctx.title.sub}</p>
             ) : (
               <p>Encontre um curso para aprender</p>
@@ -162,16 +162,16 @@ const Header = () => {
             </Box>
 
             <Box sx={styles.subheaderdesk}>
-              {logged && location.length <= 1 ? (
+              {logged && router.pathname.length <= 1 ? (
                 <p>Olá, {userFirstName.split(" ")[0]}!</p>
               ) : ctx.title.main !== "" ? (
                 <p>{ctx.title.main}</p>
               ) : (
                 <p>Seja bem vindo</p>
               )}
-              {ctx.title.sub && location.length > 1 ? (
+              {ctx.title.sub && router.pathname.length > 1 ? (
                 <p>{ctx.title.sub}</p>
-              ) : !ctx.title.sub && location.length > 1 ? (
+              ) : !ctx.title.sub && router.pathname.length > 1 ? (
                 ""
               ) : (
                 <p>Encontre um curso para aprender</p>

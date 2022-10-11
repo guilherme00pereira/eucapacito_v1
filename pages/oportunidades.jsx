@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   Box,
   Accordion,
@@ -9,69 +9,20 @@ import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper";
 import parse from "html-react-parser";
-import { useOutletContext } from "react-router-dom";
-import apiService from "../services/apiService";
-import ContentCard from "../components/ContentCard";
-import CourseImg3 from "../assets/img/home-curso3.png";
-import {swiper} from "../commonStyles/swiper";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../src/services/apiService";
+import ContentCard from "../src/components/ContentCard";
+import CourseImg3 from "../public/assets/img/home-curso3.png";
+import {swiper} from "../src/commonStyles/swiper";
 
 
 const Oportunidades = () => {
-  const [title, setTitle] = useOutletContext();
-  const [employabilities, setEmployabilities] = useState([]);
-  const [scholarships, setScholarships] = useState([]);
-  const { api } = apiService;
+  const ctx = useContext(AppContext);
 
   useEffect(() => {
-    setTitle({
+    ctx.setTitle({
       main: "Oportunidade",
       sub: "Participe do processo seletivo",
-    });
-
-    // Empregabilidade
-    api.get(`/wp/v2/empregabilidade?per_page=12`).then((res) => {
-      const fetchedEmployabilities = [];
-
-      res.data.forEach((employability) => {
-        const newEmployability = {
-          id: employability.id,
-          slug: employability.slug,
-          type: employability.type,
-          featuredImg: employability.imagem.guid,
-          title: parse(`${employability.title.rendered}`),
-          subtitle: "Eu Capacito",
-          logo: employability.responsavel,
-        };
-
-        fetchedEmployabilities.push(newEmployability);
-      });
-
-      setEmployabilities([...employabilities, ...fetchedEmployabilities]);
-    });
-
-    // Bolsa de estudos
-    api.get(`/wp/v2/bolsa_de_estudo?per_page=12`).then((res) => {
-      const fetchedScholarships = [];
-
-      res.data.forEach((scholarship) => {
-        const newScholarship = {
-          id: scholarship.id,
-          slug: scholarship.slug,
-          type: scholarship.type,
-          featuredImg: scholarship.imagem.guid,
-          title: parse(`${scholarship.title.rendered}`),
-          subtitle: "Eu Capacito",
-          logo: scholarship.responsavel,
-        };
-
-        fetchedScholarships.push(newScholarship);
-      });
-
-      setScholarships([...scholarships, ...fetchedScholarships]);
-    });
-
-    
+    });    
   }, []);
 
   return (
@@ -154,27 +105,46 @@ const Oportunidades = () => {
           </Swiper>
         </AccordionDetails>
       </Accordion>
-
-      {/* <Box sx={styles.journey}>
-        <h2>JourneyCard</h2>
-        <Swiper className="mySwiper" slidesPerView={1.2} spaceBetween={25}>
-          {journeys.length > 0 &&
-            journeys.map((journey) => (
-              <SwiperSlide key={journey.id}>
-                <ContentCard
-                  url={`/oportunidade/${journey.slug}/${journey.id}?type=${journey.type}`}
-                  imagePath={journey.featuredImg || CourseImg3}
-                  title={journey.title}
-                  subtitle="Cadastre-se"
-                  logoPath={CourseLogoFiap}
-                />
-              </SwiperSlide>
-            ))}
-        </Swiper>
-      </Box> */}
     </Box>
   );
 };
+
+export async function getServerSideProps(context) {
+  const {api}     = apiService;
+  
+  const employabilities = []
+  let res       = await api.get(`/wp/v2/empregabilidade?per_page=12`)
+  let items     = res.data
+  items.forEach(item => {
+    console.log(item)
+    employabilities.push({
+      id: item.id,
+      slug: item.slug,
+      type: item.type,
+      featuredImg: item.imagem.guid,
+      title: item.title.rendered,
+      subtitle: "Eu Capacito",
+      logo: item.responsavel,
+    })
+  })
+
+  const scholarships = []
+  res       = await api.get(`/wp/v2/empregabilidade?per_page=12`)
+  items     = res.data
+  items.forEach(item => {
+    scholarships.push({
+      id: item.id,
+      slug: item.slug,
+      type: item.type,
+      featuredImg: item.imagem.guid,
+      title: item.title.rendered,
+      subtitle: "Eu Capacito",
+      logo: item.responsavel,
+    })
+  })
+
+  return { props: { employabilities, scholarships } }
+}
 
 export default Oportunidades;
 

@@ -2,6 +2,7 @@ import {Paper, Box, Container, Link as MuiLink} from "@mui/material";
 import {Instagram, Facebook, LinkedIn} from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
 import rodapeLogos from "../../public/assets/img/logo-eucapacito-itmidia.png";
+import Image from "next/image";
 
 const Footer = () => {
     return (
@@ -86,7 +87,7 @@ const Footer = () => {
             <Box sx={{display: "flex"}}>
                 <Paper sx={styles.footerLogo}>
                     <MuiLink href="https://www.institutoitmidia.com.br/" target="_blank">
-                        <img src={rodapeLogos} alt="Logo - Eu Capacito"/>
+                        <Image src={rodapeLogos} alt="Logo - Eu Capacito"/>
                     </MuiLink>
                 </Paper>
             </Box>

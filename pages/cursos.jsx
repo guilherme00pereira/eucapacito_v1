@@ -14,8 +14,6 @@ const Cursos = () => {
     const [courses, setCourses] = useState([]);
     const [journeys, setJourneys] = useState([]);
     const [logged, setLogged] = useState(false);
-    const router = useRouter();
-    const { t } = router.query;
     const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const ctx = useContext(AppContext);
@@ -211,6 +209,12 @@ const Cursos = () => {
         </Box>
     );
 };
+
+export async function getServerSideProps(context) {
+    const {api}     = apiService;
+    let res         = 
+
+}
 
 export default Cursos;
 
