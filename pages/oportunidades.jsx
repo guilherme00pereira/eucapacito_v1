@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import {
   Box,
   Accordion,
@@ -7,15 +7,15 @@ import {
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper";
-import parse from "html-react-parser";
+import { Pagination, Autoplay } from "swiper";
+import { AppContext } from "../src/services/context";
 import apiService from "../src/services/apiService";
 import ContentCard from "../src/components/ContentCard";
 import CourseImg3 from "../public/assets/img/home-curso3.png";
 import {swiper} from "../src/commonStyles/swiper";
 
 
-const Oportunidades = () => {
+const Oportunidades = ({ employabilities, scholarships }) => {
   const ctx = useContext(AppContext);
 
   useEffect(() => {
@@ -27,8 +27,6 @@ const Oportunidades = () => {
 
   return (
     <Box sx={styles.root}>
-
-      <MetadataManager ispage={true} value="oportunidades" />
 
       <Box sx={styles.description}>
         <p>
@@ -116,30 +114,29 @@ export async function getServerSideProps(context) {
   let res       = await api.get(`/wp/v2/empregabilidade?per_page=12`)
   let items     = res.data
   items.forEach(item => {
-    console.log(item)
     employabilities.push({
       id: item.id,
       slug: item.slug,
       type: item.type,
-      featuredImg: item.imagem.guid,
+      featuredImg: item.image ? item.imagem.guid : null,
       title: item.title.rendered,
       subtitle: "Eu Capacito",
-      logo: item.responsavel,
+      logo: item.responsavel ?? null,
     })
   })
 
   const scholarships = []
-  res       = await api.get(`/wp/v2/empregabilidade?per_page=12`)
+  res       = await api.get(`/wp/v2/bolsa_de_estudo?per_page=12`)
   items     = res.data
   items.forEach(item => {
     scholarships.push({
       id: item.id,
       slug: item.slug,
       type: item.type,
-      featuredImg: item.imagem.guid,
+      featuredImg: item.image ? item.imagem.guid : null,
       title: item.title.rendered,
       subtitle: "Eu Capacito",
-      logo: item.responsavel,
+      logo: item.responsavel ?? null,
     })
   })
 

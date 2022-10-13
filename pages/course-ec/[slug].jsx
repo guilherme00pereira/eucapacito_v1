@@ -1,5 +1,4 @@
-import {useState, useEffect} from "react";
-import {useParams, useLocation, useNavigate, useOutletContext} from "react-router-dom";
+import {useState, useEffect, useContext} from "react";
 import parse from "html-react-parser";
 import {Box, CircularProgress, Grid} from "@mui/material";
 import {
@@ -8,54 +7,22 @@ import {
 import apiService from "../services/apiService";
 import Button from "../components/Button";
 import {coursePage} from "../commonStyles/coursePage";
-import MetadataManager from "../layouts/MetadataManager";
+import { AppContext } from "../src/services/context";
+import { useRouter } from "next/router";
 
-const CourseLD = () => {
-    const [courseData, setCourseData] = useState({
-        id: "",
-        featuredImg: "",
-        title: "",
-        category: "",
-        partnerLogoURL: "",
-        price: "",
-        duration: "",
-        description: "",
-        yoast: {}
-    });
-    const [title, setTitle] = useOutletContext();
-    const [isLoading, setIsLoading] = useState(true);
+const CourseLD = ({ course }) => {
+    const router = useRouter()
+    const ctx = useContext(AppContext);
     const [isEnrolled, setIsEnrolled] = useState(false);
-    const token = sessionStorage.getItem("token");
-    const {api} = apiService;
-    const {slug} = useParams();
-    let location = useLocation();
-    let navigate = useNavigate();
-
+    
     useEffect(() => {
-        api.get(`/ldlms/v2/sfwd-courses?slug=${slug}`).then((res) => {
-            const course = res.data[0];
-            setCourseData({
-                id: course.id,
-                slug: course.slug,
-                featuredImg: course.image,
-                title: parse(`${course.title.rendered}`),
-                //category: course.categories.map((category) => category.name).join(", "),
-                duration: course.duracao,
-                description: parse(`${course.content.rendered}`),
-                yoast: course.yoast_head_json
-            });
-            setTitle({
-                main: "Curso",
-                sub: courseData.title,
-              });
-            const myEnrollments = sessionStorage.getItem("userCourses");
-            if(myEnrollments !== null) {
-                setIsEnrolled(myEnrollments.includes(course.id))
-            }
-            setIsLoading(false);
-        });
+        const token = sessionStorage.getItem("token");
+        ctx.setTitle({
+            main: "Curso",
+            sub: course.title,
+          });
+    }, [])
 
-    }, []);
 
     const handleAssignment = ( course ) => {
         if(!isEnrolled) {
@@ -63,83 +30,97 @@ const CourseLD = () => {
                 user: sessionStorage.getItem("userID"),
                 course: course.id
             }).then((res) => {
-                navigate(`/${slug}/aulas/${course.id}`)
+                router.push(`/${slug}/aulas/${course.id}`)
             })
         } else {
-            navigate(`/${slug}/aulas/${course.id}`)
+            router.push(`/${slug}/aulas/${course.id}`)
         }
     }
 
     const handleRedirect = (e) => {
         e.preventDefault();
         sessionStorage.setItem("redirectURL", location.pathname);
-        navigate("/login");
+        router.push("/login");
     };
 
     return (
         <>
-            {isLoading && <CircularProgress sx={coursePage.loading} />}
-            {!isLoading && (
-                <Box sx={coursePage.root}>
-                    <MetadataManager ispage={false} value={courseData.yoast} />
-                    <Box sx={coursePage.image}>
-                        <img src={courseData.featuredImg} alt={courseData.title}/>
-                    </Box>
+            <Box sx={coursePage.root}>
+                <Box sx={coursePage.image}>
+                    <img src={course.featuredImg} alt={course.title}/>
+                </Box>
 
-                    <Box sx={coursePage.container}>
-                        <Box sx={coursePage.description}>
-                            <h1>{courseData.title}</h1>
-                            <Grid container sx={coursePage.description.block}>
-                                <Grid item xs={8} className="description-desk">
-                                    <p>
-                                        Categoria: <span>{courseData.category}</span>
-                                    </p>
-                                    <p>
-                                        Oferecido por: Eu Capacito
-                                    </p>
-                                </Grid>
-
-                                <Grid item xs={4} className="description-desk-value">
-                                    <p>
-                                        <small className="desk-curso">Curso:</small> Grátis
-                                    </p>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <p style={{textAlign: "left"}}>
-                                        <AccessTime sx={coursePage.description.block.icons}/>
-                                        {courseData.duration}
-                                    </p>
-                                </Grid>
+                <Box sx={coursePage.container}>
+                    <Box sx={coursePage.description}>
+                        <h1>{course.title}</h1>
+                        <Grid container sx={coursePage.description.block}>
+                            <Grid item xs={8} className="description-desk">
+                                <p>
+                                    Categoria: <span>{course.category}</span>
+                                </p>
+                                <p>
+                                    Oferecido por: Eu Capacito
+                                </p>
                             </Grid>
 
-                            <div className="description">{courseData.description}</div>
+                            <Grid item xs={4} className="description-desk-value">
+                                <p>
+                                    <small className="desk-curso">Curso:</small> Grátis
+                                </p>
+                            </Grid>
 
-                            <Box sx={coursePage.description.button}>
-                                {token && (
-                                    <Button
-                                        onClick={() => handleAssignment(courseData)}
-                                        sx={coursePage.description.courseLink}
-                                    >
-                                        {isEnrolled ? "Continuar curso" : "Comece agora"}
-                                    </Button>
-                                )}
+                            <Grid item xs={12}>
+                                <p style={{textAlign: "left"}}>
+                                    <AccessTime sx={coursePage.description.block.icons}/>
+                                    {course.duration}
+                                </p>
+                            </Grid>
+                        </Grid>
 
-                                {!token && (
-                                    <Button
-                                        sx={coursePage.description.courseLink}
-                                        onClick={handleRedirect}
-                                    >
-                                        Faça o Login
-                                    </Button>
-                                )}
-                            </Box>
+                        <div className="description">{parse(course.description)}</div>
+
+                        <Box sx={coursePage.description.button}>
+                            {token && (
+                                <Button
+                                    onClick={() => handleAssignment(course)}
+                                    sx={coursePage.description.courseLink}
+                                >
+                                    {isEnrolled ? "Continuar curso" : "Comece agora"}
+                                </Button>
+                            )}
+
+                            {!token && (
+                                <Button
+                                    sx={coursePage.description.courseLink}
+                                    onClick={handleRedirect}
+                                >
+                                    Faça o Login
+                                </Button>
+                            )}
                         </Box>
-
                     </Box>
-                </Box>)}
+
+                </Box>
+            </Box>
         </>
     );
 };
+
+export async function getServerSideProps(context) {
+    const {api}     = apiService;
+    let res             = await  api.get(`/ldlms/v2/sfwd-courses?slug=${context.params.slug}`)
+    const courseData    = res.data[0];
+    const course = {
+            id: courseData.id,
+            slug: courseData.slug,
+            featuredImg: courseData.image,
+            title: courseData.title.rendered,
+            duration: courseData.duracao,
+            description: courseData.content.rendered,
+            yoast: courseData.yoast_head_json
+        }
+
+    return { props: { course }}
+}
 
 export default CourseLD;

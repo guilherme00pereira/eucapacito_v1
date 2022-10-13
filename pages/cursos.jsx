@@ -9,17 +9,11 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {swiper} from "../src/commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
 
-const Cursos = () => {
+const Cursos = ({courses, journeys}) => {
     const [myCourses, setMyCourses] = useState([]);
-    const [courses, setCourses] = useState([]);
-    const [journeys, setJourneys] = useState([]);
     const [logged, setLogged] = useState(false);
-    const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const ctx = useContext(AppContext);
-
-    const postsPerPage = "9";
-    const {api} = apiService;
 
 
     useEffect(() => {
@@ -55,52 +49,6 @@ const Cursos = () => {
                 setMyCourses([...myFetchedCourses]);
             });
         }
-
-        const ids = t;
-        let url = `/eucapacito/v1/search?page=${page}&course=true`;
-        if (null !== ids) {
-            url += `&t=${ids}`;
-        }
-        api.get(url).then((res) => {
-            if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
-                setHideLoadMoreButton(true);
-            }
-
-            const fetchedCourses = [];
-
-            res.data.courses.forEach((course) => {
-                fetchedCourses.push({
-                    id: course.id,
-                    slug: course.slug,
-                    featuredImg: course.image,
-                    title: course.title,
-                    subtitle: "Eu Capacito",
-                    partnerLogoURL: course.logo,
-                    type: course.type
-                });
-            });
-            if (page === 1) {
-                setCourses([...fetchedCourses]);
-            } else {
-                setCourses([...courses, ...fetchedCourses]);
-            }
-
-        });
-
-        api.get(`/wp/v2/jornada?per_page=${postsPerPage}`).then((res) => {
-            const fetchedJourneys = [];
-
-            res.data.forEach((journey) => {
-                fetchedJourneys.push({
-                    id: journey.id,
-                    slug: journey.slug,
-                    featuredImg: journey.image,
-                    title: journey.title.rendered,
-                    excerpt: journey.excerpt.rendered,
-                });
-                setJourneys([...fetchedJourneys]);
-            });
-        });
 
     }, []);
 
@@ -211,8 +159,43 @@ const Cursos = () => {
 };
 
 export async function getServerSideProps(context) {
-    const {api}     = apiService;
-    let res         = 
+    const {api}         = apiService;
+    const postsPerPage  = "9";
+    const page          = context.query.page ?? 1
+
+    const ids       = context.query.t ?? null;
+    let url         = `/eucapacito/v1/search?page=${page}&course=true`;
+    if (null !== ids) { url += `&t=${ids}` }
+
+    const courses   = []
+    let res         = await api.get(url)
+    let items       = res.data
+    items.courses.forEach(course => {
+        courses.push({
+            id: course.id,
+            slug: course.slug,
+            featuredImg: course.image,
+            title: course.title,
+            subtitle: "Eu Capacito",
+            partnerLogoURL: course.logo,
+            type: course.type
+        });
+    })
+
+    const journeys  = []
+    res             = await api.get(`/wp/v2/jornada?per_page=${postsPerPage}`)
+    items           = res.data
+    items.forEach(journey => {
+        journeys.push({
+            id: journey.id,
+            slug: journey.slug,
+            featuredImg: journey.image,
+            title: journey.title.rendered,
+            excerpt: journey.excerpt.rendered,
+        })
+    });
+
+    return { props: { courses, journeys }}
 
 }
 

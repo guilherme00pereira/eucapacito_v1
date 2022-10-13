@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import {
   Box,
   Accordion,
@@ -8,7 +8,7 @@ import {
 import apiService from "../src/services/apiService";
 import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper";
+import { Pagination, Autoplay } from "swiper";
 import Banners from "../src/components/Home/Banners";
 import Menu from "../src/components/Home/Menu";
 import ContentCard from "../src/components/ContentCard";
@@ -18,87 +18,13 @@ import TitlesLink from "../src/components/Home/TitlesLink";
 import { AppContext } from "../src/services/context";
 
 
-const Index = () => {
-  const [courses, setCourses] = useState([]);
-  const [blogs, setBlogs] = useState([]);
-  const [scholarships, setScholarships] = useState([]);
+const Index = ({courses, blogs, scholarships}) => {
   const ctx = useContext(AppContext);
-
-  const { api } = apiService;
 
   useEffect(() => {
     ctx.setTitle({
       main: "Olá Seja Bem Vindo",
       sub: "Encontre um curso para aprender",
-    });
-    const postsPerPage = "9";
-    
-    // Cursos EC
-    api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`).then((res) => {
-      const fetchedCourses = [];
-
-      res.data.forEach((course) => {
-        const newCourse = {
-          id: course.id,
-          slug: course.slug,
-          featuredImg: course["featured_image_src"],
-          title: course.title.rendered,
-          subtitle: "Eu Capacito",
-          partnerLogoURL: course.responsavel.guid,
-        };
-
-        fetchedCourses.push(newCourse);
-      });
-
-      setCourses([...courses, ...fetchedCourses]);
-    });
-
-    // Conteúdo
-    api.get(`/wp/v2/posts?per_page=${postsPerPage}`).then((res) => {
-      const fetchedBlogs = [];
-
-      res.data.forEach((blog) => {
-        const newBlog = {
-          id: blog.id,
-          slug: blog.slug,
-          featuredImg: blog.featured_image_src,
-          title: blog.title.rendered,
-          excerpt: blog.excerpt.rendered,
-          date: new Date(blog.date).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }),
-          categories: blog.categories_object
-            .map((category) => category.name)
-            .join(", "),
-        };
-
-        fetchedBlogs.push(newBlog);
-      });
-
-      setBlogs([...blogs, ...fetchedBlogs]);
-    });
-
-    // Bolsa de estudos
-    api.get(`/wp/v2/bolsa_de_estudo?per_page=${postsPerPage}`).then((res) => {
-      const fetchedScholarship = [];
-
-      res.data.forEach((scholarship) => {
-        const newScholarship = {
-          id: scholarship.id,
-          slug: scholarship.slug,
-          featuredImg: scholarship.imagem.guid,
-          title: scholarship.title.rendered,
-          subtitle: "Eu Capacito",
-          logo: scholarship.responsavel,
-          type: scholarship.type,
-        };
-
-        fetchedScholarship.push(newScholarship);
-      });
-
-      setScholarships([...scholarships, ...fetchedScholarship]);
     });
   }, []);
 
@@ -265,6 +191,68 @@ const Index = () => {
     </Box>
   );
 };
+
+export async function getServerSideProps(context) {
+  const {api}     = apiService;
+  const postsPerPage = "9";
+
+  // Cursos EC
+  const courses = [];
+  let res       = await api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`)
+  let items     = res.data
+  items.forEach(course => {
+    courses.push({
+      id: course.id,
+      slug: course.slug,
+      featuredImg: course["featured_image_src"],
+      title: course.title.rendered,
+      subtitle: "Eu Capacito",
+      partnerLogoURL: course.responsavel.guid,
+    })
+  })
+
+  // Conteúdo
+  const blogs  = [];
+  res             = await api.get(`/wp/v2/posts?per_page=${postsPerPage}`)
+  items           = res.data
+  items.forEach(blog => {
+    blogs.push({
+        id: blog.id,
+        slug: blog.slug,
+        featuredImg: blog.featured_image_src,
+        title: blog.title.rendered,
+        excerpt: blog.excerpt.rendered,
+        date: new Date(blog.date).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }),
+        categories: blog.categories_object
+          .map((category) => category.name)
+          .join(", "),
+      })
+  });
+
+  // Bolsa de estudos
+  const scholarships  = []
+  res                 = await api.get(`/wp/v2/bolsa_de_estudo?per_page=${postsPerPage}`)
+  items               = res.data
+  console.log(items)
+  items.forEach(scholarship => {
+    scholarships.push({
+        id: scholarship.id,
+        slug: scholarship.slug,
+        featuredImg: scholarship.imagem ? scholarship.imagem.guid : null,
+        title: scholarship.title.rendered,
+        subtitle: "Eu Capacito",
+        logo: scholarship.responsavel ? scholarship.responsavel : null,
+        type: scholarship.type,
+      })
+  });
+
+  return { props: { courses, blogs, scholarships }}
+
+}
 
 export default Index;
 

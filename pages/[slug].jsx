@@ -1,15 +1,13 @@
-import {useEffect, useState, useContext} from "react";
-import {Box, CircularProgress, Stack} from "@mui/material";
+import {useEffect, useContext} from "react";
+import {Box, Stack} from "@mui/material";
 import Link from "../src/components/Link";
 import parse from "html-react-parser";
 import apiService from "../src/services/apiService";
 import BlogSidebar from "../src/components/Content/BlogSidebar";
-import {loading} from "../src/commonStyles/loading";
 import { AppContext } from "../src/services/context";
 
 const DynamicBlog = ({blog, posts}) => {
     const ctx = useContext(AppContext);
-    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // if(slug === 'pesquisa-de-satisfacao') {
@@ -23,45 +21,42 @@ const DynamicBlog = ({blog, posts}) => {
 
     return (
         <>
-            {isLoading && <CircularProgress sx={loading.circular}/>}
-            {!isLoading && (
-                <Stack sx={styles.root}>
-                    <Box sx={styles.titlepage}>
-                        <h1>Blog</h1>
-                    </Box>
-                    <Stack direction={{md: "row", xs: "column"}} justifyContent="">
-                        <Box sx={styles.mainColumn}>
-                            <Box sx={styles.image}>
-                                <img src={blog.featuredImg} alt="Placeholder Blog"/>
-                            </Box>
-                            <Box sx={styles.content}>
-                                <Box sx={styles.content.info}>
-                                    <small>{blog.date}</small>
-                                    <small>{blog.cats}</small>
-                                </Box>
-                                <hr/>
-                                <h1>{blog.title}</h1>
-                                <div className="content">
-                                    {parse(blog.content)}
-                                </div>
-                            </Box>
-                            <Stack sx={styles.tags}>
-                                <h3>TAGS:</h3>
-                                <Stack direction="row" sx={styles.tagRow}>
-                                    { blog.tags.map( (tag) => 
-                                        <Box sx={styles.tagBadge}>
-                                            <Link to={`/tag/${tag.slug}/${tag.id}`}>
-                                                {tag.name}
-                                            </Link>
-                                        </Box> 
-                                    ) }
-                                </Stack>
-                            </Stack>
+            <Stack sx={styles.root}>
+                <Box sx={styles.titlepage}>
+                    <h1>Blog</h1>
+                </Box>
+                <Stack direction={{md: "row", xs: "column"}} justifyContent="">
+                    <Box sx={styles.mainColumn}>
+                        <Box sx={styles.image}>
+                            <img src={blog.featuredImg} alt="Placeholder Blog"/>
                         </Box>
-                        <BlogSidebar posts={posts} />
-                    </Stack>
+                        <Box sx={styles.content}>
+                            <Box sx={styles.content.info}>
+                                <small>{blog.date}</small>
+                                <small>{blog.cats}</small>
+                            </Box>
+                            <hr/>
+                            <h1>{blog.title}</h1>
+                            <div className="content">
+                                {parse(blog.content)}
+                            </div>
+                        </Box>
+                        <Stack sx={styles.tags}>
+                            <h3>TAGS:</h3>
+                            <Stack direction="row" sx={styles.tagRow}>
+                                { blog.tags.map( (tag) => 
+                                    <Box sx={styles.tagBadge}>
+                                        <Link to={`/tag/${tag.slug}/${tag.id}`}>
+                                            {tag.name}
+                                        </Link>
+                                    </Box> 
+                                ) }
+                            </Stack>
+                        </Stack>
+                    </Box>
+                    <BlogSidebar posts={posts} />
                 </Stack>
-            )}
+            </Stack>
         </>
     );
 };
@@ -80,14 +75,14 @@ export async function getServerSideProps(context) {
             month: "long",
             year: "numeric",
         }),
-        cats: blogData.categories_object
+        cats: blogData.categories_object ? blogData.categories_object
             .map((category) => category.name)
-            .join(", "),
-        tags: blogData.tag_object.map((tag) => ({
+            .join(", ") : [],
+        tags:  blogData.tag_object ? blogData.tag_object.map((tag) => ({
             name: tag.name,
             slug: tag.slug,
             id: tag.term_id
-        })),
+        })) : [],
         yoast: blogData.yoast_head_json
     }
 
@@ -106,10 +101,7 @@ export async function getServerSideProps(context) {
     return { props: { blog, posts }}
 }
 
-
 export default DynamicBlog;
-
-
 
 const styles = {
     root: {

@@ -1,82 +1,54 @@
-import {useState, useEffect} from "react";
-import {useParams, useLocation, useNavigate} from "react-router-dom";
+import {useEffect, useState, useContext} from "react";
 import parse from "html-react-parser";
-import {Box, CircularProgress, Grid} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import {
     AccessTime,
 } from "@mui/icons-material";
-import apiService from "../services/apiService";
-import Button from "../components/Button";
-import {coursePage} from "../commonStyles/coursePage";
-import {calculateTime} from "../services/helper"
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../../src/services/apiService";
+import Button from "../../src/components/Button";
+import {coursePage} from "../../src/commonStyles/coursePage";
+import {calculateTime} from "../../src/services/helper"
+import { AppContext } from "../../src/services/context";
+import { useRouter } from "next/router";
 
-const Course = () => {
-    const [courseData, setCourseData] = useState({
-        featuredImg: "",
-        title: "",
-        category: "",
-        partnerLogoURL: "",
-        price: "",
-        duration: "",
-        description: "",
-        yoast: {}
-    });
-    const [isLoading, setIsLoading] = useState(true);
-    const token = sessionStorage.getItem("token");
-    const {api} = apiService;
-    const {slug} = useParams();
-    let location = useLocation();
-    let navigate = useNavigate();
-
+const Course = ({ course }) => {
+    const router = useRouter()
+    const ctx = useContext(AppContext);
+    const [logged, setLogged] = useState(false);
 
     useEffect(() => {
-        api.get(`/wp/v2/curso_ec?slug=${slug}&_embed`).then((res) => {
-            const course = res.data[0];
-            setCourseData({
-                featuredImg: course["featured_image_src"],
-                subtitle: "Eu Capacito",
-                title: parse(`${course.title.rendered}`),
-                category: course.categories.map((category) => category.name).join(", "),
-                partnerLogoURL: course.responsavel.guid,
-                price: "",
-                duration: calculateTime(course.duration),
-                description: parse(`${course.content.rendered}`),
-                courseUrl: course.url,
-                yoast: course.yoast_head_json
-            });
-            setIsLoading(false);
-        });
-    }, [api]);
+        const token = sessionStorage.getItem("token");
+        setLogged(token?true:false);
+        ctx.setTitle({
+            main: "Curso",
+            sub: course.title,
+          });
+    }, [])
 
     const handleRedirect = (e) => {
         e.preventDefault();
-
         sessionStorage.setItem("redirectURL", location.pathname);
-        navigate("/login");
+        router.push("/login");
     };
 
     return (
         <>
-            {isLoading && <CircularProgress sx={coursePage.loading} />}
-            {!isLoading && (
             <Box sx={coursePage.root}>
-                <MetadataManager ispage={false} value={courseData.yoast} />
                 <Box sx={coursePage.image}>
-                    <img src={courseData.featuredImg} alt={courseData.title}/>
+                    <img src={course.featuredImg} alt={course.title}/>
                 </Box>
 
                 <Box sx={coursePage.container}>
                     <Box sx={coursePage.description}>
-                        <h1>{courseData.title}</h1>
+                        <h1>{course.title}</h1>
                         <Grid container sx={coursePage.description.block}>
                             <Grid item xs={8} className="description-desk">
                                 <p>
-                                    Categoria: <span>{courseData.category}</span>
+                                    Categoria: <span>{course.category}</span>
                                 </p>
                                 <p>
                                     Oferecido por:{" "}
-                                    <img src={courseData.partnerLogoURL} alt="Logo Parceiro"/>
+                                    <img src={course.partnerLogoURL} alt="Logo Parceiro"/>
                                 </p>
                             </Grid>
 
@@ -89,17 +61,17 @@ const Course = () => {
                             <Grid item xs={12}>
                                 <p style={{textAlign: "left"}}>
                                     <AccessTime sx={coursePage.description.block.icons}/>
-                                    {courseData.duration}
+                                    {course.duration}
                                 </p>
                             </Grid>
                         </Grid>
 
-                        <div className="description">{courseData.description}</div>
+                        <div className="description">{parse(course.description)}</div>
 
                         <Box sx={coursePage.description.button}>
-                            {token && (
+                            {logged && (
                                 <Button
-                                    href={courseData.courseUrl}
+                                    href={course.courseUrl}
                                     target="_blank"
                                     sx={coursePage.description.courseLink}
                                 >
@@ -107,7 +79,7 @@ const Course = () => {
                                 </Button>
                             )}
 
-                            {!token && (
+                            {!logged && (
                                 <Button
                                     sx={coursePage.description.courseLink}
                                     onClick={handleRedirect}
@@ -119,10 +91,30 @@ const Course = () => {
                     </Box>
 
                 </Box>
-            </Box>)}
+            </Box>
         </>
     );
 };
+
+export async function getServerSideProps(context) {
+    const {api}     = apiService;
+    let res             = await api.get(`/wp/v2/curso_ec?slug=${context.params.slug}&_embed`)
+    const courseData    = res.data[0];
+    const course = {
+        featuredImg: courseData["featured_image_src"],
+        subtitle: "Eu Capacito",
+        title: courseData.title.rendered,
+        category: courseData.categories.map((category) => category.name).join(", "),
+        partnerLogoURL: courseData.responsavel.guid,
+        price: "",
+        duration: calculateTime(courseData.duration),
+        description: courseData.content.rendered,
+        courseUrl: courseData.url,
+        yoast: courseData.yoast_head_json
+        }
+
+    return { props: { course }}
+}
 
 export default Course;
 

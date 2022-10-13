@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import {Box, Grid, Link} from "@mui/material";
 import parse from "html-react-parser";
 
@@ -6,7 +7,7 @@ const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
   return (
     <Box sx={styles.card}>
       <Box sx={styles.card.image}>
-        <img src={imageUrl} alt={`Curso - ${title}`}/>
+        <Image src={imageUrl} alt={`Curso - ${title}`} layout="fill"/>
       </Box>
 
       <Grid container sx={styles.card.info}>
@@ -17,7 +18,7 @@ const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
 
         {logoPathAbsent ||
             <Grid item>
-              <img src={logoPath} alt="Logo"/>
+              <Image src={logoPath} alt="Logo" layout="fill"/>
             </Grid>
         }
 
@@ -34,7 +35,7 @@ const ContentCard = ({ url, imagePath, title, subtitle, logoPath }) => {
       <Link href={url || "#"} sx={{color: "#33EDAC", textDecoration: "none"}} target="_blank">
         <CardContent imageUrl={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
       </Link> :
-      <Link to={url || "#"}>
+      <Link href={url || "#"}>
         <CardContent imageUrl={imagePath} title={title} subtitle={subtitle} logoPath={logoPath}/>
       </Link>;
 };

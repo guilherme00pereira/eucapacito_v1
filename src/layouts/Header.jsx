@@ -101,13 +101,13 @@ const Header = () => {
         >
           <Toolbar disableGutters sx={styles.toolbar}>
             <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
-              <Link href="/">
+              <Link to="/">
                 <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
               </Link>
             </Box>
 
             <Box sx={styles.toolbar.mobileLogo}>
-              <Link href="/">
+              <Link to="/">
                 <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
               </Link>
             </Box>
