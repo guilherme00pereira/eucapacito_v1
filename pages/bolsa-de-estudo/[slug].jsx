@@ -22,7 +22,7 @@ const Scholarship = ({ scholarship, courses }) => {
     if(!logged) {
       router.push('/login')
     } else {
-      router.push(`/comece-agora/${slug}`)
+      router.push(`/comece-agora/${router.params.slug}`)
     }
   }
 
@@ -86,10 +86,11 @@ export async function getServerSideProps(context) {
   const {api}   = apiService;
 
   const courses = []
-  let res       = await api.get(`/wp/v2/bolsa_de_estudo?slug=${slug}&_embed`)
+  let res       = await api.get(`/wp/v2/bolsa_de_estudo?slug=${context.params.slug}&_embed`)
   let item      = res.data[0]
+  console.log(item)
   const scholarshipData = {
-    featuredImg: item.imagem.guid,
+    featuredImg: item.iamge ? item.imagem.guid : null,
     title: item.title.rendered,
     description: item.content.rendered,
     yoast: item.yoast_head_json

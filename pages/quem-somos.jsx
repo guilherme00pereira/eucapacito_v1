@@ -1,74 +1,37 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
 import { Grid, Box, Container, Link as MuiLink } from "@mui/material";
 import { Instagram, Facebook, LinkedIn } from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
-import apiService from "../services/apiService";
+import apiService from "../src/services/apiService";
 import ReactPlayer from "react-player";
 import parse from 'html-react-parser';
+import { AppContext } from "../src/services/context";
+import PeopleIcon from "../public/assets/img/noticias-icone-pessoas.png";
+import CheckIcon from "../public/assets/img/noticias-icone-check.png";
+import HandsIcon from "../public/assets/img/noticias-icone-parceiros.png";
+import PartyIcon from "../public/assets/img/noticias-icone-festa.png";
+import EuCapacitoLogoVertical from "../public/assets/img/logo-vertical.png";
+import linhaQuemSomos from "../public/assets/img/linha-quem-somos.png";
+import linhaQuemSomosDepoimento from "../public/assets/img/linhagrande-quem-somos.png";
+import ImagemGradient from "../public/assets/img/gradiente-quem-somos.png";
+import Imagem1 from "../public/assets/img/image1-quem-somos.png";
+import Imagem2 from "../public/assets/img/image2-quem-somos.png";
+import Imagem3 from "../public/assets/img/image3-quem-somos.png";
+import Imagem4 from "../public/assets/img/image4-quem-somos.png";
 
-import PeopleIcon from "../assets/img/noticias-icone-pessoas.png";
-import CheckIcon from "../assets/img/noticias-icone-check.png";
-import HandsIcon from "../assets/img/noticias-icone-parceiros.png";
-import PartyIcon from "../assets/img/noticias-icone-festa.png";
-import EuCapacitoLogoVertical from "../assets/img/logo-vertical.png";
-import linhaQuemSomos from "../assets/img/linha-quem-somos.png";
-import linhaQuemSomosDepoimento from "../assets/img/linhagrande-quem-somos.png";
-import ImagemGradient from "../assets/img/gradiente-quem-somos.png";
-import Imagem1 from "../assets/img/image1-quem-somos.png";
-import Imagem2 from "../assets/img/image2-quem-somos.png";
-import Imagem3 from "../assets/img/image3-quem-somos.png";
-import Imagem4 from "../assets/img/image4-quem-somos.png";
-import MetadataManager from "../layouts/MetadataManager";
-
-const QuemSomos = () => {
-  const [title, setTitle] = useOutletContext();
-  const [content, setContent] = useState({
-    video: '',
-    lide: '',
-    full_text: '',
-    quote: '',
-    quote_author: '',
-    forwho: [],
-    alunos_title: '',
-    alunos_info: '',
-    conclusao_title: '',
-    conclusao_info: '',
-    parceiros_title: '',
-    parceiros_info: '',
-    empregos_title: '',
-    empregos_info: '',
-  });
-  const {api} = apiService;
-
+const QuemSomos = ({ content }) => {
+  const ctx = useContext(AppContext);
+  
   useEffect(() => {
-    setTitle({
+    ctx.setTitle({
       main: "Quem Somos",
       sub: "Saiba mais sobre",
     });
-    api.get('/eucapacito/v1/aboutpage').then( (res) => {
-      setContent({
-        video: res.data.video,
-        lide: res.data.lide,
-        full_text: res.data.full_text,
-        quote: res.data.quote,
-        quote_author: res.data.quote_author,
-        forwho: res.data.forwho,
-        alunos_title: res.data.alunos_title,
-        alunos_info: res.data.alunos_info,
-        conclusao_title: res.data.conclusao_title,
-        conclusao_info: res.data.conclusao_info,
-        parceiros_title: res.data.parceiros_title,
-        parceiros_info: res.data.parceiros_info,
-        empregos_title: res.data.empregos_title,
-        empregos_info: res.data.empregos_info,
-      });
-    })
+    
   }, []);
 
   return (
     <Box sx={styles.root}>
-      <MetadataManager ispage={true} value="about" />
 
       <h1>Sobre o Eu Capacito</h1>
       <hr />
@@ -181,6 +144,30 @@ const QuemSomos = () => {
     </Box>
   );
 };
+
+export async function getServerSideProps() {
+  const {api}     = apiService;
+
+  let res         = await api.get('/eucapacito/v1/aboutpage')
+  const content = {
+      video: res.data.video,
+      lide: res.data.lide,
+      full_text: res.data.full_text,
+      quote: res.data.quote,
+      quote_author: res.data.quote_author,
+      forwho: res.data.forwho,
+      alunos_title: res.data.alunos_title,
+      alunos_info: res.data.alunos_info,
+      conclusao_title: res.data.conclusao_title,
+      conclusao_info: res.data.conclusao_info,
+      parceiros_title: res.data.parceiros_title,
+      parceiros_info: res.data.parceiros_info,
+      empregos_title: res.data.empregos_title,
+      empregos_info: res.data.empregos_info,
+    }
+
+    return { props: { content }}
+}
 
 export default QuemSomos;
 

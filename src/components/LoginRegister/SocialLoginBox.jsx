@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
-import {Box, Button, CircularProgress, Stack} from "@mui/material";
-import {ArrowRight} from "@mui/icons-material";
+import React, { useState } from 'react';
+import { Box, Button, CircularProgress, Stack } from "@mui/material";
+import { ArrowRight } from "@mui/icons-material";
 import Link from "../Link";
-import GoogleIcon from './../../assets/img/google-icon-button.png'
-import {LoginSocialGoogle} from "reactjs-social-login";
+import GoogleIcon from '../../../public/assets/img/google-icon-button.png'
+import { LoginSocialGoogle } from "reactjs-social-login";
 import apiService from "../../services/apiService";
-import {useNavigate} from "react-router-dom";
+import { useRouter } from 'next/router';
+import Image from 'next/image'
 
-const SocialLoginBox = ({login, registerMessage}) => {
+const SocialLoginBox = ({ login, registerMessage }) => {
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
 
     const handleSocialLogin = (resp) => {
         setLoading(true)
@@ -19,11 +20,12 @@ const SocialLoginBox = ({login, registerMessage}) => {
             email: resp.data.email,
             password: resp.data.id
         }).then(resp => {
-            navigate("/")
+            router.push("/")
         })
     }
 
     return (
+
         <Stack justifyContent="center" alignItems="center" sx={styles.wrapper}>
             <Box>
                 Ou {login ? "entre" : "inscreva-se"} com
@@ -43,7 +45,7 @@ const SocialLoginBox = ({login, registerMessage}) => {
                         {loading ?
                             <CircularProgress color="inherit" /> :
                             <>
-                                <img src={GoogleIcon} alt="Google Icon" />
+                                <Image src={GoogleIcon} alt="Google Icon" />
                                 <span>Google</span>
                             </>
                         }
@@ -63,7 +65,7 @@ const SocialLoginBox = ({login, registerMessage}) => {
                         <Link to="/login">
                             Conecte-se
                             <ArrowRight
-                            sx={{fontSize: "1.7rem", verticalAlign: "middle"}}
+                                sx={{ fontSize: "1.7rem", verticalAlign: "middle" }}
                             />
                         </Link>
                     }

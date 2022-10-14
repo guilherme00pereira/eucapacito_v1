@@ -18,14 +18,18 @@ import {
   VisibilityOff,
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
 import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
-import SocialLoginBox from "./SocialLoginBox";
+import dynamic from 'next/dynamic'
 import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
+import { useRouter } from "next/router";
+
+const SocialLoginBox = dynamic(() => import("./SocialLoginBox"), { ssr: false })
+
 
 const LoginForm = ({ registerMessage }) => {
+  const router = useRouter()
   const [fields, setFields] = useState({
     email: "",
     password: "",
@@ -34,7 +38,6 @@ const LoginForm = ({ registerMessage }) => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("false");
-  let navigate = useNavigate();
 
   const handleFieldChange = (field) => (e) =>
     setFields({ ...fields, [field]: e.target.value });
@@ -83,11 +86,11 @@ const LoginForm = ({ registerMessage }) => {
     if (sessionStorage.getItem("redirectURL")) {
       const path = sessionStorage.getItem("redirectURL");
       sessionStorage.removeItem("redirectURL");
-      navigate(path);
+      router.push(path);
       return;
     }
 
-    navigate("/");
+    router.push("/");
   };
 
   useEffect(() => {
@@ -161,10 +164,11 @@ const LoginForm = ({ registerMessage }) => {
           </FormCtrl>
         </form>
       </Box>
-
+      {(typeof window !== 'undefined') &&
       <Box>
         <SocialLoginBox login={true} registerMessage={registerMessage} />
       </Box>
+    }
 
       <Snackbar
         open={alertOpen}

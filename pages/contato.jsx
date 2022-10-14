@@ -1,18 +1,17 @@
-import { useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useEffect, useContext } from "react";
 import { Container, Box, Link as MuiLink } from "@mui/material";
 import { Email, Facebook, LinkedIn, Instagram } from "@mui/icons-material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import Link from "../components/Link";
-import ContactForm from "../components/ContactForm";
-import mapa from "../assets/img/mapa.png";
-import MetadataManager from "../layouts/MetadataManager";
+import Link from "../src/components/Link";
+import ContactForm from "../src/components/ContactForm";
+import mapa from "../public/assets/img/mapa.png";
+import { AppContext } from "../src/services/context";
 
 const Contato = () => {
-  const [title, setTitle] = useOutletContext();
+  const ctx = useContext(AppContext);
 
   useEffect(() => {
-    setTitle({
+    ctx.setTitle({
       main: "Contato",
       sub: "Entre em contato conosco",
     });
@@ -20,8 +19,6 @@ const Contato = () => {
 
   return (
     <Box sx={styles.boxSx}>
-
-        <MetadataManager ispage={true} value="contato" />
 
       <Container sx={styles.container}>
         <Box sx={styles.header}>

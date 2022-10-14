@@ -9,7 +9,7 @@ import {
 import { styled } from "@mui/material/styles";
 import Button from "./Button";
 import {messageReturn} from "../commonStyles/messageReturn";
-import SendMessageImage from "../assets/img/mensagem-enviada.png";
+import SendMessageImage from "../../public/assets/img/mensagem-enviada.png";
 
 const ContactForm = () => {
   const [fields, setFields] = useState({

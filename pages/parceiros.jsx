@@ -1,25 +1,22 @@
-import { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import { Box, Paper, FormControl, OutlinedInput, InputLabel } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Button from "../components/Button";
-import apiService from "../services/apiService";
-import SendMessageImage from "../assets/img/mensagem-enviada.png"
-import {messageReturn} from "../commonStyles/messageReturn";
-import MetadataManager from "../layouts/MetadataManager";
+import Button from "../src/components/Button";
+import apiService from "../src/services/apiService";
+import SendMessageImage from "../public/assets/img/mensagem-enviada.png"
+import {messageReturn} from "../src/commonStyles/messageReturn";
+import { AppContext } from "../src/services/context";
 
-const Parceiros = () => {
+const Parceiros = ({ partners }) => {
+  const ctx = useContext(AppContext);
   const [fields, setFields] = useState({
     name: "",
     company: "",
     contact: "",
   });
-  const [title, setTitle] = useOutletContext();
   const [showPartnerButton, setShowPartnerButton] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const [partners, setPartners] = useState([]);
-  const { api } = apiService;
 
   const handleFieldChange = (field) => (e) =>
     setFields({ ...fields, [field]: e.target.value });
@@ -38,14 +35,10 @@ const Parceiros = () => {
   }
 
   useEffect(() => {
-    setTitle({
+    ctx.setTitle({
       main: "Parceiros",
       sub: "Conheça os nossos parceiros",
     });
-
-    api.get('eucapacito/v1/partners').then((res) => {
-      setPartners(res.data)
-    })
 
     const script = document.createElement("script");
     script.src = "https://d335luupugsy2.cloudfront.net/js/loader-scripts/7a9b6985-dad9-4b02-af30-b014ac36349b-loader.js";
@@ -56,8 +49,6 @@ const Parceiros = () => {
 
   return (
     <Box sx={styles.styleParagraph}>
-
-      <MetadataManager ispage={true} value="parceiros" />
 
       <Box sx={{ textAlign: "center", mb: "48px" }}>
         <p className="subtitle">Conheça quem apoia o Eu Capacito</p>
@@ -183,7 +174,15 @@ const Parceiros = () => {
   );
 };
 
+export async function getServerSideProps() {
+  const {api}     = apiService;
+  
+  let res         = await api.get('eucapacito/v1/partners')
+  const partners  = res.data
 
+  return { props: { partners } }
+
+}
 
 export default Parceiros;
 
