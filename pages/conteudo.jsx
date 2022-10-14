@@ -1,108 +1,30 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect, useContext} from "react";
 import {Box} from "@mui/material";
-import BlogPost from "../components/Content/BlogPost";
-import VideoPost from "../components/Content/VideoPost";
-import EbookPost from "../components/Content/EbookPost";
-import UpdateForm from "../components/Content/UpdateForm";
-import ContentTitle from "../components/Content/ContentTitle";
+import BlogPost from "../src/components/Content/BlogPost";
+import VideoPost from "../src/components/Content/VideoPost";
+import EbookPost from "../src/components/Content/EbookPost";
+import UpdateForm from "../src/components/Content/UpdateForm";
+import ContentTitle from "../src/components/Content/ContentTitle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper";
-import {swiper} from "../commonStyles/swiper";
+import {swiper} from "../src/commonStyles/swiper";
+import apiService from "../src/services/apiService";
+import {AppContext} from "../src/services/context";
 
-import apiService from "../services/apiService";
-import MetadataManager from "../layouts/MetadataManager";
-
-const Conteudo = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [ebooks, setEbooks] = useState([]);
-  const [videos, setVideos] = useState([]);
+const Conteudo = ({blogs, videos, ebooks}) => {
+  const ctx = useContext(AppContext);
 
   const { root, blog } = styles;
-  const { api } = apiService;
 
   useEffect(() => {
-    setTitle({
+    ctx.setTitle({
       main: "Conteúdo",
       sub: "Leia o conteúdo da semana",
-    });
-
-    // Blogs
-    api.get(`/wp/v2/posts?per_page=12`).then((res) => {
-      const fetchedBlogs = [];
-
-      res.data.forEach((blog) => {
-        const newBlog = {
-          id: blog.id,
-          slug: blog.slug,
-          featuredImg: blog.featured_image_src,
-          title: blog.title.rendered,
-          excerpt: blog.excerpt.rendered,
-          date: new Date(blog.date).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }),
-          categories: blog.categories_object
-            .map((category) => category.name)
-            .join(", "),
-        };
-
-        fetchedBlogs.push(newBlog);
-      });
-
-      setBlogs([...blogs, ...fetchedBlogs]);
-    });
-
-    // Vídeos
-    api.get(`/wp/v2/video?per_page=6`).then((res) => {
-      const fetchedVideos = [];
-
-      res.data.forEach((video) => {
-        const newVideo = {
-          id: video.id,
-          title: video.title.rendered,
-          excerpt: video.excerpt.rendered,
-          featuredImg: video.featured_image_src,
-          youtubeURL: video.youtube_url,
-          slug: video.slug,
-        };
-
-        fetchedVideos.push(newVideo);
-      });
-
-      setVideos([...videos, ...fetchedVideos]);
-    });
-
-    // E-books
-    api.get(`/wp/v2/ebooks?per_page=12`).then((res) => {
-      const fetchedEbooks = [];
-
-      res.data.forEach((ebook) => {
-        const newEbook = {
-          id: ebook.id,
-          slug: ebook.slug,
-          featuredImg: ebook.featured_image_src,
-          title: ebook.title.rendered,
-          content: ebook.content.rendered,
-          excerpt: ebook.excerpt.rendered,
-          date: new Date(ebook.date).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }),
-          download: ebook.arquivo.guid,
-        };
-
-        fetchedEbooks.push(newEbook);
-      });
-
-      setEbooks([...ebooks, ...fetchedEbooks]);
-    });
+    })
   }, []);
 
   return (
     <Box sx={root}>
-      <MetadataManager ispage={true} value="conteudos" />
 
       <Box sx={blog}>
         <ContentTitle title="Blog" to={'/blog'} linkText="Todos os posts" />
@@ -168,6 +90,71 @@ const Conteudo = () => {
     </Box>
   );
 };
+
+export async function getServerSideProps() {
+  const {api}   = apiService;
+
+  // Blogs
+  const blogs   = []
+  let res       = await api.get(`/wp/v2/posts?per_page=12`)
+  let items     = res.data
+  items.forEach((blog) => {
+    blogs.push({
+      id: blog.id,
+      slug: blog.slug,
+      featuredImg: blog.featured_image_src,
+      title: blog.title.rendered,
+      excerpt: blog.excerpt.rendered,
+      date: new Date(blog.date).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      }),
+      categories: blog.categories_object
+          .map((category) => category.name)
+          .join(", "),
+    });
+  });
+
+  // Videos
+  const videos  = []
+  res           = await api.get(`/wp/v2/video?per_page=6`)
+  items         = res.data
+  items.forEach((video) => {
+    videos.push({
+      id: video.id,
+      title: video.title.rendered,
+      excerpt: video.excerpt.rendered,
+      featuredImg: video.featured_image_src,
+      youtubeURL: video.youtube_url,
+      slug: video.slug,
+    })
+  });
+
+  // E-Books
+  const ebooks  = []
+  res           = await api.get(`/wp/v2/ebooks?per_page=12`)
+  items         = res.data
+  items.forEach((ebook) => {
+    ebooks.push({
+      id: ebook.id,
+      slug: ebook.slug,
+      featuredImg: ebook.featured_image_src,
+      title: ebook.title.rendered,
+      content: ebook.content.rendered,
+      excerpt: ebook.excerpt.rendered,
+      date: new Date(ebook.date).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      }),
+      download: ebook.arquivo.guid,
+    })
+  });
+
+  return { props: { blogs, videos, ebooks }}
+
+}
 
 export default Conteudo;
 

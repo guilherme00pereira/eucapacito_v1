@@ -18,7 +18,7 @@ const Cursos = ({courses, journeys}) => {
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
-        setLogged(token?true:false);
+        setLogged(!!token);
         const userID = sessionStorage.getItem("userID");
         token
             ? ctx.setTitle({

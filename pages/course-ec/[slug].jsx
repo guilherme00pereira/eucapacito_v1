@@ -4,10 +4,10 @@ import {Box, CircularProgress, Grid} from "@mui/material";
 import {
     AccessTime,
 } from "@mui/icons-material";
-import apiService from "../services/apiService";
-import Button from "../components/Button";
-import {coursePage} from "../commonStyles/coursePage";
-import { AppContext } from "../src/services/context";
+import apiService from "../../src/services/apiService";
+import Button from "../../src/components/Button";
+import {coursePage} from "../../src/commonStyles/coursePage";
+import { AppContext } from "../../src/services/context";
 import { useRouter } from "next/router";
 
 const CourseLD = ({ course }) => {

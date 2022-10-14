@@ -1,5 +1,5 @@
 module.exports = {
     images: {
-      domains: ['eucapacito.local'],
-    },
+      domains: ['eucapacito.local', 'wp.eucapacito.com.br']
+    }
   }

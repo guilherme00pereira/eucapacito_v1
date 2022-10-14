@@ -1,21 +1,22 @@
 import {useState} from "react";
 import {Container, Box, MobileStepper, Button} from "@mui/material";
 import {KeyboardArrowLeft} from "@mui/icons-material";
-import {Link} from 'react-router-dom';
 
-import EuCapacitoLogo from '../assets/img/logo.png';
-import Btn from "../components/Button";
-import ArrowRightPath from "../assets/img/arrow-right.png";
+import EuCapacitoLogo from '../../public/assets/img/logo.png';
+import Btn from "../../src/components/Button";
+import ArrowRightPath from "../../public/assets/img/arrow-right.png";
 
-import NameForm from "../components/EmployabilityRegister/NameForm";
-import DateForm from "../components/EmployabilityRegister/DateForm";
-import CpfForm from "../components/EmployabilityRegister/CpfForm";
-import EmailForm from "../components/EmployabilityRegister/EmailForm";
-import PhoneForm from "../components/EmployabilityRegister/PhoneForm";
-import CityForm from "../components/EmployabilityRegister/CityForm";
-import GenderForm from "../components/EmployabilityRegister/GenderForm";
-import EducationForm from "../components/EmployabilityRegister/EducationForm";
-import TermsForm from "../components/EmployabilityRegister/TermsForm";
+import NameForm from "../../src/components/EmployabilityRegister/NameForm";
+import DateForm from "../../src/components/EmployabilityRegister/DateForm";
+import CpfForm from "../../src/components/EmployabilityRegister/CpfForm";
+import EmailForm from "../../src/components/EmployabilityRegister/EmailForm";
+import PhoneForm from "../../src/components/EmployabilityRegister/PhoneForm";
+import CityForm from "../../src/components/EmployabilityRegister/CityForm";
+import GenderForm from "../../src/components/EmployabilityRegister/GenderForm";
+import EducationForm from "../../src/components/EmployabilityRegister/EducationForm";
+import TermsForm from "../../src/components/EmployabilityRegister/TermsForm";
+import Link from "next/link";
+import Image from "next/image";
 
 
 const EmployabilityRegister = () => {
@@ -68,45 +69,45 @@ const EmployabilityRegister = () => {
     }
 
     return (
-            <Container sx={styles.container}>
-                <Box elevation={0} sx={{mt: '25px', mb: '50px', textAlign: 'center'}}>
-                    <Link to="/">
-                        <img src={EuCapacitoLogo} alt="Logo EuCapacito"/>
-                    </Link>
+        <Container sx={styles.container}>
+            <Box elevation={0} sx={{mt: '25px', mb: '50px', textAlign: 'center'}}>
+                <Link href="/">
+                    <Image src={EuCapacitoLogo} alt="Logo EuCapacito"/>
+                </Link>
+            </Box>
+
+            <Box sx={styles.root}>
+                <Box>
+                    <MobileStepper
+                        variant="progress"
+                        steps={9}
+                        position="static"
+                        activeStep={currentStep}
+                        sx={styles.stepper}
+                        LinearProgressProps={styles.stepper.bar}
+                        nextButton={<Button sx={styles.stepper.nextArrow}></Button>}
+                        backButton={
+                            <Button
+                                size="small"
+                                onClick={handleBackStep}
+                                disabled={currentStep === 0}
+                                sx={styles.stepper.backArrow}
+                            >
+                                <KeyboardArrowLeft/>
+                            </Button>
+                        }
+                    />
                 </Box>
 
-                <Box sx={styles.root}>
-                    <Box>
-                        <MobileStepper
-                            variant="progress"
-                            steps={9}
-                            position="static"
-                            activeStep={currentStep}
-                            sx={styles.stepper}
-                            LinearProgressProps={styles.stepper.bar}
-                            nextButton={<Button sx={styles.stepper.nextArrow}></Button>}
-                            backButton={
-                                <Button
-                                    size="small"
-                                    onClick={handleBackStep}
-                                    disabled={currentStep === 0}
-                                    sx={styles.stepper.backArrow}
-                                >
-                                    <KeyboardArrowLeft/>
-                                </Button>
-                            }
-                        />
-                    </Box>
+                {thisStep(currentStep)}
 
-                    {thisStep(currentStep)}
-
-                    {currentStep < 8 && (
-                        <Btn onClick={handleNextStep} sx={styles.submitButton}>
-                            Continuar <img src={ArrowRightPath} alt="Ícone - Seta para direita"/>
-                        </Btn>
-                    )}
-                </Box>
-            </Container>
+                {currentStep < 8 && (
+                    <Btn onClick={handleNextStep} sx={styles.submitButton}>
+                        Continuar <img src={ArrowRightPath} alt="Ícone - Seta para direita"/>
+                    </Btn>
+                )}
+            </Box>
+        </Container>
     );
 };
 

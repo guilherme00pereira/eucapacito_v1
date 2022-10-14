@@ -3,11 +3,12 @@ import {Box, Grid, Link} from "@mui/material";
 import parse from "html-react-parser";
 
 const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
-  const logoPathAbsent = (typeof logoPath === 'undefined') || logoPath === false;
   return (
     <Box sx={styles.card}>
       <Box sx={styles.card.image}>
-        <Image src={imageUrl} alt={`Curso - ${title}`} layout="fill"/>
+        {imageUrl === null ||
+            <Image src={imageUrl} alt={`Curso - ${title}`} layout="fill"/>
+        }
       </Box>
 
       <Grid container sx={styles.card.info}>
@@ -16,9 +17,9 @@ const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
           <small>{parse(`${subtitle}`)}</small>
         </Grid>
 
-        {logoPathAbsent ||
+        {logoPath === null ||
             <Grid item>
-              <Image src={logoPath} alt="Logo" layout="fill"/>
+              <Image src={logoPath} alt="Logo" width="55" height="33"/>
             </Grid>
         }
 

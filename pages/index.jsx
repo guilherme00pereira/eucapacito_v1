@@ -25,7 +25,7 @@ const Index = ({courses, blogs, scholarships}) => {
     ctx.setTitle({
       main: "Olá Seja Bem Vindo",
       sub: "Encontre um curso para aprender",
-    });
+    })
   }, []);
 
   return (
@@ -190,9 +190,9 @@ const Index = ({courses, blogs, scholarships}) => {
       </Box>
     </Box>
   );
-};
+}
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const {api}     = apiService;
   const postsPerPage = "9";
 
@@ -237,7 +237,6 @@ export async function getServerSideProps(context) {
   const scholarships  = []
   res                 = await api.get(`/wp/v2/bolsa_de_estudo?per_page=${postsPerPage}`)
   items               = res.data
-  console.log(items)
   items.forEach(scholarship => {
     scholarships.push({
         id: scholarship.id,
@@ -248,10 +247,9 @@ export async function getServerSideProps(context) {
         logo: scholarship.responsavel ? scholarship.responsavel : null,
         type: scholarship.type,
       })
-  });
+  })
 
   return { props: { courses, blogs, scholarships }}
-
 }
 
 export default Index;

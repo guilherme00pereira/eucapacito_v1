@@ -94,7 +94,7 @@ function App() {
                 <Route path="/editar-senha" element={<Password />} />
                 <Route path="/editar-conta" element={<AccountEdition />} />
                 <Route path="/filtro" element={<Filter />} />
-                <Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />
+                {/*<Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />*/}
                 <Route path="/concluido" element={<Finished />} />
                 <Route path="/termos-e-servicos" element={<TermsAndServices />} />
                 <Route path="/pesquisa-de-satisfacao" element={<Temp />} />

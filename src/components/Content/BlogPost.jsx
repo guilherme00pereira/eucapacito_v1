@@ -2,13 +2,14 @@ import { Box } from "@mui/material";
 import { CancelOutlined } from "@mui/icons-material";
 import parse from "html-react-parser";
 import Link from "../Link";
+import Image from "next/image";
 
 const BlogPost = ({ blog, sxContent, sxFull }) => {
   return (
       <Box sx={{...styles.post, ...sxFull}}>
         <Link to={`/${blog.slug}`}>
           <Box sx={styles.post.image}>
-            <img src={blog.featuredImg} alt="Placeholder Imagem" />
+            <Image src={blog.featuredImg} alt="Placeholder Imagem" width="100%" height="240px" />
           </Box>
           <Box sx={{ ...styles.post.content, ...sxContent }}>
             <small>{parse(`${blog.categories}`)}</small>

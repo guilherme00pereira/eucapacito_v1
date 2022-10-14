@@ -1,73 +1,36 @@
 import { useState, useEffect } from "react";
-import {useNavigate, useParams} from "react-router-dom";
 import { Box } from "@mui/material";
-import Button from "../components/Button";
+import Button from "../../src/components/Button";
 import parse from "html-react-parser";
+import ContentCard from "../../src/components/ContentCard";
+import apiService from "../../src/services/apiService";
+import {useRouter} from "next/router";
 
-import ContentCard from "../components/ContentCard";
-
-import apiService from "../services/apiService";
-import MetadataManager from "../layouts/MetadataManager";
-
-const Journey = () => {
-    const [journeyData, setJourneyData] = useState({
-        featuredImg: "",
-        title: "",
-        description: "",
-        yoast: {}
-    });
-    const [renderMeta, setRenderMeta] = useState(false)
-    const loggedId = sessionStorage.getItem('loggedIn');
-    let navigate = useNavigate();
-    const [courses, setCourses] = useState([]);
-    const { api } = apiService;
-    const { slug } = useParams();
+const Journey = ({ journey, courses }) => {
+    const router = useRouter()
+    const [logged, setLogged] = useState(false);
 
     const handleStartForm = () => {
-        if(!loggedId) {
-            navigate('/login')
+        if(!logged) {
+            router.push('/login')
         } else {
             window.location.reload()
         }
     }
 
     useEffect(() => {
-        api
-            .get(`/wp/v2/jornada?slug=${slug}&_embed`)
-            .then((res) => {
-                setJourneyData({
-                    featuredImg: res.data[0].image,
-                    title: parse(`${res.data[0].title.rendered}`),
-                    description: parse(`${res.data[0].content.rendered}`),
-                    yoast: res.data[0].yoast_head_json
-                });
-                const fetchedCourses = [];
-                res.data[0].cursos_ec.forEach((course) => {
-                    fetchedCourses.push({
-                        id: course.id,
-                        url: course.url,
-                        featuredImg: course.image,
-                        title: course.title,
-                        subtitle: "Eu Capacito",
-                        partnerLogoURL: course.responsavel,
-                    });
-                });
-                setCourses([...fetchedCourses]);
-                setRenderMeta(true)
-            });
-    }, [api]);
+        const token = sessionStorage.getItem("token");
+        setLogged(!!token);
+    }, []);
 
     return (
         <Box sx={styles.root}>
-            {renderMeta &&
-                <MetadataManager ispage={false} value={journeyData.yoast}/>
-            }
 
             <Box sx={styles.texto}>
                 <Box>
-                    <h1>{journeyData.title}</h1>
+                    <h1>{journey.title}</h1>
 
-                    <p>{journeyData.description}</p>
+                    <p>{parse(journey.description)}</p>
                 </Box>
             </Box>
 
@@ -95,6 +58,34 @@ const Journey = () => {
         </Box>
     );
 };
+
+export async function getServerSideProps(context) {
+    const { api }   = apiService;
+
+    let courses     = []
+    let res         = await api.get(`/wp/v2/jornada?slug=${slug}&_embed`)
+    let item        = res.data[0]
+    const journey   = {
+        featuredImg: item.image,
+        title: item.title.rendered,
+        description: item.content.rendered,
+        yoast: item.yoast_head_json
+    }
+
+    item.cursos_ec.forEach((course) => {
+        courses.push({
+            id: course.id,
+            url: course.url,
+            featuredImg: course.image,
+            title: course.title,
+            subtitle: "Eu Capacito",
+            partnerLogoURL: course.responsavel ?? null,
+        })
+    })
+
+    return { props: { journey, courses }}
+
+}
 
 export default Journey;
 

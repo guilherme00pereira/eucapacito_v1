@@ -1,85 +1,45 @@
 import { useState, useEffect } from "react";
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import { Box } from "@mui/material";
-import Button from "../components/Button";
+import Button from "../../src/components/Button";
 import parse from "html-react-parser";
-
-import ContentCard from "../components/ContentCard";
-
-import apiService from "../services/apiService";
-import MetadataManager from "../layouts/MetadataManager";
+import ContentCard from "../../src/components/ContentCard";
+import apiService from "../../src/services/apiService";
+import {useRouter} from "next/router";
 
 
-const Scholarship = () => {
-  const [employabilityData, setEmployabilityData] = useState({
-    featuredImg: "",
-    title: "",
-    description: "",
-    yoast: {}
-  });
-  const [renderMeta, setRenderMeta] = useState(false)
-  const [courses, setCourses] = useState([]);
-  const loggedId = sessionStorage.getItem('loggedIn');
-  const { api } = apiService;
-  const { slug } = useParams();
-  let navigate = useNavigate();
+const Employability = ({ employability, courses }) => {
+  const router = useRouter()
+  const [logged, setLogged] = useState(false);
 
   const handleCertificationUpload = () => {
-    if(!loggedId) {
-      navigate('/login')
-    } else {
-      console.log('fazer upload');
+    if(!logged) {
+      router.push('/login')
     }
   }
 
   const handleStartForm = () => {
-    if(!loggedId) {
-      navigate('/login')
+    if(!logged) {
+      router.push('/login')
     } else {
-      window.location.href = `/comece-agora/${slug}`
+      router.push(`/comece-agora/${slug}`)
     }
   }
 
   useEffect(() => {
-    api
-      .get(`/wp/v2/empregabilidade?slug=${slug}&_embed`)
-      .then((res) => {
-        const post = res.data[0];
-        setEmployabilityData({
-          featuredImg: post.imagem.guid,
-          title: parse(`${post.title.rendered}`),
-          description: parse(`${post.content.rendered}`),
-          yoast: post.yoast_head_json
-        });
-        const fetchedCourses = [];
-        post.cursos_ec.forEach((course) => {
-          fetchedCourses.push({
-            id: course.id,
-            url: course.url,
-            featuredImg: course.image,
-            title: course.title,
-            subtitle: "Eu Capacito",
-            partnerLogoURL: course.responsavel,
-          });
-        });
-        setCourses(fetchedCourses);
-        setRenderMeta(true)
-      });
-  }, [api]);
+    const token = sessionStorage.getItem("token");
+    setLogged(!!token);
+  }, []);
 
   return (
     <Box sx={styles.root}>
-      {renderMeta &&
-          <MetadataManager ispage={false} value={employabilityData.yoast}/>
-      }
       <h1>Empregabilidade</h1>
       <hr />
 
       <Box sx={styles.texto}>
         <Box sx={styles.description}>
-          <h1>{employabilityData.title}</h1>
+          <h1>{employability.title}</h1>
 
-          <p>{employabilityData.description}</p>
+          <p>{parse(employability.description)}</p>
         </Box>
       </Box>
 
@@ -120,7 +80,34 @@ const Scholarship = () => {
   );
 };
 
-export default Scholarship;
+export async function getServerSideProps(context) {
+  const { api } = apiService;
+
+  const courses = []
+  let res = await api.get(`/wp/v2/empregabilidade?slug=${context.params.slug}&_embed`)
+  let item = res.data[0]
+  const employability = {
+    featuredImg: item.imagem.guid,
+    title: item.title.rendered,
+    description: item.content.rendered,
+    yoast: item.yoast_head_json
+  }
+  item.cursos_ec.forEach(course => {
+    courses.push({
+      id: course.id,
+      url: course.url,
+      featuredImg: course.image,
+      title: course.title,
+      subtitle: "Eu Capacito",
+      partnerLogoURL: course.responsavel ?? null,
+    });
+  })
+
+  return { props: { employability, courses }}
+
+}
+
+export default Employability;
 
 const styles = {
   root: {

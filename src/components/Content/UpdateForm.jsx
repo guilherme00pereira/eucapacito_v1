@@ -4,8 +4,7 @@ import {PersonOutlined, MailOutlined} from "@mui/icons-material";
 import {styled} from "@mui/material/styles";
 import Button from "../Button";
 import {messageReturn} from "../../commonStyles/messageReturn";
-import SendMessageImage from "../../assets/img/mensagem-enviada.png";
-import CheckImage from "../../assets/img/check.png";
+import CheckImage from "../../../public/assets/img/check.png";
 
 const UpdateForm = () => {
     const [fields, setFields] = useState({

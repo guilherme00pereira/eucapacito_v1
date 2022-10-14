@@ -18,7 +18,7 @@ const Course = ({ course }) => {
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
-        setLogged(token?true:false);
+        setLogged(!!token);
         ctx.setTitle({
             main: "Curso",
             sub: course.title,
