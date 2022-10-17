@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import { Grid, Box, Container, Link as MuiLink } from "@mui/material";
 import { Instagram, Facebook, LinkedIn } from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
@@ -18,6 +18,7 @@ import Imagem1 from "../public/assets/img/image1-quem-somos.png";
 import Imagem2 from "../public/assets/img/image2-quem-somos.png";
 import Imagem3 from "../public/assets/img/image3-quem-somos.png";
 import Imagem4 from "../public/assets/img/image4-quem-somos.png";
+import Image from 'next/image';
 
 const QuemSomos = ({ content }) => {
   const ctx = useContext(AppContext);
@@ -55,26 +56,26 @@ const QuemSomos = ({ content }) => {
           </Container>
 
           <Box sx={{ mr: "10px" }}>
-            <img src={Imagem1} alt="business-man-owner-company-office" />
+            <Image src={Imagem1} alt="business-man-owner-company-office" />
           </Box>
 
           <Box>
-            <img
+            <Image
               src={Imagem2}
               alt="attractive-caucasian-woman-with-curly-hair-wearing-white-shirt-holding-pink-tablet-computer"
             />
-            <img src={Imagem3} alt="close-up-business-people-conference-room" />
+            <Image src={Imagem3} alt="close-up-business-people-conference-room" />
           </Box>
         </Container>
 
         <Container sx={styles.containerDepoimento}>
           <Box>
-            <img src={ImagemGradient} className="gradiente" alt="" />
-            <img src={Imagem4} alt="" />
+            <Image src={ImagemGradient} className="gradiente" alt="" />
+            <Image src={Imagem4} alt="" />
           </Box>
 
           <Box sx={styles.boxDepoimento}>
-            <img src={linhaQuemSomosDepoimento} alt="" />
+            <Image src={linhaQuemSomosDepoimento} alt="" />
             <Box>
               <h4>DEPOIMENTO</h4>
               <p>{content.quote}</p>
@@ -92,35 +93,35 @@ const QuemSomos = ({ content }) => {
           <Grid item xs={6} md={3}>
             <h2>{content.alunos_title}</h2>
             <p>MATRICULADOS</p>
-            <img src={PeopleIcon} alt="Ícone - Pessoas" />
+            <Image src={PeopleIcon} alt="Ícone - Pessoas" />
             <p>{content.alunos_info}</p>
           </Grid>
 
           <Grid item xs={6} md={3}>
             <h2>{content.conclusao_title}</h2>
             <p>CURSOS FINALIZADOS</p>
-            <img src={CheckIcon} alt="Ícone - Check" />
+            <Image src={CheckIcon} alt="Ícone - Check" />
             <p>{content.conclusao_info}</p>
           </Grid>
 
           <Grid item xs={6} md={3}>
             <h2>{content.parceiros_title}</h2>
             <p>AJUDAM NO PROJETO</p>
-            <img src={HandsIcon} alt="Ícone - Hands" />
+            <Image src={HandsIcon} alt="Ícone - Hands" />
             <p>{content.parceiros_info}</p>
           </Grid>
 
           <Grid item xs={6} md={3}>
             <h2>{content.empregos_title}</h2>
             <p>PELO EU CAPACITO</p>
-            <img src={PartyIcon} alt="Ícone - Jobs" />
+            <Image src={PartyIcon} alt="Ícone - Jobs" />
             <p>{content.empregos_info}</p>
           </Grid>
         </Grid>
       </Box>
 
       <Box sx={styles.description}>
-        <img src={EuCapacitoLogoVertical} alt="Logo EuCapacito" />
+        <Image src={EuCapacitoLogoVertical} alt="Logo EuCapacito" />
       </Box>
 
       <Box sx={styles.boxredes}>
@@ -165,7 +166,6 @@ export async function getServerSideProps() {
       empregos_title: res.data.empregos_title,
       empregos_info: res.data.empregos_info,
     }
-
     return { props: { content }}
 }
 

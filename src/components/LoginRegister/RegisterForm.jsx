@@ -1,32 +1,36 @@
-import {useEffect, useState} from "react";
+import { useState, useEffect } from "react";
 import {
-    Container,
-    Box,
-    FormControl,
-    OutlinedInput,
-    IconButton,
-    InputLabel,
-    InputAdornment,
-    Alert,
-    Snackbar,
-    Checkbox,
-    FormControlLabel
+  Container,
+  Box,
+  FormControl,
+  FormControlLabel,
+  Checkbox,
+  OutlinedInput,
+  IconButton,
+  InputLabel,
+  InputAdornment,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
-    PersonOutlined,
-    MailOutlined,
-    LockOpenRounded,
-    Visibility,
-    VisibilityOff,
+  MailOutlined,
+  LockOpenRounded,
+  Visibility,
+  VisibilityOff,
+  PersonOutlined
 } from "@mui/icons-material";
-import {styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
+import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
-import {useNavigate} from "react-router-dom";
-import SocialLoginBox from "./SocialLoginBox";
+import dynamic from 'next/dynamic'
 import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
+import { useRouter } from "next/router";
+
+const SocialLoginBox = dynamic(() => import("./SocialLoginBox"), { ssr: false })
 
 const RegisterForm = ({registerMessage}) => {
+    const router = useRouter()
     const [fields, setFields] = useState({
         name: "",
         email: "",
@@ -38,7 +42,6 @@ const RegisterForm = ({registerMessage}) => {
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("false");
     const [alertType, setAlertType] = useState("success");
-    let navigate = useNavigate();
 
     const handleFieldChange = (field) => (e) =>
         setFields({...fields, [field]: e.target.value});
@@ -69,7 +72,7 @@ const RegisterForm = ({registerMessage}) => {
         const response = await apiService.register(fields);
         if (response.status) {
             registerMessage(true)
-            navigate("/login");
+            router.push("/login");
         } else {
             setAlertType('error')
             setAlertMessage(response.message);

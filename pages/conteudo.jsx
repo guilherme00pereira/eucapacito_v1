@@ -39,7 +39,7 @@ const Conteudo = ({blogs, videos, ebooks}) => {
             {blogs.length > 0 &&
               blogs.map((blog) => (
                 <SwiperSlide key={blog.id}>
-                  <BlogPost blog={blog} />
+                  <BlogPost blog={blog} sxFull={styles.blog.box} />
                 </SwiperSlide>
               ))}
           </Swiper>
@@ -225,6 +225,12 @@ const styles = {
     "& .MuiSvgIcon-root": {
       width: "12px",
     },
+    box: {
+      width: {
+        md: "342px",
+        xs: "100%"
+      }
+    }
   },
   ebook: {
       "& h1":{

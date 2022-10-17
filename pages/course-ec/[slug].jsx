@@ -9,6 +9,7 @@ import Button from "../../src/components/Button";
 import {coursePage} from "../../src/commonStyles/coursePage";
 import { AppContext } from "../../src/services/context";
 import { useRouter } from "next/router";
+import SEO from '../../src/seo'
 
 const CourseLD = ({ course }) => {
     const router = useRouter()
@@ -45,6 +46,7 @@ const CourseLD = ({ course }) => {
 
     return (
         <>
+            <SEO metadata={course.yoast} />
             <Box sx={coursePage.root}>
                 <Box sx={coursePage.image}>
                     <img src={course.featuredImg} alt={course.title}/>

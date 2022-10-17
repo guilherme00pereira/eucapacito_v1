@@ -115,7 +115,7 @@ const Header = () => {
 
           <Box sx={styles.subheader}>
             {logged && router.pathname.length <= 1 ? (
-              <p>Olá, {userFirstName.split(" ")[0]}!</p>
+              <p>Olá, {firstName.split(" ")[0]}!</p>
             ) : ctx.title.main !== "" ? (
               <p>{ctx.title.main}</p>
             ) : (
@@ -163,7 +163,7 @@ const Header = () => {
 
             <Box sx={styles.subheaderdesk}>
               {logged && router.pathname.length <= 1 ? (
-                <p>Olá, {userFirstName.split(" ")[0]}!</p>
+                <p>Olá, {firstName.split(" ")[0]}!</p>
               ) : ctx.title.main !== "" ? (
                 <p>{ctx.title.main}</p>
               ) : (

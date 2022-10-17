@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Image from 'next/image'
 import Link from '../src/components/Link'
 
-const LoginRegister = () => {
+const Login = () => {
     const router = useRouter()
     const [token, setToken] = useState(null);
     const [showRegisterMessage, setShowRegisterMessage] = useState(false);
@@ -20,7 +20,7 @@ const LoginRegister = () => {
         if (token) {
             return router.push('/');
         }
-    }, [token]);
+    }, []);
 
     return (
         <Container>
@@ -46,4 +46,6 @@ const LoginRegister = () => {
     );
 };
 
-export default LoginRegister;
+Login.noLayout = true
+
+export default Login;

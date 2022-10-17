@@ -6,6 +6,7 @@ import ContentCard from "../../src/components/ContentCard";
 import apiService from "../../src/services/apiService";
 import {scholarshipStyle} from "../../src/commonStyles/scholarshipStyle";
 import {useRouter} from "next/router";
+import SEO from '../../src/seo'
 
 
 const Scholarship = ({ scholarship, courses }) => {
@@ -19,10 +20,11 @@ const Scholarship = ({ scholarship, courses }) => {
   }
 
   const handleStartForm = () => {
+    console.log(router)
     if(!logged) {
       router.push('/login')
     } else {
-      router.push(`/comece-agora/${router.params.slug}`)
+      router.push(`/comece-agora/${router.query.slug}`)
     }
   }
 
@@ -33,9 +35,11 @@ const Scholarship = ({ scholarship, courses }) => {
 
 
   return (
-    <Box sx={scholarshipStyle.root}>
-      <h1>Bolsas de Estudo</h1>
-      <hr />
+    <>
+      <SEO metadata={scholarship.yoast} />
+      <Box sx={scholarshipStyle.root}>
+        <h1>Bolsas de Estudo</h1>
+        <hr />
 
       <Box sx={scholarshipStyle.texto}>
         <Box sx={scholarshipStyle.description}>
@@ -79,6 +83,7 @@ const Scholarship = ({ scholarship, courses }) => {
       </Box>
 
     </Box>
+    </>
   );
 };
 
@@ -88,9 +93,8 @@ export async function getServerSideProps(context) {
   const courses = []
   let res       = await api.get(`/wp/v2/bolsa_de_estudo?slug=${context.params.slug}&_embed`)
   let item      = res.data[0]
-  console.log(item)
-  const scholarshipData = {
-    featuredImg: item.iamge ? item.imagem.guid : null,
+  const scholarship = {
+    featuredImg: item.image ? item.imagem.guid : null,
     title: item.title.rendered,
     description: item.content.rendered,
     yoast: item.yoast_head_json
@@ -106,7 +110,7 @@ export async function getServerSideProps(context) {
     })
   })
 
-  return { props: { scholarshipData, courses }}
+  return { props: { scholarship, courses }}
 }
 
 export default Scholarship;

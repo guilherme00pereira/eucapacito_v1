@@ -7,7 +7,7 @@ const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
     <Box sx={styles.card}>
       <Box sx={styles.card.image}>
         {imageUrl === null ||
-            <Image src={imageUrl} alt={`Curso - ${title}`} layout="fill"/>
+            <Image src={imageUrl} alt={`Curso - ${title}`} width="340" height="200" layout="responsive"/>
         }
       </Box>
 
@@ -18,8 +18,8 @@ const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
         </Grid>
 
         {logoPath === null ||
-            <Grid item>
-              <Image src={logoPath} alt="Logo" width="55" height="33"/>
+            <Grid item sx={styles.card.partnerLogo}>
+              <Image src={logoPath} alt="Logo" layout="fill" objectFit='contain' />
             </Grid>
         }
 
@@ -74,5 +74,9 @@ const styles = {
         maxWidth: "70%",
       },
     },
+    partnerLogo: {
+        with: "100px",
+        height: "35px"
+    }
   },
 };

@@ -8,17 +8,16 @@ import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
   const [title, setTitle] = useState('')
+  const renderLayout = Component.noLayout ? <Component {...pageProps} /> : <Layout><Component {...pageProps} /></Layout>
   return (
     <AppContext.Provider value={{title, setTitle}}>
       <ThemeProvider theme={Theme}>
-          <Layout>
-              <Head>
-                  <title>Eu Capacito</title>
-                  <meta name="viewport" content="width=device-width, initial-scale=1" />
-                  <meta name="theme-color" content="#000000" />
-              </Head>
-            <Component {...pageProps} />
-          </Layout>
+            <Head>
+                <title>Eu Capacito</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta name="theme-color" content="#000000" />
+            </Head>
+            {renderLayout}
         </ThemeProvider>
     </AppContext.Provider>
   )

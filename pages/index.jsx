@@ -16,6 +16,7 @@ import BlogPost from "../src/components/Content/BlogPost";
 import {swiper} from "../src/commonStyles/swiper";
 import TitlesLink from "../src/components/Home/TitlesLink";
 import { AppContext } from "../src/services/context";
+import SEO from '../src/seo'
 
 
 const Index = ({courses, blogs, scholarships}) => {
@@ -30,6 +31,8 @@ const Index = ({courses, blogs, scholarships}) => {
 
   return (
     <Box sx={styles.root}>
+
+      <SEO metadata={{}} />
 
       <Menu sx={styles.menu} />
       <Banners />

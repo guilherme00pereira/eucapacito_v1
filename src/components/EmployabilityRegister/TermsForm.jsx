@@ -2,15 +2,15 @@ import {Grid, FormGroup, FormControlLabel, Checkbox} from "@mui/material";
 import Button from "../Button";
 import formStyle from "../../commonStyles/formStyle";
 import {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import { useRouter } from "next/router";
 
 const TermsForm = ({form, handler}) => {
-    let navigate = useNavigate();
+    const router = useRouter()
     const telefone = `(${form.ddd}) ${form.phone}`;
     const data_nascimento = `${form.day}/${form.month}/${form.year}`
 
     const handleSubmit = () => {
-        navigate('/concluido');
+        router.push('/concluido');
     }
 
     useEffect(() => {

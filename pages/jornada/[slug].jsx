@@ -5,6 +5,7 @@ import parse from "html-react-parser";
 import ContentCard from "../../src/components/ContentCard";
 import apiService from "../../src/services/apiService";
 import {useRouter} from "next/router";
+import SEO from '../../src/seo'
 
 const Journey = ({ journey, courses }) => {
     const router = useRouter()
@@ -24,38 +25,41 @@ const Journey = ({ journey, courses }) => {
     }, []);
 
     return (
-        <Box sx={styles.root}>
+        <>
+            <SEO metadata={journey.yoast} />
+            <Box sx={styles.root}>
 
-            <Box sx={styles.texto}>
-                <Box>
-                    <h1>{journey.title}</h1>
+                <Box sx={styles.texto}>
+                    <Box>
+                        <h1>{journey.title}</h1>
 
-                    <p>{parse(journey.description)}</p>
+                        <p>{parse(journey.description)}</p>
+                    </Box>
+                </Box>
+
+                <h2>Para garantir o seu acesso, você precisa  concluir o(s) seguinte(s) curso(s):</h2>
+
+                <Box sx={styles.cardsContainer}>
+
+                    {courses.length > 0 &&
+                        courses.map((course) => (
+                            <Box key={course.id} sx={styles.card}>
+                                <ContentCard
+                                    url={course.url}
+                                    imagePath={course.featuredImg}
+                                    title={course.title}
+                                    subtitle={course.subtitle}
+                                    logoPath={course.partnerLogoURL}
+                                />
+                            </Box>
+                        ))
+                    }
+                </Box>
+                <Box sx={styles.button}>
+                    <Button onClick={handleStartForm}>Comece agora!</Button>
                 </Box>
             </Box>
-
-            <h2>Para garantir o seu acesso, você precisa  concluir o(s) seguinte(s) curso(s):</h2>
-
-            <Box sx={styles.cardsContainer}>
-
-                {courses.length > 0 &&
-                    courses.map((course) => (
-                        <Box key={course.id} sx={styles.card}>
-                            <ContentCard
-                                url={course.url}
-                                imagePath={course.featuredImg}
-                                title={course.title}
-                                subtitle={course.subtitle}
-                                logoPath={course.partnerLogoURL}
-                            />
-                        </Box>
-                    ))
-                }
-            </Box>
-            <Box sx={styles.button}>
-                <Button onClick={handleStartForm}>Comece agora!</Button>
-            </Box>
-        </Box>
+        </>
     );
 };
 

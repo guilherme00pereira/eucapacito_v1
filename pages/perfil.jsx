@@ -1,55 +1,59 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import { Box } from "@mui/material";
-import { NavLink, useNavigate, useOutletContext } from "react-router-dom";
 import { ArrowForwardIos } from "@mui/icons-material";
+import { AppContext } from "../src/services/context";
+import Badge from "../src/components/Badge";
+import apiService from "../src/services/apiService";
+import { useRouter } from "next/router";
+import Link from 'next/link';
+import Image from 'next/image';
+import PlayIcon from "../public/assets/img/perfil-menu-play.png";
+import UserIcon from "../public/assets/img/perfil-menu-usuario.png";
+import KeyIcon from "../public/assets/img/perfil-menu-chave.png";
+import TermsIcon from "../public/assets/img/perfil-menu-termos.png"
 
-import Badge from "../components/Badge";
-import apiService from "../services/apiService";
-
-import PlayIcon from "../assets/img/perfil-menu-play.png";
-import UserIcon from "../assets/img/perfil-menu-usuario.png";
-import KeyIcon from "../assets/img/perfil-menu-chave.png";
-import TermsIcon from "../assets/img/perfil-menu-termos.png"
-import MetadataManager from "../layouts/MetadataManager";
 
 const Perfil = () => {
-  const [title, setTitle] = useOutletContext();
-  const token = sessionStorage.getItem('loggedIn');
-  let navigate = useNavigate();
-  const avatar = sessionStorage.getItem("avatarURL") ?? UserIcon;
+  const ctx = useContext(AppContext);
+  const router = useRouter()
+  const [logged, setLogged] = useState(false);
+  const [avatar, setAvatar] = useState('');
+  const [firstName, setFirstName] = useState('');
 
   useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    setLogged(!!token);
+    setAvatar(sessionStorage.getItem("avatarURL") ?? UserIcon);
+    setFirstName(sessionStorage.getItem("username"));
     if (!token) {
-      return navigate('/login');
+      return router.push('/login');
     }
-    setTitle({
+    ctx.setTitle({
       main: "Perfil",
       sub: false,
     });
-  }, [token, navigate]);
+  }, []);
 
   const handleLogout = (e) => {
     e.preventDefault();
-    
     apiService.logout();
-    return navigate('/login');
+    return router.push('/login');
   }
 
   return (
     <Box sx={styles.root}>
-      <MetadataManager ispage={true} value="default" />
       <Box sx={styles.user}>
-        <img src={avatar} alt="Foto de perfil" referrerPolicy="no-referrer" />
-        <h2>{sessionStorage.getItem('username')}</h2>
+        <Image src={avatar} alt="Foto de perfil" referrerPolicy="no-referrer" width="150" height="150" />
+        <h2>{firstName}</h2>
         <Badge value="VIP" />
       </Box>
 
       <h2>Conta</h2>
       <Box sx={styles.accountBox}>
-        <NavLink to="/cursos">
+        <Link href="/cursos">
           <Box sx={styles.menu}>
             <Box sx={styles.menu.left}>
-              <img src={PlayIcon} alt="Ícone - Play" />
+              <Image src={PlayIcon} alt="Ícone - Play" />
               <p>Meus cursos</p>
             </Box>
             <ArrowForwardIos
@@ -59,12 +63,12 @@ const Perfil = () => {
               }}
             />
           </Box>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/editar-conta">
+        <Link href="/editar-conta">
           <Box sx={styles.menu}>
             <Box sx={styles.menu.left}>
-              <img src={UserIcon} alt="Ícone - Usuário" />
+              <Image src={UserIcon} alt="Ícone - Usuário" />
               <p>Editar Perfil</p>
             </Box>
             <ArrowForwardIos
@@ -74,12 +78,12 @@ const Perfil = () => {
               }}
             />
           </Box>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/editar-senha">
+        <Link href="/editar-senha">
           <Box sx={styles.menu}>
             <Box sx={styles.menu.left}>
-              <img src={KeyIcon} alt="Ícone - Chave" />
+              <Image src={KeyIcon} alt="Ícone - Chave" />
               <p>Alterar a senha</p>
             </Box>
             <ArrowForwardIos
@@ -90,12 +94,12 @@ const Perfil = () => {
             />
             
           </Box>
-        </NavLink>
+        </Link>
 
-        <NavLink to="/termos-e-servicos">
+        <Link href="/termos-e-servicos">
           <Box sx={styles.menu}>
             <Box sx={styles.menu.left}>
-              <img src={TermsIcon} alt="Ícone - Termos" />
+              <Image src={TermsIcon} alt="Ícone - Termos" />
               <p>Termos de Uso</p>
             </Box>
             <ArrowForwardIos
@@ -106,15 +110,13 @@ const Perfil = () => {
             />
 
           </Box>
-        </NavLink>
+        </Link>
 
         
       </Box>
-      <NavLink to="/" onClick={handleLogout}>
-        <Box sx={styles.logout}>
+        <Box sx={styles.logout} onClick={handleLogout}>
           <p>Sair</p>
         </Box>
-      </NavLink>
     </Box>
   );
 };

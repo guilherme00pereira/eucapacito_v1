@@ -9,7 +9,7 @@ const BlogPost = ({ blog, sxContent, sxFull }) => {
       <Box sx={{...styles.post, ...sxFull}}>
         <Link to={`/${blog.slug}`}>
           <Box sx={styles.post.image}>
-            <Image src={blog.featuredImg} alt="Placeholder Imagem" width="100%" height="240px" />
+            <Image src={blog.featuredImg} alt="Placeholder Imagem" layout="fill" />
           </Box>
           <Box sx={{ ...styles.post.content, ...sxContent }}>
             <small>{parse(`${blog.categories}`)}</small>
@@ -35,17 +35,18 @@ const styles = {
   post: {
     marginTop: "1rem",
     border: "1px solid #77837F",
-    borderRadius: "8px",
-    image: {
-      width: "100%",
-      borderRadius: "8px",
-      minHeight: "190px",
-      img: {
-        width: "100%",
-        height: "240px",
-        borderTopLeftRadius: "7px",
-        borderTopRightRadius: "7px",
+    borderRadius: "0.5rem",
+    image: { 
+      position: "relative",
+      width: {
+        xs: "100%",
+        md: "340px"
       },
+      height: "200px",        
+      borderRadius: "0.5rem",
+        img: {
+          borderRadius: "0.5rem 0.5rem 0 0",
+      }
     },
     content: {
       p: 2,

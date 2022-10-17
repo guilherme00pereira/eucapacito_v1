@@ -5,7 +5,7 @@ import parse from "html-react-parser";
 import ContentCard from "../../src/components/ContentCard";
 import apiService from "../../src/services/apiService";
 import {useRouter} from "next/router";
-
+import SEO from '../../src/seo'
 
 const Employability = ({ employability, courses }) => {
   const router = useRouter()
@@ -21,7 +21,7 @@ const Employability = ({ employability, courses }) => {
     if(!logged) {
       router.push('/login')
     } else {
-      router.push(`/comece-agora/${slug}`)
+      router.push(`/comece-agora/${router.query.slug}`)
     }
   }
 
@@ -31,52 +31,55 @@ const Employability = ({ employability, courses }) => {
   }, []);
 
   return (
-    <Box sx={styles.root}>
-      <h1>Empregabilidade</h1>
-      <hr />
+    <>
+      <SEO metadata={employability.yoast} />
+      <Box sx={styles.root}>
+        <h1>Empregabilidade</h1>
+        <hr />
 
-      <Box sx={styles.texto}>
-        <Box sx={styles.description}>
-          <h1>{employability.title}</h1>
+        <Box sx={styles.texto}>
+          <Box sx={styles.description}>
+            <h1>{employability.title}</h1>
 
-          <p>{parse(employability.description)}</p>
+            <p>{parse(employability.description)}</p>
+          </Box>
         </Box>
-      </Box>
 
-      <h2>Para ajudar no seu processo, conclua o(s) seguinte(s) curso(s):</h2>
+        <h2>Para ajudar no seu processo, conclua o(s) seguinte(s) curso(s):</h2>
 
-      <Box sx={styles.cardsContainer}>
-        
-          {courses.length > 0 && 
-            courses.map((course) => (
-              <Box key={course.id} sx={styles.card}>
-                <ContentCard
-                  url={course.url}
-                  imagePath={course.featuredImg}
-                  title={course.title}
-                  subtitle={course.subtitle}
-                  logoPath={course.partnerLogoURL}
-                />
-              </Box>
-            ))
-          }
+        <Box sx={styles.cardsContainer}>
           
-        <Box sx={styles.certificado}>
-          <Button onClick={handleCertificationUpload}>Envie os certificados</Button>
-          <input type="file" />
-          <input type="file" />
-          <p>
-            Finalizando os cursos anexar nos campos correspondentes e comece o
-            processo seletivo clicando em "comece agora”.
-          </p>
+            {courses.length > 0 && 
+              courses.map((course) => (
+                <Box key={course.id} sx={styles.card}>
+                  <ContentCard
+                    url={course.url}
+                    imagePath={course.featuredImg}
+                    title={course.title}
+                    subtitle={course.subtitle}
+                    logoPath={course.partnerLogoURL}
+                  />
+                </Box>
+              ))
+            }
+            
+          <Box sx={styles.certificado}>
+            <Button onClick={handleCertificationUpload}>Envie os certificados</Button>
+            <input type="file" />
+            <input type="file" />
+            <p>
+              Finalizando os cursos anexar nos campos correspondentes e comece o
+              processo seletivo clicando em "comece agora”.
+            </p>
+          </Box>
         </Box>
-      </Box>
 
-      <Box sx={styles.button}>
-        <Button onClick={handleStartForm}>Comece agora!</Button>
-      </Box>
+        <Box sx={styles.button}>
+          <Button onClick={handleStartForm}>Comece agora!</Button>
+        </Box>
 
-    </Box>
+      </Box>
+    </>
   );
 };
 
