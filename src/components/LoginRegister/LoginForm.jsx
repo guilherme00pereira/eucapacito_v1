@@ -28,7 +28,7 @@ import { useRouter } from "next/router";
 const SocialLoginBox = dynamic(() => import("./SocialLoginBox"), { ssr: false })
 
 
-const LoginForm = ({ registerMessage }) => {
+const LoginForm = () => {
   const router = useRouter()
   const [fields, setFields] = useState({
     email: "",
@@ -166,7 +166,7 @@ const LoginForm = ({ registerMessage }) => {
       </Box>
       {(typeof window !== 'undefined') &&
       <Box>
-        <SocialLoginBox login={true} registerMessage={registerMessage} />
+        <SocialLoginBox login={true} />
       </Box>
     }
 

@@ -1,20 +1,18 @@
 import {useState, useEffect} from "react";
 import {Box, CircularProgress} from "@mui/material";
-import apiService from "../services/apiService";
-import Button from "../components/Button";
-import BlogPost from "../components/Content/BlogPost";
-import UpdateForm from "../components/Content/UpdateForm";
-
-import { postListStyles } from '../commonStyles/postListStyles';
-import {loading} from "../commonStyles/loading";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../src/services/apiService";
+import Button from "../src/components/Button";
+import BlogPost from "../src/components/Content/BlogPost";
+import UpdateForm from "../src/components/Content/UpdateForm";
+import { postListStyles } from '../src/commonStyles/postListStyles';
+import {loading} from "../src/commonStyles/loading";
 
 const Blog = () => {
     const [blogs, setBlogs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
-    const {api} = apiService;
+
 
     const handleLoadMore = () => {
         if (!hideLoadMoreButton) {
@@ -23,6 +21,7 @@ const Blog = () => {
     };
 
     useEffect(() => {
+        const {api} = apiService;
         setIsLoading(true);
         api.get(`/wp/v2/posts?per_page=12&page=${page}`)
             .then((res) => {
@@ -59,7 +58,6 @@ const Blog = () => {
 
     return (
         <Box sx={postListStyles.root}>
-            <MetadataManager ispage={true} value="conteudos" />
             <h1>Blog</h1>
             <hr />
             <Box sx={postListStyles.tabPanelBox}>

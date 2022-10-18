@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import {
     Container,
     Box,
@@ -17,14 +17,14 @@ import {
     VisibilityOff,
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import { loginRegisterStyles } from "../../commonStyles/loginRegisterStyles";
+import { useRouter } from 'next/router'
 
 const PasswordReset = () => {
-    const params = new URLSearchParams(window.location.search)
-    const code = params.get('c')
+    const router = useRouter()
+    const [code, setCode] = useState()
     const [fields, setFields] = useState({
         password: "",
         confirmPassword: "",
@@ -37,7 +37,6 @@ const PasswordReset = () => {
     const [alertMessage, setAlertMessage] = useState("false");
     const [alertType, setAlertType] = useState("success");
     const [btnLoading, setBtnLoading] = useState(false);
-    let navigate = useNavigate();
 
     const handleFieldChange = (field) => (e) =>
         setFields({ ...fields, [field]: e.target.value });
@@ -56,7 +55,7 @@ const PasswordReset = () => {
         setBtnLoading(true);
         const response = await apiService.resetPassword(fields);
         if (response.status) {
-            navigate("/login");
+            router.push("/login");
         } else {
             setBtnLoading(false)
             setAlertType('error');
@@ -64,6 +63,12 @@ const PasswordReset = () => {
             setAlertOpen(true);
         }
     };
+
+    useEffect(() => {
+        if(router.isReady) {
+            setCode(router.query.c)
+        }
+    }, [])
 
 
     return (

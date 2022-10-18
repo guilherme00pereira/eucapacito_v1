@@ -1,14 +1,12 @@
 import {useState, useEffect} from "react";
 import {Box, CircularProgress} from "@mui/material";
-
-import apiService from "../services/apiService";
-import Button from "../components/Button";
-import VideoPost from "../components/Content/VideoPost";
-import UpdateForm from "../components/Content/UpdateForm";
-
-import { postListStyles } from '../commonStyles/postListStyles';
-import {loading} from "../commonStyles/loading";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../src/services/apiService";
+import Button from "../src/components/Button";
+import VideoPost from "../src/components/Content/VideoPost";
+import UpdateForm from "../src/components/Content/UpdateForm";
+import { postListStyles } from '../src/commonStyles/postListStyles';
+import {loading} from "../src/commonStyles/loading";
+import MetadataManager from "../src/layouts/MetadataManager";
 
 
 const Videos = () => {

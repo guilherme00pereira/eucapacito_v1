@@ -23,7 +23,7 @@ const CourseCard = ({ url, course }) => {
             value={courseProgress}
             sx={styles.progressBar}
           /> */}
-          <img src={course.partnerLogoURL} alt="" />
+          <img src={course.partnerLogoURL} alt={course.title} />
         </Box>
       </Box>
     </Link>

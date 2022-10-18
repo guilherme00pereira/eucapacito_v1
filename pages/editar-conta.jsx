@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from "../src/components/Button";
 import {
     Container,
     Box,
@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 
 import {useEffect, useState, useRef} from "react";
-import apiService from "../services/apiService";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../src/services/apiService";
 
 const extractBirthdate = (data) => {
     let [bd, bm, by] = "";
@@ -35,7 +34,7 @@ const extractPhone = (phone) => {
 
 const Account = () => {
     const [fields, setFields] = useState({
-        id: sessionStorage.getItem('userID'),
+        id: "",
         avatar: "",
         username: "",
         full_name: "",
@@ -49,9 +48,6 @@ const Account = () => {
         state: "",
         city: "",
     });
-    const token = sessionStorage.getItem('token');
-    const {api} = apiService;
-
     const [isLoading, setIsLoading] = useState(true);
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("false");
@@ -70,6 +66,7 @@ const Account = () => {
     };
 
     const handleCapture = ({ target }) => {
+        const {api} = apiService;
         let formData = new FormData();
         formData.set("file", target.files[0], target.files[0].name);
 
@@ -95,40 +92,37 @@ const Account = () => {
 
 
     useEffect(() => {
+        const {api} = apiService;
+        const token = sessionStorage.getItem('token');
+        const id = sessionStorage.getItem('userID');
+        api.get(`/wp/v2/users/${id}?_embed`, {
+            headers: {Authorization: `Bearer ${token}`},
+        }).then((res) => {
 
-        /* const savedFields = sessionStorage.getItem('userProfile');
-        if(savedFields) {
-            setFields(savedFields)
-        } else { */
-            const id = sessionStorage.getItem('userID');
-            api.get(`/wp/v2/users/${id}?_embed`, {
-                headers: {Authorization: `Bearer ${token}`},
-            }).then((res) => {
+            let {bd, bm, by} = extractBirthdate(res.data.acf.data_de_nascimento)
+            let {ddd, num} = extractPhone(res.data.acf.telefone)
+            const avatar = res.data.avatar ? res.data.avatar : res.data.avatar_urls[96];
+            setFields({
+                ...fields,
+                id: id,
+                username: res.data.slug,
+                avatar: avatar,
+                full_name: res.data.first_name + " " + res.data.last_name,
+                b_day: bd,
+                b_month: bm,
+                b_year: by,
+                phone_ddd: ddd,
+                phone_number: num,
+                email: res.data.email,
+                country: res.data.acf.pais ? res.data.acf.pais : 'Brasil',
+                state: res.data.acf.estado,
+                city: res.data.acf.cidade
+            })
+            sessionStorage.setItem('userProfile', fields);
+            setIsLoading(false);
+        });
 
-                let {bd, bm, by} = extractBirthdate(res.data.acf.data_de_nascimento)
-                let {ddd, num} = extractPhone(res.data.acf.telefone)
-                const avatar = res.data.avatar ? res.data.avatar : res.data.avatar_urls[96];
-                setFields({
-                    ...fields,
-                    username: res.data.slug,
-                    avatar: avatar,
-                    full_name: res.data.first_name + " " + res.data.last_name,
-                    b_day: bd,
-                    b_month: bm,
-                    b_year: by,
-                    phone_ddd: ddd,
-                    phone_number: num,
-                    email: res.data.email,
-                    country: res.data.acf.pais ? res.data.acf.pais : 'Brasil',
-                    state: res.data.acf.estado,
-                    city: res.data.acf.cidade
-                })
-                sessionStorage.setItem('userProfile', fields);
-                setIsLoading(false);
-            });
-        //}
-
-    }, [token, api]);
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -146,7 +140,6 @@ const Account = () => {
             {isLoading && <CircularProgress sx={styles.loading}/>}
             {!isLoading && (
                 <Container sx={styles}>
-                    <MetadataManager ispage={true} value="default" />
                     <Box sx={styles.pagetitle}>
                         <h1>Edição da conta</h1>
                     </Box>

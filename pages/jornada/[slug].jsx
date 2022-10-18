@@ -67,7 +67,7 @@ export async function getServerSideProps(context) {
     const { api }   = apiService;
 
     let courses     = []
-    let res         = await api.get(`/wp/v2/jornada?slug=${slug}&_embed`)
+    let res         = await api.get(`/wp/v2/jornada?slug=${context.params.slug}&_embed`)
     let item        = res.data[0]
     const journey   = {
         featuredImg: item.image,

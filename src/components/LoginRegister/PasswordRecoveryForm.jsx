@@ -12,11 +12,11 @@ import { styled } from "@mui/material/styles";
 import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
-import SendMessageImage from "../../assets/img/mensagem-enviada.png"
+import SendMessageImage from "../../../public/assets/img/mensagem-enviada.png"
 import {messageReturn} from "../../commonStyles/messageReturn";
 import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
 
-const PasswordRecoveryForm = ({registerMessage}) => {
+const PasswordRecoveryForm = () => {
   const [email, setEmail] = useState("");
   const [hideMessage, setHideMessage] = useState(true);
   const [alertOpen, setAlertOpen] = useState(false);
@@ -78,7 +78,7 @@ const PasswordRecoveryForm = ({registerMessage}) => {
             <Box sx={{ display: "inline-block" }}>
               <p>
                 Já tem uma conta?{" "}
-                <Link to="/login" onClick={() => registerMessage(false)}>
+                <Link to="/login">
                   Conecte-se
                   <ArrowRight
                     sx={{ fontSize: "1.7rem", verticalAlign: "middle" }}

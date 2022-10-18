@@ -2,7 +2,7 @@ import {useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router"
 import {Box} from "@mui/material";
 import { AppContext } from "../src/services/context";
-import apiService from "../src//services/apiService";
+import apiService from "../src/services/apiService";
 import ContentTitle from "../src/components/Content/ContentTitle";
 import ContentCard from "../src/components/ContentCard";
 import {Swiper, SwiperSlide} from "swiper/react";
@@ -17,6 +17,7 @@ const Cursos = ({courses, journeys}) => {
 
 
     useEffect(() => {
+        const {api}         = apiService;
         const token = sessionStorage.getItem("token");
         setLogged(!!token);
         const userID = sessionStorage.getItem("userID");

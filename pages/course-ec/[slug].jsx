@@ -14,10 +14,13 @@ import SEO from '../../src/seo'
 const CourseLD = ({ course }) => {
     const router = useRouter()
     const ctx = useContext(AppContext);
+    const [logged, setLogged] = useState(false);
     const [isEnrolled, setIsEnrolled] = useState(false);
+    const {api}     = apiService;
     
     useEffect(() => {
         const token = sessionStorage.getItem("token");
+        setLogged(!!token)
         ctx.setTitle({
             main: "Curso",
             sub: course.title,
@@ -31,10 +34,10 @@ const CourseLD = ({ course }) => {
                 user: sessionStorage.getItem("userID"),
                 course: course.id
             }).then((res) => {
-                router.push(`/${slug}/aulas/${course.id}`)
+                router.push(`/${router.query.slug}/aulas/${course.id}`)
             })
         } else {
-            router.push(`/${slug}/aulas/${course.id}`)
+            router.push(`/${router.query.slug}/aulas/${course.id}`)
         }
     }
 
@@ -82,7 +85,7 @@ const CourseLD = ({ course }) => {
                         <div className="description">{parse(course.description)}</div>
 
                         <Box sx={coursePage.description.button}>
-                            {token && (
+                            {logged && (
                                 <Button
                                     onClick={() => handleAssignment(course)}
                                     sx={coursePage.description.courseLink}
@@ -91,7 +94,7 @@ const CourseLD = ({ course }) => {
                                 </Button>
                             )}
 
-                            {!token && (
+                            {!logged && (
                                 <Button
                                     sx={coursePage.description.courseLink}
                                     onClick={handleRedirect}

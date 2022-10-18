@@ -24,7 +24,7 @@ import Oportunities from "./pages/Oportunities";
 import Employability from "./pages/Employability";
 import EmployabilityRegister from "./pages/EmployabilityRegister";
 import Profile from "./pages/Profile";
-import Password from "./pages/Password";
+import Password from "./pages/EditarSenha";
 import AccountEdition from "./pages/AccountEdition";
 import Filter from "./components/Search/Filter";
 import Video from "./pages/Video";
@@ -34,7 +34,7 @@ import Ebooks from "./pages/Ebooks";
 import Finished from "./pages/Finished";
 import Journey from "./pages/Journey";
 import CoursesListing from "./pages/CoursesListing";
-import TermsAndServices from "./pages/TermsAndServices"
+import TermsAndServices from "./pages/TermosEServicos"
 import CourseLD from "./pages/CourseLD";
 import Lessons from "./pages/Lessons"
 import Lesson from "./pages/Lesson";
@@ -56,17 +56,17 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<AppSettings />}>
-              <Route path="/login" element={<LoginRegister />} />
-              <Route path="/registrar" element={<LoginRegister />} />
-              <Route path="/recuperar-senha" element={<LoginRegister />} />
-              <Route path="/redefinir-senha" element={<LoginRegister />} />
+              {/*<Route path="/login" element={<LoginRegister />} />*/}
+              {/*<Route path="/registrar" element={<LoginRegister />} />*/}
+              {/*<Route path="/recuperar-senha" element={<LoginRegister />} />*/}
+              {/*<Route path="/redefinir-senha" element={<LoginRegister />} />*/}
               <Route path="/empregabilidade/registrar" element={<EmployabilityRegister />} />
 
               <Route element={<TopBottomBars />}>
                 {/* <Route path="/" element={<Home />} /> */}
                 {/* <Route path="/procurar" element={<Search />} /> */}
                 {/* <Route path="/pesquisa-cursos" element={<CoursesListing />} /> */}
-                <Route path="/tag/:slug/:id" element={<Tag />} />
+                {/*<Route path="/tag/:slug/:id" element={<Tag />} />*/}
                 {/* <Route path="/cursos" element={<Courses />} /> */}
                 {/* <Route path="/course-ec/:slug" element={<CourseLD />} /> */}
                 <Route path="/lessons/:slug/:id" element={<Lesson />} />
@@ -90,13 +90,13 @@ function App() {
                 {/* <Route path="/bolsa-de-estudo/:slug" element={<Scholarship />} /> */}
                 {/* <Route path="/empregabilidade/:slug" element={<Employability />} /> */}
                 {/* <Route path="/oportunidades" element={<Oportunities />} /> */}
-                <Route path="/perfil" element={<Profile />} />
-                <Route path="/editar-senha" element={<Password />} />
-                <Route path="/editar-conta" element={<AccountEdition />} />
+                {/*<Route path="/perfil" element={<Profile />} />*/}
+                {/*<Route path="/editar-senha" element={<Password />} />*/}
+                {/*<Route path="/editar-conta" element={<AccountEdition />} />*/}
                 <Route path="/filtro" element={<Filter />} />
                 {/*<Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />*/}
                 <Route path="/concluido" element={<Finished />} />
-                <Route path="/termos-e-servicos" element={<TermsAndServices />} />
+                {/*<Route path="/termos-e-servicos" element={<TermsAndServices />} />*/}
                 <Route path="/pesquisa-de-satisfacao" element={<Temp />} />
               </Route>
             </Route>

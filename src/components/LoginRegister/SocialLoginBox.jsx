@@ -8,7 +8,7 @@ import apiService from "../../services/apiService";
 import { useRouter } from 'next/router';
 import Image from 'next/image'
 
-const SocialLoginBox = ({ login, registerMessage }) => {
+const SocialLoginBox = ({ login }) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
 

@@ -37,7 +37,6 @@ export const genHash = (str, seed = 0) => {
 
 export const capitalizeFirstLetterSlug = (str) => {
     str = str.replaceAll('-', ' ');
-    console.log(str)
     const words = str.split(" ");
     for (var i = 0; i < words.length; i++) {
         words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);

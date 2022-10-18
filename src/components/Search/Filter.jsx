@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import {
   Grid,
   Box,
@@ -8,14 +7,12 @@ import {
   Checkbox,
 } from "@mui/material";
 
-import Button from "../../components/Button";
+import Button from "../Button";
+import { useRouter } from "next/router";
 
 const Filter = ({handleModal, filters}) => {
-
-  const [searchParams, setSearchParams] = useSearchParams();
+  const router = useRouter()
   const [categoryIDs, setCategoryIDs] = useState([]);
-  let navigate = useNavigate();
-  const location = useLocation();
   
   const handleCheckbox = (e) => {
     const checkboxID = parseInt(e.target.value);
@@ -31,12 +28,12 @@ const Filter = ({handleModal, filters}) => {
 
   const handleApply = () => {
     handleModal(false);
-    const term = searchParams.get('search');
-    let url = location.pathname + '?t=' + categoryIDs.toString();
+    const term = router.query.search;
+    let url = router.pathname + '?t=' + categoryIDs.toString();
     if(null !== term){
       url += '&search=' + term
     }
-    navigate(url, {replace: true})
+    router.push(url)
   }
 
   return (

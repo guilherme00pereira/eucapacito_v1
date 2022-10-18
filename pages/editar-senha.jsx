@@ -1,6 +1,5 @@
-import {useState} from "react";
-import Button from "../components/Button";
-import Logo from "../assets/img/logo.png";
+import {useEffect, useState} from "react";
+import Button from "../src/components/Button";
 import {
     Container,
     Box,
@@ -18,14 +17,13 @@ import {
     Visibility,
     VisibilityOff,
 } from "@mui/icons-material";
-import apiService from "../services/apiService";
-import {messageReturn} from "../commonStyles/messageReturn";
-import SendMessageImage from "../assets/img/mensagem-enviada.png";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../src/services/apiService";
+import {messageReturn} from "../src/commonStyles/messageReturn";
+import SendMessageImage from "../public/assets/img/mensagem-enviada.png";
 
-const Password = () => {
+const EditarSenha = () => {
     const [fields, setFields] = useState({
-        id: sessionStorage.getItem('userID'),
+        id: "",
         oldPassword: "",
         newPassword: "",
         confirmPassword: "",
@@ -77,13 +75,22 @@ const Password = () => {
         }
     }
 
+    useEffect(() => {
+        setFields({
+            id: sessionStorage.getItem('userID'),
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+            showOldPassword: false,
+            showNewPassword: false,
+        })
+    }, [])
+
     return (
         <Container sx={styles}>
-            <MetadataManager ispage={true} value="default" />
             <Box sx={styles.pagetitle}>
                 <h1>Alteração de senha</h1>
             </Box>
-            <img src={Logo} alt="logo"/>
 
             {hideMessage ?
             <form sx={styles.form}>
@@ -160,7 +167,7 @@ const Password = () => {
     );
 };
 
-export default Password;
+export default EditarSenha;
 
 const styles = {
     button: {

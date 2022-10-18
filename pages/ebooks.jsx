@@ -1,14 +1,14 @@
 import {useState, useEffect} from "react";
 import {Box, CircularProgress} from "@mui/material";
 
-import apiService from "../services/apiService";
-import Button from "../components/Button";
-import EbookPost from "../components/Content/EbookPost";
-import UpdateForm from "../components/Content/UpdateForm";
+import apiService from "../src/services/apiService";
+import Button from "../src/components/Button";
+import EbookPost from "../src/components/Content/EbookPost";
+import UpdateForm from "../src/components/Content/UpdateForm";
 
-import { postListStyles } from '../commonStyles/postListStyles';
-import {loading} from "../commonStyles/loading";
-import MetadataManager from "../layouts/MetadataManager";
+import { postListStyles } from '../src/commonStyles/postListStyles';
+import {loading} from "../src/commonStyles/loading";
+import MetadataManager from "../src/layouts/MetadataManager";
 
 const Ebooks = () => {
     const [ebooks, setEbooks] = useState([]);

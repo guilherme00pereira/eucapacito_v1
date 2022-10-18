@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import parse from 'html-react-parser';
-import apiService from "../services/apiService";
-import {useOutletContext} from "react-router-dom";
+import apiService from "../src/services/apiService";
 import {Box} from "@mui/material";
-import MetadataManager from "../layouts/MetadataManager";
+import {AppContext} from "../src/services/context";
 
-const TermsAndServices = () => {
-    const [title, setTitle] = useOutletContext();
-    const [content, setContent] = useState("");
-    const {api} = apiService;
+const TermosEServicos = ({ content }) => {
+    const ctx = useContext(AppContext)
 
     useEffect(() => {
-        setTitle({
+        ctx.setTitle({
             main: "Termos e Serviços",
             sub: "Política de privacidade",
-        });
-        api.get('/eucapacito/v1/terms-and-services').then( (res) => {
-            setContent(res.data.items[0].items[0].value.content)
         });
     }, []);
 
     return (
         <Box sx={styles.root}>
-
-            <MetadataManager ispage={true} value="terms" />
-
             <h1>Política de Privacidade - LGPD</h1>
             <hr />
             {parse(content)}
@@ -32,7 +23,17 @@ const TermsAndServices = () => {
     );
 };
 
-export default TermsAndServices;
+export async function getServerSideProps() {
+    const {api} = apiService;
+
+    let res = await api.get('/eucapacito/v1/terms-and-services')
+    const content = res.data.items[0].items[0].value.content
+
+    return { props: { content }}
+
+}
+
+export default TermosEServicos;
 
 const styles = {
     root: {

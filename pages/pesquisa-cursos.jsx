@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import { AppContext } from "../src/services/context";
 import {Box, CircularProgress, Drawer} from "@mui/material";
 import Filter from "../src/components/Search/Filter";
@@ -7,10 +7,11 @@ import {loading} from "../src/commonStyles/loading"
 import Button from "../src/components/Button";
 import FilterIcon from "../public/assets/img/filter-icon.svg";
 import CourseCard from "../src/components/Course/CourseCard";
+import { useRouter } from "next/router";
+import Image from "next/image"
 
 const PesquisaCursos = () => {
     const router = useRouter();
-    const { s, t } = router.query;
     const [isLoading, setIsLoading] = useState(false);
     const [courses, setCourses] = useState([]);
     const [filters, setFilters] = useState({
@@ -49,54 +50,55 @@ const PesquisaCursos = () => {
                 main: "Cursos",
                 sub: "Encontre um curso para aprender",
             });
-
-        setIsLoading(true);
-        let term = searchParams.get('s');
-        if(term === null) term = ""
-        const ids = searchParams.get('t');
-        let url = `/eucapacito/v1/search?page=${page}&course=true`;
-        if(null !== ids) {
-            url += `&t=${ids}`;
-        }
-        if (term === "" || term.length > 3) {
-            url += `&search=${term}`;
-        }
-        api.get(url).then((res) => {
-            if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
-                setHideLoadMoreButton(true);
+        if(router.isReady) {
+            setIsLoading(true);
+            let term = router.query.search;
+            if (term === null || typeof term === 'undefined') term = ""
+            const ids = router.query.t;
+            let url = `/eucapacito/v1/search?page=${page}&course=true`;
+            if (null !== ids) {
+                url += `&t=${ids}`;
             }
-            const fetchedCourses = [];
-            res.data.courses.forEach((course) => {
-                const newCourse = {
-                    id: course.id,
-                    slug: course.slug,
-                    featuredImg: course.image,
-                    title: course.title,
-                    subtitle: "Eu Capacito",
-                    partnerLogoURL: course.logo,
-                    type: course.type
-                };
-
-                fetchedCourses.push(newCourse);
-            });
-            setFilters({
-                levels: res.data.filters.nivel,
-                ranking: res.data.filters.avaliao,
-                categories: res.data.filters.categoria_de_curso_ec,
-                partners: res.data.filters.parceiro_ec
-            })
-            if (page === 1) {
-                setCourses([...fetchedCourses]);
-            } else {
-                setCourses([...courses, ...fetchedCourses]);
+            if (term === "" || term.length > 3) {
+                url += `&search=${term}`;
             }
-            setIsLoading(false);
-        })
-            .catch((error) => {
+            api.get(url).then((res) => {
+                if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
+                    setHideLoadMoreButton(true);
+                }
+                const fetchedCourses = [];
+                res.data.courses.forEach((course) => {
+                    const newCourse = {
+                        id: course.id,
+                        slug: course.slug,
+                        featuredImg: course.image,
+                        title: course.title,
+                        subtitle: "Eu Capacito",
+                        partnerLogoURL: course.logo,
+                        type: course.type
+                    };
+
+                    fetchedCourses.push(newCourse);
+                });
+                setFilters({
+                    levels: res.data.filters.nivel,
+                    ranking: res.data.filters.avaliao,
+                    categories: res.data.filters.categoria_de_curso_ec,
+                    partners: res.data.filters.parceiro_ec
+                })
+                if (page === 1) {
+                    setCourses([...fetchedCourses]);
+                } else {
+                    setCourses([...courses, ...fetchedCourses]);
+                }
                 setIsLoading(false);
-                return false;
-            });
-    }, [page, token, searchParams]);
+            })
+                .catch((error) => {
+                    setIsLoading(false);
+                    return false;
+                });
+        }
+    }, [page, router.query.search, router.query.t]);
 
     return (
         <Box sx={styles.root}>
@@ -108,7 +110,7 @@ const PesquisaCursos = () => {
                     <div className="filter-control">
                         <p>Filtro</p>
 
-                        <img src={FilterIcon} alt="" onClick={handleDrawer}/>
+                        <Image src={FilterIcon} alt="" onClick={handleDrawer}/>
                     </div>
 
                     <Drawer

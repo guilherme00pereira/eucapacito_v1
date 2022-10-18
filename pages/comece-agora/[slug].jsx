@@ -103,7 +103,7 @@ const EmployabilityRegister = () => {
 
                 {currentStep < 8 && (
                     <Btn onClick={handleNextStep} sx={styles.submitButton}>
-                        Continuar <img src={ArrowRightPath} alt="Ícone - Seta para direita"/>
+                        Continuar <Image src={ArrowRightPath} alt="Ícone - Seta para direita"/>
                     </Btn>
                 )}
             </Box>
