@@ -20,7 +20,6 @@ import {
   PersonOutlined
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import Link from "../Link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import dynamic from 'next/dynamic'
@@ -29,7 +28,7 @@ import { useRouter } from "next/router";
 
 const SocialLoginBox = dynamic(() => import("./SocialLoginBox"), { ssr: false })
 
-const RegisterForm = ({registerMessage}) => {
+const RegisterForm = () => {
     const router = useRouter()
     const [fields, setFields] = useState({
         name: "",
@@ -71,7 +70,6 @@ const RegisterForm = ({registerMessage}) => {
         }
         const response = await apiService.register(fields);
         if (response.status) {
-            registerMessage(true)
             router.push("/login");
         } else {
             setAlertType('error')
@@ -181,7 +179,7 @@ const RegisterForm = ({registerMessage}) => {
                 </form>
             </Box>
             <Box>
-                <SocialLoginBox login={false} registerMessage={registerMessage} />
+                <SocialLoginBox login={false} />
             </Box>
             <Snackbar
                 open={alertOpen}

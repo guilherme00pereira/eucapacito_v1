@@ -5,7 +5,6 @@ import FormContainer from "../src/components/LoginRegister/FormContainer";
 
 const Login = () => {
     const router = useRouter()
-
     useEffect(() => {
         if (sessionStorage.getItem('token')) {
             return router.push('/');

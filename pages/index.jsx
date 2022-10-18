@@ -5,6 +5,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
+import Footer from "../src/layouts/Footer";
 import apiService from "../src/services/apiService";
 import { ExpandMore } from "@mui/icons-material";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -265,6 +266,7 @@ const Index = ({ metadata }) => {
           </AccordionDetails>
         </Accordion>
       </Box>
+      <Footer />
     </Box>
   );
 }

@@ -31,7 +31,7 @@ import Video from "./pages/Video";
 import Videos from "./pages/Videos";
 import Ebook from "./pages/Ebook";
 import Ebooks from "./pages/Ebooks";
-import Finished from "./pages/Finished";
+import Finished from "./pages/Concluido";
 import Journey from "./pages/Journey";
 import CoursesListing from "./pages/CoursesListing";
 import TermsAndServices from "./pages/TermosEServicos"
@@ -60,7 +60,7 @@ function App() {
               {/*<Route path="/registrar" element={<LoginRegister />} />*/}
               {/*<Route path="/recuperar-senha" element={<LoginRegister />} />*/}
               {/*<Route path="/redefinir-senha" element={<LoginRegister />} />*/}
-              <Route path="/empregabilidade/registrar" element={<EmployabilityRegister />} />
+              {/*<Route path="/empregabilidade/registrar" element={<EmployabilityRegister />} />*/}
 
               <Route element={<TopBottomBars />}>
                 {/* <Route path="/" element={<Home />} /> */}
@@ -76,7 +76,7 @@ function App() {
                {/*  <Route path="/curso-ec/:slug" element={<Course />} /> */}
                 {/* <Route path="/jornada/:slug" element={<Journey />} /> */}
                 {/* <Route path="/contato" element={<Contact />} /> */}
-                <Route path="/faq" element={<Faq />} />
+                {/*<Route path="/faq" element={<Faq />} />*/}
                 {/* <Route path="/parceiros" element={<Partners />} /> */}
                 {/* <Route path="/conteudo" element={<Content />} /> */}
                 {/* <Route path="/:slug" element={<Blog />} /> */}
@@ -93,9 +93,9 @@ function App() {
                 {/*<Route path="/perfil" element={<Profile />} />*/}
                 {/*<Route path="/editar-senha" element={<Password />} />*/}
                 {/*<Route path="/editar-conta" element={<AccountEdition />} />*/}
-                <Route path="/filtro" element={<Filter />} />
+                {/*<Route path="/filtro" element={<Filter />} />*/}
                 {/*<Route path="/comece-agora/:slug" element={<EmployabilityRegister />} />*/}
-                <Route path="/concluido" element={<Finished />} />
+                {/*<Route path="/concluido" element={<Finished />} />*/}
                 {/*<Route path="/termos-e-servicos" element={<TermsAndServices />} />*/}
                 <Route path="/pesquisa-de-satisfacao" element={<Temp />} />
               </Route>

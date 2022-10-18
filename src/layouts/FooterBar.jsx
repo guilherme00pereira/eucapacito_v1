@@ -1,110 +1,109 @@
-import { useState, useEffect } from "react";
-import { Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import {useState, useEffect} from "react";
+import {Paper, BottomNavigation, BottomNavigationAction} from "@mui/material";
 import {
-  HomeRounded,
-  SearchRounded,
-  ArticleRounded,
-  PersonOutlined,
+    HomeRounded,
+    SearchRounded,
+    ArticleRounded,
+    PersonOutlined,
 } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {styled} from "@mui/material/styles";
+import Link from 'next/link'
+import {useRouter} from "next/router";
 
 const FooterBar = () => {
-  const [value, setValue] = useState(null);
-  const [token, setToken] = useState(null);
+    const router = useRouter()
+    const [value, setValue] = useState(null);
+    const [token, setToken] = useState(null);
+    const [path, setPath] = useState(null)
 
-  const path = useLocation().pathname;
-  let navigate = useNavigate();
+    useEffect(() => {
+        setToken(sessionStorage.getItem("token"));
+        const path = router.pathname
+        setPath(path)
+        switch (path) {
+            case "/":
+                setValue(0);
+                break;
+            case "/procurar":
+                setValue(1);
+                break;
+            case "/cursos":
+                setValue(2);
+                break;
+            case "/login":
+                setValue(3);
+                break;
+            default:
+                setValue(9);
+                break;
+        }
+    }, [token, path]);
 
-  useEffect(() => {
-    setToken(sessionStorage.getItem("token"));
+    const handleNavChange = (event, newValue) => setValue(newValue);
 
-    switch (path) {
-      case "/":
-        setValue(0);
-        break;
-      case "/procurar":
-        setValue(1);
-        break;
-      case "/cursos":
-        setValue(2);
-        break;
-      case "/login":
-        setValue(3);
-        break;
-      default:
-        setValue(9);
-        break;
+    const handleClickEvent = (to) => {
+        router.push(to)
     }
-  }, [token, path]);
+    return (
+        <Paper
+            sx={{
+                position: "fixed",
+                left: 0,
+                zIndex: 10,
+                //css desktop
+                right: {
+                    md: "94%",
+                    xs: "0",
+                },
+                bottom: {
+                    md: "40%",
+                    xs: "0",
+                },
+                backgroundImage: {
+                    md: "none",
+                },
+                boxShadow: {
+                    md: "none",
+                },
+                backgroundColor: {
+                    md: "unset"
+                }
 
-  const handleNavChange = (event, newValue) => setValue(newValue);
-
-  return (
-    <Paper
-      sx={{
-        position: "fixed",
-        left: 0,
-        zIndex: 10,
-        //css desktop
-        right: {
-          md: "94%",
-          xs: "0",
-        },
-        bottom: {
-          md: "40%",
-          xs: "0",
-        },
-        backgroundImage: {
-          md: "none",
-        },
-        boxShadow: {
-          md: "none",
-        },
-        backgroundColor:{
-            md:"unset"
-        } 
-        
-      }}
-      elevation={3}
-    >
-      <Nav showLabels value={value} onChange={handleNavChange}>
-        <NavAction
-          component={Link}
-          to="/"
-          label="Home"
-          icon={<HomeRounded />}
-        />
-        <NavAction
-          component={Link}
-          to="/procurar?search="
-          label="Procurar"
-          icon={<SearchRounded />}
-        />
-        <NavAction
-          component={Link}
-          to="/cursos"
-          label="Ver cursos"
-          icon={<ArticleRounded />}
-        />
-        {token ? (
-          <NavAction
-            component={Link}
-            to="/perfil"
-            label="Perfil"
-            icon={<PersonOutlined />}
-          />
-        ) : (
-          <NavAction
-            component={Link}
-            to="/login"
-            label="Entrar"
-            icon={<PersonOutlined />}
-          />
-        )}
-      </Nav>
-    </Paper>
-  );
+            }}
+            elevation={3}
+        >
+            <Nav showLabels value={value} onChange={handleNavChange}>
+                <NavAction
+                    label="Home"
+                    icon={<HomeRounded/>}
+                    onClick={() => handleClickEvent('/')}
+                />
+                <NavAction
+                    label="Procurar"
+                    icon={<SearchRounded/>}
+                    onClick={() => handleClickEvent('/procurar?search=')}
+                />
+                <NavAction
+                    label="Ver cursos"
+                    icon={<ArticleRounded/>}
+                    onClick={() => handleClickEvent('/cursos')}
+                />
+                {token ? (
+                    <NavAction
+                        label="Perfil"
+                        icon={<PersonOutlined/>}
+                        onClick={() => handleClickEvent('/perfil')}
+                    />
+                ) : (
+                    <NavAction
+                        label="Entrar"
+                        icon={<PersonOutlined/>}
+                        onClick={() => handleClickEvent('/login')}
+                    />
+                )}
+            </Nav>
+        </Paper>
+    );
 };
 
 export default FooterBar;

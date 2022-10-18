@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import ReactGA from 'react-ga4';
 import Header from './layouts/Header';
-import FooterBar from './layouts/Footer';
+import FooterBar from './layouts/FooterBar';
 
 
 const TRACKING_ID = "G-NGP1WFMVFV";

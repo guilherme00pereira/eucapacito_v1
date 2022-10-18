@@ -26,7 +26,6 @@ const Tag = () => {
     useEffect(() => {
         if(router.isReady) {
             setTagTitle(capitalizeFirstLetterSlug(router.query.slug))
-
             setIsLoading(true);
             api.get(`/wp/v2/posts?tags=${router.query.id}&per_page=12&page=${page}`)
                 .then((res) => {
@@ -60,7 +59,7 @@ const Tag = () => {
                     return false;
                 });
         }
-    }, [page]);
+    }, [page, router]);
 
     return (
         <Box sx={postListStyles.root}>

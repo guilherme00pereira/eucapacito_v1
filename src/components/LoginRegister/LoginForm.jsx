@@ -18,7 +18,7 @@ import {
   VisibilityOff,
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import Link from "../Link";
+import Link from "next/link";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import dynamic from 'next/dynamic'
@@ -152,7 +152,7 @@ const LoginForm = () => {
               }
             />
 
-            <Link to="/recuperar-senha" sx={{ textAlign: "right", mr: { md: "50%" }, fontSize: "16px" }} >
+            <Link href="/recuperar-senha" sx={{ textAlign: "right", mr: { md: "50%" }, fontSize: "16px" }} >
               Esqueceu a senha
             </Link>
           </FormCtrl>
@@ -164,11 +164,11 @@ const LoginForm = () => {
           </FormCtrl>
         </form>
       </Box>
-      {(typeof window !== 'undefined') &&
-      <Box>
-        <SocialLoginBox login={true} />
-      </Box>
-    }
+
+        <Box>
+          <SocialLoginBox login={true} />
+        </Box>
+
 
       <Snackbar
         open={alertOpen}

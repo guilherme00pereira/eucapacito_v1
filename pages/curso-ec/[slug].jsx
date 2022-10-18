@@ -1,9 +1,9 @@
 import {useEffect, useState, useContext} from "react";
-import parse from "html-react-parser";
 import {Box, Grid} from "@mui/material";
 import {
     AccessTime,
 } from "@mui/icons-material";
+import parse from "html-react-parser";
 import apiService from "../../src/services/apiService";
 import Button from "../../src/components/Button";
 import {coursePage} from "../../src/commonStyles/coursePage";
@@ -42,7 +42,7 @@ const Course = ({ course }) => {
 
                 <Box sx={coursePage.container}>
                     <Box sx={coursePage.description}>
-                        <h1>{course.title}</h1>
+                        <h1>{parse(course.title)}</h1>
                         <Grid container sx={coursePage.description.block}>
                             <Grid item xs={8} className="description-desk">
                                 <p>

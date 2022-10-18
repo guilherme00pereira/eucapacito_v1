@@ -1,5 +1,5 @@
 import { Container, Box } from "@mui/material";
-import Link from "../components/Link";
+import Link from "../src/components/Link";
 
 const Faq = () => {
   return (
@@ -13,7 +13,7 @@ const Faq = () => {
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Link to="/contato">
+        <Link href="/contato">
           <h1>Mensagem</h1>
         </Link>
         <h1>F.A.Q.</h1>

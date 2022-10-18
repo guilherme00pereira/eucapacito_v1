@@ -38,7 +38,7 @@ const DynamicBlog = ({blog, posts}) => {
                                 <small>{blog.cats}</small>
                             </Box>
                             <hr/>
-                            <h1>{blog.title}</h1>
+                            <h1>{parse(blog.title)}</h1>
                             <div className="content">
                                 {parse(blog.content)}
                             </div>

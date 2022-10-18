@@ -14,7 +14,7 @@ const Login = () => {
 
     return (
         <FormContainer>
-            <RegisterForm registerMessage={setShowRegisterMessage} />
+            <RegisterForm />
         </FormContainer>
     );
 };

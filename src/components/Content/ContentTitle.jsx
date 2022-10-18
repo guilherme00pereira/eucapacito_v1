@@ -21,6 +21,7 @@ const styles = {
     box: {
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "baseline"
+        alignItems: "baseline",
+        cursor: "pointer"
     }
 }
