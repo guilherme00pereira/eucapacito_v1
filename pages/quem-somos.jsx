@@ -150,7 +150,7 @@ const QuemSomos = ({ content, metadata }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const {api}     = apiService;
   let res         = await api.get('/eucapacito/v1/aboutpage')
   const content = {

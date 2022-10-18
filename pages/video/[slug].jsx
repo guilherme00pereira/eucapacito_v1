@@ -1,42 +1,41 @@
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { Box } from "@mui/material";
 import parse from "html-react-parser";
-import apiService from "../services/apiService";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../../src/services/apiService";
+import {AppContext} from "../../src/services/context";
+import {useRouter} from "next/router";
 
 const DynamicPage = () => {
-  const [title, setTitle] = useOutletContext();
+  const ctx = useContext(AppContext);
+  const router = useRouter()
   const [video, setVideo] = useState({
     title: "",
     description: "",
     embedURL: "",
     yoast: {}
   });
-  const [renderMeta, setRenderMeta] = useState(false)
-  const { api } = apiService;
 
   useEffect(() => {
-    setTitle({
+    const { api } = apiService;
+    ctx.setTitle({
       main: "Vídeo",
       sub: false,
     });
 
-    api.get(`/wp/v2/video?slug=${slug}&_embed`).then((res) => {
-      const videoData = res.data[0];
-      setVideo({
-        title: parse(videoData.title.rendered),
-        description: parse(videoData.content.rendered),
-        yoast: videoData.yoast_head_json
+    if(router.isReady) {
+      api.get(`/wp/v2/video?slug=${router.query.slug}&_embed`).then((res) => {
+        const videoData = res.data[0];
+        setVideo({
+          title: parse(videoData.title.rendered),
+          description: parse(videoData.content.rendered),
+          yoast: videoData.yoast_head_json
+        });
       });
-      setRenderMeta(true)
-    });
+    }
   }, []);
 
   return (
     <Box sx={styles.root}>
-      {renderMeta &&
-          <MetadataManager ispage={false} value={video.yoast}/>
-      }
       <h1 className="title">{video.title}</h1>
       <div className="description">{video.description}</div>
     </Box>

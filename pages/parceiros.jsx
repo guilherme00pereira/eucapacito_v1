@@ -63,7 +63,7 @@ const Parceiros = ({ partners, metadata }) => {
       </Box>
 
       <Box sx={styles.boxSx}>
-        {partners.map((partner, index) => {
+        {partners.map((partner) => {
           if (partner.category === 'Mantenedores') {
             return (<Paper sx={styles.paperSx}>
               <img src={partner.image} alt="Logo - {partner.name}" />
@@ -78,7 +78,7 @@ const Parceiros = ({ partners, metadata }) => {
       </Box>
 
       <Box sx={styles.boxSx}>
-        {partners.map((partner, index) => {
+        {partners.map((partner) => {
           if (partner.category === 'Associados') {
             return (
               <Paper sx={styles.paperSxDesk}>
@@ -95,7 +95,7 @@ const Parceiros = ({ partners, metadata }) => {
 
       <Box sx={styles.boxSx}>
 
-        {partners.map((partner, index) => {
+        {partners.map((partner) => {
           if (partner.category === 'Parceiros Institucionais') {
             return (
               <Paper sx={styles.paperSxDeskLast}>
@@ -177,7 +177,7 @@ const Parceiros = ({ partners, metadata }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const {api}     = apiService;
   let res         = await api.get('eucapacito/v1/partners')
   const partners  = res.data

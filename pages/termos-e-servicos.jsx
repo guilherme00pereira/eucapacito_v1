@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import parse from 'html-react-parser';
 import apiService from "../src/services/apiService";
 import {Box} from "@mui/material";
@@ -25,7 +25,7 @@ const TermosEServicos = ({ content, metadata }) => {
     );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     const {api} = apiService;
 
     let res         = await api.get('/eucapacito/v1/terms-and-services')
