@@ -19,8 +19,10 @@ import Imagem2 from "../public/assets/img/image2-quem-somos.png";
 import Imagem3 from "../public/assets/img/image3-quem-somos.png";
 import Imagem4 from "../public/assets/img/image4-quem-somos.png";
 import Image from 'next/image';
+import SEO from '../src/seo'
 
-const QuemSomos = ({ content }) => {
+
+const QuemSomos = ({ content, metadata }) => {
   const ctx = useContext(AppContext);
   
   useEffect(() => {
@@ -33,6 +35,8 @@ const QuemSomos = ({ content }) => {
 
   return (
     <Box sx={styles.root}>
+
+      <SEO metadata={metadata} />
 
       <h1>Sobre o Eu Capacito</h1>
       <hr />
@@ -148,7 +152,6 @@ const QuemSomos = ({ content }) => {
 
 export async function getServerSideProps() {
   const {api}     = apiService;
-
   let res         = await api.get('/eucapacito/v1/aboutpage')
   const content = {
       video: res.data.video,
@@ -166,7 +169,17 @@ export async function getServerSideProps() {
       empregos_title: res.data.empregos_title,
       empregos_info: res.data.empregos_info,
     }
-    return { props: { content }}
+
+    res       = await api.get("/wp/v2/pages/" + process.env.PAGE_ABOUT)
+    const metadata  = {
+          title: res.data.yoast_head_json.og_title,
+          description: res.data.yoast_head_json.description,
+          og_title: res.data.yoast_head_json.og_title,
+          og_description: res.data.yoast_head_json.og_description,
+          article_modified_time: res.data.yoast_head_json.article_modified_time ?? null
+        }
+
+    return { props: { content, metadata }}
 }
 
 export default QuemSomos;

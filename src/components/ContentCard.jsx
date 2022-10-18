@@ -1,13 +1,13 @@
-import Image from 'next/image'
 import {Box, Grid, Link} from "@mui/material";
 import parse from "html-react-parser";
 
 const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
+  const logoPathAbsent = (typeof logoPath === 'undefined') || logoPath === false;
   return (
     <Box sx={styles.card}>
       <Box sx={styles.card.image}>
         {imageUrl === null ||
-            <Image src={imageUrl} alt={`Curso - ${title}`} width="340" height="200" layout="responsive"/>
+            <img src={imageUrl} alt={`Curso - ${title}`}/>
         }
       </Box>
 
@@ -17,9 +17,9 @@ const CardContent = ({ imageUrl, title, subtitle, logoPath }) => {
           <small>{parse(`${subtitle}`)}</small>
         </Grid>
 
-        {logoPath === null ||
+        {logoPathAbsent ||
             <Grid item sx={styles.card.partnerLogo}>
-              <Image src={logoPath} alt="Logo" layout="fill" objectFit='contain' />
+              <img src={logoPath} alt="Logo" />
             </Grid>
         }
 

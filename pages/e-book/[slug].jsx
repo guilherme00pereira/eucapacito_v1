@@ -1,65 +1,61 @@
-import { useEffect, useState } from "react";
-import {useLocation, useNavigate, useOutletContext, useParams} from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import { Box } from "@mui/material";
 import parse from "html-react-parser";
-import apiService from "../services/apiService";
-import Button from "../components/Button";
-import MetadataManager from "../layouts/MetadataManager";
+import apiService from "../../src/services/apiService";
+import Button from "../../src/components/Button";
+import {AppContext} from "../../src/services/context";
+import {useRouter} from "next/router";
 
 const DynamicPage = () => {
-    const token = sessionStorage.getItem('token');
-    const [title, setTitle] = useOutletContext();
+    const ctx = useContext(AppContext);
+    const router = useRouter()
+    const [logged, setLogged] = useState(false);
     const [ebook, setEbook] = useState({
         title: "",
         content: "",
         yoast: {}
     });
-    const [renderMeta, setRenderMeta] = useState(false)
-
-    const { api } = apiService;
-    const { slug } = useParams();
-    let location = useLocation();
-    let navigate = useNavigate();
 
     useEffect(() => {
-        setTitle({
+        const token = sessionStorage.getItem('token');
+        setLogged(!!token)
+        const { api } = apiService;
+        ctx.setTitle({
             main: "E-book",
             sub: false,
         });
-
-        api.get(`/wp/v2/ebooks?slug=${slug}`).then((res) => {
-            const ebookData = res.data[0];
-            setEbook({
-                title: parse(ebookData.title.rendered),
-                content: parse(ebookData.content.rendered),
-                download: ebookData.arquivo.guid,
-                yoast: ebookData.yoast_head_json
+        if(router.isReady) {
+            api.get(`/wp/v2/ebooks?slug=${router.query.slug}`).then((res) => {
+                const ebookData = res.data[0];
+                setEbook({
+                    title: parse(ebookData.title.rendered),
+                    content: parse(ebookData.content.rendered),
+                    download: ebookData.arquivo.guid,
+                    yoast: ebookData.yoast_head_json
+                });
             });
-            setRenderMeta(true)
-        });
+        }
     }, []);
 
     const handleRedirect = (e) => {
         e.preventDefault();
         sessionStorage.setItem("redirectURL", location.pathname);
-        navigate("/login");
+        router.push("/login");
     };
 
     return (
         <Box sx={styles.root}>
-            {renderMeta &&
-                <MetadataManager ispage={false} value={ebook.yoast}/>
-            }
+            
             <h1 className="title">{ebook.title}</h1>
             <div className="description">{ebook.content}</div>
             <Box sx={styles.button}>
-                {token && (
+                {logged && (
                     <Button href={ebook.download} target="_blank" sx={styles.ebookLink}>
                         Baixar E-book
                     </Button>
                 )}
 
-                {!token && (
+                {!logged && (
                     <Button
                         sx={styles.ebookLink}
                         onClick={handleRedirect}>

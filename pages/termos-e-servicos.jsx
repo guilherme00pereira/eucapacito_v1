@@ -3,8 +3,9 @@ import parse from 'html-react-parser';
 import apiService from "../src/services/apiService";
 import {Box} from "@mui/material";
 import {AppContext} from "../src/services/context";
+import SEO from '../src/seo'
 
-const TermosEServicos = ({ content }) => {
+const TermosEServicos = ({ content, metadata }) => {
     const ctx = useContext(AppContext)
 
     useEffect(() => {
@@ -16,6 +17,7 @@ const TermosEServicos = ({ content }) => {
 
     return (
         <Box sx={styles.root}>
+            <SEO metadata={metadata} />
             <h1>Política de Privacidade - LGPD</h1>
             <hr />
             {parse(content)}
@@ -26,10 +28,18 @@ const TermosEServicos = ({ content }) => {
 export async function getServerSideProps() {
     const {api} = apiService;
 
-    let res = await api.get('/eucapacito/v1/terms-and-services')
-    const content = res.data.items[0].items[0].value.content
+    let res         = await api.get('/eucapacito/v1/terms-and-services')
+    const content   = res.data.items[0].items[0].value.content
+    res             = await api.get("/wp/v2/pages/" + process.env.PAGE_TERMS)
+    const metadata  = {
+          title: res.data.yoast_head_json.og_title,
+          description: res.data.yoast_head_json.description,
+          og_title: res.data.yoast_head_json.og_title,
+          og_description: res.data.yoast_head_json.og_description,
+          article_modified_time: res.data.yoast_head_json.article_modified_time ?? null
+        }
 
-    return { props: { content }}
+    return { props: { content, metadata }}
 
 }
 

@@ -1,23 +1,24 @@
 import {useState, useEffect, useContext} from "react";
-import {useParams} from "react-router-dom";
 import {Container, Box, Stack, Pagination, CircularProgress} from "@mui/material";
 import Button from "../Button";
 import apiService from "../../services/apiService";
 import QuestionCard from "./QuestionCard";
 import {QuizContext} from "../../services/context";
+import { useRouter } from "next/router";
 
 const Questions = ({setFinish}) => {
+    const router = useRouter()
     const [validation, setValidation] = useContext(QuizContext);
     const [questions, setQuestions] = useState([]);
     const [current, setCurrent] = useState(1);
     const [end, setEnd] = useState(false);
     const {api} = apiService;
-    const {id} = useParams();
-    const token = sessionStorage.getItem("token");
     const [isLoading, setIsLoading] = useState(true);
-
+    
     useEffect(() => {
-        api.get(`/ldlms/v2/sfwd-question?quiz=${id}`, {
+        const token = sessionStorage.getItem("token");
+
+        api.get(`/ldlms/v2/sfwd-question?quiz=${router.query.id}`, {
             headers: {Authorization: `Bearer ${token}`},
         }).then((res) => {
             const fetchedQuestions = [];

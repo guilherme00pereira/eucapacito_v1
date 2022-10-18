@@ -29,8 +29,9 @@ const Filter = ({handleModal, filters}) => {
   const handleApply = () => {
     handleModal(false);
     const term = router.query.search;
+    console.log(term)
     let url = router.pathname + '?t=' + categoryIDs.toString();
-    if(null !== term){
+    if(null !== term && typeof term !== 'undefined'){
       url += '&search=' + term
     }
     router.push(url)

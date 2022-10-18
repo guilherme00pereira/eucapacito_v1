@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { Box, CircularProgress, Drawer } from "@mui/material";
-import FilterIcon from "../assets/img/filter-icon.svg";
-import apiService from "../services/apiService";
-import Filter from "../components/Search/Filter";
-import Button from "../components/Button";
-import CourseBox from "../components/Search/CourseBox";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import MetadataManager from "../layouts/MetadataManager";
+import FilterIcon from "../public/assets/img/filter-icon.svg";
+import apiService from "../src/services/apiService";
+import Filter from "../src/components/Search/Filter";
+import Button from "../src/components/Button";
+import CourseBox from "../src/components/Search/CourseBox";
+import { useRouter } from "next/router";
+import Image from 'next/image';
 
 const Procurar = () => {
+    const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
     const [courses, setCourses] = useState([]);
     const [filters, setFilters] = useState({
@@ -20,12 +21,10 @@ const Procurar = () => {
     const [total, setTotal] = useState(0);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [page, setPage] = useState(1);
-    // const [term, setTerm] = useState('');
-    // const [ids, setIds] = useState('');
+    const [term, setTerm] = useState('');
+    const [ids, setIds] = useState('');
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
-    const [searchParams, setSearchParams] = useSearchParams();
     const { api } = apiService;
-    let navigate = useNavigate();
 
     const handleLoadMore = () => {
         if (!hideLoadMoreButton) {
@@ -40,59 +39,61 @@ const Procurar = () => {
     const handleModal = (status) => setDrawerOpen(status);
 
     useEffect(() => {
-        let term = searchParams.get('s');
-        if(term === null) term = ""
-        const ids = searchParams.get('t');
-        let url = `/eucapacito/v1/search?page=${page}`;
-        if(null !== ids) {
-            url += `&t=${ids}`;
-          }
-        if (term === "" || term.length > 3) {
-            url += `&search=${term}`;
-        }
-        setIsLoading(true);
-        api.get(url).then((res) => {
-            if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
-                setHideLoadMoreButton(true);
-            } else {
-                setHideLoadMoreButton(false);
+        if(router.isReady) {
+            let term = router.query.search;
+            if(term === null || typeof term === 'undefined') term = ""
+            const ids = router.query.t;
+            let url = `/eucapacito/v1/search?page=${page}`;
+            if(null !== ids) {
+                url += `&t=${ids}`;
+                setIds(ids)
             }
-            const fetchedCourses = [];
-            res.data.courses.forEach((course) => {
-                const newCourse = {
-                    id: course.id,
-                    slug: course.slug,
-                    title: course.title,
-                    subtitle: course.type === "curso_ec" ? "Parceiro" : "Eu Capacito",
-                    partnerLogoURL: course.logo,
-                    type: course.type
-                };
-                fetchedCourses.push(newCourse);
-            });
-            setTotal(res.data.total);
-            setFilters({
-                levels: res.data.filters.nivel,
-                ranking: res.data.filters.avaliao,
-                categories: res.data.filters.categoria_de_curso_ec,
-                partners: res.data.filters.parceiro_ec
+            if (term === "" || term.length > 3) {
+                url += `&search=${term}`;
+                setTerm(term)
+            }
+            setIsLoading(true);
+            api.get(url).then((res) => {
+                if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
+                    setHideLoadMoreButton(true);
+                } else {
+                    setHideLoadMoreButton(false);
+                }
+                const fetchedCourses = [];
+                res.data.courses.forEach((course) => {
+                    const newCourse = {
+                        id: course.id,
+                        slug: course.slug,
+                        title: course.title,
+                        subtitle: course.type === "curso_ec" ? "Parceiro" : "Eu Capacito",
+                        partnerLogoURL: course.logo,
+                        type: course.type
+                    };
+                    fetchedCourses.push(newCourse);
+                });
+                setTotal(res.data.total);
+                setFilters({
+                    levels: res.data.filters.nivel,
+                    ranking: res.data.filters.avaliao,
+                    categories: res.data.filters.categoria_de_curso_ec,
+                    partners: res.data.filters.parceiro_ec
+                })
+                console.log(fetchedCourses)
+
+                page === 1 ? setCourses([...fetchedCourses]) : setCourses([...courses, ...fetchedCourses]);
+
+                setIsLoading(false);
             })
-            console.log(fetchedCourses)
-
-            page === 1 ? setCourses([...fetchedCourses]) : setCourses([...courses, ...fetchedCourses]);
-
-            setIsLoading(false);
-        })
-        .catch((error) => {
-            setIsLoading(false);
-            return false;
-        });
-    }, [page, searchParams]);
+            .catch((error) => {
+                setIsLoading(false);
+                return false;
+            });
+        }
+    }, [page, term, ids, router]);
 
     return (
 
         <Box sx={styles.root}>
-            <MetadataManager ispage={true} value="default" />
-
             <Box>
                 <div className="titulo">
                     <p>Resultados da pesquisa ({total})</p>
@@ -100,7 +101,7 @@ const Procurar = () => {
                     <div className="filter-control">
                         <p>Filtro</p>
 
-                        <img src={FilterIcon} alt="" onClick={handleDrawer} />
+                        <Image src={FilterIcon} alt="" onClick={handleDrawer} />
                     </div>
 
                     <Drawer

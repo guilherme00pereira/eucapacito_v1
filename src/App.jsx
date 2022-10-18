@@ -69,9 +69,9 @@ function App() {
                 {/*<Route path="/tag/:slug/:id" element={<Tag />} />*/}
                 {/* <Route path="/cursos" element={<Courses />} /> */}
                 {/* <Route path="/course-ec/:slug" element={<CourseLD />} /> */}
-                <Route path="/lessons/:slug/:id" element={<Lesson />} />
-                <Route path=":slug/aulas/:id" element={<Lessons />} />
-                <Route path="/quizzes/:slug/:id" element={<Quiz />} />
+                {/* <Route path="/lessons/:slug/:id" element={<Lesson />} /> */}
+                {/* <Route path=":slug/aulas/:id" element={<Lessons />} /> */}
+                {/* <Route path="/quizzes/:slug/:id" element={<Quiz />} /> */}
                 <Route path="/certificado/:id" element={<Certification />} />
                {/*  <Route path="/curso-ec/:slug" element={<Course />} /> */}
                 {/* <Route path="/jornada/:slug" element={<Journey />} /> */}

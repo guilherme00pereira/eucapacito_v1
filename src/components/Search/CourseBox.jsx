@@ -1,38 +1,38 @@
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
-
-import IconBlog from "../../assets/img/icon_blog.png";
-import IconBolsaEstudo from "../../assets/img/icon_bolsa_de_estudo.png";
-import IconCursos from "../../assets/img/icon_cursos.png";
-import IconEbook from "../../assets/img/icon_ebook.png";
-import IconEmpregabilidade from "../../assets/img/icon_empregabilidade.png";
-import IconJornada from "../../assets/img/icon_jornada.png";
-import IconVideo from "../../assets/img/icon_video.png";
+import IconBlog from "../../../public/assets/img/icon_blog.png";
+import IconBolsaEstudo from "../../../public/assets/img/icon_bolsa_de_estudo.png";
+import IconCursos from "../../../public/assets/img/icon_cursos.png";
+import IconEbook from "../../../public/assets/img/icon_ebook.png";
+import IconEmpregabilidade from "../../../public/assets/img/icon_empregabilidade.png";
+import IconJornada from "../../../public/assets/img/icon_jornada.png";
+import IconVideo from "../../../public/assets/img/icon_video.png";
+import { useRouter } from "next/router";
+import Image from 'next/image';
 
 
 const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
-  let navigate = useNavigate();
+  const router = useRouter()
 
   const handleCoursePage = (type, slug) => {
     switch(type) {
       case 'curso_ec':
-        navigate(`/curso-ec/${slug}`);
+        router.push(`/curso-ec/${slug}`);
         break;
       case 'sfwd-courses':
-        navigate(`/course-ec/${slug}`);
+        router.push(`/course-ec/${slug}`);
         break;
       case 'bolsa_de_estudo':
-        navigate(`/bolsa_de_estudo/${slug}`);
+        router.push(`/bolsa_de_estudo/${slug}`);
         break;
       case 'empregabilidade':
-        navigate(`/empregabilidade/${slug}`);
+        router.push(`/empregabilidade/${slug}`);
         break;
       case 'jornada':
-        navigate(`/jornada/${slug}`);
+        router.push(`/jornada/${slug}`);
         break;
       default:
-        navigate(`/${slug}`);  
+        router.push(`/${slug}`);  
         break;
     }
   };
@@ -60,7 +60,7 @@ const CourseBox = ({ courseId, slug, icon, title, company, logoURL, type }) => {
     <Box sx={styles.box} onClick={() => handleCoursePage(type, slug)}>
       <Box sx={styles.box.info}>
         <Box sx={styles.box.info.icon}>
-          <img src={renderIcon(type)} width="58" height="58" alt="Ícone" />
+          <Image src={renderIcon(type)} width="58" height="58" alt="Ícone" />
         </Box>
 
         <Box sx={styles.box.info.description}>

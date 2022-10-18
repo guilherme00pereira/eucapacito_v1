@@ -6,8 +6,9 @@ import apiService from "../src/services/apiService";
 import SendMessageImage from "../public/assets/img/mensagem-enviada.png"
 import {messageReturn} from "../src/commonStyles/messageReturn";
 import { AppContext } from "../src/services/context";
+import SEO from '../src/seo'
 
-const Parceiros = ({ partners }) => {
+const Parceiros = ({ partners, metadata }) => {
   const ctx = useContext(AppContext);
   const [fields, setFields] = useState({
     name: "",
@@ -49,6 +50,8 @@ const Parceiros = ({ partners }) => {
 
   return (
     <Box sx={styles.styleParagraph}>
+
+      <SEO metadata={metadata} />
 
       <Box sx={{ textAlign: "center", mb: "48px" }}>
         <p className="subtitle">Conheça quem apoia o Eu Capacito</p>
@@ -176,11 +179,18 @@ const Parceiros = ({ partners }) => {
 
 export async function getServerSideProps() {
   const {api}     = apiService;
-  
   let res         = await api.get('eucapacito/v1/partners')
   const partners  = res.data
+  res             = await api.get("/wp/v2/pages/" + process.env.PAGE_PARCEIROS)
+  const metadata  = {
+        title: res.data.yoast_head_json.og_title,
+        description: res.data.yoast_head_json.description,
+        og_title: res.data.yoast_head_json.og_title,
+        og_description: res.data.yoast_head_json.og_description,
+        article_modified_time: res.data.yoast_head_json.article_modified_time ?? null
+      }
 
-  return { props: { partners } }
+  return { props: { partners, metadata } }
 
 }
 

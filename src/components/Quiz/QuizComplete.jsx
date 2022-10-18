@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react";
-import {useNavigate, useParams} from "react-router-dom";
 import apiService from "../../services/apiService";
-import {Box, CircularProgress, Container, Stack, Typography} from "@mui/material";
+import { Box, CircularProgress, Container, Stack, Typography } from "@mui/material";
 import Button from "../Button";
-import {QuizContext} from "../../services/context"
+import { QuizContext } from "../../services/context";
+import { useRouter } from "next/router";
 
 const QuizComplete = () => {
+    const router = useRouter()
     const [validation, setValidation] = useContext(QuizContext);
     const [certificate, setCertificate] = useState("");//https://wp.eucapacito.com.br/certificates/cinco-habilidades-essenciais-para-impulsionar-a-sua-carreira/?quiz=9841&cert-nonce=097bbc7731
     const [result, setResult] = useState({
@@ -18,48 +19,50 @@ const QuizComplete = () => {
         summary: "",
         passed: false
     })
-    const {api} = apiService;
-    const { id } = useParams();
-    const userID = sessionStorage.getItem("userID");
 
     useEffect(() => {
+        const userID = sessionStorage.getItem("userID");
+        const { api } = apiService;
+
         const pts = countPoints(validation)
-        const pct = Math.round(( pts/validation.length ) * 100)
+        const pct = Math.round((pts / validation.length) * 100)
         setResult({
             total: validation.length,
             points: pts,
             percent: pct
         })
-        api.post('/eucapacito/v1/set-quiz-progress', {
-            quiz: id,
-            user: userID,
-            percentage: pct,
-            score: pts,
-            total: validation.length
-        }).then( (res) => {
-            if(res.data.passed) {
-                api.get(`/eucapacito/v1/get-certificate?quiz=${id}&user=${userID}`).then((res) => {
-                    setCertificate(res.data)
-                });
-                setMessage({
-                    title: "Parabéns",
-                    summary: 'Você passou em todas as perguntas',
-                    passed: true
-                })
-            } else {
-                setMessage({
-                    title: "Não foi desta vez",
-                    summary: 'Refaça a prova e tente novamente',
-                    passed: false
-                })
-            }
-        })
+        if (router.isReady) {
+            api.post('/eucapacito/v1/set-quiz-progress', {
+                quiz: router.query.id,
+                user: userID,
+                percentage: pct,
+                score: pts,
+                total: validation.length
+            }).then((res) => {
+                if (res.data.passed) {
+                    api.get(`/eucapacito/v1/get-certificate?quiz=${router.query.id}&user=${userID}`).then((res) => {
+                        setCertificate(res.data)
+                    });
+                    setMessage({
+                        title: "Parabéns",
+                        summary: 'Você passou no teste',
+                        passed: true
+                    })
+                } else {
+                    setMessage({
+                        title: "Não foi desta vez",
+                        summary: 'Refaça a prova e tente novamente',
+                        passed: false
+                    })
+                }
+            })
+        }
 
     }, []);
 
     const countPoints = (arr) => {
         let i = 0;
-        arr.forEach( (item) => {
+        arr.forEach((item) => {
             item.a && i++
         })
         return i

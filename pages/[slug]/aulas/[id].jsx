@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import apiService from "../../../src/services/apiService";
 import parse from "html-react-parser";
 import { Timeline, TimelineConnector, TimelineContent, TimelineSeparator } from '@mui/lab';
@@ -7,66 +7,71 @@ import { AccessTime, PlayCircleOutlined, CheckCircle, Adjust } from "@mui/icons-
 import Button from "../../../src/components/Button";
 import LessonCard from "../../../src/components/Course/LessonCard";
 import { TimelineDot, TimelineItem } from "@mui/lab";
-import {useRouter} from "next/router";
+import { StepsContext } from "../../../src/services/context";
+import { useRouter } from "next/router";
 
 const Lessons = () => {
     const router = useRouter()
-    const [title, setTitle, courseData, setCourseData, userSteps, setUserSteps] = useOutletContext();
     const [lessons, setLessons] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [allCompleted, setAllCompleted] = useState(false);
-
+    const [logged, setLogged] = useState(false);
+    const ctx = useContext(StepsContext)
     const { api } = apiService;
 
-    const lessonCompleted = (id) => 'completed' === userSteps[id]
-    const showConnector = (arr, index) =>  arr.length - 1 === index
+    const lessonCompleted = (id) => 'completed' === ctx.userSteps[id]
+    const showConnector = (arr, index) => arr.length - 1 === index
 
     useEffect(() => {
         const userID = sessionStorage.getItem("userID");
         const token = sessionStorage.getItem("token");
-        api.get(`/ldlms/v1/sfwd-lessons?course=${id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-        }).then((res) => {
-            const fetchedLessons = []
-            res.data.forEach((lesson) => {
-                fetchedLessons.push({
-                    id: lesson.id,
-                    title: lesson.title.rendered,
-                    slug: lesson.slug,
-                    duration: lesson.duracao
+        setLogged(!!token);
+
+        if (router.isReady) {
+            api.get(`/ldlms/v1/sfwd-lessons?course=${router.query.id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            }).then((res) => {
+                const fetchedLessons = []
+                res.data.forEach((lesson) => {
+                    fetchedLessons.push({
+                        id: lesson.id,
+                        title: lesson.title.rendered,
+                        slug: lesson.slug,
+                        duration: lesson.duracao
+                    })
+                    setLessons([...fetchedLessons]);
                 })
-                setLessons([...fetchedLessons]);
-            })
-            setIsLoading(false);
-        });
-
-        //api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
-        api.get(`eucapacito/v1/get-user-progress?user=${userID}&course=${id}`).then((res) => {
-            const fetchedSteps = []
-            res.data.forEach((step) => {
-                fetchedSteps[step.id] = step.status
-            })
-            setAllCompleted(fetchedSteps.every( (v) => 'completed' === v))
-            setUserSteps(fetchedSteps);
-            setIsLoading(false);
-        });
-
-        api.get(`/ldlms/v2/sfwd-courses/${id}`).then((res) => {
-            const course = res.data
-            setCourseData({
-                id: course.id,
-                featuredImg: course.image,
-                title: parse(`${course.title.rendered}`),
-                duration: course.duracao,
-                quizz: course.quizz
+                setIsLoading(false);
             });
-            setIsLoading(false);
-        });
+
+            //api.get(`ldlms/v2/users/${userID}/course-progress/${id}/steps`, {
+            api.get(`eucapacito/v1/get-user-progress?user=${userID}&course=${router.query.id}`).then((res) => {
+                const fetchedSteps = []
+                res.data.forEach((step) => {
+                    fetchedSteps[step.id] = step.status
+                })
+                setAllCompleted(fetchedSteps.every((v) => 'completed' === v))
+                ctx.setUserSteps(fetchedSteps);
+                setIsLoading(false);
+            });
+
+            api.get(`/ldlms/v2/sfwd-courses/${router.query.id}`).then((res) => {
+                const course = res.data
+                ctx.setCourseData({
+                    id: course.id,
+                    featuredImg: course.image,
+                    title: parse(`${course.title.rendered}`),
+                    duration: course.duracao,
+                    quizz: course.quizz
+                });
+                setIsLoading(false);
+            });
+        }
 
     }, []);
 
     const handleBeginTest = () => {
-        router.push(`/quizzes/${courseData.quizz.slug}/${courseData.quizz.id}`)
+        router.push(`/quizzes/${ctx.courseData.quizz.slug}/${ctx.courseData.quizz.id}`)
     }
 
     return (
@@ -75,12 +80,12 @@ const Lessons = () => {
             {!isLoading && (
                 <Box sx={styles.root}>
                     <Box sx={styles.image}>
-                        <img src={courseData.featuredImg} alt={courseData.title} />
+                        <img src={ctx.courseData.featuredImg} alt={ctx.courseData.title} />
                     </Box>
 
                     <Box sx={styles.container}>
                         <Box sx={styles.description}>
-                            <h1>{courseData.title}</h1>
+                            <h1>{ctx.courseData.title}</h1>
                             <Grid container sx={styles.topinfo}>
                                 <Grid item xs={4} md={2}>
                                     <div>
@@ -91,7 +96,7 @@ const Lessons = () => {
                                 <Grid item xs={4} md={2}>
                                     <div>
                                         <AccessTime sx={styles.topinfo.icons} />
-                                        {courseData.duration}
+                                        {ctx.courseData.duration}
                                     </div>
                                 </Grid>
                             </Grid>
@@ -112,7 +117,7 @@ const Lessons = () => {
                                                 index={index}
                                                 lesson={lesson}
                                                 active={lessonCompleted(lesson.id)}
-                                                course={courseData.id} />
+                                                course={ctx.courseData.id} />
                                         </TimelineContent>
                                     </TimelineItem>
                                 ))}
@@ -120,7 +125,7 @@ const Lessons = () => {
 
                             {allCompleted &&
                                 <Box sx={styles.button}>
-                                    {token && (
+                                    {logged && (
                                         <Button
                                             onClick={handleBeginTest}
                                             sx={styles.courseLink}
@@ -132,12 +137,13 @@ const Lessons = () => {
                             }
 
                         </Box>
-
                     </Box>
                 </Box>)}
         </>
     );
 };
+
+Lessons.isLessonPage = true
 
 export default Lessons;
 

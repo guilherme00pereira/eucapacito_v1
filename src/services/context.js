@@ -9,5 +9,3 @@ export const StepsContext = createContext({
 
 export const QuizContext = createContext({});
 
-export const MetadataContext = createContext()
-

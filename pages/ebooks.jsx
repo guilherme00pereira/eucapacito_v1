@@ -1,16 +1,14 @@
 import {useState, useEffect} from "react";
 import {Box, CircularProgress} from "@mui/material";
-
 import apiService from "../src/services/apiService";
 import Button from "../src/components/Button";
 import EbookPost from "../src/components/Content/EbookPost";
 import UpdateForm from "../src/components/Content/UpdateForm";
-
 import { postListStyles } from '../src/commonStyles/postListStyles';
 import {loading} from "../src/commonStyles/loading";
-import MetadataManager from "../src/layouts/MetadataManager";
+import SEO from '../src/seo'
 
-const Ebooks = () => {
+const Ebooks = ({ metadata }) => {
     const [ebooks, setEbooks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(1);
@@ -59,7 +57,7 @@ const Ebooks = () => {
 
     return (
         <Box sx={postListStyles.root}>
-            <MetadataManager ispage={true} value="ebooks" />
+            <SEO metadata={metadata} />
             <h1>Ebook</h1>
             <hr />
             <Box sx={postListStyles.tabPanelBox}>
@@ -83,6 +81,19 @@ const Ebooks = () => {
         </Box>
     );
 };
+
+export async function getStaticProps() {
+    const {api}     = apiService;
+    const res       = await api.get("/wp/v2/pages/" + process.env.PAGE_EBOOKS)
+    const metadata  = {
+          title: res.data.yoast_head_json.og_title,
+          description: res.data.yoast_head_json.description,
+          og_title: res.data.yoast_head_json.og_title,
+          og_description: res.data.yoast_head_json.og_description,
+          article_modified_time: res.data.yoast_head_json.article_modified_time ?? null
+        }
+    return { props: { metadata }}
+  }
 
 export default Ebooks;
 

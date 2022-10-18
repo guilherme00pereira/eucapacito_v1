@@ -65,9 +65,9 @@ const Header = () => {
   const handleSearchResults = (e) => {
     if (e.key === "Enter") {
       if( router.pathname === "/cursos" || router.pathname.includes("pesquisa-cursos") ) {
-         router.push(`/pesquisa-cursos?s=${search}`, {replace: true})
+         router.push(`/pesquisa-cursos?search=${search}`)
       } else {
-        router.push(`/procurar?s=${search}`, {replace: true});
+        router.push(`/procurar?search=${search}`);
       }
     }
   };

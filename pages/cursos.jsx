@@ -8,12 +8,18 @@ import ContentCard from "../src/components/ContentCard";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {swiper} from "../src/commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
+import SEO from '../src/seo'
 
-const Cursos = ({courses, journeys}) => {
+const Cursos = ({ metadata }) => {
+    const router = useRouter()
     const [myCourses, setMyCourses] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [journeys, setJourneys] = useState([]);
+    const [page, setPage] = useState(1);
     const [logged, setLogged] = useState(false);
     const [hideLoadMoreButton, setHideLoadMoreButton] = useState(false);
     const ctx = useContext(AppContext);
+    const postsPerPage = "9";
 
 
     useEffect(() => {
@@ -51,10 +57,61 @@ const Cursos = ({courses, journeys}) => {
             });
         }
 
+        if(router.isReady) {
+            const ids = router.query.t;
+            let url = `/eucapacito/v1/search?page=${page}&course=true`;
+            if (null !== ids) {
+                url += `&t=${ids}`;
+            }
+            api.get(url).then((res) => {
+                if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
+                    setHideLoadMoreButton(true);
+                }
+
+                const fetchedCourses = [];
+
+                res.data.courses.forEach((course) => {
+                    fetchedCourses.push({
+                        id: course.id,
+                        slug: course.slug,
+                        featuredImg: course.image,
+                        title: course.title,
+                        subtitle: "Eu Capacito",
+                        partnerLogoURL: course.logo,
+                        type: course.type
+                    });
+                });
+                if (page === 1) {
+                    setCourses([...fetchedCourses]);
+                } else {
+                    setCourses([...courses, ...fetchedCourses]);
+                }
+
+            });
+
+            api.get(`/wp/v2/jornada?per_page=${postsPerPage}`).then((res) => {
+                const fetchedJourneys = [];
+
+                res.data.forEach((journey) => {
+                    fetchedJourneys.push({
+                        id: journey.id,
+                        slug: journey.slug,
+                        featuredImg: journey.image,
+                        title: journey.title.rendered,
+                        excerpt: journey.excerpt.rendered,
+                    });
+                    setJourneys([...fetchedJourneys]);
+                });
+            });
+
+        }
+
     }, []);
 
     return (
         <Box sx={styles.root}>
+
+            <SEO metadata={metadata} />
 
             {logged &&
                 <>
@@ -159,46 +216,18 @@ const Cursos = ({courses, journeys}) => {
     );
 };
 
-export async function getServerSideProps(context) {
-    const {api}         = apiService;
-    const postsPerPage  = "9";
-    const page          = context.query.page ?? 1
-
-    const ids       = context.query.t ?? null;
-    let url         = `/eucapacito/v1/search?page=${page}&course=true`;
-    if (null !== ids) { url += `&t=${ids}` }
-
-    const courses   = []
-    let res         = await api.get(url)
-    let items       = res.data
-    items.courses.forEach(course => {
-        courses.push({
-            id: course.id,
-            slug: course.slug,
-            featuredImg: course.image,
-            title: course.title,
-            subtitle: "Eu Capacito",
-            partnerLogoURL: course.logo,
-            type: course.type
-        });
-    })
-
-    const journeys  = []
-    res             = await api.get(`/wp/v2/jornada?per_page=${postsPerPage}`)
-    items           = res.data
-    items.forEach(journey => {
-        journeys.push({
-            id: journey.id,
-            slug: journey.slug,
-            featuredImg: journey.image,
-            title: journey.title.rendered,
-            excerpt: journey.excerpt.rendered,
-        })
-    });
-
-    return { props: { courses, journeys }}
-
-}
+export async function getStaticProps() {
+    const {api}     = apiService;
+    const res       = await api.get("/wp/v2/pages/" + process.env.PAGE_CURSOS)
+    const metadata  = {
+          title: res.data.yoast_head_json.og_title,
+          description: res.data.yoast_head_json.description,
+          og_title: res.data.yoast_head_json.og_title,
+          og_description: res.data.yoast_head_json.og_description,
+          article_modified_time: res.data.yoast_head_json.article_modified_time ?? null
+        }
+    return { props: { metadata }}
+  }
 
 export default Cursos;
 

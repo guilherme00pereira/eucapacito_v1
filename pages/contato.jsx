@@ -6,8 +6,10 @@ import Link from "../src/components/Link";
 import ContactForm from "../src/components/ContactForm";
 import mapa from "../public/assets/img/mapa.png";
 import { AppContext } from "../src/services/context";
+import apiService from "../src/services/apiService";
+import SEO from '../src/seo'
 
-const Contato = () => {
+const Contato = ({ metadata }) => {
   const ctx = useContext(AppContext);
 
   useEffect(() => {
@@ -19,6 +21,8 @@ const Contato = () => {
 
   return (
     <Box sx={styles.boxSx}>
+
+      <SEO metadata={metadata} />
 
       <Container sx={styles.container}>
         <Box sx={styles.header}>
@@ -198,6 +202,19 @@ const Contato = () => {
     </Box>
   );
 };
+
+export async function getStaticProps() {
+  const {api}     = apiService;
+  const res       = await api.get("/wp/v2/pages/" + process.env.PAGE_CONTATO)
+  const metadata  = {
+        title: res.data.yoast_head_json.og_title,
+        description: res.data.yoast_head_json.description,
+        og_title: res.data.yoast_head_json.og_title,
+        og_description: res.data.yoast_head_json.og_description,
+        article_modified_time: res.data.yoast_head_json.article_modified_time ?? null
+      }
+  return { props: { metadata }}
+}
 
 export default Contato;
 
