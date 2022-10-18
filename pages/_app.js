@@ -1,10 +1,12 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import '../public/assets/css/global.css';
 import Layout from '../src/layout';
 import { ThemeProvider } from '@mui/material/styles';
 import Theme from '../src/Theme';
 import { AppContext, StepsContext } from '../src/services/context';
 import Head from "next/head";
+import TagManager from 'react-gtm-module'
+
 
 function MyApp({ Component, pageProps }) {
   const [title, setTitle] = useState('')
@@ -15,8 +17,11 @@ function MyApp({ Component, pageProps }) {
       quizz: "",
   });
   const [userSteps, setUserSteps] = useState([]);
-
   const renderLayout = Component.noLayout ? <Component {...pageProps} /> : <Layout><Component {...pageProps} /></Layout>
+
+    useEffect(() => {
+        TagManager.initialize({ gtmId: 'GTM-K77MBFD' })
+    }, [])
   
   return (
     <AppContext.Provider value={{title, setTitle}}>
