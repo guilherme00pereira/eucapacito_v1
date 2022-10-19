@@ -13,6 +13,9 @@ const SEO = ({metadata}) => {
             <meta property="og:title" content={metadata.og_title} />
             <meta property="og:description" content={metadata.og_description} />
             <meta property="article:modified_time" content={metadata.article_modified_time} />
+            {metadata.og_image &&
+                <meta property='og:image' content={metadata.og_image[0].url} />
+            }
         </Head>
     )
 }

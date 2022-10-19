@@ -4,6 +4,13 @@ Aplicação em React.js do site eucapacito.com.br
 
 ## Versões
 
+### Versão 1
+
+<ul>
+<li>v_1.0.3 - Ajuste da metatag de imagem</li>
+<li>v_1.0.0 - App migrado para Next.js</li>
+</ul>
+
 ### Versão 0.8
 
 <ul>
