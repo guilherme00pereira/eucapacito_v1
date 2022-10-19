@@ -5,6 +5,7 @@ Frontend do site eucapacito.com.br feito em Next.js
 ### Versão 0.8
 
 <ul>
+<li>v_1.0.1 - Ajuste da metatag de imagem</li>
 <li>v_1.0.0 - App migrado para Next.js</li>
 </ul>
 
