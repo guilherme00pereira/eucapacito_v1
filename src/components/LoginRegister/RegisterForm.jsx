@@ -163,7 +163,7 @@ const RegisterForm = () => {
                                     onChange={handleFieldChange("agree")}
                                 />
                             }
-                            label="Eu aceito receber e-mail promocionais e com instruções do Eu Capacito"
+                            label="Eu aceito receber comunicação do Eu Capacito e seus parceiros"
                             sx={styles.checkbox}
                         />
                             <p>Ao inscrever-se, concordo com os Termos de uso e Política de
