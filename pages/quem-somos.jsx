@@ -3,7 +3,7 @@ import { Grid, Box, Container, Link as MuiLink } from "@mui/material";
 import { Instagram, Facebook, LinkedIn } from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
 import apiService from "../src/services/apiService";
-import ReactPlayer from "react-player";
+//import ReactPlayer from "react-player";
 import parse from 'html-react-parser';
 import { AppContext } from "../src/services/context";
 import PeopleIcon from "../public/assets/img/noticias-icone-pessoas.png";
@@ -18,9 +18,11 @@ import Imagem1 from "../public/assets/img/image1-quem-somos.png";
 import Imagem2 from "../public/assets/img/image2-quem-somos.png";
 import Imagem3 from "../public/assets/img/image3-quem-somos.png";
 import Imagem4 from "../public/assets/img/image4-quem-somos.png";
-import Image from 'next/image';
+import Image from 'next/future/image';
 import SEO from '../src/seo'
+import dynamic from 'next/dynamic'
 
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
 const QuemSomos = ({ content, metadata }) => {
   const ctx = useContext(AppContext);
@@ -74,7 +76,7 @@ const QuemSomos = ({ content, metadata }) => {
 
         <Container sx={styles.containerDepoimento}>
           <Box>
-            <Image src={ImagemGradient} className="gradiente" alt="" />
+            <Image src={ImagemGradient} style={styles.containerDepoimento.gradiente} alt="" />
             <Image src={Imagem4} alt="" />
           </Box>
 
@@ -216,7 +218,7 @@ const styles = {
     alignItems: "flex-start",
     mb: "15px",
     pl: "17px",
-    backgroundImage: `url(${linhaQuemSomos})`,
+    backgroundImage: `url(${linhaQuemSomos.src})`,
     backgroundRepeat: "no-repeat",
     "& p": {
       margin: "0",
@@ -247,6 +249,12 @@ const styles = {
       left: "1.5%",
     },
     paddingBottom: "40px !important",
+    gradiente: {
+      position: "absolute",
+      mt: "43px",
+      zIndex: "-10",
+      left: "1.5%",
+    }
   },
 
   boxDepoimento: {

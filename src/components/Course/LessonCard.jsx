@@ -36,7 +36,8 @@ const styles = {
                 xs: "1em",
             },
             my: "0"
-        }
+        },
+        cursor: "pointer"
     },
     info: {
         minHeight: "90px",

@@ -1,6 +1,12 @@
 # Eu Capacito
 
-Aplicação em React.js do site eucapacito.com.br 
+Frontend do site eucapacito.com.br feito em Next.js
+
+### Versão 0.8
+
+<ul>
+<li>v_1.0.0 - App migrado para Next.js</li>
+</ul>
 
 ## Versões
 
