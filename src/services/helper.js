@@ -43,3 +43,25 @@ export const capitalizeFirstLetterSlug = (str) => {
     }
     return words.join(" ");
 }
+
+export const extractYoastData = (metadata) => {
+    return {
+        title: metadata.og_title,
+        description: metadata.description,
+        og_title: metadata.og_title,
+        og_description: metadata.og_description,
+        article_modified_time: metadata.article_modified_time ?? null,
+        og_url: sanitizeYoastUrl(metadata.og_url),
+        canonical: sanitizeYoastUrl(metadata.canonical)
+    }
+}
+
+const sanitizeYoastUrl = (value) => {
+    if(value.includes('172')) {
+        return "https://www.eucapacito.com.br"
+    }
+    if(value.includes('wp.eucapacito')) {
+        return value.replace('wp.eucapacito', 'www.eucapacito')
+    }
+    return value
+}

@@ -7,7 +7,7 @@ import parse from "html-react-parser";
 import apiService from "../../src/services/apiService";
 import Button from "../../src/components/Button";
 import {coursePage} from "../../src/commonStyles/coursePage";
-import {calculateTime} from "../../src/services/helper"
+import {calculateTime, extractYoastData} from "../../src/services/helper"
 import { AppContext } from "../../src/services/context";
 import { useRouter } from "next/router";
 import SEO from "../../src/seo";
@@ -34,7 +34,7 @@ const Course = ({ course }) => {
 
     return (
         <>
-            <SEO metadata={course.yoast} />
+            <SEO metadata={extractYoastData(course.yoast)} />
             <Box sx={coursePage.root}>
                 <Box sx={coursePage.image}>
                     <img src={course.featuredImg} alt={course.title}/>

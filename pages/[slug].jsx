@@ -6,6 +6,7 @@ import apiService from "../src/services/apiService";
 import BlogSidebar from "../src/components/Content/BlogSidebar";
 import { AppContext } from "../src/services/context";
 import SEO from '../src/seo'
+import {extractYoastData} from "../src/services/helper";
 
 const DynamicBlog = ({blog, posts}) => {
     const ctx = useContext(AppContext);
@@ -22,7 +23,7 @@ const DynamicBlog = ({blog, posts}) => {
 
     return (
         <>
-            <SEO metadata={blog.yoast} />
+            <SEO metadata={extractYoastData(blog.yoast)} />
             <Stack sx={styles.root}>
                 <Box sx={styles.titlepage}>
                     <h1>Blog</h1>

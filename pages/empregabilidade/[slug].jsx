@@ -6,6 +6,7 @@ import ContentCard from "../../src/components/ContentCard";
 import apiService from "../../src/services/apiService";
 import {useRouter} from "next/router";
 import SEO from '../../src/seo'
+import {extractYoastData} from "../../src/services/helper";
 
 const Employability = ({ employability, courses }) => {
   const router = useRouter()
@@ -32,7 +33,7 @@ const Employability = ({ employability, courses }) => {
 
   return (
     <>
-      <SEO metadata={employability.yoast} />
+      <SEO metadata={extractYoastData(employability.yoast)} />
       <Box sx={styles.root}>
         <h1>Empregabilidade</h1>
         <hr />

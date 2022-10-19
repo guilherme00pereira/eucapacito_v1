@@ -7,6 +7,7 @@ import SendMessageImage from "../public/assets/img/mensagem-enviada.png"
 import {messageReturn} from "../src/commonStyles/messageReturn";
 import { AppContext } from "../src/services/context";
 import SEO from '../src/seo'
+import {extractYoastData} from "../src/services/helper";
 
 const Parceiros = ({ partners, metadata }) => {
   const ctx = useContext(AppContext);
@@ -182,16 +183,7 @@ export async function getStaticProps() {
   let res         = await api.get('eucapacito/v1/partners')
   const partners  = res.data
   res             = await api.get("/wp/v2/pages/" + process.env.PAGE_PARCEIROS)
-  const metadata  = {
-        title: res.data.yoast_head_json.og_title,
-        description: res.data.yoast_head_json.description,
-        og_title: res.data.yoast_head_json.og_title,
-        og_description: res.data.yoast_head_json.og_description,
-        article_modified_time: res.data.yoast_head_json.article_modified_time ?? null,
-    og_url: res.data.yoast_head_json.og_url.replace('wp.eucapacito', 'www.eucapacito'),
-    canonical: res.data.yoast_head_json.canonical.replace('wp.eucapacito', 'www.eucapacito')
-      }
-
+  const metadata  = extractYoastData(res.data.yoast_head_json)
   return { props: { partners, metadata } }
 
 }

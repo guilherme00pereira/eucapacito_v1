@@ -15,6 +15,7 @@ import ContentCard from "../src/components/ContentCard";
 import CourseImg3 from "../public/assets/img/home-curso3.png";
 import {swiper} from "../src/commonStyles/swiper";
 import SEO from '../src/seo'
+import {extractYoastData} from "../src/services/helper";
 
 
 const Oportunidades = ({ metadata }) => {
@@ -160,15 +161,7 @@ const Oportunidades = ({ metadata }) => {
 export async function getStaticProps() {
   const {api}     = apiService;
   const res       = await api.get("/wp/v2/pages/" + process.env.PAGE_OPORTUNIDADES)
-  const metadata  = {
-        title: res.data.yoast_head_json.og_title,
-        description: res.data.yoast_head_json.description,
-        og_title: res.data.yoast_head_json.og_title,
-        og_description: res.data.yoast_head_json.og_description,
-        article_modified_time: res.data.yoast_head_json.article_modified_time ?? null,
-    og_url: res.data.yoast_head_json.og_url.replace('wp.eucapacito', 'www.eucapacito'),
-    canonical: res.data.yoast_head_json.canonical.replace('wp.eucapacito', 'www.eucapacito')
-      }
+  const metadata  = extractYoastData(res.data.yoast_head_json)
   return { props: { metadata }}
 }
 

@@ -7,6 +7,7 @@ import apiService from "../../src/services/apiService";
 import {scholarshipStyle} from "../../src/commonStyles/scholarshipStyle";
 import {useRouter} from "next/router";
 import SEO from '../../src/seo'
+import {extractYoastData} from "../../src/services/helper";
 
 
 const Scholarship = ({ scholarship, courses }) => {
@@ -36,7 +37,7 @@ const Scholarship = ({ scholarship, courses }) => {
 
   return (
     <>
-      <SEO metadata={scholarship.yoast} />
+      <SEO metadata={extractYoastData(scholarship.yoast)} />
       <Box sx={scholarshipStyle.root}>
         <h1>Bolsas de Estudo</h1>
         <hr />

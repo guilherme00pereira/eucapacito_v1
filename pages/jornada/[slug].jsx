@@ -6,6 +6,7 @@ import ContentCard from "../../src/components/ContentCard";
 import apiService from "../../src/services/apiService";
 import {useRouter} from "next/router";
 import SEO from '../../src/seo'
+import {extractYoastData} from "../../src/services/helper";
 
 const Journey = ({ journey, courses }) => {
     const router = useRouter()
@@ -26,7 +27,7 @@ const Journey = ({ journey, courses }) => {
 
     return (
         <>
-            <SEO metadata={journey.yoast} />
+            <SEO metadata={extractYoastData(journey.yoast)} />
             <Box sx={styles.root}>
 
                 <Box sx={styles.texto}>
