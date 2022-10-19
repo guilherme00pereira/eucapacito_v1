@@ -181,7 +181,9 @@ export async function getStaticProps() {
         description: res.data.yoast_head_json.description,
         og_title: res.data.yoast_head_json.og_title,
         og_description: res.data.yoast_head_json.og_description,
-        article_modified_time: res.data.yoast_head_json.article_modified_time ?? null
+        article_modified_time: res.data.yoast_head_json.article_modified_time ?? null,
+    og_url: res.data.yoast_head_json.og_url.replace('wp.eucapacito', 'www.eucapacito'),
+    canonical: res.data.yoast_head_json.canonical.replace('wp.eucapacito', 'www.eucapacito')
       }
   return { props: { metadata }}
 }
