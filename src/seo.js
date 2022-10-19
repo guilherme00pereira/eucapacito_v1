@@ -8,9 +8,9 @@ const SEO = ({metadata}) => {
                 <meta property='og:image' content={metadata.og_image[0].url} />
             }
             <meta name="description" content={metadata.description} />
-            <link rel="canonical" href={metadata.canonical} />
+            <link rel="canonical" href={metadata.canonical.replace('wp.eucapacito', 'www.eucapacito')} />
             <meta property="og:locale" content="pt_BR" />
-            <meta property="og:url" content={metadata.og_url} />
+            <meta property="og:url" content={metadata.og_url.replace('wp.eucapacito', 'www.eucapacito')} />
             <meta property="og:site_name" content="Eu Capacito" />
             <meta property="og:type" content="website" />
             <meta property="og:title" content={metadata.og_title} />
