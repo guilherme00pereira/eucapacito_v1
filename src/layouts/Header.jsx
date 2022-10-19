@@ -36,7 +36,7 @@ const Header = () => {
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
-    setLogged(token?true:false);
+    setLogged(!!token);
     setFirstName(sessionStorage.getItem("username"));
     setAvatar(sessionStorage.getItem("avatarURL") ?? UserIcon);
     if (!router.pathname.includes("/procurar")) {
@@ -218,7 +218,7 @@ const Header = () => {
                   sx={styles.drawer.userMenu}
                 >
                   <Box sx={styles.drawer.userMenu.user}>
-                    <img src={EuCapacitoLogo} alt="Logo Eu Capacito" />
+                    <Image src={EuCapacitoLogo} alt="Logo Eu Capacito" />
                     <div className="profile-photo">
                       <img
                         src={avatar}

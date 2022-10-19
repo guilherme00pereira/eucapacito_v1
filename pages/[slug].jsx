@@ -123,9 +123,15 @@ const styles = {
             width: "calc(100% + 32px)",
             height: "262px",
             position: "relative",
-            left: "-16px",
+            left: {
+                md: "-16px",
+                xs: "0px"
+            },
             zIndex: -1,
-            objectFit: "cover"
+            objectFit: {
+                md: "cover",
+                xs: "contain"
+            },
         },
         pl: {
             xs: "0",

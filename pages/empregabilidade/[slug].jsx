@@ -39,7 +39,7 @@ const Employability = ({ employability, courses }) => {
 
         <Box sx={styles.texto}>
           <Box sx={styles.description}>
-            <h1>{employability.title}</h1>
+            <h1>{parse(employability.title)}</h1>
 
             <p>{parse(employability.description)}</p>
           </Box>

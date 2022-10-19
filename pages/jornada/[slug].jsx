@@ -31,7 +31,7 @@ const Journey = ({ journey, courses }) => {
 
                 <Box sx={styles.texto}>
                     <Box>
-                        <h1>{journey.title}</h1>
+                        <h1>{parse(journey.title)}</h1>
 
                         <p>{parse(journey.description)}</p>
                     </Box>
