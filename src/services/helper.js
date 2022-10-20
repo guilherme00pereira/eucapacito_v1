@@ -48,7 +48,7 @@ export const extractYoastData = (metadata) => {
     return {
         title: metadata.og_title,
         description: metadata.description,
-        og_image: metadata.og_image,
+        og_image: metadata.og_image ?? null,
         og_title: metadata.og_title,
         og_description: metadata.og_description,
         article_modified_time: metadata.article_modified_time ?? null,
