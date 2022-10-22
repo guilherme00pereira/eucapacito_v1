@@ -1,3 +1,6 @@
 node_modules
 .env
 .next
+sitemap.xml
+sitemap-0.xml
+robots.txt

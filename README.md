@@ -7,6 +7,7 @@ Aplicação em React.js do site eucapacito.com.br
 ### Versão 1
 
 <ul>
+<li>v_1.0.10 - Adição do arquivo _error.js para tratamento de status 404 e 500</li>
 <li>v_1.0.7 - Ajuste da metatag og:image para LinkedIn</li>
 <li>v_1.0.4 - Ajuste da metatag og:url</li>
 <li>v_1.0.3 - Ajuste da metatag de imagem</li>
