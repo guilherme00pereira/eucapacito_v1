@@ -6,6 +6,13 @@ module.exports = {
     priority: 0.7,
     sitemapSize: 5000,
     generateRobotsTxt: true,
+    exclude: [
+        '/[slug]',
+        '/bolsa-de-estudo/[slug]',
+        '/curso-ec/[slug]',
+        '/empregabilidade/[slug]',
+        '/jornada/[slug]'
+    ],
     transform: async (config, path) => {
         return {
             loc: path,
