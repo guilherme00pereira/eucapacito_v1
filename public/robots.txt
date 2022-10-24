@@ -1,3 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
-Disallow:
+Allow: /
+
+# Host
+Host: https://www.eucapacito.com.br
+
+# Sitemaps
+Sitemap: https://www.eucapacito.com.br/sitemap.xml

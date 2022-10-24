@@ -98,9 +98,19 @@ const Course = ({ course }) => {
     );
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
     const {api}     = apiService;
-    let res             = await api.get(`/wp/v2/curso_ec?slug=${context.params.slug}&_embed`)
+    const res       = await api.get('eucapacito/v1/course-slugs')
+    const slugs     = res.data
+    const paths     = slugs.map(slug => ({
+        params: { slug: slug }
+    }))
+    return { paths, fallback: true }
+}
+
+export async function getStaticProps({ params }) {
+    const {api}     = apiService;
+    let res             = await api.get(`/wp/v2/curso_ec?slug=${params.slug}&_embed`)
     const courseData    = res.data[0];
     const course = {
         featuredImg: courseData["featured_image_src"],
