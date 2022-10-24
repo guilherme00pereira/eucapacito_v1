@@ -33,7 +33,9 @@ const Employability = ({ employability, courses }) => {
 
   return (
     <>
-      <SEO metadata={extractYoastData(employability.yoast)} />
+      {employability.yoast && 
+        <SEO metadata={extractYoastData(employability.yoast)} />
+      }
       <Box sx={styles.root}>
         <h1>Empregabilidade</h1>
         <hr />
@@ -84,11 +86,21 @@ const Employability = ({ employability, courses }) => {
   );
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+  const {api}     = apiService;
+  const res       = await api.get('eucapacito/v1/employability-slugs')
+  const slugs     = res.data
+  const paths     = slugs.map(slug => ({
+      params: { slug: slug }
+  }))
+  return { paths, fallback: true }
+}
+
+export async function getStaticProps({ params }) {
   const { api } = apiService;
 
   const courses = []
-  let res = await api.get(`/wp/v2/empregabilidade?slug=${context.params.slug}&_embed`)
+  let res = await api.get(`/wp/v2/empregabilidade?slug=${params.slug}&_embed`)
   let item = res.data[0]
   const employability = {
     featuredImg: item.imagem.guid,

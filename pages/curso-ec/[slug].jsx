@@ -34,7 +34,9 @@ const Course = ({ course }) => {
 
     return (
         <>
+        {course.yoast && 
             <SEO metadata={extractYoastData(course.yoast)} />
+        }
             <Box sx={coursePage.root}>
                 <Box sx={coursePage.image}>
                     <img src={course.featuredImg} alt={course.title}/>
