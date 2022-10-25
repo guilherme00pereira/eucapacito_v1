@@ -1,19 +1,13 @@
 # Eu Capacito
 
-Frontend do site eucapacito.com.br feito em Next.js
-
-### Versão 0.8
-
-<ul>
-<li>v_1.0.2 - Ajuste da metatag de imagem</li>
-<li>v_1.0.0 - App migrado para Next.js</li>
-</ul>
+Aplicação em React.js do site eucapacito.com.br 
 
 ## Versões
 
 ### Versão 1
 
 <ul>
+<li>v_1.0.14 - Preload dos banners</li>
 <li>v_1.0.13 - Aprimoramento na geração de sitemap</li>
 <li>v_1.0.10 - Adição do arquivo _error.js para tratamento de status 404 e 500</li>
 <li>v_1.0.7 - Ajuste da metatag og:image para LinkedIn</li>

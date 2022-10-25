@@ -1,31 +1,14 @@
-import { useEffect, useState } from "react";
-import apiService from "../../services/apiService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {Autoplay, Pagination} from "swiper";
 import {Box} from "@mui/material";
 import {swiper} from "../../commonStyles/swiper";
-import ReactPlayer from "react-player";
 import BannerLink from "./BannerLink";
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
-const Banners = () => {
-    const [banners, setBanners] = useState([]);
-    const { api } = apiService;
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
-    useEffect(() => {
-        api.get('/eucapacito/v1/banners').then((res) => {
-            let fetchedBanners = [];
-            res.data.forEach((banner) => {
-                const newBanner = {
-                    image: banner.image,
-                    link: banner.link,
-                    deviceClass: banner.device === 'desktop' ? "bannerDesk" : "bannerMobile",
-                    type: banner.type
-                }
-                fetchedBanners.push(newBanner)
-            });
-            setBanners([...banners, ...fetchedBanners]);
-        });
-    }, []);
+const Banners = ({ banners }) => {
 
     return (
         <Box sx={styles.banners}>
@@ -42,7 +25,7 @@ const Banners = () => {
                                 {
                                     banner.type === 'video' ?
                                         <ReactPlayer url={banner.link}/> :
-                                        <img src={banner.image} alt="Banner"/>
+                                        <Image src={banner.image} alt="Banner" width="1100" height="450" />
                                 }
                             </BannerLink>
                         </SwiperSlide>

@@ -21,7 +21,7 @@ import SEO from '../src/seo'
 import { extractYoastData } from '../src/services/helper'
 
 
-const Index = ({ metadata }) => {
+const Index = ({ metadata, banners }) => {
   const [courses, setCourses] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [scholarships, setScholarships] = useState([]);
@@ -111,7 +111,7 @@ const Index = ({ metadata }) => {
       <SEO metadata={metadata} />
 
       <Menu sx={styles.menu} />
-      <Banners />
+      <Banners banners={banners} />
       <Box sx={styles.courses}>
         {/* <Box
           sx={{
@@ -274,9 +274,20 @@ const Index = ({ metadata }) => {
 
 export async function getStaticProps() {
   const {api}     = apiService;
-  const res       = await api.get("/wp/v2/pages/" + process.env.PAGE_INDEX)
+  let res         = await api.get("/wp/v2/pages/" + process.env.PAGE_INDEX)
   const metadata  = extractYoastData(res.data.yoast_head_json)
-  return { props: { metadata }}
+
+  const banners   = [];
+  res             = await api.get('/eucapacito/v1/banners')
+  res.data.forEach(banner => {
+    banners.push({
+        image: banner.image,
+        link: banner.link,
+        deviceClass: banner.device === 'desktop' ? "bannerDesk" : "bannerMobile",
+        type: banner.type
+    })
+  })
+  return { props: { metadata, banners }}
 }
 
 export default Index;

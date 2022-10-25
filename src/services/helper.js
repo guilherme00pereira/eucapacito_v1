@@ -47,10 +47,10 @@ export const capitalizeFirstLetterSlug = (str) => {
 export const extractYoastData = (metadata) => {
     return {
         title: metadata.og_title,
-        description: metadata.description,
+        description: metadata.description ?? null,
         og_image: metadata.og_image ?? null,
         og_title: metadata.og_title,
-        og_description: metadata.og_description,
+        og_description: metadata.og_description ?? null,
         article_modified_time: metadata.article_modified_time ?? null,
         og_url: sanitizeYoastUrl(metadata.og_url),
         canonical: sanitizeYoastUrl(metadata.canonical)
