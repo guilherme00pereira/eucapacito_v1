@@ -34,7 +34,9 @@ const Course = ({ course }) => {
 
     return (
         <>
+        {course.yoast && 
             <SEO metadata={extractYoastData(course.yoast)} />
+        }
             <Box sx={coursePage.root}>
                 <Box sx={coursePage.image}>
                     <img src={course.featuredImg} alt={course.title}/>
@@ -105,7 +107,7 @@ export async function getStaticPaths() {
     const paths     = slugs.map(slug => ({
         params: { slug: slug }
     }))
-    return { paths, fallback: true }
+    return { paths, fallback: 'blocking' }
 }
 
 export async function getStaticProps({ params }) {

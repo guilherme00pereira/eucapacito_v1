@@ -37,7 +37,9 @@ const Scholarship = ({ scholarship, courses }) => {
 
   return (
     <>
-      <SEO metadata={extractYoastData(scholarship.yoast)} />
+      {scholarship.yoast && 
+       <SEO metadata={extractYoastData(scholarship.yoast)} />
+      }
       <Box sx={scholarshipStyle.root}>
         <h1>Bolsas de Estudo</h1>
         <hr />
@@ -88,11 +90,21 @@ const Scholarship = ({ scholarship, courses }) => {
   );
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+  const {api}     = apiService;
+  const res       = await api.get('eucapacito/v1/scholarship-slugs')
+  const slugs     = res.data
+  const paths     = slugs.map(slug => ({
+      params: { slug: slug }
+  }))
+  return { paths, fallback: 'blocking' }
+}
+
+export async function getStaticProps({ params }) {
   const {api}   = apiService;
 
   const courses = []
-  let res       = await api.get(`/wp/v2/bolsa_de_estudo?slug=${context.params.slug}&_embed`)
+  let res       = await api.get(`/wp/v2/bolsa_de_estudo?slug=${params.slug}&_embed`)
   let item      = res.data[0]
   const scholarship = {
     featuredImg: item.image ? item.imagem.guid : null,

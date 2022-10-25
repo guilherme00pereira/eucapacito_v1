@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.eucapacito.com.br
+Host: https://eucapacito.com.br
 
 # Sitemaps
-Sitemap: https://www.eucapacito.com.br/sitemap.xml
+Sitemap: https://eucapacito.com.br/sitemap.xml

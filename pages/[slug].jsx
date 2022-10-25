@@ -23,7 +23,9 @@ const DynamicBlog = ({blog, posts}) => {
 
     return (
         <>
-            <SEO metadata={extractYoastData(blog.yoast)} />
+            {blog.yoast &&
+               <SEO metadata={extractYoastData(blog.yoast)} />
+            }
             <Stack sx={styles.root}>
                 <Box sx={styles.titlepage}>
                     <h1>Blog</h1>
@@ -64,10 +66,20 @@ const DynamicBlog = ({blog, posts}) => {
     );
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+    const {api}     = apiService;
+    const res       = await api.get('eucapacito/v1/blog-slugs')
+    const slugs     = res.data
+    const paths     = slugs.map(slug => ({
+        params: { slug: slug }
+    }))
+    return { paths, fallback: 'blocking' }
+}
+
+export async function getStaticProps({ params }) {
     const {api}     = apiService;
     
-    let res       = await api.get(`/wp/v2/posts?slug=${context.params.slug}&_embed`)
+    let res       = await api.get(`/wp/v2/posts?slug=${params.slug}&_embed`)
     const blogData  = res.data[0]
     const blog = {
         featuredImg: blogData.featured_image_src,

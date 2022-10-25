@@ -27,7 +27,9 @@ const Journey = ({ journey, courses }) => {
 
     return (
         <>
-            <SEO metadata={extractYoastData(journey.yoast)} />
+            {journey.yoast &&
+                <SEO metadata={extractYoastData(journey.yoast)} />
+            }
             <Box sx={styles.root}>
 
                 <Box sx={styles.texto}>
@@ -64,11 +66,21 @@ const Journey = ({ journey, courses }) => {
     );
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+    const {api}     = apiService;
+    const res       = await api.get('eucapacito/v1/journey-slugs')
+    const slugs     = res.data
+    const paths     = slugs.map(slug => ({
+        params: { slug: slug }
+    }))
+    return { paths, fallback: 'blocking' }
+}
+
+export async function getStaticProps({ params }) {
     const { api }   = apiService;
 
     let courses     = []
-    let res         = await api.get(`/wp/v2/jornada?slug=${context.params.slug}&_embed`)
+    let res         = await api.get(`/wp/v2/jornada?slug=${params.slug}&_embed`)
     let item        = res.data[0]
     const journey   = {
         featuredImg: item.image,
