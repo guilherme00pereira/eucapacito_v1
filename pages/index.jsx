@@ -39,7 +39,6 @@ const Index = ({ metadata, banners }) => {
     // Cursos EC
     api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`).then((res) => {
       const fetchedCourses = [];
-
       res.data.forEach((course) => {
         const newCourse = {
           id: course.id,
@@ -49,7 +48,6 @@ const Index = ({ metadata, banners }) => {
           subtitle: "Eu Capacito",
           partnerLogoURL: course.responsavel.guid,
         };
-
         fetchedCourses.push(newCourse);
       });
 
