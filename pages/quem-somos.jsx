@@ -21,6 +21,7 @@ import Imagem4 from "../public/assets/img/image4-quem-somos.png";
 import Image from 'next/future/image';
 import SEO from '../src/seo'
 import {extractYoastData} from "../src/services/helper";
+import dynamic from "next/dynamic";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
