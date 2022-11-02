@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router"
 import { AppContext } from "../services/context";
-import Image from 'next/image';
+import Image from 'next/future/image';
 import PersonIcon from "@mui/icons-material/PersonOutlineOutlined";
 import {
   AppBar,
@@ -28,7 +28,7 @@ import YouTube from "@mui/icons-material/YouTube";
 const Header = () => {
   const router = useRouter();
   const [search, setSearch] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState(UserIcon);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [logged, setLogged] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -38,7 +38,8 @@ const Header = () => {
     const token = sessionStorage.getItem("token");
     setLogged(!!token);
     setFirstName(sessionStorage.getItem("username"));
-    setAvatar(sessionStorage.getItem("avatarURL") ?? UserIcon);
+    const userImage = sessionStorage.getItem("avatarURL")
+    setAvatar( userImage === 'false' ? UserIcon : userImage);
     if (!router.pathname.includes("/procurar")) {
       setSearch("");
     }
@@ -191,12 +192,15 @@ const Header = () => {
               <Box sx={styles.headerPerfil}>
                 <Link to="/perfil">
                   <div className="profile-photo">
-                    <img
-                      src={avatar}
-                      alt="Foto de perfil"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="online-status"></div>
+                        <Image
+                            src={avatar}
+                            alt="Foto de perfil"
+                            referrerPolicy="no-referrer"
+                            width="45"
+                            height="45"
+                            layout="fill"
+                        />
+                      <div className="online-status"></div>
                   </div>
                 </Link>
               </Box>
@@ -220,9 +224,11 @@ const Header = () => {
                   <Box sx={styles.drawer.userMenu.user}>
                     <Image src={EuCapacitoLogo} alt="Logo Eu Capacito" />
                     <div className="profile-photo">
-                      <img
+                      <Image
                         src={avatar}
                         alt="Foto de perfil"
+                        width="45"
+                        height="45"
                       />
                       <div className="online-status"></div>
                     </div>

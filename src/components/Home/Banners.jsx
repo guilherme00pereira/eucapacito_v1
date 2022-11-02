@@ -25,7 +25,7 @@ const Banners = ({ banners }) => {
                                 {
                                     banner.type === 'video' ?
                                         <ReactPlayer url={banner.link}/> :
-                                        <Image src={banner.image} alt="Banner" width="1100" height="450" />
+                                        <Image src={banner.image} alt="Banner" width="1100" height="450" priority={true} />
                                 }
                             </BannerLink>
                         </SwiperSlide>

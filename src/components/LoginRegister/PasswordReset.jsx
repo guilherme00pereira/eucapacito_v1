@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {
     Container,
     Box,
@@ -30,8 +30,6 @@ const PasswordReset = () => {
         confirmPassword: "",
         showPassword: false,
         showConfirmPassword: false,
-        code: code
-
     });
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("false");
@@ -53,7 +51,9 @@ const PasswordReset = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setBtnLoading(true);
-        const response = await apiService.resetPassword(fields);
+        let formFields = {...fields}
+        formFields.code = router.query.c
+        const response = await apiService.resetPassword(formFields);
         if (response.status) {
             router.push("/login");
         } else {
@@ -63,12 +63,6 @@ const PasswordReset = () => {
             setAlertOpen(true);
         }
     };
-
-    useEffect(() => {
-        if(router.isReady) {
-            setCode(router.query.c)
-        }
-    }, [])
 
 
     return (

@@ -15,6 +15,7 @@ import apiService from "../../services/apiService";
 import SendMessageImage from "../../../public/assets/img/mensagem-enviada.png"
 import {messageReturn} from "../../commonStyles/messageReturn";
 import {loginRegisterStyles} from "../../commonStyles/loginRegisterStyles";
+import Image from "next/image";
 
 const PasswordRecoveryForm = () => {
   const [email, setEmail] = useState("");
@@ -91,7 +92,7 @@ const PasswordRecoveryForm = () => {
       </Box>
           :
       <Box sx={messageReturn}>
-        <img src={SendMessageImage} alt={"senha enviada"} />
+        <Image src={SendMessageImage} alt={"senha enviada"} />
         <h2>Senha Enviada</h2>
         <span>Sua nova senha foi direcionado ao email cadastrado</span>
       </Box>
