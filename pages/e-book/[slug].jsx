@@ -35,7 +35,7 @@ const DynamicPage = () => {
                 });
             });
         }
-    }, []);
+    }, [router]);
 
     const handleRedirect = (e) => {
         e.preventDefault();
