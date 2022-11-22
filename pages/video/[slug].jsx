@@ -7,7 +7,7 @@ import {useRouter} from "next/router";
 
 const DynamicPage = () => {
   const ctx = useContext(AppContext);
-  const router = useRouter()
+  const router = useRouter();
   const [video, setVideo] = useState({
     title: "",
     description: "",
@@ -23,6 +23,7 @@ const DynamicPage = () => {
     });
 
     if(router.isReady) {
+      console.log('aqui')
       api.get(`/wp/v2/video?slug=${router.query.slug}&_embed`).then((res) => {
         const videoData = res.data[0];
         setVideo({
@@ -32,7 +33,7 @@ const DynamicPage = () => {
         });
       });
     }
-  }, []);
+  }, [router]);
 
   return (
     <Box sx={styles.root}>

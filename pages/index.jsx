@@ -21,7 +21,8 @@ import SEO from '../src/seo'
 import { extractYoastData } from '../src/services/helper'
 
 
-const Index = ({ metadata, banners }) => {
+const Index = ({ metadata }) => {
+  const [banners, setBanners] = useState([]);
   const [courses, setCourses] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [scholarships, setScholarships] = useState([]);
@@ -35,9 +36,23 @@ const Index = ({ metadata, banners }) => {
 
     const {api}     = apiService;
     const postsPerPage = "9";
+
+    // Banners
+    api.get('/eucapacito/v1/banners').then(res => {
+      const fetchedBanners = [];
+      res.data.forEach(banner => {
+        fetchedBanners.push({
+            image: banner.image,
+            link: banner.link,
+            deviceClass: banner.device === 'desktop' ? "bannerDesk" : "bannerMobile",
+            type: banner.type
+        })
+      })
+      setBanners([...fetchedBanners])
+    })
     
     // Cursos EC
-    api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`).then((res) => {
+    api.get(`/wp/v2/curso_ec?per_page=${postsPerPage}`).then(res => {
       const fetchedCourses = [];
       res.data.forEach((course) => {
         const newCourse = {
@@ -55,7 +70,7 @@ const Index = ({ metadata, banners }) => {
     });
 
     // Conteúdo
-    api.get(`/wp/v2/posts?per_page=${postsPerPage}`).then((res) => {
+    api.get(`/wp/v2/posts?per_page=${postsPerPage}`).then(res => {
       const fetchedBlogs = [];
 
       res.data.forEach((blog) => {
@@ -82,7 +97,7 @@ const Index = ({ metadata, banners }) => {
     });
 
     // Bolsa de estudos
-    api.get(`/wp/v2/bolsa_de_estudo?per_page=${postsPerPage}`).then((res) => {
+    api.get(`/wp/v2/bolsa_de_estudo?per_page=${postsPerPage}`).then(res => {
       const fetchedScholarship = [];
 
       res.data.forEach((scholarship) => {
@@ -274,18 +289,8 @@ export async function getStaticProps() {
   const {api}     = apiService;
   let res         = await api.get("/wp/v2/pages/" + process.env.PAGE_INDEX)
   const metadata  = extractYoastData(res.data.yoast_head_json)
-
-  const banners   = [];
-  res             = await api.get('/eucapacito/v1/banners')
-  res.data.forEach(banner => {
-    banners.push({
-        image: banner.image,
-        link: banner.link,
-        deviceClass: banner.device === 'desktop' ? "bannerDesk" : "bannerMobile",
-        type: banner.type
-    })
-  })
-  return { props: { metadata, banners }}
+  
+  return { props: { metadata }}
 }
 
 export default Index;
