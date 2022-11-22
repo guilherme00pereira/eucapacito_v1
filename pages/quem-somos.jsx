@@ -1,9 +1,14 @@
 import { useEffect, useContext } from "react";
-import { Grid, Box, Container, Link as MuiLink } from "@mui/material";
-import { Instagram, Facebook, LinkedIn } from "@mui/icons-material";
+import {
+  Grid,
+  Box,
+  Container,
+  Link as MuiLink, Stack,
+} from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {Instagram, Facebook, LinkedIn} from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
 import apiService from "../src/services/apiService";
-//import ReactPlayer from "react-player";
 import parse from 'html-react-parser';
 import { AppContext } from "../src/services/context";
 import PeopleIcon from "../public/assets/img/noticias-icone-pessoas.png";
@@ -12,16 +17,14 @@ import HandsIcon from "../public/assets/img/noticias-icone-parceiros.png";
 import PartyIcon from "../public/assets/img/noticias-icone-festa.png";
 import EuCapacitoLogoVertical from "../public/assets/img/logo-vertical.png";
 import linhaQuemSomos from "../public/assets/img/linha-quem-somos.png";
-import linhaQuemSomosDepoimento from "../public/assets/img/linhagrande-quem-somos.png";
-import ImagemGradient from "../public/assets/img/gradiente-quem-somos.png";
-import Imagem1 from "../public/assets/img/image1-quem-somos.png";
-import Imagem2 from "../public/assets/img/image2-quem-somos.png";
-import Imagem3 from "../public/assets/img/image3-quem-somos.png";
-import Imagem4 from "../public/assets/img/image4-quem-somos.png";
 import Image from 'next/future/image';
 import SEO from '../src/seo'
 import {extractYoastData} from "../src/services/helper";
 import dynamic from "next/dynamic";
+import {swiper} from "../src/commonStyles/swiper";
+import {Autoplay, Pagination} from "swiper";
+import depoimentos from "../src/data/depoimentos.json"
+import TestimonyCard from "../src/components/About/TestimonyCard";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
@@ -49,49 +52,27 @@ const QuemSomos = ({ content, metadata }) => {
       </Box>
 
       <Box sx={styles.texto}>
-        <p>{content.lide}</p>
+        <div className="textContent">
+          {parse(content.lide)}
+        </div>
 
         <Container sx={styles.containerParaQuem}>
-          <p>PARA QUEM É?</p>
+          <div className="forWhoTitle">
+            <h5>PARA QUEM É?</h5>
+          </div>
 
-          <Container>
+          <Stack direction="row" spacing={4} justifyContent="space-evenly" flexWrap="wrap" alignItems="center" className="forWhoTopics">
             {content.forwho.map((item) => (
                 <Box sx={styles.boxInfo}>
                     <p>{item}</p>
                   </Box>
             ))}
-          </Container>
-
-          <Box sx={{ mr: "10px" }}>
-            <Image src={Imagem1} alt="business-man-owner-company-office" />
-          </Box>
-
-          <Box>
-            <Image
-              src={Imagem2}
-              alt="attractive-caucasian-woman-with-curly-hair-wearing-white-shirt-holding-pink-tablet-computer"
-            />
-            <Image src={Imagem3} alt="close-up-business-people-conference-room" />
-          </Box>
+          </Stack>
         </Container>
 
-        <Container sx={styles.containerDepoimento}>
-          <Box>
-            <Image src={ImagemGradient} style={styles.containerDepoimento.gradiente} alt="" />
-            <Image src={Imagem4} alt="" />
-          </Box>
-
-          <Box sx={styles.boxDepoimento}>
-            <Image src={linhaQuemSomosDepoimento} alt="" />
-            <Box>
-              <h4>DEPOIMENTO</h4>
-              <p>{content.quote}</p>
-              <p>- {content.quote_author}</p>
-            </Box>
-          </Box>
-        </Container>
-
-        {parse(content.full_text)}
+        <div className="textContent">
+          {parse(content.full_text)}
+        </div>
 
       </Box>
 
@@ -100,7 +81,7 @@ const QuemSomos = ({ content, metadata }) => {
           <Grid item xs={6} md={3}>
             <h2>{content.alunos_title}</h2>
             <p>MATRICULADOS</p>
-            <Image src={PeopleIcon} alt="Ícone - Pessoas" />
+            <Image src={PeopleIcon} alt="Ícone - Pessoas" width="92" height="45" />
             <p>{content.alunos_info}</p>
           </Grid>
 
@@ -125,6 +106,19 @@ const QuemSomos = ({ content, metadata }) => {
             <p>{content.empregos_info}</p>
           </Grid>
         </Grid>
+      </Box>
+
+      <Box sx={styles.boxDepoimento}>
+        <Stack display="flex" direction="row" justifyContent="between" className="depoimentoHead">
+          <h2>Depoimentos</h2>
+        </Stack>
+        <Stack display="flex" direction="row" sx={{overflow: "hidden"}}>
+          {depoimentos.map(d => (
+              <Box sx={{mr: "20px"}}>
+                <TestimonyCard testimonial={d} />
+              </Box>
+          ))}
+        </Stack>
       </Box>
 
       <Box sx={styles.description}>
@@ -187,15 +181,18 @@ const styles = {
       xs: "none",
     },
     justifyContent: "space-around",
-    width: "80%",
+    width: "90%",
+    height: "220px",
     position: "relative",
-    "& > p": {
-      position: "absolute",
+    "& .forWhoTitle": {
+      width: "5%",
       transform: " rotate(270deg)",
-      left: "-27%",
-      top: "12%",
       color: "#77837F !important",
       fontSize: "30px !important",
+    },
+    "& h5": {
+      width: "200px",
+      ml: "-70px"
     },
     "& p": {
       color: "#CAC8C8",
@@ -203,14 +200,18 @@ const styles = {
       fontWeight: "500",
       textAlign: "left",
     },
-    mt: "90px",
+    "& .forWhoTopics": {
+      width: "100%",
+      ml: "-30px"
+    },
+    my: "90px",
     paddingBottom: "0px !important",
   },
   boxInfo: {
-    width: "220px",
+    width: "360px",
     display: "flex",
     alignItems: "flex-start",
-    mb: "15px",
+    m: "0 0 15px 0 !important",
     pl: "17px",
     backgroundImage: `url(${linhaQuemSomos.src})`,
     backgroundRepeat: "no-repeat",
@@ -224,52 +225,24 @@ const styles = {
       wordBreak: "break-word",
     },
   },
-  containerDepoimento: {
-    display: {
-      md: "flex",
-      xs: "none",
-    },
-    justifyContent: "space-between",
-    "& > img": {
-      width: "342px",
-      mt: "-20px",
-      zIndex: "99",
-    },
-    position: "relative",
-    "& .gradiente": {
-      position: "absolute",
-      mt: "43px",
-      zIndex: "-10",
-      left: "1.5%",
-    },
-    paddingBottom: "40px !important",
-    gradiente: {
-      position: "absolute",
-      mt: "43px",
-      zIndex: "-10",
-      left: "1.5%",
-    }
-  },
-
   boxDepoimento: {
-    display: "flex",
-    "& img": {
-      margin: "0 30px",
-      height: "80%",
+    margin: "20px auto",
+    width: "90%",
+    "& h2": {
+      fontSize: "20px"
     },
-    alignItems: "center",
-    justifyContent: "space-between",
-    "& h4": {
-      fontSize: "18px",
-      fontWeight: "500",
-    },
+    "& .depoimentoHead": {
+      fontStyle: "italic",
+      textTransform: "uppercase"
+    }
   },
   texto: {
     margin: "70px auto",
-    "& p": {
-      lineHeight: "30px",
-      fontSize: "18px",
-      fontWeight: "500",
+    "& .textContent": {
+      fontStyle: "italic",
+      lineHeight: "28px",
+      fontSize: "16px",
+      fontWeight: "600",
       color: "#77837F",
       textAlign: "justify",
     },

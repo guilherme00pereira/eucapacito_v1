@@ -1,0 +1,23 @@
+[
+    {
+        "nome": "Antonio Santos",
+        "curso": "Big Data & Analytics",
+        "tempo": "Há 2 meses",
+        "rating": "4",
+        "texto": "É uma escola que prepara profissionais para uma nova era, dando uma visãode evolução e aprendizagem constante dentro de nossas próprias atuações, quebrando os paradig..."
+    },
+    {
+        "nome": "Elisabete Gois",
+        "curso": "Leadership Communication",
+        "tempo": "Há 1 ano",
+        "rating": "4.5",
+        "texto": "Plataforma excelente com cursos gratuitos e qualidade até superior aos pagos. Contribuiu com atualizações, novos aprendizados e com a minha recolocação atual..."
+    },
+    {
+        "nome": "Danilo S",
+        "curso": "Python",
+        "tempo": "Há 2 semanas",
+        "rating": "5",
+        "texto": "Muito bom os cursos oferecidos gratuitamente, incentivo aos estudos e desenvolvimento da cidadania. Parabéns pela iniciativa."
+    }
+]
