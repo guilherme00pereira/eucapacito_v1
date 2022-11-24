@@ -5,7 +5,7 @@ const TestimonyCard = ({testimonial}) => {
         <Stack display="flex" direction="column" sx={styles.boxWrapper}>
             <Stack display="flex" direction="row" justifyContent="space-between" sx={{mb: "20px"}}>
                 <Stack display="flex" direction="column">
-                    <Rating defaultValue={testimonial.rating} precision={0.5} size="small" readOnly />
+                    <Rating defaultValue={testimonial.rating} precision={0.5} size="small" readOnly/>
                     <small>{testimonial.tempo}</small>
                 </Stack>
                 <Stack display="flex" direction="column" alignItems="flex-end">
@@ -17,6 +17,7 @@ const TestimonyCard = ({testimonial}) => {
                 {testimonial.texto}
             </Box>
         </Stack>
+
     );
 };
 
@@ -28,8 +29,8 @@ const styles = {
         border: "1px solid #77837F",
         borderRadius: "0.5rem",
         p: "20px",
-        width: "360px",
-        height: "210px"
+        height: "240px",
+        width: "100%"
     },
     name: {
         borderBottom: "2px solid #77837F",

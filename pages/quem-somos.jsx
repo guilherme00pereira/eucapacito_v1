@@ -11,8 +11,8 @@ import YouTube from "@mui/icons-material/YouTube";
 import apiService from "../src/services/apiService";
 import parse from 'html-react-parser';
 import { AppContext } from "../src/services/context";
-import PeopleIcon from "../public/assets/img/noticias-icone-pessoas.png";
-import CheckIcon from "../public/assets/img/noticias-icone-check.png";
+import PeopleIcon from "../public/assets/img/quem-icone-pessoas.png";
+import CheckIcon from "../public/assets/img/quem-icone-check.png";
 import HandsIcon from "../public/assets/img/noticias-icone-parceiros.png";
 import PartyIcon from "../public/assets/img/noticias-icone-festa.png";
 import EuCapacitoLogoVertical from "../public/assets/img/logo-vertical.png";
@@ -81,7 +81,7 @@ const QuemSomos = ({ content, metadata }) => {
           <Grid item xs={6} md={3}>
             <h2>{content.alunos_title}</h2>
             <p>MATRICULADOS</p>
-            <Image src={PeopleIcon} alt="Ícone - Pessoas" width="92" height="45" />
+            <Image src={PeopleIcon} alt="Ícone - Pessoas" />
             <p>{content.alunos_info}</p>
           </Grid>
 
@@ -112,13 +112,20 @@ const QuemSomos = ({ content, metadata }) => {
         <Stack display="flex" direction="row" justifyContent="between" className="depoimentoHead">
           <h2>Depoimentos</h2>
         </Stack>
-        <Stack display="flex" direction="row" sx={{overflow: "hidden"}}>
+        <Swiper
+            slidesPerView={1.2}
+            spaceBetween={10}
+            breakpoints={swiper.breakpoints}
+            autoplay={swiper.autoplay}
+            modules={[Pagination, Autoplay]}
+            pagination={{clickable: true}}
+        >
           {depoimentos.map(d => (
-              <Box sx={{mr: "20px"}}>
-                <TestimonyCard testimonial={d} />
-              </Box>
+              <SwiperSlide className="card-desk">
+                  <TestimonyCard testimonial={d} />
+              </SwiperSlide>
           ))}
-        </Stack>
+        </Swiper>
       </Box>
 
       <Box sx={styles.description}>
@@ -146,6 +153,7 @@ const QuemSomos = ({ content, metadata }) => {
     </Box>
   );
 };
+
 
 export async function getStaticProps() {
   const {api}     = apiService;
@@ -234,6 +242,18 @@ const styles = {
     "& .depoimentoHead": {
       fontStyle: "italic",
       textTransform: "uppercase"
+    },
+    "& .swiper-pagination-bullet": {
+      background: "#33EDAC",
+    },
+    "& .swiper-pagination-bullet-active": {
+      background: "#33EDAC",
+    },
+    "& .swiper-slide": {
+      mb: {
+        xs: "50px",
+        md: "50px",
+      },
     }
   },
   texto: {
