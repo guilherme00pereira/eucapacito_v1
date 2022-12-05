@@ -56,12 +56,10 @@ const PesquisaCursos = () => {
             if (term === null || typeof term === 'undefined') term = ""
             const ids = router.query.t;
             let url = `/eucapacito/v1/search?page=${page}&course=true`;
-            if (null !== ids) {
+            if (typeof ids !== 'undefined') {
                 url += `&t=${ids}`;
             }
-            if (term === "" || term.length > 3) {
-                url += `&search=${term}`;
-            }
+            url += `&search=${term}`;
             api.get(url).then((res) => {
                 if (parseInt(res["headers"]["x-wp-totalpages"]) === page) {
                     setHideLoadMoreButton(true);
