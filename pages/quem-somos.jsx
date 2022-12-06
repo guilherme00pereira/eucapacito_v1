@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import {
   Grid,
   Box,
@@ -23,18 +23,36 @@ import {extractYoastData} from "../src/services/helper";
 import dynamic from "next/dynamic";
 import {swiper} from "../src/commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
-import depoimentos from "../src/data/depoimentos.json"
 import TestimonyCard from "../src/components/About/TestimonyCard";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
 const QuemSomos = ({ content, metadata }) => {
   const ctx = useContext(AppContext);
+  const [testimonials, setTestimonials] = useState([]);
   
   useEffect(() => {
     ctx.setTitle({
       main: "Quem Somos",
       sub: "Saiba mais sobre",
+    });
+
+    const {api}     = apiService;
+
+    api.get('/wp/v2/depoimento?per_page=9').then(res => {
+      const fetchedTestimonials = [];
+      res.data.forEach((testimonial) => {
+        fetchedTestimonials.push({
+          id: testimonial.id,
+          rating: testimonial.avaliacao,
+          tempo: testimonial.periodo,
+          nome: testimonial.nome,
+          curso: testimonial.curso[0].post_title,
+          texto: testimonial.texto
+        });
+      });
+      fetchedTestimonials.sort((a, b) => (a.ordem > b.ordem) ? 1 : -1)
+      setTestimonials([...fetchedTestimonials]);
     });
     
   }, []);
@@ -120,7 +138,7 @@ const QuemSomos = ({ content, metadata }) => {
             modules={[Pagination, Autoplay]}
             pagination={{clickable: true}}
         >
-          {depoimentos.map(d => (
+          {testimonials.map(d => (
               <SwiperSlide className="card-desk">
                   <TestimonyCard testimonial={d} />
               </SwiperSlide>
