@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import {
   Grid,
   Box,
@@ -6,7 +6,7 @@ import {
   Link as MuiLink, Stack,
 } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {Instagram, Facebook, LinkedIn} from "@mui/icons-material";
+import {Instagram, Facebook, LinkedIn, RateReviewOutlined} from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
 import apiService from "../src/services/apiService";
 import parse from 'html-react-parser';
@@ -23,18 +23,37 @@ import {extractYoastData} from "../src/services/helper";
 import dynamic from "next/dynamic";
 import {swiper} from "../src/commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
-import depoimentos from "../src/data/depoimentos.json"
 import TestimonyCard from "../src/components/About/TestimonyCard";
+import Link from "next/link";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
 const QuemSomos = ({ content, metadata }) => {
   const ctx = useContext(AppContext);
+  const [testimonials, setTestimonials] = useState([]);
   
   useEffect(() => {
     ctx.setTitle({
       main: "Quem Somos",
       sub: "Saiba mais sobre",
+    });
+
+    const {api}     = apiService;
+
+    api.get('/wp/v2/depoimento?per_page=9').then(res => {
+      const fetchedTestimonials = [];
+      res.data.forEach((testimonial) => {
+        fetchedTestimonials.push({
+          id: testimonial.id,
+          rating: testimonial.avaliacao,
+          tempo: testimonial.periodo,
+          nome: testimonial.nome,
+          curso: testimonial.curso[0].post_title,
+          texto: testimonial.texto
+        });
+      });
+      fetchedTestimonials.sort((a, b) => (a.ordem > b.ordem) ? 1 : -1)
+      setTestimonials([...fetchedTestimonials]);
     });
     
   }, []);
@@ -109,8 +128,12 @@ const QuemSomos = ({ content, metadata }) => {
       </Box>
 
       <Box sx={styles.boxDepoimento}>
-        <Stack display="flex" direction="row" justifyContent="between" className="depoimentoHead">
-          <h2>Depoimentos</h2>
+        <Stack display="flex" direction="row" justifyContent="space-between" className="depoimentoHead">
+          <Box><h2>Depoimentos</h2></Box>
+          <Stack display="flex" direction="row" alignItems="center" className="depoimentoLink">
+            <RateReviewOutlined />
+            <Link href="/pesquisa-de-satisfacao">Avaliar</Link>
+          </Stack>
         </Stack>
         <Swiper
             slidesPerView={1.2}
@@ -120,7 +143,7 @@ const QuemSomos = ({ content, metadata }) => {
             modules={[Pagination, Autoplay]}
             pagination={{clickable: true}}
         >
-          {depoimentos.map(d => (
+          {testimonials.map(d => (
               <SwiperSlide className="card-desk">
                   <TestimonyCard testimonial={d} />
               </SwiperSlide>
@@ -241,7 +264,15 @@ const styles = {
     },
     "& .depoimentoHead": {
       fontStyle: "italic",
-      textTransform: "uppercase"
+      textTransform: "uppercase",
+    },
+    "& .depoimentoHead svg": {
+      color: "#77837F !important",
+    },
+    "& .depoimentoHead a": {
+      fontWeight: "600",
+      color: "#CAC8C8",
+      ml: "10px"
     },
     "& .swiper-pagination-bullet": {
       background: "#33EDAC",
