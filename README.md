@@ -4,6 +4,11 @@ Aplicação em React.js do site eucapacito.com.br
 
 ## Versões
 
+### Versão 1.1
+<ul>
+<li>v_1.1.0 - Adicionado o componente Depoimentos na página Quem Somos</li>
+</ul>
+
 ### Versão 1
 
 <ul>

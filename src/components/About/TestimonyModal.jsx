@@ -7,22 +7,24 @@ const TestimonyModal = ({testimonial, open, openModal}) => {
         <Modal
         open={open}
         onClose={() => openModal(false)}
-        sx={styles.modal}>
-            <Stack display="flex" direction="column" sx={styles.boxWrapper}>
-                <Stack display="flex" direction="row" justifyContent="space-between" sx={{mb: "20px"}}>
-                    <Stack display="flex" direction="column">
-                        <Rating defaultValue={testimonial.rating} precision={0.5} size="small" readOnly/>
-                        <small>{testimonial.tempo}</small>
+        >
+            <Box sx={styles.modal}>
+                <Stack display="flex" direction="column" sx={styles.boxWrapper}>
+                    <Stack display="flex" direction="row" justifyContent="space-between" sx={{mb: "20px"}}>
+                        <Stack display="flex" direction="column">
+                            <Rating defaultValue={testimonial.rating} precision={0.5} size="small" readOnly/>
+                            <small>{testimonial.tempo}</small>
+                        </Stack>
+                        <Stack display="flex" direction="column" alignItems="flex-end">
+                            <Box sx={styles.name}>{testimonial.nome}</Box>
+                            <Box>{testimonial.curso}</Box>
+                        </Stack>
                     </Stack>
-                    <Stack display="flex" direction="column" alignItems="flex-end">
-                        <Box sx={styles.name}>{testimonial.nome}</Box>
-                        <Box>{testimonial.curso}</Box>
-                    </Stack>
+                    <Box>
+                        {testimonial.texto}
+                    </Box>
                 </Stack>
-                <Box>
-                    {testimonial.texto}
-                </Box>
-            </Stack>
+            </Box>
         </Modal>
     );
 };
@@ -47,6 +49,7 @@ const styles = {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
+        backgroundColor: "#0E0E0E",
         width: "600px",
         boxShadow: "24",
         p: "4",

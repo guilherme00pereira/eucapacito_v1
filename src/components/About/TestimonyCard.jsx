@@ -1,7 +1,12 @@
 import {Box, Stack, Rating} from "@mui/material";
 import Button from "../../../src/components/Button";
 
-const TestimonyCard = ({testimonial, openModal}) => {
+const TestimonyCard = ({testimonial, openModal, updateSelected}) => {
+
+    const handleOpenModal = () => {
+        openModal(true)
+        updateSelected(testimonial)
+    }
 
     return (
         <Stack display="flex" direction="column" sx={styles.boxWrapper}>
@@ -20,7 +25,7 @@ const TestimonyCard = ({testimonial, openModal}) => {
             </Box>
             {testimonial.texto.length > 120 &&
                 <Stack display="flex" direction="row" justifyContent="center" sx={styles.buttonBox}>
-                    <Button type="button" sx={styles.button} onClick={() => openModal(true)}>
+                    <Button type="button" sx={styles.button} onClick={handleOpenModal}>
                         ver mais
                     </Button>
                 </Stack>
@@ -50,6 +55,7 @@ const styles = {
     },
     button: {
         textTransform: "uppercase",
-        fontSize: "0.625rem"
+        fontSize: "0.625rem",
+        color: "#0E0E0E"
     }
 }

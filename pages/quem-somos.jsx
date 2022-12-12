@@ -148,7 +148,7 @@ const QuemSomos = ({ content, metadata }) => {
         >
           {testimonials.map(d => (
               <SwiperSlide className="card-desk">
-                  <TestimonyCard testimonial={d} openModal={setOpenModal} />
+                  <TestimonyCard testimonial={d} openModal={setOpenModal} updateSelected={setSelectedTestimonial} />
               </SwiperSlide>
           ))}
         </Swiper>
