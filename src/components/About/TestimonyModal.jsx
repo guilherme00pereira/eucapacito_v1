@@ -34,11 +34,10 @@ export default TestimonyModal;
 const styles = {
     boxWrapper: {
         color: "#77837F",
-        border: "1px solid #77837F",
-        borderRadius: "0.5rem",
         p: "20px",
-        height: "260px",
-        width: "100%"
+        width: "100%",
+        height: "100%",
+        overflowY: "auto"
     },
     name: {
         borderBottom: "2px solid #77837F",
@@ -50,8 +49,14 @@ const styles = {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         backgroundColor: "#0E0E0E",
-        width: "600px",
+        width: {
+            md: "600px",
+            xs: "90%"
+        },
+        height: "75%",
         boxShadow: "24",
         p: "4",
+        border: "1px solid #77837F",
+        borderRadius: "0.5rem",
     }
 }
