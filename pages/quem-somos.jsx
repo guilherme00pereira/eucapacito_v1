@@ -25,12 +25,15 @@ import {swiper} from "../src/commonStyles/swiper";
 import {Autoplay, Pagination} from "swiper";
 import TestimonyCard from "../src/components/About/TestimonyCard";
 import Link from "next/link";
+import TestimonyModal from "../src/components/About/TestimonyModal";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
 const QuemSomos = ({ content, metadata }) => {
   const ctx = useContext(AppContext);
   const [testimonials, setTestimonials] = useState([]);
+  const [selectedTestimonial, setSelectedTestimonial] = useState({})
+  const [openModal, setOpenModal] = useState(false)
   
   useEffect(() => {
     ctx.setTitle({
@@ -145,10 +148,11 @@ const QuemSomos = ({ content, metadata }) => {
         >
           {testimonials.map(d => (
               <SwiperSlide className="card-desk">
-                  <TestimonyCard testimonial={d} />
+                  <TestimonyCard testimonial={d} openModal={setOpenModal} />
               </SwiperSlide>
           ))}
         </Swiper>
+        <TestimonyModal testimonial={selectedTestimonial} open={openModal} openModal={setOpenModal} />
       </Box>
 
       <Box sx={styles.description}>
