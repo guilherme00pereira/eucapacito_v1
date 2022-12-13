@@ -8,6 +8,16 @@ import { AppContext } from "../src/services/context";
 import SEO from '../src/seo'
 import {extractYoastData} from "../src/services/helper";
 
+const TagsLoop = ({tag}) => {
+    return (
+        <Box sx={styles.tagBadge} key={tag.id}>
+            <Link to={`/tag/${tag.slug}/${tag.id}`}>
+                {tag.name}
+            </Link>
+        </Box>
+    )
+}
+
 const DynamicBlog = ({blog, posts}) => {
     const ctx = useContext(AppContext);
 
@@ -49,13 +59,7 @@ const DynamicBlog = ({blog, posts}) => {
                         <Stack sx={styles.tags}>
                             <h3>TAGS:</h3>
                             <Stack direction="row" sx={styles.tagRow}>
-                                { blog.tags.map( (tag) => 
-                                    <Box sx={styles.tagBadge}>
-                                        <Link to={`/tag/${tag.slug}/${tag.id}`}>
-                                            {tag.name}
-                                        </Link>
-                                    </Box> 
-                                ) }
+                                { blog.tags.map( (tag) => <TagsLoop tag={tag} /> ) }
                             </Stack>
                         </Stack>
                     </Box>
@@ -159,7 +163,7 @@ const styles = {
             mt: "0.75rem",
             small: {
                 color: "#77837F",
-                fontSize: {md: "16px", xs: "6px"},
+                fontSize: {md: "16px", xs: "12px"},
                 fontWeight: 400,
                 "&+small": {
                     textTransform: "uppercase",
@@ -214,6 +218,14 @@ const styles = {
                 xs: "0",
                 md: "35px",
             },
+            img: {
+                width: {
+                    xs: "100%"
+                },
+                height: {
+                    xs: "100%"
+                }
+            }
         },
         "& p+h2": {
             mt: "1rem",

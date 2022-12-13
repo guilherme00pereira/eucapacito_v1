@@ -22,8 +22,32 @@ import EuCapacitoLogo from "../../public/assets/img/logo.png";
 import UserIcon from "../../public/assets/img/perfil-menu-usuario.png";
 
 import MenuDesk from "../components/Home/MenuDesktop";
-import {Facebook, Instagram, LinkedIn} from "@mui/icons-material";
+import { Facebook, Instagram, LinkedIn } from "@mui/icons-material";
 import YouTube from "@mui/icons-material/YouTube";
+
+const WelcomeTitle = ({ logged, title, name, routerLength }) => {
+  if (logged && routerLength <= 1) {
+    return (
+      <p>Olá, {name.split(" ")[0]}!</p>
+    )
+  } else {
+    if (title !== "") {
+      return (<p>{title}</p>)
+    } else {
+      return (<p>Seja bem vindo</p>)
+    }
+  }
+}
+
+const WelcomeSubtitle = ({ subtitle, routerLength }) => {
+  if (subtitle !== "" && routerLength > 1) {
+    return (
+      <p>{subtitle}</p>
+    )
+  } else {    
+    return (<p>Encontre um curso para aprender</p>)
+  }
+}
 
 const Header = () => {
   const router = useRouter();
@@ -39,7 +63,7 @@ const Header = () => {
     setLogged(!!token);
     setFirstName(sessionStorage.getItem("username"));
     const userImage = sessionStorage.getItem("avatarURL")
-    setAvatar( userImage === 'false' ? UserIcon : userImage);
+    setAvatar(userImage === 'false' ? UserIcon : userImage);
     if (!router.pathname.includes("/procurar")) {
       setSearch("");
     }
@@ -61,12 +85,12 @@ const Header = () => {
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
-  } 
+  }
 
   const handleSearchResults = (e) => {
     if (e.key === "Enter") {
-      if( router.pathname === "/cursos" || router.pathname.includes("pesquisa-cursos") ) {
-         router.push(`/pesquisa-cursos?search=${search}`)
+      if (router.pathname === "/cursos" || router.pathname.includes("pesquisa-cursos")) {
+        router.push(`/pesquisa-cursos?search=${search}`)
       } else {
         router.push(`/procurar?search=${search}`);
       }
@@ -103,30 +127,20 @@ const Header = () => {
           <Toolbar disableGutters sx={styles.toolbar}>
             <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
               <Link to="/">
-                <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
+                <Image src={EuCapacitoLogo} alt="Logo EuCapacito" priority />
               </Link>
             </Box>
 
             <Box sx={styles.toolbar.mobileLogo}>
               <Link to="/">
-                <Image src={EuCapacitoLogo} alt="Logo EuCapacito" />
+                <Image src={EuCapacitoLogo} alt="Logo EuCapacito" priority />
               </Link>
             </Box>
           </Toolbar>
 
           <Box sx={styles.subheader}>
-            {logged && router.pathname.length <= 1 ? (
-              <p>Olá, {firstName.split(" ")[0]}!</p>
-            ) : ctx.title.main !== "" ? (
-              <p>{ctx.title.main}</p>
-            ) : (
-              <p>Seja bem vindo</p>
-            )}
-            {ctx.title.sub !== "" && router.pathname.length > 1 ? (
-              <p>{ctx.title.sub}</p>
-            ) : (
-              <p>Encontre um curso para aprender</p>
-            )}
+            <WelcomeTitle logged={logged} title={ctx.title.main} name={firstName} routerLength={router.pathname.length} />
+            <WelcomeSubtitle subtitle={ctx.title.sub} routerLength={router.pathname.length} />
           </Box>
 
           <Box sx={styles.searchBar}>
@@ -163,20 +177,15 @@ const Header = () => {
             </Box>
 
             <Box sx={styles.subheaderdesk}>
-              {logged && router.pathname.length <= 1 ? (
-                <p>Olá, {firstName.split(" ")[0]}!</p>
-              ) : ctx.title.main !== "" ? (
-                <p>{ctx.title.main}</p>
-              ) : (
-                <p>Seja bem vindo</p>
-              )}
-              {ctx.title.sub && router.pathname.length > 1 ? (
+            <WelcomeTitle logged={logged} title={ctx.title.main} name={firstName} routerLength={router.pathname.length} />
+            <WelcomeSubtitle subtitle={ctx.title.sub} routerLength={router.pathname.length} />
+              {/* {ctx.title.sub && router.pathname.length > 1 ? (
                 <p>{ctx.title.sub}</p>
               ) : !ctx.title.sub && router.pathname.length > 1 ? (
                 ""
               ) : (
                 <p>Encontre um curso para aprender</p>
-              )}
+              )} */}
             </Box>
             {!logged && (
               <Box sx={styles.deskcadastro}>
@@ -192,15 +201,15 @@ const Header = () => {
               <Box sx={styles.headerPerfil}>
                 <Link to="/perfil">
                   <div className="profile-photo">
-                        <Image
-                            src={avatar}
-                            alt="Foto de perfil"
-                            referrerPolicy="no-referrer"
-                            width="45"
-                            height="45"
-                            layout="fill"
-                        />
-                      <div className="online-status"></div>
+                    <Image
+                      src={avatar}
+                      alt="Foto de perfil"
+                      referrerPolicy="no-referrer"
+                      width="45"
+                      height="45"
+                      layout="fill"
+                    />
+                    <div className="online-status"></div>
                   </div>
                 </Link>
               </Box>
