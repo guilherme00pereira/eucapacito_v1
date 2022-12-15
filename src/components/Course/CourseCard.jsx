@@ -35,7 +35,7 @@ export default CourseCard;
 const styles = {
   container: {
     width: {
-      xs: "calc(100% / 2 - 2%)",
+      xs: "100%",
       md: "calc(100% / 3 - 2%)",
     },
     m: "10px 1%",
@@ -46,14 +46,13 @@ const styles = {
     mb: "7px",
     border: "1px solid #77837F",
     borderRadius: "8px",
+    height: "200px",
+    overflow: "hidden",
     img: {
       display: "block",
       borderRadius: "8px",
       width: "100%",
-      height: {
-        xs: "105px",
-        md: "200px",
-      },
+      height: "100%",
     },
   },
   info: {

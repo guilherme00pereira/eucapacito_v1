@@ -48,10 +48,12 @@ export default ContentCard;
 const styles = {
   card: {
     image: {
+      height: "200px",
+      overflow: "hidden",
       img: {
         borderRadius: "0.5rem",
         width: "100%",
-        height: "200px",
+        height: "100%",
       },
     },
     info: {
@@ -83,7 +85,8 @@ const styles = {
     },
     partnerLogo: {
       with: "100px",
-      height: "35px"
+      height: "35px",
+      boxShadow: "none",
     }
   },
 };
